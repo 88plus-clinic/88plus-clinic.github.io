@@ -375,14 +375,22 @@ ul.list li strong {
 
 @media (max-width: 640px) {
   .exam-table {
-    font-size: 12.5px;
+    font-size: 11px;
+    line-height: 1.45;
   }
   .exam-table thead th,
   .exam-table tbody td {
-    padding: 9px 10px;
+    padding: 6px 6px;
+    line-height: 1.45;
   }
   .exam-table thead th {
-    font-size: 10.5px;
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    padding: 7px 6px;
+  }
+  .exam-table .col-name {
+    white-space: normal;
+    word-break: keep-all;
   }
 }
 
@@ -773,11 +781,6 @@ ul.list li strong {
   .hero h1 { font-size: 22px; }
   .tab-nav { padding: 20px 18px; }
   .page-header h2 { font-size: 22px; }
-  .site-header .container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-  }
   .contact-card { padding: 28px 22px; }
   .tab-btn { font-size: 12.5px; padding: 8px 12px; }
   .schedule-list li { flex-direction: column; gap: 4px; }
@@ -833,10 +836,10 @@ ul.list li strong {
   <nav class="tab-nav">
     <span class="tab-group-label">검사 단계별 안내</span>
     <div class="tab-buttons">
-      <button class="tab-btn active" data-tab="prep-week">1주일 전 · 정결제 선택</button>
-      <button class="tab-btn" data-tab="prep-3day">3일 전 · 식이조절</button>
-      <button class="tab-btn" data-tab="prep-1day">1일 전 · 정결제 복용</button>
-      <button class="tab-btn" data-tab="prep-after">검사 후 · 주의사항</button>
+      <button class="tab-btn active" data-tab="prep-week">1주일 전 / 정결제 선택</button>
+      <button class="tab-btn" data-tab="prep-3day">3일 전 / 식이조절</button>
+      <button class="tab-btn" data-tab="prep-1day">1일 전 / 정결제 복용</button>
+      <button class="tab-btn" data-tab="prep-after">검사 후 / 주의사항</button>
     </div>
   </nav>
 
@@ -844,7 +847,7 @@ ul.list li strong {
   <div class="tab-content active" id="prep-week">
     <div class="page-header">
       <div class="label">Step 01 · One Week Before</div>
-      <h2>1주일 전 · 장정결제 선택</h2>
+      <h2>1주일 전 / 장정결제 선택</h2>
       <p class="desc">대장내시경 검사 1주일 전부터 약물 조정과 장정결제 선택이 필요합니다. 환자분의 복용 편의, 비용, 기존 복용 약물에 따라 적절한 정결제를 선택해 주세요.</p>
     </div>
 
@@ -950,7 +953,7 @@ ul.list li strong {
   <div class="tab-content" id="prep-3day">
     <div class="page-header">
       <div class="label">Step 02 · Three Days Before</div>
-      <h2>3일 전 · 식이조절</h2>
+      <h2>3일 전 / 식이조절</h2>
       <p class="desc">대장 내 잔류물을 줄이기 위해 검사 3일 전부터 식이조절을 시작합니다. 섬유소가 많은 음식과 씨가 있는 과일·채소는 대장 점막에 남아 시야를 가릴 수 있으므로 피해 주세요.</p>
     </div>
 
@@ -1040,7 +1043,7 @@ ul.list li strong {
   <div class="tab-content" id="prep-1day">
     <div class="page-header">
       <div class="label">Step 03 · One Day Before</div>
-      <h2>1일 전 · 장정결제 복용</h2>
+      <h2>1일 전 / 장정결제 복용</h2>
       <p class="desc">대장내시경 검사의 정확도는 장정결 상태에 따라 좌우됩니다. 처방받은 정결제의 복용법을 정확히 따르고, 마지막 배변이 <strong>맑은 노란색 또는 투명한 액체</strong>가 될 때까지 충분히 수분을 섭취해 주세요.</p>
     </div>
 
@@ -1122,7 +1125,7 @@ ul.list li strong {
   <div class="tab-content" id="prep-after">
     <div class="page-header">
       <div class="label">Step 04 · After Examination</div>
-      <h2>검사 후 · 주의사항</h2>
+      <h2>검사 후 / 주의사항</h2>
       <p class="desc">대장내시경 검사가 끝난 후에도 일정 기간 주의가 필요합니다. 특히 용종 절제술을 받으신 경우 출혈 위험을 줄이기 위해 활동·식이 제한이 필요합니다.</p>
     </div>
 
