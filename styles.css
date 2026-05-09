@@ -44,6 +44,8 @@ body {
   font-size: 16.5px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  word-break: keep-all;       /* 한글 어절 단위 줄바꿈 (단어 중간에서 끊기지 않음) */
+  overflow-wrap: break-word;  /* 매우 긴 단어/URL은 예외적으로 줄바꿈 허용 */
 }
 
 img { max-width: 100%; display: block; }
