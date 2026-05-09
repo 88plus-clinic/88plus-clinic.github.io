@@ -66,10 +66,34 @@
       대학병원에서 쌓아온 임상 경험을 바탕으로, 가까이에서 신뢰할 수 있는 든든한 주치의가 되겠습니다.<br>
       여러분의 건강한 일상을 늘 함께 지키겠습니다.
     </p>
-    <div style="display:flex; align-items:center; justify-content:center; gap:6px; margin-top:8px; font-size:15px; color:var(--color-text-muted);">
-      <span>- 88플러스내과·산부인과 의료진 일동 드림</span>
-      <img src="88plus_signature.png" alt="88플러스 사인" style="height:64px; width:auto;">
+    <div class="signature-row">
+      <span class="signature-text">- 88플러스내과·산부인과 의료진 일동 드림</span>
+      <img src="88plus_signature.png" alt="88플러스 사인" class="signature-img">
     </div>
+    <style>
+      .signature-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 8px;
+        flex-wrap: wrap;
+      }
+      .signature-text {
+        font-size: 15px;
+        color: var(--color-text-muted);
+        white-space: nowrap;
+      }
+      .signature-img {
+        height: 64px;
+        width: auto;
+      }
+      @media (max-width: 640px) {
+        .signature-row { gap: 4px; }
+        .signature-text { font-size: 13px; }
+        .signature-img { height: 50px; }
+      }
+    </style>
   </div>
 </section>
 
