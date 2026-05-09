@@ -128,18 +128,10 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: -0.01em;
   position: relative;
   padding: 6px 0;
-  transition: color 0.15s;
+  transition: color 0.2s ease;
 }
 
-.main-nav a:hover {
-  color: var(--color-primary);
-}
-
-.main-nav a.active {
-  color: var(--color-primary);
-}
-
-.main-nav a.active::after {
+.main-nav a::after {
   content: '';
   position: absolute;
   bottom: -19px;
@@ -147,6 +139,25 @@ a { color: inherit; text-decoration: none; }
   right: 0;
   height: 2px;
   background: var(--color-primary);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-nav a:hover {
+  color: var(--color-primary);
+}
+
+.main-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+.main-nav a.active {
+  color: var(--color-primary);
+}
+
+.main-nav a.active::after {
+  transform: scaleX(1);
 }
 
 /* Hamburger (모바일 메뉴) */
@@ -676,6 +687,161 @@ a { color: inherit; text-decoration: none; }
 
 .hours-list li.closed .time { color: var(--color-accent); }
 
+/* 의료진별 진료 일정 (full width below info-row) */
+.schedule-section {
+  margin-top: 48px;
+}
+
+.schedule-section-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.schedule-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  font-family: var(--font-sans);
+  background: var(--color-surface);
+}
+
+.schedule-table thead th {
+  padding: 16px 10px;
+  background: var(--color-primary-dark);
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  border-right: 1px solid rgba(255,255,255,0.15);
+}
+
+.schedule-table thead th:last-child { border-right: none; }
+
+.schedule-table tbody th.doc {
+  text-align: center;
+  padding: 18px 12px;
+  border-bottom: 1px solid var(--color-line);
+  border-right: 1px solid var(--color-line);
+  font-weight: 500;
+  white-space: nowrap;
+  background: var(--color-surface);
+  vertical-align: middle;
+  min-width: 130px;
+}
+
+.schedule-table tbody th.doc .doc-photo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+  margin: 0 auto 10px;
+  border: 2px solid var(--color-primary-soft);
+}
+
+.schedule-table tbody th.doc .doc-name {
+  font-size: 16px;
+  color: var(--color-text);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.schedule-table tbody th.doc .doc-name span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-left: 3px;
+}
+
+.schedule-table tbody th.doc .doc-dept {
+  font-size: 12.5px;
+  color: var(--color-primary);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.schedule-table tbody th.time-row {
+  padding: 14px 16px;
+  border-right: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line-soft);
+  font-size: 14.5px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  background: var(--color-bg-soft);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.schedule-table tbody td {
+  text-align: center;
+  padding: 14px 6px;
+  border-bottom: 1px solid var(--color-line-soft);
+  border-right: 1px solid var(--color-line-soft);
+  font-size: 16px;
+  vertical-align: middle;
+  background: var(--color-surface);
+}
+
+.schedule-table tbody td:last-child { border-right: none; }
+
+/* 오후 row: 의료진 사이 구분선 진하게 */
+.schedule-table tbody tr:nth-child(even) td,
+.schedule-table tbody tr:nth-child(even) th.time-row {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.schedule-table tbody tr:last-child th,
+.schedule-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.schedule-table .open {
+  color: var(--color-primary-dark);
+  font-size: 16px;
+}
+
+/* 빈 칸 (휴진) — 옅은 회색 배경 */
+.schedule-table tbody td:empty {
+  background: #f5f5f2;
+}
+
+.schedule-note-bottom {
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: var(--color-text-light);
+  text-align: right;
+}
+
+@media (max-width: 880px) {
+  .schedule-section { margin-top: 36px; }
+  .schedule-section-title { font-size: 18px; margin-bottom: 14px; }
+  .schedule-table { font-size: 13.5px; }
+  .schedule-table thead th { padding: 11px 4px; font-size: 12.5px; }
+  .schedule-table tbody th.doc { padding: 12px 6px; min-width: 80px; }
+  .schedule-table tbody th.doc .doc-photo { width: 48px; height: 48px; margin-bottom: 6px; }
+  .schedule-table tbody th.doc .doc-name { font-size: 13px; }
+  .schedule-table tbody th.doc .doc-name span { font-size: 11px; }
+  .schedule-table tbody th.doc .doc-dept { font-size: 11px; }
+  .schedule-table tbody th.time-row { padding: 10px 6px; font-size: 12.5px; }
+  .schedule-table tbody td { padding: 10px 2px; font-size: 13px; }
+  .schedule-table .open { font-size: 13px; }
+  .schedule-note-bottom { font-size: 12px; }
+}
+
 .hours-card .note {
   margin-top: 20px;
   padding: 14px 16px;
@@ -806,7 +972,7 @@ a { color: inherit; text-decoration: none; }
 .site-footer {
   background: #1f1f1c;
   color: #c9c9c4;
-  padding: 50px 0 30px;
+  padding: 28px 0 18px;
   font-size: 14px;
 }
 
@@ -814,7 +980,7 @@ a { color: inherit; text-decoration: none; }
   display: grid;
   grid-template-columns: 1.3fr 1fr 1fr;
   gap: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 18px;
 }
 
 .site-footer h4 {
@@ -846,15 +1012,15 @@ a { color: inherit; text-decoration: none; }
 
 .site-footer .copyright {
   border-top: 1px solid #2c2c28;
-  padding-top: 24px;
+  padding-top: 14px;
   font-size: 11.5px;
   color: #666661;
   text-align: center;
 }
 
 @media (max-width: 880px) {
-  .site-footer .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-  .site-footer { padding: 40px 0 24px; }
+  .site-footer .footer-grid { grid-template-columns: 1fr; gap: 18px; margin-bottom: 14px; }
+  .site-footer { padding: 22px 0 16px; }
 }
 
 /* ========== Notice Box ========== */
@@ -897,6 +1063,315 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ========== To-top Button ========== */
+/* ========== 병원 시설 갤러리 ========== */
+.facility-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.facility-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: var(--color-bg-soft);
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.facility-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.facility-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.facility-item:hover img {
+  transform: scale(1.04);
+}
+
+@media (max-width: 880px) {
+  .facility-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+
+/* 라이트박스 */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  animation: lbFade 0.2s ease;
+}
+
+.lightbox.visible { display: flex; }
+
+@keyframes lbFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.15s;
+  font-family: var(--font-sans);
+  z-index: 1;
+}
+
+.lightbox-close {
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.lightbox-prev { left: 24px; }
+.lightbox-next { right: 24px; }
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.lightbox-counter {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13.5px;
+  font-feature-settings: 'tnum';
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 880px) {
+  .lightbox { padding: 16px; }
+  .lightbox-close { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 22px; }
+  .lightbox-prev, .lightbox-next { width: 40px; height: 40px; font-size: 24px; }
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
+}
+
+/* ========== 공지 팝업 ========== */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: popupFade 0.2s ease;
+}
+
+.popup-overlay.visible { display: flex; }
+
+@keyframes popupFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-box {
+  background: #fff;
+  border-radius: 8px;
+  max-width: 440px;
+  width: 100%;
+  max-height: 92vh;
+  overflow: auto;
+  position: relative;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  animation: popupSlide 0.25s ease;
+}
+
+@keyframes popupSlide {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 22px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 1;
+  color: #555;
+  line-height: 1;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.15s;
+}
+
+.popup-close:hover { background: #fff; color: #000; }
+
+.popup-image {
+  width: 100%;
+  display: block;
+  border-radius: 8px 8px 0 0;
+}
+
+/* 팝업 슬라이더 */
+.popup-slider {
+  position: relative;
+  background: #f4f4f4;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
+.popup-slide {
+  display: none;
+}
+.popup-slide.active {
+  display: block;
+}
+.popup-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  z-index: 2;
+}
+.popup-nav:hover { background: rgba(0, 0, 0, 0.7); }
+.popup-prev { left: 10px; }
+.popup-next { right: 10px; }
+.popup-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+.popup-dot {
+  width: 8px;
+  height: 8px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s, transform 0.15s;
+}
+.popup-dot.active {
+  background: #fff;
+  transform: scale(1.25);
+}
+
+.popup-actions {
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--color-line);
+  gap: 12px;
+}
+
+.popup-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.popup-checkbox input {
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+  accent-color: var(--color-primary);
+}
+
+.popup-close-btn {
+  padding: 8px 18px;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+  transition: background 0.15s;
+}
+
+.popup-close-btn:hover { background: var(--color-primary-dark); }
+
+@media (max-width: 880px) {
+  .popup-overlay { padding: 12px; }
+  .popup-box { max-width: 95vw; }
+  .popup-actions { padding: 12px 16px; }
+  .popup-checkbox { font-size: 12px; }
+}
+
 /* ========== 예약 방법 카드 ========== */
 .reservation-grid {
   display: grid;

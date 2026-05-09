@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
 <style>
 :root {
   --color-bg: #fafaf8;
@@ -41,41 +42,13 @@ body {
   padding: 0 24px;
 }
 
-/* ========== Header ========== */
-.site-header {
-  border-bottom: 1px solid var(--color-line);
-  background: var(--color-surface);
-  padding: 18px 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+/* 헤더와 탑바는 넓은 컨테이너 사용 (메뉴 공간 확보) */
+.top-bar > .container,
+.site-header > .container {
+  max-width: 1100px;
 }
 
-.site-header .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.site-header .logo {
-  font-family: var(--font-serif);
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--color-primary);
-}
-
-.site-header .tel {
-  font-size: 13px;
-  color: var(--color-text-muted);
-  font-feature-settings: 'tnum';
-}
-
-.site-header .tel strong {
-  color: var(--color-text);
-  font-weight: 600;
-  margin-left: 6px;
-}
+/* (Header styles inherited from ../styles.css) */
 
 /* ========== Hero ========== */
 .hero {
@@ -769,10 +742,37 @@ ul.list li strong {
 </head>
 <body>
 
+<div class="top-bar">
+  <div class="container">
+    <span>88플러스내과·산부인과 — 내과·산부인과 전문의 협진</span>
+    <a class="tel" href="tel:0229728800">진료문의 <strong>02-972-8800</strong></a>
+  </div>
+</div>
+
 <header class="site-header">
   <div class="container">
-    <a href="../" class="logo" style="text-decoration:none;">← 88플러스내과산부인과</a>
-    <div class="tel">진료문의 <strong>02-972-8800</strong></div>
+    <a href="../index.html" class="site-logo">
+      <img src="../logo.png" alt="88플러스내과산부인과" class="logo-img">
+    </a>
+    <nav class="main-nav">
+      <a href="../index.html">홈</a>
+      <a href="../about.html">병원 소개</a>
+      <a href="../services.html">진료과목</a>
+      <a href="../checkup.html">건강검진</a>
+      <a href="../pricing.html">비급여 안내</a>
+      <a href="../location.html">예약 안내</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="메뉴">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="../index.html">홈</a>
+    <a href="../about.html">병원 소개</a>
+    <a href="../services.html">진료과목</a>
+    <a href="../checkup.html">건강검진</a>
+    <a href="../pricing.html">비급여 안내</a>
+    <a href="../location.html">예약 안내</a>
   </div>
 </header>
 
@@ -1051,7 +1051,7 @@ ul.list li strong {
   <!-- Gastroscopy Tab (이미 작성된 내용) -->
   <div class="tab-content" id="gastroscopy">
     <div class="page-header">
-      <div class="label">Examination · 01</div>
+      <div class="label">Gastroscopy</div>
       <h2>위내시경 검사 안내</h2>
       <p class="desc">식도, 위, 십이지장 점막을 직접 관찰하여 위염, 위궤양, 헬리코박터 감염 및 위암을 포함한 위장 질환을 진단하는 검사입니다.</p>
       <div class="meta">
@@ -1150,7 +1150,7 @@ ul.list li strong {
   <!-- Colonoscopy Tab -->
   <div class="tab-content" id="colonoscopy">
     <div class="page-header">
-      <div class="label">Examination · 02</div>
+      <div class="label">Colonoscopy</div>
       <h2>대장내시경 검사 안내</h2>
       <p class="desc">항문을 통해 내시경을 삽입하여 직장부터 맹장까지 대장 전체 점막을 직접 관찰하는 검사입니다. 대장 용종, 염증성 장질환, 대장암 등을 진단하며, 발견된 용종은 검사 중 함께 절제할 수 있습니다.</p>
       <div class="meta">
@@ -1318,7 +1318,7 @@ ul.list li strong {
   <!-- Upper Abdomen US Tab -->
   <div class="tab-content" id="upper-abd">
     <div class="page-header">
-      <div class="label">Examination · 03</div>
+      <div class="label">Upper Abdominal Ultrasound</div>
       <h2>상복부 초음파 검사 안내</h2>
       <p class="desc">간, 담낭, 담도, 췌장(일부), 비장을 영상으로 관찰하는 검사입니다. 지방간, 간경변, 간종양, 담석증, 담낭용종, 췌장 종양·낭종 등을 확인할 수 있습니다.</p>
       <div class="meta">
@@ -1391,7 +1391,7 @@ ul.list li strong {
   <!-- Lower Abdomen US Tab -->
   <div class="tab-content" id="lower-abd">
     <div class="page-header">
-      <div class="label">Examination · 04</div>
+      <div class="label">Lower Abdominal Ultrasound</div>
       <h2>하복부 초음파 검사 안내</h2>
       <p class="desc">신장, 방광, 전립선을 영상으로 관찰하는 검사입니다. 신장 결석, 신낭종, 신장 종양, 방광 종양, 전립선 비대 등을 확인할 수 있습니다.</p>
       <div class="meta">
@@ -1466,7 +1466,7 @@ ul.list li strong {
   <!-- Thyroid US Tab -->
   <div class="tab-content" id="thyroid">
     <div class="page-header">
-      <div class="label">Examination · 05</div>
+      <div class="label">Thyroid Ultrasound</div>
       <h2>갑상선 초음파 검사 안내</h2>
       <p class="desc">갑상선과 경부 림프절을 영상으로 관찰하여 갑상선 결절, 갑상선암, 갑상선염 등을 확인하는 검사입니다.</p>
       <div class="meta">
@@ -1539,7 +1539,7 @@ ul.list li strong {
   <!-- Carotid US Tab -->
   <div class="tab-content" id="carotid">
     <div class="page-header">
-      <div class="label">Examination · 06</div>
+      <div class="label">Carotid Ultrasound</div>
       <h2>경동맥 초음파 검사 안내</h2>
       <p class="desc">목 양쪽의 경동맥을 영상으로 관찰하여 동맥경화반(plaque), 혈관 내중막두께(IMT), 협착 정도, 혈류 속도를 평가하는 검사입니다. 뇌졸중 위험 평가에 활용됩니다.</p>
       <div class="meta">
@@ -1612,7 +1612,7 @@ ul.list li strong {
   <!-- Female Pelvic US Tab -->
   <div class="tab-content" id="female-us">
     <div class="page-header">
-      <div class="label">Examination · 07</div>
+      <div class="label">Gynecologic Ultrasound</div>
       <h2>부인과 초음파 검사 안내</h2>
       <p class="desc">자궁, 난소를 영상으로 관찰하는 검사입니다. 자궁근종, 자궁선근증, 난소낭종, 자궁내막 이상 등을 확인할 수 있습니다.</p>
       <div class="meta">
@@ -2026,8 +2026,8 @@ ul.list li strong {
     </div>
   </div>
 
-  <!-- 항상 표시되는 연락처 카드 -->
-  <div class="contact-card">
+  <!-- 기본 연락처 카드 -->
+  <div class="contact-card" id="contactDefault">
     <div class="name">88플러스내과산부인과</div>
     <p class="desc">검사 예약 및 문의는 전화 또는 방문으로 가능합니다.</p>
     <div class="info">
@@ -2039,9 +2039,21 @@ ul.list li strong {
         <span class="info-label">MAP</span>
         <a href="https://map.naver.com/p/entry/place/1126097266" target="_blank" rel="noopener">네이버 지도에서 보기</a>
       </div>
+    </div>
+  </div>
+
+  <!-- 산부인과(부인과 초음파) 전용 연락처 카드 -->
+  <div class="contact-card" id="contactObgyn" style="display:none;">
+    <div class="name">88플러스내과산부인과</div>
+    <p class="desc">산부인과 진료 및 검사 예약은 네이버 예약을 통해 24시간 가능합니다.</p>
+    <div class="info">
       <div class="info-row">
-        <span class="info-label">BLOG</span>
-        <a href="https://blog.naver.com/88plusim" target="_blank" rel="noopener">blog.naver.com/88plusim</a>
+        <span class="info-label">BOOK</span>
+        <a href="https://map.naver.com/p/search/88%ED%94%8C%EB%9F%AC%EC%8A%A4%EB%82%B4%EA%B3%BC/place/1126097266?c=15.00,0,0,0,dh&amp;placePath=%3Fbk_query%253D88%2525ED%252594%25258C%2525EB%25259F%2525AC%2525EC%25258A%2525A4%2525EB%252582%2525B4%2525EA%2525B3%2525BC%2526entry%253Dbmp" target="_blank" rel="noopener">네이버 예약 바로가기</a>
+      </div>
+      <div class="info-row">
+        <span class="info-label">MAP</span>
+        <a href="https://map.naver.com/p/entry/place/1126097266" target="_blank" rel="noopener">네이버 지도에서 보기</a>
       </div>
     </div>
   </div>
@@ -2076,6 +2088,15 @@ ul.list li strong {
 </script>
 
 <script>
+// 모바일 메뉴 토글
+(function() {
+  const toggle = document.getElementById('menuToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  if (toggle) toggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
+})();
+</script>
+
+<script>
 (function() {
   const tabs = document.querySelectorAll('.tab-btn');
   const contents = document.querySelectorAll('.tab-content');
@@ -2099,17 +2120,22 @@ ul.list li strong {
       document.querySelector('[data-tab="exam-guide"]').classList.add('active');
       document.getElementById('exam-guide').classList.add('active');
     }
+    // 부인과 초음파 탭에서는 산부인과 전용 연락처 카드로 전환
+    const cardDefault = document.getElementById('contactDefault');
+    const cardObgyn = document.getElementById('contactObgyn');
+    if (cardDefault && cardObgyn) {
+      const isObgyn = tabId === 'female-us';
+      cardDefault.style.display = isObgyn ? 'none' : '';
+      cardObgyn.style.display = isObgyn ? '' : 'none';
+    }
   }
 
-  // 탭 네비게이션 위치로 스크롤 (탭 버튼이 화면 상단에 보이도록)
+  // 활성 탭 콘텐츠의 시작 위치로 스크롤
   function scrollToTabNav() {
-    const nav = document.querySelector('.tab-nav');
-    if (!nav) return;
-    const top = nav.getBoundingClientRect().top + window.pageYOffset - 8;
-    // 현재 위치보다 위에 있을 때만 스크롤(아래에서 탭 클릭 시 점프 방지 목적)
-    if (window.pageYOffset > top) {
-      window.scrollTo({ top: top, behavior: 'smooth' });
-    }
+    const active = document.querySelector('.tab-content.active');
+    if (!active) return;
+    const top = active.getBoundingClientRect().top + window.pageYOffset - 16;
+    window.scrollTo({ top: top, behavior: 'smooth' });
   }
 
   tabs.forEach(btn => {

@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>대장내시경 안내 | 88플러스내과산부인과</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+:root {
+  --color-bg: #fafaf8;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #5a5a5a;
+  --color-text-light: #8a8a8a;
+  --color-primary: #468c28;
+  --color-primary-dark: #2f6019;
+  --color-primary-soft: #f0f5e8;
+  --color-line: #e5e5e0;
+  --color-warning: #8b5a00;
+  --color-warning-soft: #fdf6e3;
+  --font-serif: 'Noto Serif KR', serif;
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* 헤더와 탑바는 넓은 컨테이너 사용 (메뉴 공간 확보) */
+.top-bar > .container,
+.site-header > .container {
+  max-width: 1100px;
+}
+
+/* (Header styles inherited from ../styles.css) */
+
+/* ========== Hero ========== */
+.hero {
+  padding: 56px 0 30px;
+  text-align: center;
+}
+
+.hero .label {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.hero h1 strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.hero .subtitle {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-top: 18px;
+  line-height: 1.8;
+}
+
+/* ========== Tab Navigation ========== */
+.tab-nav {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  padding: 24px 28px;
+  margin-bottom: 40px;
+}
+
+.tab-group-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-family: var(--font-serif);
+}
+
+.tab-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tab-btn {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  letter-spacing: -0.01em;
+}
+
+.tab-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.tab-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+/* ========== Tab Content ========== */
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== Content Page Style ========== */
+.page-header {
+  border-bottom: 1px solid var(--color-line);
+  padding-bottom: 32px;
+  margin-bottom: 40px;
+}
+
+.page-header .label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.page-header h2 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  color: var(--color-text);
+  margin-bottom: 14px;
+}
+
+.page-header .desc {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+}
+
+section.content-section {
+  margin-bottom: 44px;
+}
+
+.section-num {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: 12px;
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.content-section h3 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  color: var(--color-text);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.content-section h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 22px;
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.content-section p {
+  font-size: 14.5px;
+  margin-bottom: 12px;
+  line-height: 1.8;
+  color: var(--color-text-muted);
+}
+
+ol.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 14px 0;
+}
+
+ol.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 36px;
+  margin-bottom: 12px;
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+ol.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-serif);
+  font-size: 12px;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-feature-settings: 'tnum';
+}
+
+ul.list {
+  list-style: none;
+  margin: 10px 0;
+}
+
+ul.list li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 8px;
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+ul.list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 6px;
+  height: 1px;
+  background: var(--color-primary);
+}
+
+ul.list li strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Notice / Info / Warning */
+.notice {
+  background: var(--color-warning-soft);
+  border-left: 3px solid var(--color-warning);
+  padding: 16px 20px;
+  margin: 18px 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.notice .notice-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-warning);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.info-box {
+  background: var(--color-primary-soft);
+  border-left: 3px solid var(--color-primary);
+  padding: 16px 20px;
+  margin: 18px 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.info-box .info-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-primary-dark);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+/* Table */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 14px 0;
+}
+
+.exam-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+}
+
+.exam-table thead th {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-align: left;
+  padding: 11px 14px;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-primary);
+  white-space: nowrap;
+}
+
+.exam-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--color-line);
+  line-height: 1.6;
+  vertical-align: top;
+}
+
+.exam-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.exam-table .col-name {
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.exam-table .col-detail {
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 640px) {
+  .exam-table {
+    font-size: 12.5px;
+  }
+  .exam-table thead th,
+  .exam-table tbody td {
+    padding: 9px 10px;
+  }
+  .exam-table thead th {
+    font-size: 10.5px;
+  }
+}
+
+/* Diet table — 식이조절용 색상 표 */
+.diet-table th, .diet-table td { vertical-align: top; }
+.diet-table .ok { color: var(--color-primary-dark); font-weight: 500; }
+.diet-table .no { color: var(--color-warning); font-weight: 500; }
+
+/* Product cards — 정결제 사진 카드 */
+.product-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 18px 0 24px;
+}
+
+.product-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  padding: 18px 14px 16px;
+  text-align: center;
+  transition: border-color 0.15s;
+}
+
+.product-card:hover {
+  border-color: var(--color-primary);
+}
+
+.product-card .product-img-wrap {
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  border-radius: 3px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.product-card .product-img-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.product-card .product-name {
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.product-card .product-type {
+  font-size: 11.5px;
+  color: var(--color-text-light);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 640px) {
+  .product-cards {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .product-card {
+    padding: 12px 8px 10px;
+  }
+  .product-card .product-img-wrap {
+    height: 90px;
+    margin-bottom: 8px;
+  }
+  .product-card .product-name {
+    font-size: 12.5px;
+  }
+  .product-card .product-type {
+    font-size: 10.5px;
+  }
+}
+
+/* Video embed */
+.video-wrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  margin: 18px 0;
+  background: #000;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.video-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* YouTube 썸네일 링크 카드 */
+.video-link {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  margin: 18px 0;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #000;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.video-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+.video-link img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.92;
+  transition: opacity 0.2s;
+}
+
+.video-link:hover img { opacity: 1; }
+
+.video-link::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  background: rgba(255, 0, 0, 0.92);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.video-link::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-40%, -50%);
+  width: 0;
+  height: 0;
+  border-left: 22px solid #fff;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.video-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 18px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: #fff;
+  font-size: 13px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.video-caption strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.video-placeholder {
+  background: var(--color-surface);
+  border: 1px dashed var(--color-line);
+  border-radius: 4px;
+  padding: 50px 30px;
+  text-align: center;
+  color: var(--color-text-light);
+  margin: 18px 0;
+}
+
+.video-placeholder .ph-label {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  color: var(--color-primary);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.video-placeholder .ph-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--color-text);
+  font-weight: 500;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.video-placeholder .ph-desc {
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+/* Schedule timeline */
+.schedule-list {
+  list-style: none;
+  margin: 14px 0;
+}
+
+.schedule-list li {
+  display: flex;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-line);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.schedule-list li:last-child { border-bottom: none; }
+
+.schedule-list .time {
+  flex-shrink: 0;
+  width: 110px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  font-size: 13.5px;
+}
+
+.schedule-list .what {
+  flex: 1;
+  color: var(--color-text);
+}
+
+.schedule-list .what strong { color: var(--color-text); font-weight: 600; }
+
+/* Back link */
+.back-link {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--color-line);
+  padding-bottom: 2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.back-link:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ========== Contact ========== */
+.contact-card {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 36px 30px;
+  margin-top: 40px;
+  border-radius: 3px;
+}
+
+.contact-card .name {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.contact-card .desc {
+  font-size: 13.5px;
+  opacity: 0.85;
+  margin-bottom: 22px;
+  line-height: 1.7;
+}
+
+.contact-card .info {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  font-size: 13.5px;
+}
+
+.contact-card .info a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.35);
+  padding-bottom: 2px;
+}
+
+.contact-card .info-row {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.contact-card .info-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+  text-transform: uppercase;
+  min-width: 50px;
+}
+
+/* ========== Footer ========== */
+.site-footer {
+  border-top: 1px solid var(--color-line);
+  padding: 28px 0;
+  font-size: 11.5px;
+  color: var(--color-text-light);
+  text-align: center;
+  background: var(--color-surface);
+  margin-top: 60px;
+}
+
+.site-footer .disclaimer {
+  margin-bottom: 6px;
+  line-height: 1.7;
+}
+
+/* ========== Top Scroll Button ========== */
+.to-top-btn {
+  position: fixed;
+  top: 50%;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%) translateX(10px);
+  transition: opacity 0.25s, visibility 0.25s, transform 0.25s, background 0.15s;
+  z-index: 200;
+}
+
+.to-top-btn.visible {
+  opacity: 0.92;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+.to-top-btn:hover {
+  background: var(--color-primary-dark);
+  opacity: 1;
+}
+
+.to-top-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: #fff;
+  stroke-width: 2;
+  fill: none;
+}
+
+@media (max-width: 640px) {
+  .to-top-btn {
+    right: 14px;
+    width: 40px;
+    height: 40px;
+  }
+  .to-top-btn svg { width: 16px; height: 16px; }
+}
+
+/* ========== Mobile ========== */
+@media (max-width: 640px) {
+  .hero { padding: 40px 0 24px; }
+  .hero h1 { font-size: 22px; }
+  .tab-nav { padding: 20px 18px; }
+  .page-header h2 { font-size: 22px; }
+  .site-header .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .contact-card { padding: 28px 22px; }
+  .tab-btn { font-size: 12.5px; padding: 8px 12px; }
+  .schedule-list li { flex-direction: column; gap: 4px; }
+  .schedule-list .time { width: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <span>88플러스내과·산부인과 — 내과·산부인과 전문의 협진</span>
+    <a class="tel" href="tel:0229728800">진료문의 <strong>02-972-8800</strong></a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../index.html" class="site-logo">
+      <img src="../logo.png" alt="88플러스내과산부인과" class="logo-img">
+    </a>
+    <nav class="main-nav">
+      <a href="../index.html">홈</a>
+      <a href="../about.html">병원 소개</a>
+      <a href="../services.html">진료과목</a>
+      <a href="../checkup.html">건강검진</a>
+      <a href="../pricing.html">비급여 안내</a>
+      <a href="../location.html">예약 안내</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="메뉴">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="../index.html">홈</a>
+    <a href="../about.html">병원 소개</a>
+    <a href="../services.html">진료과목</a>
+    <a href="../checkup.html">건강검진</a>
+    <a href="../pricing.html">비급여 안내</a>
+    <a href="../location.html">예약 안내</a>
+  </div>
+</header>
+
+<div class="container">
+
+  <section class="hero">
+    <div class="label">Colonoscopy Guide</div>
+    <h1>대장내시경 <strong>안내</strong></h1>
+    <p class="subtitle">정확한 대장내시경 검사와 안전한 회복을 위한 <strong>단계별 안내</strong>입니다.<br>해당 단계의 탭을 선택해 확인해 주세요.</p>
+  </section>
+
+  <!-- ===== Tab Navigation ===== -->
+  <nav class="tab-nav">
+    <span class="tab-group-label">검사 단계별 안내</span>
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="prep-week">1주일 전 · 정결제 선택</button>
+      <button class="tab-btn" data-tab="prep-3day">3일 전 · 식이조절</button>
+      <button class="tab-btn" data-tab="prep-1day">1일 전 · 정결제 복용</button>
+      <button class="tab-btn" data-tab="prep-after">검사 후 · 주의사항</button>
+    </div>
+  </nav>
+
+  <!-- ===== Tab 1: 1주일 전 — 정결제 선택 ===== -->
+  <div class="tab-content active" id="prep-week">
+    <div class="page-header">
+      <div class="label">Step 01 · One Week Before</div>
+      <h2>1주일 전 · 장정결제 선택</h2>
+      <p class="desc">대장내시경 검사 1주일 전부터 약물 조정과 장정결제 선택이 필요합니다. 환자분의 복용 편의, 비용, 기존 복용 약물에 따라 적절한 정결제를 선택해 주세요.</p>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>장정결제 종류 비교</h3>
+      <p>본원에서 사용하는 장정결제는 다음 3종이며, 각자의 특성에 맞게 선택하실 수 있습니다.</p>
+
+      <div class="product-cards">
+        <div class="product-card">
+          <div class="product-img-wrap"><img src="cleanviewal.jpg" alt="크린뷰올산"></div>
+          <div class="product-name">크린뷰올산</div>
+          <div class="product-type">가루 용액 · 보험 적용</div>
+        </div>
+        <div class="product-card">
+          <div class="product-img-wrap"><img src="suprep.jpg" alt="수프렙 미니정"></div>
+          <div class="product-name">수프렙 미니정</div>
+          <div class="product-type">알약 · 비급여</div>
+        </div>
+        <div class="product-card">
+          <div class="product-img-wrap"><img src="oneprep.jpg" alt="원프렙 1.38산"></div>
+          <div class="product-name">원프렙 1.38산</div>
+          <div class="product-type">가루 용액 · 비급여</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr>
+              <th style="width: 18%">항목</th>
+              <th>크린뷰올산</th>
+              <th>수프렙 미니정 (알약)</th>
+              <th>원프렙 1.38산</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-name">제형 / 용량</td>
+              <td class="col-detail">가루 용액 1L + 생수 1L</td>
+              <td class="col-detail">알약 16포 (1포당 20정)</td>
+              <td class="col-detail">가루 용액 460ml + 생수 960ml</td>
+            </tr>
+            <tr>
+              <td class="col-name">복용법</td>
+              <td class="col-detail">전날 저녁 + 당일 아침 2차례</td>
+              <td class="col-detail">전날 저녁 + 당일 아침 2차례</td>
+              <td class="col-detail">당일 1회 (검사 최소 5시간 전)</td>
+            </tr>
+            <tr>
+              <td class="col-name">장점</td>
+              <td class="col-detail">비용 저렴 (보험 적용)</td>
+              <td class="col-detail">알약 제형으로 복용 편리, 기존 오라팡보다 작은 알약 크기</td>
+              <td class="col-detail">비타민음료와 비슷한 맛, 전날 밤 약 복용 없이 편안한 수면</td>
+            </tr>
+            <tr>
+              <td class="col-name">단점</td>
+              <td class="col-detail">걸쭉하고 신 맛으로 복용이 힘듦. 메스꺼움·구토·복부팽만 발생 가능</td>
+              <td class="col-detail">비용 부담(비급여), 알약 복용 후에도 물 다량 필요, 알약 개수 많음</td>
+              <td class="col-detail">비용 부담(비급여), 검사 전까지 화장실 가야 할 수 있음(개인차)</td>
+            </tr>
+            <tr>
+              <td class="col-name">가격</td>
+              <td class="col-detail">약 3,500원 <span style="color: var(--color-text-light); font-size: 12px;">(보험 적용)</span></td>
+              <td class="col-detail">35,000원 <span style="color: var(--color-text-light); font-size: 12px;">(비급여)</span></td>
+              <td class="col-detail">35,000원 <span style="color: var(--color-text-light); font-size: 12px;">(비급여)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="info-box">
+        <span class="info-label">선택 가이드</span>
+        비용 부담을 줄이려면 <strong>크린뷰올산</strong>, 액체 복용이 어렵다면 <strong>수프렙 미니정(알약)</strong>, 전날 저녁 약 복용 없이 편안하게 자고 싶다면 <strong>원프렙 1.38산</strong>이 적합합니다.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>검사 7일 전부터 조정해야 할 약물</h3>
+      <div class="notice">
+        <span class="notice-label">중요</span>
+        <strong>항혈전제와 철분제는 처방하신 주치의와 반드시 사전 상의 후 중단 여부와 일정을 결정</strong>해야 합니다. 임의로 중단하지 마세요. 항혈전제 임의 중단은 뇌경색·심근경색 등 혈전성 합병증의 위험이 있습니다.
+      </div>
+      <ul class="list">
+        <li><strong>철분제</strong> — 대장 점막에 검게 묻어 시야를 가립니다. 검사 7일 전부터 중단이 필요하며, <strong>처방 주치의와 사전 상의 후</strong> 중단해주세요.</li>
+        <li><strong>항혈전제(아스피린, 클로피도그렐, 와파린, NOAC 등)</strong> — 용종 절제 시 출혈 위험이 있어 일반적으로 사전 중단이 필요합니다. 약제 종류와 기저질환에 따라 중단 시기와 기간이 다르므로 <strong>반드시 처방 주치의와 상의</strong>해 주세요.</li>
+        <li><strong>GLP-1 제제(위고비, 마운자로 등)</strong> — 위·장 운동 저하로 잔류물이 남을 수 있어 검사 1주일 전 중단이 권장됩니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>준비물 안내</h3>
+      <ul class="list">
+        <li>처방받은 장정결제와 함께 마실 <strong>생수 또는 맑은 음료</strong>를 충분히 준비해 주세요.</li>
+        <li>검사 후 귀가 시 <strong>대중교통 이용 또는 보호자 동반</strong>을 권장합니다(수면 내시경 시).</li>
+        <li>편안한 복장과 슬리퍼, 평소 복용 약물 목록을 지참해 주세요.</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- ===== Tab 2: 3일 전 — 식이조절 ===== -->
+  <div class="tab-content" id="prep-3day">
+    <div class="page-header">
+      <div class="label">Step 02 · Three Days Before</div>
+      <h2>3일 전 · 식이조절</h2>
+      <p class="desc">대장 내 잔류물을 줄이기 위해 검사 3일 전부터 식이조절을 시작합니다. 섬유소가 많은 음식과 씨가 있는 과일·채소는 대장 점막에 남아 시야를 가릴 수 있으므로 피해 주세요.</p>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>일자별 식이 가이드</h3>
+      <ul class="schedule-list">
+        <li>
+          <span class="time">3일 전 ~ 2일 전</span>
+          <span class="what">잡곡밥, 견과류, 씨가 있는 과일·채소(참외, 키위, 딸기, 토마토, 포도 등), 김·미역 등 <strong>섬유소가 많은 음식</strong>은 피해주세요. 일반 식사에서 잡곡과 채소·과일류만 제한하면 됩니다.</span>
+        </li>
+        <li>
+          <span class="time">1일 전</span>
+          <span class="what">흰죽, 흰쌀밥, 계란, 두부 등 <strong>부드러운 음식 위주</strong>로 드세요. 저녁 식사 이후 <strong>금식</strong>하시고, 안내된 시각에 장정결제 복용을 시작합니다.</span>
+        </li>
+        <li>
+          <span class="time">검사 당일</span>
+          <span class="what"><strong>금식이 원칙</strong>이며, 처방된 일정에 따라 남은 장정결제를 복용하고 맑은 음료(물, 보리차, 사과주스 등)는 검사 2시간 전까지 가능합니다.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>먹어도 되는 음식 / 피해야 할 음식</h3>
+      <div class="table-wrap">
+        <table class="exam-table diet-table">
+          <thead>
+            <tr>
+              <th style="width: 20%">분류</th>
+              <th>먹어도 되는 음식</th>
+              <th>피해야 할 음식</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-name">곡류</td>
+              <td class="col-detail ok">흰쌀밥, 흰죽, 흰빵, 국수</td>
+              <td class="col-detail no">잡곡밥, 현미, 보리, 통곡물 빵, 옥수수</td>
+            </tr>
+            <tr>
+              <td class="col-name">단백질</td>
+              <td class="col-detail ok">계란, 두부, 흰살 생선, 살코기</td>
+              <td class="col-detail no">콩, 견과류, 비계 많은 고기</td>
+            </tr>
+            <tr>
+              <td class="col-name">채소</td>
+              <td class="col-detail ok">껍질 벗긴 감자·당근(익힌 것)</td>
+              <td class="col-detail no">잎채소, 김·미역·다시마, 버섯, 옥수수, 콩나물</td>
+            </tr>
+            <tr>
+              <td class="col-name">과일</td>
+              <td class="col-detail ok">사과·배 (껍질·씨 제외, 과즙 또는 익힌 것)</td>
+              <td class="col-detail no">씨 있는 과일(참외, 키위, 딸기, 토마토, 포도, 수박 등)</td>
+            </tr>
+            <tr>
+              <td class="col-name">유제품</td>
+              <td class="col-detail ok">우유, 요거트(과육·씨 없는 것)</td>
+              <td class="col-detail no">씨앗·과일이 들어간 요거트</td>
+            </tr>
+            <tr>
+              <td class="col-name">음료</td>
+              <td class="col-detail ok">물, 보리차, 맑은 사과주스, 이온음료</td>
+              <td class="col-detail no">우유 함유 음료, 과육 함유 주스, 알코올, 적색·보라색 음료</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="info-box">
+        <span class="info-label">주의</span>
+        검사 전날과 당일에는 <strong>붉은색·보라색 음식·음료(딸기, 포도주스, 비트 등)</strong>는 피해주세요. 출혈 소견과 혼동될 수 있습니다.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>약물 복용 안내</h3>
+      <ul class="list">
+        <li><strong>혈압약</strong> — 검사 당일 아침 소량의 물과 함께 복용 가능합니다.</li>
+        <li><strong>당뇨약, 인슐린</strong> — 금식과 장정결로 저혈당 위험이 있어 검사 당일 아침 복용을 중단하고, 검사 후 식사와 함께 재개합니다.</li>
+        <li><strong>기타 만성질환 약물</strong> — 평소 복용 약물은 미리 본원에 알려 주시고, 검사 당일 복용 여부를 확인받아 주세요.</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- ===== Tab 3: 1일 전 — 정결제 복용 ===== -->
+  <div class="tab-content" id="prep-1day">
+    <div class="page-header">
+      <div class="label">Step 03 · One Day Before</div>
+      <h2>1일 전 · 장정결제 복용</h2>
+      <p class="desc">대장내시경 검사의 정확도는 장정결 상태에 따라 좌우됩니다. 처방받은 정결제의 복용법을 정확히 따르고, 마지막 배변이 <strong>맑은 노란색 또는 투명한 액체</strong>가 될 때까지 충분히 수분을 섭취해 주세요.</p>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>장정결제별 복용 안내 동영상</h3>
+      <p>본인이 처방받은 정결제에 해당하는 동영상으로 복용법을 단계별로 확인해 주세요.</p>
+
+      <h4>크린뷰올산 복용법</h4>
+      <a class="video-link" href="https://youtu.be/iBWsMPotxj0" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/iBWsMPotxj0/hqdefault.jpg" alt="크린뷰올산 복용 안내">
+        <div class="video-caption"><strong>크린뷰올산 복용 안내</strong>YouTube에서 재생</div>
+      </a>
+
+      <h4>수프렙 미니정 복용법</h4>
+      <a class="video-link" href="https://youtu.be/oSqdj_750X0" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/oSqdj_750X0/hqdefault.jpg" alt="수프렙 미니정 복용 안내">
+        <div class="video-caption"><strong>수프렙 미니정 복용 안내</strong>YouTube에서 재생</div>
+      </a>
+
+      <h4>원프렙 1.38산 복용법</h4>
+      <a class="video-link" href="https://youtu.be/UmBTEPs6GVY" target="_blank" rel="noopener">
+        <img src="https://img.youtube.com/vi/UmBTEPs6GVY/hqdefault.jpg" alt="원프렙 1.38산 복용 안내">
+        <div class="video-caption"><strong>원프렙 1.38산 복용 안내</strong>YouTube에서 재생</div>
+      </a>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>약제별 복용 시간표</h3>
+
+      <h4>크린뷰올산 (가루 용액 1L + 생수 1L)</h4>
+      <ul class="schedule-list">
+        <li><span class="time">전날 저녁</span><span class="what">처방받은 가루 용액 1L를 약 1시간 동안 천천히 나누어 복용 (10분에 1컵)</span></li>
+        <li><span class="time">전날 자기 전</span><span class="what">생수 1L를 추가 섭취하여 충분한 수분 보충</span></li>
+        <li><span class="time">검사 당일 아침<br>(검사 4–6시간 전)</span><span class="what">남은 가루 용액 1L를 1시간 동안 분할 복용 → 이어서 생수 1L 섭취</span></li>
+      </ul>
+
+      <h4>수프렙 미니정 (알약 16포 = 320정)</h4>
+      <ul class="schedule-list">
+        <li><span class="time">전날 저녁</span><span class="what">알약 8포(160정)를 약 250ml의 물과 함께 15–20분 간격으로 복용. 이후 1L 이상의 맑은 음료를 천천히 섭취</span></li>
+        <li><span class="time">검사 당일 아침<br>(검사 5시간 전)</span><span class="what">남은 알약 8포(160정)를 동일 방법으로 복용 → 1L 이상 수분 보충</span></li>
+      </ul>
+
+      <h4>원프렙 1.38산 (당일 1회)</h4>
+      <ul class="schedule-list">
+        <li><span class="time">검사 당일 아침<br>(검사 최소 5시간 전)</span><span class="what">가루 용액 460ml를 처음 30분간 분할 복용 → 이어서 생수 960ml를 30분–1시간에 걸쳐 천천히 섭취</span></li>
+      </ul>
+
+      <div class="notice">
+        <span class="notice-label">필독</span>
+        실제 복용 시각은 본인 검사 시각에 맞춰 본원 안내문에 명시된 일정을 따라주세요. 위 시간표는 일반적인 예시입니다.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>복용 중 주의사항</h3>
+      <ul class="list">
+        <li>마지막 배변이 <strong>맑은 노란색 또는 투명한 액체</strong>가 될 때까지 수분을 충분히 섭취해 주세요.</li>
+        <li>복용 중 <strong>구역감, 구토</strong>가 있을 경우 30분 정도 휴식 후 천천히 재개합니다.</li>
+        <li>복용 후 <strong>심한 복통, 부풀어 오르는 복부팽만, 어지럼증</strong>이 있는 경우 즉시 본원에 연락해 주세요.</li>
+        <li>차게 복용하면 맛이 한결 부드러워집니다(냉장 보관 가능).</li>
+        <li>맑은 음료(물, 보리차, 맑은 사과주스 등)는 <strong>검사 2시간 전까지</strong> 가능합니다. 그 이후로는 완전 금식합니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">04</span>
+      <h3>장정결 성공 여부 자가 확인</h3>
+      <div class="info-box">
+        <span class="info-label">정결 완료 기준</span>
+        마지막 배변의 색이 <strong>맑은 노란색 또는 투명한 물</strong> 같으면 정결이 성공한 것입니다. 잔변, 갈색·짙은 노란색이 남아 있다면 추가 수분 섭취가 필요할 수 있으니 본원에 연락해 주세요.
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== Tab 4: 검사 후 — 주의사항 ===== -->
+  <div class="tab-content" id="prep-after">
+    <div class="page-header">
+      <div class="label">Step 04 · After Examination</div>
+      <h2>검사 후 · 주의사항</h2>
+      <p class="desc">대장내시경 검사가 끝난 후에도 일정 기간 주의가 필요합니다. 특히 용종 절제술을 받으신 경우 출혈 위험을 줄이기 위해 활동·식이 제한이 필요합니다.</p>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>당일 식사</h3>
+      <ul class="list">
+        <li>검사 후 1–2시간 뒤부터 <strong>가벼운 식사(흰죽, 흰밥, 미음 등)</strong>부터 시작합니다.</li>
+        <li>당일에는 <strong>맵거나 기름진 음식, 음주, 카페인 음료</strong>를 피해주세요.</li>
+        <li>위장 자극을 줄이기 위해 충분한 수분 섭취를 권장합니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>용종 절제술을 받으신 경우</h3>
+      <div class="notice">
+        <span class="notice-label">시술 후 7일간 출혈 위험</span>
+        용종 절제 부위는 약 7일간 아물어 가는 과정에서 <strong>지연 출혈 위험</strong>이 있습니다. 아래 사항을 반드시 지켜주세요.
+      </div>
+      <ul class="list">
+        <li><strong>음주, 격렬한 운동, 사우나, 장거리 여행, 무거운 물건 들기</strong>는 시술 후 7일간 피해 주세요.</li>
+        <li>자극적인 음식, 섬유소가 많은 음식(잡곡, 견과류, 김 등)은 며칠간 자제해 주세요.</li>
+        <li>중단했던 <strong>항혈전제 재개 시점</strong>은 처방 주치의와 본원 의료진의 안내에 따라 결정합니다.</li>
+        <li>조직검사·용종 절제 결과는 약 1–2주 후 외래에서 확인합니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>응급 상황 — 즉시 내원이 필요한 증상</h3>
+      <div class="notice">
+        <span class="notice-label">응급</span>
+        아래 증상이 있는 경우 본원 또는 가까운 응급실로 즉시 내원해 주세요.
+      </div>
+      <ul class="list">
+        <li><strong>다량의 혈변</strong> 또는 <strong>검은색 변</strong>이 지속되는 경우</li>
+        <li>가라앉지 않는 <strong>심한 복통</strong></li>
+        <li><strong>발열(38℃ 이상)</strong></li>
+        <li>지속되는 <strong>어지럼증, 식은땀, 의식 저하</strong></li>
+        <li>점차 심해지는 <strong>복부 팽만</strong>과 가스가 나오지 않는 상태</li>
+      </ul>
+      <div class="info-box">
+        <span class="info-label">진료 문의</span>
+        본원 진료시간 내 <strong>02-972-8800</strong> 으로 연락 주시고, 야간·휴일에는 가까운 응급실을 이용해 주세요.
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== Contact ===== -->
+  <div class="contact-card">
+    <div class="name">88플러스내과산부인과</div>
+    <div class="desc">대장내시경 검사 관련 문의 사항은 언제든 연락 주세요.</div>
+    <div class="info">
+      <div class="info-row"><span class="info-label">Tel</span><a href="tel:0229728800">02-972-8800</a></div>
+      <div class="info-row"><span class="info-label">Map</span><a href="https://map.naver.com/p/entry/place/1126097266" target="_blank" rel="noopener">네이버 지도에서 보기</a></div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="disclaimer">본 안내는 일반적인 검사 정보를 제공하며, 개별 환자의 상태에 따라 달라질 수 있습니다.<br>정확한 진단과 처방은 진료를 통해 확인해주세요.</p>
+    <p>© 88플러스내과산부인과</p>
+  </div>
+</footer>
+
+<button class="to-top-btn" id="toTopBtn" aria-label="페이지 위로">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5 M5 12 L12 5 L19 12"/></svg>
+</button>
+
+<script>
+// 모바일 메뉴 토글
+(function() {
+  const toggle = document.getElementById('menuToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  if (toggle) toggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
+})();
+</script>
+
+<script>
+(function() {
+  const btn = document.getElementById('toTopBtn');
+  if (!btn) return;
+  function check() {
+    if (window.pageYOffset > 240) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', check, { passive: true });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  check();
+})();
+</script>
+
+<script>
+(function() {
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+
+  function activateTab(tabId) {
+    if (!tabId) tabId = 'prep-week';
+    let found = false;
+    tabs.forEach(btn => {
+      if (btn.dataset.tab === tabId) {
+        btn.classList.add('active');
+        found = true;
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+    contents.forEach(c => {
+      c.classList.toggle('active', c.id === tabId);
+    });
+    if (!found) {
+      document.querySelector('[data-tab="prep-week"]').classList.add('active');
+      document.getElementById('prep-week').classList.add('active');
+    }
+  }
+
+  function scrollToTabNav() {
+    const nav = document.querySelector('.tab-nav');
+    if (!nav) return;
+    const top = nav.getBoundingClientRect().top + window.pageYOffset - 8;
+    if (window.pageYOffset > top) {
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  }
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.dataset.tab;
+      history.pushState(null, '', '#' + tabId);
+      activateTab(tabId);
+      scrollToTabNav();
+    });
+  });
+
+  window.addEventListener('hashchange', () => {
+    activateTab(location.hash.replace('#', ''));
+  });
+
+  if (location.hash) {
+    activateTab(location.hash.replace('#', ''));
+    // 알림톡에서 #prep-* 앵커로 진입 시 브라우저가 해당 위치로 자동 스크롤하는 것을 방지.
+    // 탭만 활성화하고 페이지 최상단(제목)부터 보이도록 함.
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    // 일부 모바일 브라우저는 hash scroll이 페이지 로딩 끝난 후 한 번 더 발생 → 보정
+    requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 100);
+  }
+})();
+</script>
+
+</body>
+</html>
