@@ -344,10 +344,10 @@ if (toggle) toggle.addEventListener('click', () => mobileNav.classList.toggle('o
     });
 
     const infowindow = new kakao.maps.InfoWindow({
-      content: '<div style="padding:10px 14px; font-size:13px; line-height:1.5; min-width:180px;">' +
+      content: '<div style="padding:12px 16px; font-size:13px; line-height:1.7; width:230px; word-break:keep-all; box-sizing:border-box;">' +
                '<strong style="color:#5C7F22; font-size:14px;">88플러스내과·산부인과</strong><br>' +
-               '서울시 노원구 동일로192길 74<br>우은빌딩 2층<br>' +
-               '<span style="color:#5a5a5a;">02-972-8800</span></div>',
+               '서울시 노원구 동일로192길 74, 우은빌딩 2층<br>' +
+               '<span style="color:#5a5a5a;">☎ 02-972-8800</span></div>',
       removable: true
     });
     infowindow.open(map, marker);
