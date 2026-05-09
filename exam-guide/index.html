@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>검사 안내 | 88플러스내과산부인과</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --color-bg: #fafaf8;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #5a5a5a;
+  --color-text-light: #8a8a8a;
+  --color-primary: #468c28;
+  --color-primary-dark: #2f6019;
+  --color-primary-soft: #f0f5e8;
+  --color-line: #e5e5e0;
+  --color-warning: #8b5a00;
+  --color-warning-soft: #fdf6e3;
+  --font-serif: 'Noto Serif KR', serif;
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ========== Header ========== */
+.site-header {
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-surface);
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header .logo {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+}
+
+.site-header .tel {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-feature-settings: 'tnum';
+}
+
+.site-header .tel strong {
+  color: var(--color-text);
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+/* ========== Hero ========== */
+.hero {
+  padding: 56px 0 40px;
+  text-align: center;
+}
+
+.hero .label {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.hero h1 strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.hero .tagline {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: var(--color-primary);
+  margin-top: 18px;
+  letter-spacing: -0.01em;
+  line-height: 1.7;
+}
+
+.hero .subtitle {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-top: 18px;
+  line-height: 1.8;
+}
+
+/* ========== Tab Navigation ========== */
+.tab-nav {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  padding: 24px 28px;
+  margin-bottom: 40px;
+}
+
+.tab-group {
+  margin-bottom: 22px;
+}
+
+.tab-group:last-child {
+  margin-bottom: 0;
+}
+
+.tab-group-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-family: var(--font-serif);
+}
+
+.tab-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tab-btn {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  letter-spacing: -0.01em;
+}
+
+.tab-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.tab-btn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+/* ========== Tab Content ========== */
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== Content Page Style ========== */
+.page-header {
+  border-bottom: 1px solid var(--color-line);
+  padding-bottom: 32px;
+  margin-bottom: 40px;
+}
+
+.page-header .label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+.page-header h2 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  color: var(--color-text);
+  margin-bottom: 14px;
+}
+
+.page-header .desc {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+}
+
+.page-header .meta {
+  display: flex;
+  gap: 28px;
+  margin-top: 24px;
+  font-size: 12px;
+  color: var(--color-text-light);
+  flex-wrap: wrap;
+}
+
+.page-header .meta span strong {
+  color: var(--color-text);
+  font-weight: 500;
+  margin-left: 5px;
+}
+
+section.content-section {
+  margin-bottom: 44px;
+}
+
+.section-num {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: 12px;
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.content-section h3 {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  color: var(--color-text);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.content-section h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 22px;
+  margin-bottom: 10px;
+  color: var(--color-text);
+}
+
+.content-section p {
+  font-size: 14.5px;
+  margin-bottom: 12px;
+  line-height: 1.8;
+}
+
+ol.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 14px 0;
+}
+
+ol.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 36px;
+  margin-bottom: 12px;
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+ol.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-serif);
+  font-size: 12px;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-feature-settings: 'tnum';
+}
+
+ul.list {
+  list-style: none;
+  margin: 10px 0;
+}
+
+ul.list li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 8px;
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+ul.list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 6px;
+  height: 1px;
+  background: var(--color-primary);
+}
+
+ul.list li strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Notice box */
+.notice {
+  background: var(--color-warning-soft);
+  border-left: 3px solid var(--color-warning);
+  padding: 16px 20px;
+  margin: 18px 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.notice .notice-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-warning);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+/* Info box (positive) */
+.info-box {
+  background: var(--color-primary-soft);
+  border-left: 3px solid var(--color-primary);
+  padding: 16px 20px;
+  margin: 18px 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+.info-box .info-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-primary-dark);
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+/* Table */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 14px 0;
+}
+
+.exam-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+}
+
+.exam-table thead th {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  text-align: left;
+  padding: 11px 14px;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-primary);
+  white-space: nowrap;
+}
+
+.exam-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--color-line);
+  line-height: 1.6;
+  vertical-align: top;
+}
+
+.exam-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.exam-table .col-name {
+  font-weight: 600;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.exam-table .col-detail {
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 640px) {
+  .exam-table {
+    font-size: 12.5px;
+  }
+  .exam-table thead th,
+  .exam-table tbody td {
+    padding: 9px 10px;
+  }
+  .exam-table thead th {
+    font-size: 10.5px;
+  }
+}
+
+/* FAQ */
+.faq-item {
+  border-bottom: 1px solid var(--color-line);
+  padding: 18px 0;
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-q {
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--color-text);
+  margin-bottom: 8px;
+  display: flex;
+  gap: 10px;
+}
+
+.faq-q::before {
+  content: 'Q.';
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.faq-a {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  display: flex;
+  gap: 10px;
+}
+
+.faq-a::before {
+  content: 'A.';
+  font-family: var(--font-serif);
+  color: var(--color-text-light);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* ========== Welcome Tab Style ========== */
+.welcome-content {
+  text-align: center;
+  padding: 30px 0;
+}
+
+.welcome-content .greeting {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.welcome-content .greeting strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.welcome-content .welcome-desc {
+  font-size: 14.5px;
+  color: var(--color-text-muted);
+  line-height: 1.9;
+  max-width: 540px;
+  margin: 0 auto 40px;
+}
+
+.exam-list {
+  background: var(--color-primary-soft);
+  border-radius: 4px;
+  padding: 32px 28px;
+  text-align: left;
+  margin-top: 30px;
+}
+
+.exam-list-title {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.exam-categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.exam-cat {
+  text-align: center;
+}
+
+.exam-cat-name {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--color-primary-dark);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(70, 140, 40, 0.2);
+}
+
+.exam-cat ul {
+  list-style: none;
+}
+
+.exam-cat ul li {
+  font-size: 13.5px;
+  color: var(--color-text);
+  padding: 4px 0;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.exam-cat ul li:hover {
+  color: var(--color-primary);
+}
+
+.exam-cat ul li.info {
+  cursor: default;
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+}
+
+.exam-cat ul li.info:hover {
+  color: var(--color-text-muted);
+}
+
+.exam-note {
+  font-size: 11.5px;
+  color: var(--color-text-light);
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(70, 140, 40, 0.15);
+  text-align: center;
+  line-height: 1.7;
+}
+
+/* ========== Contact ========== */
+.contact-card {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 36px 30px;
+  margin-top: 40px;
+  border-radius: 3px;
+}
+
+.contact-card .name {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.contact-card .desc {
+  font-size: 13.5px;
+  opacity: 0.85;
+  margin-bottom: 22px;
+  line-height: 1.7;
+}
+
+.contact-card .info {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  font-size: 13.5px;
+}
+
+.contact-card .info a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.35);
+  padding-bottom: 2px;
+  transition: border-color 0.2s;
+}
+
+.contact-card .info a:hover {
+  border-color: #fff;
+}
+
+.contact-card .info-row {
+  display: flex;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.contact-card .info-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+  text-transform: uppercase;
+  min-width: 50px;
+}
+
+/* ========== Footer ========== */
+.site-footer {
+  border-top: 1px solid var(--color-line);
+  padding: 28px 0;
+  font-size: 11.5px;
+  color: var(--color-text-light);
+  text-align: center;
+  background: var(--color-surface);
+  margin-top: 60px;
+}
+
+.site-footer .disclaimer {
+  margin-bottom: 6px;
+  line-height: 1.7;
+}
+
+/* ========== Placeholder ========== */
+.placeholder {
+  background: var(--color-surface);
+  border: 1px dashed var(--color-line);
+  border-radius: 4px;
+  padding: 60px 30px;
+  text-align: center;
+  color: var(--color-text-light);
+}
+
+.placeholder .ph-label {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  color: var(--color-primary);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.placeholder .ph-title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  color: var(--color-text);
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.placeholder .ph-desc {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+/* ========== Top Scroll Button ========== */
+.to-top-btn {
+  position: fixed;
+  top: 50%;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%) translateX(10px);
+  transition: opacity 0.25s, visibility 0.25s, transform 0.25s, background 0.15s;
+  z-index: 200;
+}
+
+.to-top-btn.visible {
+  opacity: 0.92;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+.to-top-btn:hover {
+  background: var(--color-primary-dark);
+  opacity: 1;
+}
+
+.to-top-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: #fff;
+  stroke-width: 2;
+  fill: none;
+}
+
+@media (max-width: 640px) {
+  .to-top-btn {
+    right: 14px;
+    width: 40px;
+    height: 40px;
+  }
+  .to-top-btn svg { width: 16px; height: 16px; }
+}
+
+/* ========== Mobile ========== */
+@media (max-width: 640px) {
+  .hero { padding: 40px 0 30px; }
+  .hero h1 { font-size: 24px; }
+  .tab-nav { padding: 20px 18px; }
+  .page-header h2 { font-size: 22px; }
+  .site-header .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .exam-categories {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .contact-card { padding: 28px 22px; }
+  .welcome-content .greeting { font-size: 18px; }
+  .tab-btn { font-size: 13px; padding: 8px 12px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../" class="logo" style="text-decoration:none;">← 88플러스내과산부인과</a>
+    <div class="tel">진료문의 <strong>02-972-8800</strong></div>
+  </div>
+</header>
+
+<div class="container">
+
+  <section class="hero">
+    <h1><strong>88플러스내과산부인과</strong>에서<br>건강검진을 예약해주셔서 감사합니다</h1>
+    <p class="tagline">내과 · 산부인과 각 과 전문의 3인의 협진<br>정확한 진료를 위해 노력합니다</p>
+    <p class="subtitle">예약하신 검사 항목을 아래 메뉴에서 선택하시면<br>검사 진행 과정, 준비사항, 주의사항을 확인하실 수 있습니다.</p>
+  </section>
+
+  <!-- ===== Tab Navigation ===== -->
+  <nav class="tab-nav">
+
+    <div class="tab-group">
+      <span class="tab-group-label">건강검진 안내</span>
+      <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="exam-guide">검사 선택 가이드</button>
+        <button class="tab-btn" data-tab="nhc">국가건강검진</button>
+        <button class="tab-btn" data-tab="extra-exams">추가 검사 안내</button>
+      </div>
+    </div>
+
+    <div class="tab-group">
+      <span class="tab-group-label">혈액 · 소변검사</span>
+      <div class="tab-buttons">
+        <button class="tab-btn" data-tab="blood-test">혈액종검(50종)</button>
+        <button class="tab-btn" data-tab="tumor-markers">암표지자</button>
+        <button class="tab-btn" data-tab="urine-test">소변검사(7종)</button>
+      </div>
+    </div>
+
+    <div class="tab-group">
+      <span class="tab-group-label">내시경검사</span>
+      <div class="tab-buttons">
+        <button class="tab-btn" data-tab="gastroscopy">위내시경</button>
+        <button class="tab-btn" data-tab="colonoscopy">대장내시경</button>
+      </div>
+    </div>
+
+    <div class="tab-group">
+      <span class="tab-group-label">초음파검사</span>
+      <div class="tab-buttons">
+        <button class="tab-btn" data-tab="upper-abd">상복부초음파</button>
+        <button class="tab-btn" data-tab="lower-abd">하복부초음파</button>
+        <button class="tab-btn" data-tab="thyroid">갑상선초음파</button>
+        <button class="tab-btn" data-tab="carotid">경동맥초음파</button>
+        <button class="tab-btn" data-tab="female-us">부인과 초음파</button>
+      </div>
+    </div>
+
+  </nav>
+
+  <!-- ===== Tab Contents ===== -->
+
+  <!-- Blood Test Tab -->
+  <div class="tab-content" id="blood-test">
+    <div class="page-header">
+      <div class="label">Blood Test</div>
+      <h2>혈액종검 (50종)</h2>
+      <p class="desc">본원에서 시행하는 혈액종검(50종) 항목과 각 검사의 의미를 정리했습니다.<br>검사는 환자의 증상, 과거력, 가족력에 따라 선택적으로 시행되며, 결과 해석은 진료를 통해 안내드립니다.</p>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>일반혈액검사 (CBC)</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 38%">검사 항목</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">혈색소 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Hemoglobin, Hb)</span></td><td class="col-detail">빈혈 진단의 핵심 지표</td></tr>
+            <tr><td class="col-name">헤마토크릿 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Hematocrit, Hct)</span></td><td class="col-detail">전체 혈액 중 적혈구 비율</td></tr>
+            <tr><td class="col-name">적혈구 수 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(RBC)</span></td><td class="col-detail">적혈구 양 — 빈혈·다혈구증 평가</td></tr>
+            <tr><td class="col-name">백혈구 수 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(WBC)</span></td><td class="col-detail">감염·염증·혈액 질환 평가</td></tr>
+            <tr><td class="col-name">혈소판 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Platelet)</span></td><td class="col-detail">지혈·출혈 위험 평가</td></tr>
+            <tr><td class="col-name">적혈구 지수 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(MCV / MCH / MCHC)</span></td><td class="col-detail">적혈구 크기·혈색소 함량 — 빈혈 종류 분류</td></tr>
+            <tr><td class="col-name">백혈구 분획 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(WBC Differential)</span></td><td class="col-detail">호중구 · 림프구 · 단핵구 · 호산구 · 호염기구 비율 — 감염·알레르기·혈액질환 감별</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>일반 화학검사</h3>
+      <h4>간기능 · 황달</h4>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 38%">검사 항목</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">총단백 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Total Protein)</span></td><td class="col-detail">혈액 내 총 단백질 — 영양 상태, 간·신장 기능 평가</td></tr>
+            <tr><td class="col-name">총빌리루빈 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Total Bilirubin)</span></td><td class="col-detail">황달 여부, 간·담도 기능 평가</td></tr>
+            <tr><td class="col-name">AST (SGOT)</td><td class="col-detail">간세포 손상 지표 (심장·근육에도 분포)</td></tr>
+            <tr><td class="col-name">ALT (SGPT)</td><td class="col-detail">간세포 손상 지표 — 간염 진단에 더 특이적</td></tr>
+            <tr><td class="col-name">ALP <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Alkaline Phosphatase)</span></td><td class="col-detail">담도 폐쇄, 간·뼈 질환 평가</td></tr>
+            <tr><td class="col-name">감마-GTP <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(γ-GTP)</span></td><td class="col-detail">알코올성 간질환·담도 질환 지표</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>신장기능 · 전해질</h4>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 38%">검사 항목</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">요소질소 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(BUN)</span></td><td class="col-detail">신장 기능 평가 (탈수·식이에 영향받음)</td></tr>
+            <tr><td class="col-name">크레아티닌 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Creatinine)</span></td><td class="col-detail">신장 기능 평가의 핵심 지표</td></tr>
+            <tr><td class="col-name">사구체여과율 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(eGFR)</span></td><td class="col-detail">만성 신질환 단계 평가</td></tr>
+            <tr><td class="col-name">요산 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Uric acid)</span></td><td class="col-detail">통풍, 신기능 평가</td></tr>
+            <tr><td class="col-name">나트륨 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Sodium, Na)</span></td><td class="col-detail">전해질 균형 평가</td></tr>
+            <tr><td class="col-name">칼슘 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Calcium, Ca)</span></td><td class="col-detail">뼈·근육·신경 기능, 부갑상선 평가</td></tr>
+            <tr><td class="col-name">마그네슘 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Magnesium, Mg)</span></td><td class="col-detail">근육·신경·심장 리듬 조절에 관여</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>당대사</h4>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 38%">검사 항목</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">공복혈당 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Glucose)</span></td><td class="col-detail">당뇨병 선별 — 8시간 이상 금식 후 측정</td></tr>
+            <tr><td class="col-name">당화혈색소 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(HbA1c)</span></td><td class="col-detail">최근 2–3개월 평균 혈당 — 당뇨 진단·관리 핵심 지표</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>췌장 효소 · 염증 표지자</h4>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 38%">검사 항목</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">아밀라제 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Amylase)</span></td><td class="col-detail">췌장·침샘 효소 — 급성 췌장염 평가</td></tr>
+            <tr><td class="col-name">C-반응성 단백 (정량) <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(CRP)</span></td><td class="col-detail">급성 염증·감염·심혈관 위험 평가</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>지질 검사</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 38%">검사 항목</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">총콜레스테롤 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Total Cholesterol)</span></td><td class="col-detail">전체 콜레스테롤 수치 — 200 mg/dL 미만 정상</td></tr>
+            <tr><td class="col-name">HDL 콜레스테롤 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(HDL-Cholesterol)</span></td><td class="col-detail">"좋은 콜레스테롤" — 높을수록 심혈관 위험 감소</td></tr>
+            <tr><td class="col-name">LDL 콜레스테롤 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(LDL-Cholesterol)</span></td><td class="col-detail">"나쁜 콜레스테롤" — 동맥경화·심혈관 질환 위험인자</td></tr>
+            <tr><td class="col-name">중성지방 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Triglyceride, TG)</span></td><td class="col-detail">대사증후군·췌장염 위험 지표</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">04</span>
+      <h3>갑상선 검사</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 38%">검사 항목</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">갑상선자극호르몬 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(TSH)</span></td><td class="col-detail">뇌하수체 분비 — 갑상선 기능 1차 선별 지표</td></tr>
+            <tr><td class="col-name">유리 티록신 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Free T4)</span></td><td class="col-detail">활성 갑상선 호르몬 — 기능 평가</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">05</span>
+      <h3>비타민 D</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 38%">검사 항목</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">비타민 D <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(25-OH Vitamin D)</span></td><td class="col-detail">뼈 건강·면역력 — 골다공증·면역 저하 평가</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="notice">
+      <span class="notice-label">안내</span>
+      위 검사 항목은 본원에서 시행하는 주요 혈액검사입니다. <strong>모든 검사를 한 번에 받는 것이 아니라, 환자의 증상·과거력·가족력에 따라 필요한 항목만 선택하여 시행</strong>합니다. 검사 결과 해석과 추가 검사 필요 여부는 진료를 통해 안내드립니다.
+    </div>
+  </div>
+
+  <!-- Tumor Markers Tab -->
+  <div class="tab-content" id="tumor-markers">
+    <div class="page-header">
+      <div class="label">Tumor Markers</div>
+      <h2>암표지자 검사</h2>
+      <p class="desc">혈액 내 특정 단백질·항원 수치를 측정해 암 발생·재발·치료 반응을 모니터링하는 검사입니다.<br>본원에서 시행하는 주요 암표지자 항목과 관련 암종을 정리했습니다.</p>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>주요 암표지자</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 38%">검사 항목</th><th>관련 암종 / 의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">알파태아단백 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(AFP)</span></td><td class="col-detail">간암 (간경변·만성 간염 추적에도 사용)</td></tr>
+            <tr><td class="col-name">CEA</td><td class="col-detail">대장암 등 소화기암 추적 (흡연자에서 상승 가능)</td></tr>
+            <tr><td class="col-name">CA 19-9</td><td class="col-detail">췌장암·담도암 추적</td></tr>
+            <tr><td class="col-name">CA 125</td><td class="col-detail">난소암 추적</td></tr>
+            <tr><td class="col-name">CA 15-3</td><td class="col-detail">유방암 추적</td></tr>
+            <tr><td class="col-name">전립선특이항원 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(PSA)</span></td><td class="col-detail">전립선암 선별·추적</td></tr>
+            <tr><td class="col-name">SCC Ag</td><td class="col-detail">편평상피세포암 (자궁경부·폐·두경부 등)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="notice">
+      <span class="notice-label">중요</span>
+      암표지자는 <strong>선별검사로서 한계</strong>가 있습니다. 수치가 정상이라도 암을 완전히 배제할 수 없으며, 수치가 상승했다고 반드시 암을 의미하지도 않습니다. 정확한 진단을 위해서는 <strong>영상검사 등 추가 검사와 함께 종합적으로 해석</strong>해야 하므로, 결과는 반드시 진료를 통해 확인해주시기 바랍니다.
+    </div>
+  </div>
+
+  <!-- Urine Test Tab -->
+  <div class="tab-content" id="urine-test">
+    <div class="page-header">
+      <div class="label">Urinalysis</div>
+      <h2>소변검사 (7종)</h2>
+      <p class="desc">소변에서 7가지 항목을 측정하여 신장·간·당뇨·요로 질환 등을 선별하는 검사입니다.<br>채취가 간편하고 비침습적이지만, 신체 전반의 건강 상태에 대한 중요한 정보를 제공합니다.</p>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>검사 항목</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 38%">검사 항목</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">포도당 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Glucose)</span></td><td class="col-detail">당뇨병 선별 — 혈당이 높을 때 소변으로 배출됨</td></tr>
+            <tr><td class="col-name">빌리루빈 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Bilirubin)</span></td><td class="col-detail">간담도 질환·황달 평가</td></tr>
+            <tr><td class="col-name">케톤체 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Ketone)</span></td><td class="col-detail">당뇨성 케톤산증, 장기 금식·다이어트 평가</td></tr>
+            <tr><td class="col-name">잠혈 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Blood)</span></td><td class="col-detail">요로 감염, 결석, 사구체 질환, 종양 가능성</td></tr>
+            <tr><td class="col-name">산도 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(pH)</span></td><td class="col-detail">신장 산-염기 평형 평가</td></tr>
+            <tr><td class="col-name">단백질 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Protein)</span></td><td class="col-detail">신장 사구체·세뇨관 손상 평가</td></tr>
+            <tr><td class="col-name">우로빌리노겐 <span style="color:var(--color-text-light); font-weight:400; font-size:12px;">(Urobilinogen)</span></td><td class="col-detail">간기능·용혈성 빈혈 평가</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="notice">
+      <span class="notice-label">안내</span>
+      소변검사는 선별검사로서 이상 소견이 발견되면 추가 검사(요침사현미경검사·소변배양검사·신장 영상검사 등)가 필요할 수 있습니다. 결과 해석은 진료를 통해 안내드립니다.
+    </div>
+  </div>
+
+  <!-- Gastroscopy Tab (이미 작성된 내용) -->
+  <div class="tab-content" id="gastroscopy">
+    <div class="page-header">
+      <div class="label">Examination · 01</div>
+      <h2>위내시경 검사 안내</h2>
+      <p class="desc">식도, 위, 십이지장 점막을 직접 관찰하여 위염, 위궤양, 헬리코박터 감염 및 위암을 포함한 위장 질환을 진단하는 검사입니다.</p>
+      <div class="meta">
+        <span>검사 시간 <strong>5분 이내</strong></span>
+        <span>금식 <strong>8시간 이상</strong></span>
+        <span>권고 주기 <strong>2년</strong></span>
+      </div>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>검사가 권장되는 분</h3>
+      <ul class="list">
+        <li>만 40세 이상 (국가 위암 검진 대상)</li>
+        <li>속쓰림, 소화불량, 명치 통증 등 상복부 증상이 지속되는 분</li>
+        <li>토혈, 흑색변 등 위장관 출혈이 의심되는 분</li>
+        <li>헬리코박터 감염 진단·치료가 필요한 분</li>
+        <li>위암·식도암 가족력이 있는 분</li>
+        <li>만성 위염, 위·십이지장궤양, 위선종 등 추적이 필요한 분</li>
+        <li>원인 미상의 빈혈 또는 체중 감소가 있는 분</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>검사 진행 과정</h3>
+      <ol class="steps">
+        <li>접수 및 문진 — 복용 약물, 과거력, 알레르기 확인</li>
+        <li>인후부 국소마취제(리도카인 스프레이) 도포</li>
+        <li>수면 검사를 선택한 경우 진정제 정맥 투여</li>
+        <li>좌측위 자세에서 내시경 삽입, 식도–위–십이지장 관찰</li>
+        <li>필요 시 조직검사(생검) 또는 헬리코박터 검사 시행</li>
+      </ol>
+      <p style="font-size: 13.5px; color: var(--color-text-muted); margin-top: 14px;">
+        검사 자체는 일반적으로 5분 이내에 마무리됩니다.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>검사 전 준비사항</h3>
+      <h4>금식</h4>
+      <ul class="list">
+        <li>검사 <strong>8시간 전부터 물을 포함한 모든 음식 금지</strong></li>
+        <li><strong>위고비, 마운자로 등 GLP-1 계열 비만·당뇨 주사제</strong>를 사용 중이라면 위 배출 지연으로 흡인 위험이 있어 <strong>검사 1주일 전 중단</strong>이 필요합니다. (반드시 처방 주치의와 상의 후 결정)</li>
+      </ul>
+      <h4>복용 약물</h4>
+      <ul class="list">
+        <li><strong>혈압약</strong> — 검사 당일 아침 소량의 물과 함께 복용 가능합니다.</li>
+        <li><strong>아스피린 등 항혈전제</strong> — 위내시경(진단 목적) 시 중단할 필요가 없습니다. 단, 조직검사 가능성이 있는 경우 담당의와 사전 상의가 필요합니다.</li>
+        <li><strong>당뇨약, 인슐린</strong> — 저혈당 위험이 있어 검사 당일 아침 복용을 중단하고, 검사 후 식사와 함께 재개합니다.</li>
+      </ul>
+      <h4>그 외</h4>
+      <ul class="list">
+        <li>틀니, 콘택트렌즈, 액세서리는 검사 전 제거해주세요.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">04</span>
+      <h3>검사 당일 주의사항</h3>
+      <div class="notice">
+        <span class="notice-label">수면 내시경 안내</span>
+        진정제 사용 후에는 <strong>당일 운전, 자전거, 중요 서류 작성, 기계 조작이 불가</strong>합니다. 대중교통 또는 보호자 동반을 권장합니다.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">05</span>
+      <h3>검사 후 안내</h3>
+      <ul class="list">
+        <li>인후부 마취가 풀리는 데 약 30분이 소요됩니다. 마취가 풀린 뒤 부드러운 음식부터 드세요.</li>
+        <li>조직검사를 시행한 경우 당일은 자극적이거나 뜨거운 음식을 피하시는 것이 좋습니다.</li>
+        <li>일시적인 인후 불편감, 복부 팽만감은 흔히 나타날 수 있는 증상입니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">06</span>
+      <h3>자주 묻는 질문</h3>
+      <div class="faq-item">
+        <div class="faq-q">수면과 비수면, 어떤 차이가 있나요?</div>
+        <div class="faq-a">수면 내시경은 진정제를 사용해 검사 중 불편감과 기억을 줄여줍니다. 비수면은 약물을 사용하지 않아 회복 시간이 짧고 당일 일상 복귀가 가능하지만, 구역감을 더 느낄 수 있습니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">헬리코박터균 검사도 같이 받을 수 있나요?</div>
+        <div class="faq-a">네, 내시경 중 조직을 채취해 신속요소분해효소검사(CLO test)로 확인할 수 있습니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">매년 받아야 하나요?</div>
+        <div class="faq-a">일반적으로 2년 간격을 권고합니다. 위축성 위염, 장상피화생, 위선종 등 위험인자가 있는 경우 1년 간격 추적이 권고될 수 있습니다.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Colonoscopy Tab -->
+  <div class="tab-content" id="colonoscopy">
+    <div class="page-header">
+      <div class="label">Examination · 02</div>
+      <h2>대장내시경 검사 안내</h2>
+      <p class="desc">항문을 통해 내시경을 삽입하여 직장부터 맹장까지 대장 전체 점막을 직접 관찰하는 검사입니다. 대장 용종, 염증성 장질환, 대장암 등을 진단하며, 발견된 용종은 검사 중 함께 절제할 수 있습니다.</p>
+      <div class="meta">
+        <span>검사 시간 <strong>15–30분</strong></span>
+        <span>준비 <strong>3일간 식사조절 후 장정결제 복용 필요</strong></span>
+        <span>권고 주기 <strong>5년</strong></span>
+      </div>
+    </div>
+
+    <a href="colon.html" style="display:block; background: var(--color-primary); color:#fff; padding:18px 22px; border-radius:4px; text-decoration:none; margin-bottom:32px; transition:background 0.15s;" onmouseover="this.style.background='var(--color-primary-dark)'" onmouseout="this.style.background='var(--color-primary)'">
+      <div style="font-family: var(--font-serif); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; opacity:0.85; margin-bottom:6px;">Step-by-Step Colonoscopy Guide</div>
+      <div style="font-family: var(--font-serif); font-size:17px; font-weight:600; margin-bottom:4px;">대장내시경 안내 자세히 보기 →</div>
+      <div style="font-size:13px; opacity:0.9; line-height:1.6;">1주일 전 정결제 선택 · 3일 전 식이조절 · 1일 전 정결제 복용 · 검사 후 주의사항</div>
+    </a>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>검사가 권장되는 분</h3>
+      <ul class="list">
+        <li>대장암 또는 대장 용종 가족력이 있는 분</li>
+        <li>국가 대장암 분변잠혈검사 양성으로 정밀검사가 필요한 분</li>
+        <li>혈변, 흑색변이 있는 분</li>
+        <li>배변 습관 변화(만성 변비·설사)가 있는 분</li>
+        <li>복통, 체중 감소 등이 동반된 분</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>검사 진행 과정</h3>
+      <ol class="steps">
+        <li>접수 및 문진 — 복용 약물, 과거력, 알레르기 확인</li>
+        <li>검사복으로 환복, 정맥로 확보</li>
+        <li>수면 검사를 선택한 경우 진정제 정맥 투여</li>
+        <li>좌측위 자세에서 항문을 통해 내시경 삽입</li>
+        <li>맹장(회맹부)까지 진입한 뒤 후퇴하며 대장 전체 점막 관찰</li>
+        <li>필요 시 조직검사(생검) 또는 용종 절제술 시행</li>
+      </ol>
+      <p style="font-size: 13.5px; color: var(--color-text-muted); margin-top: 14px;">
+        검사 자체는 일반적으로 15–30분 내외이며, 용종 절제를 시행한 경우 더 길어질 수 있습니다.
+      </p>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>검사 전 준비사항</h3>
+
+      <h4>식이 — 검사 3일 전부터</h4>
+      <ul class="list">
+        <li><strong>3일 전 ~ 2일 전</strong> — 잡곡밥, 견과류, 씨가 있는 과일·채소(참외, 키위, 딸기, 토마토, 포도 등), 김·미역 등 <strong>섬유소가 많은 음식</strong>은 피해주세요.</li>
+        <li><strong>1일 전</strong> — 흰죽, 흰쌀밥, 계란, 두부 등 부드러운 음식 위주로 드시고, 저녁 식사 이후 금식하며 안내된 시각에 장정결제 복용을 시작합니다.</li>
+        <li><strong>검사 당일</strong> — 금식이 원칙이며, 처방된 일정에 따라 남은 장정결제를 복용합니다.</li>
+      </ul>
+
+      <h4>장정결제 종류 안내</h4>
+      <p style="font-size: 13.5px; color: var(--color-text-muted); margin-bottom: 12px;">본원에서 사용하는 장정결제는 다음 3종이며, 각자의 특성에 맞게 선택하실 수 있습니다.</p>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr>
+              <th style="width: 18%">항목</th>
+              <th>크린뷰올산</th>
+              <th>수프렙 미니정 (알약)</th>
+              <th>원프렙 1.38산</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-name">제형 / 용량</td>
+              <td class="col-detail">가루 용액 1L + 생수 1L</td>
+              <td class="col-detail">알약 16포 (1포당 20정)</td>
+              <td class="col-detail">가루 용액 460ml + 생수 960ml</td>
+            </tr>
+            <tr>
+              <td class="col-name">복용법</td>
+              <td class="col-detail">전날 저녁 + 당일 아침 2차례</td>
+              <td class="col-detail">전날 저녁 + 당일 아침 2차례</td>
+              <td class="col-detail">당일 1회 (검사 최소 5시간 전)</td>
+            </tr>
+            <tr>
+              <td class="col-name">장점</td>
+              <td class="col-detail">비용 저렴 (보험 적용)</td>
+              <td class="col-detail">알약 제형으로 복용 편리, 기존 오라팡보다 작은 알약 크기</td>
+              <td class="col-detail">비타민음료와 비슷한 맛, 전날 밤 약 복용 없이 편안한 수면</td>
+            </tr>
+            <tr>
+              <td class="col-name">단점</td>
+              <td class="col-detail">걸쭉하고 신 맛으로 복용이 힘듦. 메스꺼움·구토·복부팽만 발생 가능</td>
+              <td class="col-detail">비용 부담(비급여), 알약 복용 후에도 물 다량 필요, 알약 개수 많음</td>
+              <td class="col-detail">비용 부담(비급여), 검사 전까지 화장실 가야 할 수 있음(개인차)</td>
+            </tr>
+            <tr>
+              <td class="col-name">가격</td>
+              <td class="col-detail">약 3,500원 <span style="color: var(--color-text-light); font-size: 12px;">(보험 적용)</span></td>
+              <td class="col-detail">35,000원 <span style="color: var(--color-text-light); font-size: 12px;">(비급여)</span></td>
+              <td class="col-detail">35,000원 <span style="color: var(--color-text-light); font-size: 12px;">(비급여)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>장정결제 복용법</h4>
+      <ul class="list">
+        <li>처방받은 장정결제를 안내된 시각에 정해진 용량의 물과 함께 나누어 복용합니다.</li>
+        <li>마지막 배변이 <strong>맑은 노란색 또는 투명한 액체</strong>가 될 때까지 수분을 충분히 섭취해주세요.</li>
+        <li>복용 중 구역감, 구토가 있을 경우 30분 정도 휴식 후 천천히 재개합니다.</li>
+      </ul>
+
+      <h4>복용 약물</h4>
+      <div class="notice">
+        <span class="notice-label">중요</span>
+        <strong>항혈전제와 철분제는 처방하신 주치의와 반드시 사전 상의 후 중단 여부와 일정을 결정</strong>해야 합니다. 환자분이 임의로 중단하거나 재개하지 마세요. 항혈전제 임의 중단은 뇌경색·심근경색 등 혈전성 합병증의 위험이 있습니다.
+      </div>
+      <ul class="list">
+        <li><strong>항혈전제(아스피린, 클로피도그렐, 와파린, NOAC 등)</strong> — 용종 절제 시 출혈 위험이 있어 일반적으로 사전 중단이 필요하지만, 약제 종류와 기저질환에 따라 중단 시기와 기간이 다릅니다. <strong>반드시 처방 주치의와 상의</strong>해주세요.</li>
+        <li><strong>철분제</strong> — 대장 점막에 검게 묻어 시야를 가립니다. 검사 7일 전부터 중단이 필요하나, <strong>처방 주치의와 사전 상의 후</strong> 중단해주세요.</li>
+        <li><strong>혈압약</strong> — 검사 당일 아침 소량의 물과 함께 복용 가능합니다.</li>
+        <li><strong>당뇨약, 인슐린</strong> — 금식과 장정결로 저혈당 위험이 있어 검사 당일 아침 복용을 중단하고, 검사 후 식사와 함께 재개합니다.</li>
+      </ul>
+
+      <h4>그 외</h4>
+      <ul class="list">
+        <li>액세서리, 틀니, 콘택트렌즈는 검사 전 제거해주세요.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">04</span>
+      <h3>검사 당일 주의사항</h3>
+      <div class="notice">
+        <span class="notice-label">수면 내시경 안내</span>
+        진정제 사용 후에는 <strong>당일 운전, 자전거, 중요 서류 작성, 기계 조작이 불가</strong>합니다. 대중교통 또는 보호자 동반을 권장합니다.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">05</span>
+      <h3>검사 후 안내</h3>
+      <ul class="list">
+        <li>검사 중 주입된 공기로 복부 팽만감이 있을 수 있으며, 가스가 배출되면서 호전됩니다.</li>
+        <li>수면 내시경을 받으신 경우 1–2시간 회복 후 안정 상태에서 귀가하시게 됩니다.</li>
+        <li><strong>용종 절제술을 받은 경우</strong> — 시술 후 약 7일간 출혈 위험이 있습니다. 음주, 격렬한 운동, 사우나, 장거리 여행, 무거운 물건 들기를 피하시고, 자극적이거나 섬유소가 많은 음식은 며칠간 자제해주세요.</li>
+        <li>검사 후 <strong>다량의 혈변, 검은색 변, 심한 복통, 발열</strong>이 있는 경우 즉시 본원 또는 가까운 응급실로 내원해주세요.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">06</span>
+      <h3>자주 묻는 질문</h3>
+      <div class="faq-item">
+        <div class="faq-q">분변잠혈검사 양성이 나왔는데 꼭 대장내시경을 받아야 하나요?</div>
+        <div class="faq-a">분변잠혈검사 양성은 대장 내 출혈 가능성을 의미하므로 원인 확인을 위해 대장내시경 검사가 권고됩니다. 국가 대장암 검진 대상자(50세 이상)는 분변잠혈검사 양성 시 대장내시경을 받으실 수 있습니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">용종이 발견되면 그날 바로 제거하나요?</div>
+        <div class="faq-a">대부분의 용종은 검사 중 발견 즉시 절제 가능합니다. 다만 항혈전제 복용 중이거나 용종의 크기·위치·개수에 따라 별도의 일정으로 시술이 필요한 경우도 있습니다.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">얼마나 자주 받아야 하나요?</div>
+        <div class="faq-a"><span>검사 주기는 <strong>이전 검사 결과에 따라 달라집니다</strong>. 평균 위험군에서 결과가 정상이라면 5년 간격이 권고되며, 선종(용종)이 발견된 경우 종류·개수·크기에 따라 1–5년 간격으로 추적 검사가 필요합니다. 가족력, 염증성 장질환, 이전 대장암 병력 등이 있는 경우 더 짧은 주기가 권고될 수 있으므로, <strong>이전 검사 결과지를 바탕으로 담당 의사와 상의하여 다음 검사 시기를 정하시기를 권장</strong>합니다.</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Upper Abdomen US Tab -->
+  <div class="tab-content" id="upper-abd">
+    <div class="page-header">
+      <div class="label">Examination · 03</div>
+      <h2>상복부 초음파 검사 안내</h2>
+      <p class="desc">간, 담낭, 담도, 췌장(일부), 비장을 영상으로 관찰하는 검사입니다. 지방간, 간경변, 간종양, 담석증, 담낭용종, 췌장 종양·낭종 등을 확인할 수 있습니다.</p>
+      <div class="meta">
+        <span>검사 시간 <strong>5–10분</strong></span>
+        <span>금식 <strong>8시간 이상 (물 포함)</strong></span>
+        <span>검사 부위 <strong>간 · 담낭 · 담도 · 췌장(일부) · 비장</strong></span>
+      </div>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>검사가 권장되는 분</h3>
+      <ul class="list">
+        <li>만성 B형·C형 간염, 간경변 등 간 질환이 있는 분</li>
+        <li>비만, 과체중, 만성 음주, 당뇨 등 지방간 위험인자가 있는 분</li>
+        <li>간기능 검사(AST/ALT/γ-GTP) 수치 이상이 있는 분</li>
+        <li>우상복부 통증, 황달, 식후 복통이 있는 분</li>
+        <li>담석·담낭용종 추적이 필요한 분</li>
+        <li>간·췌장·담낭 질환 가족력이 있는 분</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>검사 진행 과정</h3>
+      <ol class="steps">
+        <li>접수 및 문진 — 복용 약물, 과거력 확인</li>
+        <li>누운 자세에서 상복부에 젤 도포</li>
+        <li>탐촉자로 간, 담낭, 담도, 췌장(일부), 비장을 순차 관찰합니다. <strong>검사 중 통증은 없습니다.</strong></li>
+        <li>필요 시 호흡 보조(숨을 들이마신 후 잠시 멈춤) 요청</li>
+      </ol>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>검사 전 준비사항</h3>
+      <ul class="list">
+        <li><strong>검사 8시간 이상 금식이 필요합니다.</strong> 물, 음료, 사탕, 껌도 모두 제한됩니다.</li>
+        <li>금식이 필요한 이유: 음식 섭취 시 담낭이 수축되어 담석·담낭용종 평가가 부정확해지고, 위 내 가스가 췌장 시야를 가립니다.</li>
+        <li>흡연은 위장관 가스를 증가시켜 췌장 관찰을 방해할 수 있어 검사 전 자제해주세요.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">04</span>
+      <h3>검사 후 안내</h3>
+      <ul class="list">
+        <li>검사 직후 식사와 일상생활이 가능합니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">05</span>
+      <h3>자주 묻는 질문</h3>
+      <div class="faq-item">
+        <div class="faq-q">물도 마시면 안 되나요?</div>
+        <div class="faq-a"><span>네, 검사 8시간 전부터는 물도 제한됩니다. 위 내 액체와 가스는 췌장·담도 영상 시야를 가리고 담낭 수축을 유발할 수 있습니다.</span></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">복부초음파로 췌장 전체를 다 볼 수 있나요?</div>
+        <div class="faq-a"><span>복부초음파는 신체 구조 상 췌장 검사에 한계가 있습니다. 특히 장 가스가 많으면 췌장 일부가 가려질 수 있어, 자세 변경과 호흡 보조로 최대한 시야를 확보하지만 일부 환자에서는 CT 등 추가 영상검사가 필요할 수 있습니다.</span></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">얼마나 자주 받아야 하나요?</div>
+        <div class="faq-a"><span>특별한 증상이 없는 경우 <strong>2년 간격</strong>이 권장됩니다. 지방간, 담낭용종, 간낭종 등 추적이 필요한 질환이 있는 경우 6–12개월 간격으로 담당 의사가 안내한 주기에 따라 받으시면 됩니다.</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Lower Abdomen US Tab -->
+  <div class="tab-content" id="lower-abd">
+    <div class="page-header">
+      <div class="label">Examination · 04</div>
+      <h2>하복부 초음파 검사 안내</h2>
+      <p class="desc">신장, 방광, 전립선을 영상으로 관찰하는 검사입니다. 신장 결석, 신낭종, 신장 종양, 방광 종양, 전립선 비대 등을 확인할 수 있습니다.</p>
+      <div class="meta">
+        <span>검사 시간 <strong>5–10분</strong></span>
+        <span>금식 <strong>8시간 (소량의 물은 가능)</strong></span>
+        <span>준비 <strong>검사 3시간 전부터 소변 참기</strong></span>
+      </div>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>검사가 권장되는 분</h3>
+      <ul class="list">
+        <li>혈뇨, 단백뇨가 있는 분</li>
+        <li>옆구리·하복부 통증이 있는 분</li>
+        <li>신장 결석 병력이 있거나 추적이 필요한 분</li>
+        <li>만성 신질환이 의심되거나 신기능 검사 이상이 있는 분</li>
+        <li>50세 이상 남성 (전립선 비대 평가)</li>
+        <li>배뇨 장애(빈뇨, 야간뇨, 잔뇨감)가 있는 분</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>검사 진행 과정</h3>
+      <ol class="steps">
+        <li>접수 및 문진</li>
+        <li>누운 자세에서 하복부에 젤 도포</li>
+        <li>탐촉자로 신장(양측), 방광, 전립선(남성) 관찰</li>
+      </ol>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>검사 전 준비사항</h3>
+      <ul class="list">
+        <li><strong>검사 8시간 이상 금식이 필요합니다.</strong> 소량의 물은 드셔도 됩니다.</li>
+        <li><strong>검사 3시간 전부터 소변을 참아주세요.</strong> 방광이 충분히 차야 방광 내부와 전립선이 잘 보입니다.</li>
+      </ul>
+      <div class="info-box">
+        <span class="info-label">참고</span>
+        방광이 비어 있으면 영상이 부정확해 재검사가 필요할 수 있습니다.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">04</span>
+      <h3>검사 후 안내</h3>
+      <ul class="list">
+        <li>검사 직후 배뇨 가능하며, 일상생활에 지장이 없습니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">05</span>
+      <h3>자주 묻는 질문</h3>
+      <div class="faq-item">
+        <div class="faq-q">소변을 너무 많이 참아 불편한데 어떡하나요?</div>
+        <div class="faq-a"><span>가능한 만큼만 참고 내원해주시면 검사실에서 추가 안내해드립니다. 검사 직전 일부 배뇨 후 다시 참는 방법도 있습니다.</span></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">전립선까지 자세히 볼 수 있나요?</div>
+        <div class="faq-a"><span>경복부 초음파로 전립선 크기·전반적 형태 평가가 가능합니다. 정밀한 내부 평가가 필요한 경우에는 경직장 초음파(TRUS)나 MRI가 권고될 수 있습니다.</span></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">얼마나 자주 받아야 하나요?</div>
+        <div class="faq-a"><span>특별한 증상이 없는 경우 <strong>2년 간격</strong>이 권장됩니다. 신낭종, 결석, 전립선 비대 등 추적이 필요한 질환이 있는 경우 6–12개월 간격으로 담당 의사가 안내한 주기에 따라 받으시면 됩니다.</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Thyroid US Tab -->
+  <div class="tab-content" id="thyroid">
+    <div class="page-header">
+      <div class="label">Examination · 05</div>
+      <h2>갑상선 초음파 검사 안내</h2>
+      <p class="desc">갑상선과 경부 림프절을 영상으로 관찰하여 갑상선 결절, 갑상선암, 갑상선염 등을 확인하는 검사입니다.</p>
+      <div class="meta">
+        <span>검사 시간 <strong>5분 내외</strong></span>
+        <span>금식 <strong>불필요</strong></span>
+        <span>검사 부위 <strong>갑상선 · 경부 림프절</strong></span>
+      </div>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>검사가 권장되는 분</h3>
+      <ul class="list">
+        <li>목 부위에 결절이 만져지거나 비대칭이 보이는 분</li>
+        <li>갑상선 기능 검사(TSH, Free T4) 이상이 있는 분</li>
+        <li>갑상선암 가족력이 있는 분</li>
+        <li>어릴 적 두경부 방사선 노출력이 있는 분</li>
+        <li>목의 압박감, 삼킴 곤란 등이 있는 분</li>
+        <li>갑상선 결절을 추적 중인 분</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>검사 진행 과정</h3>
+      <ol class="steps">
+        <li>접수 및 문진</li>
+        <li>누운 자세에서 어깨 아래에 베개를 받쳐 목을 약간 신전</li>
+        <li>목 부위에 젤 도포</li>
+        <li>갑상선 양엽과 협부, 주변 경부 림프절 관찰</li>
+      </ol>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>검사 전 준비사항</h3>
+      <ul class="list">
+        <li><strong>금식은 필요하지 않습니다.</strong></li>
+        <li>목걸이, 귀걸이 등 액세서리는 검사 전 제거해주세요.</li>
+        <li>목이 노출되도록 단추가 있거나 분리되는 상의 착용을 권장합니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">04</span>
+      <h3>검사 후 안내</h3>
+      <ul class="list">
+        <li>검사 직후 일상생활이 가능합니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">05</span>
+      <h3>자주 묻는 질문</h3>
+      <div class="faq-item">
+        <div class="faq-q">갑상선 결절이 발견되면 어떻게 하나요?</div>
+        <div class="faq-a"><span>결절의 크기, 모양, 내부 구조에 따라 추적 관찰을 하거나 세침흡인 세포검사(FNAB)가 권고될 수 있습니다. K-TIRADS(한국 갑상선 영상 보고체계) 기준으로 평가합니다.</span></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">갑상선 호르몬 검사도 함께 필요한가요?</div>
+        <div class="faq-a"><span>결절이 발견되거나 갑상선 기능 이상이 의심되는 증상이 있는 경우 갑상선 기능 검사(TSH, Free T4)를 함께 받으시기를 권장합니다.</span></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">얼마나 자주 받아야 하나요?</div>
+        <div class="faq-a"><span>특별한 증상이 없는 경우 <strong>2년 간격</strong>이 권장됩니다. 결절 등 추적이 필요한 질환이 있는 경우 6–12개월 간격으로 담당 의사가 안내한 주기에 따라 받으시면 됩니다.</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Carotid US Tab -->
+  <div class="tab-content" id="carotid">
+    <div class="page-header">
+      <div class="label">Examination · 06</div>
+      <h2>경동맥 초음파 검사 안내</h2>
+      <p class="desc">목 양쪽의 경동맥을 영상으로 관찰하여 동맥경화반(plaque), 혈관 내중막두께(IMT), 협착 정도, 혈류 속도를 평가하는 검사입니다. 뇌졸중 위험 평가에 활용됩니다.</p>
+      <div class="meta">
+        <span>검사 시간 <strong>5분 내외</strong></span>
+        <span>금식 <strong>불필요</strong></span>
+        <span>검사 부위 <strong>좌·우 경동맥</strong></span>
+      </div>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>검사가 권장되는 분</h3>
+      <ul class="list">
+        <li>고혈압, 당뇨병, 고지혈증을 진단받은 분</li>
+        <li>흡연자이신 분</li>
+        <li>60세 이상이신 분</li>
+        <li>뇌졸중·심근경색 가족력이 있는 분</li>
+        <li>협심증, 심방세동 등 심혈관 질환이 있는 분</li>
+        <li>일과성 시력 소실, 어지럼증 등 뇌혈관 증상이 있는 분</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>검사 진행 과정</h3>
+      <ol class="steps">
+        <li>접수 및 문진 — 혈관 위험인자(고혈압·당뇨·고지혈증·흡연·가족력) 확인</li>
+        <li>누운 자세에서 머리를 검사 반대편으로 돌림</li>
+        <li>목 양측에 젤 도포</li>
+        <li>B-mode로 혈관벽 두께·플라크 관찰, 도플러로 혈류 속도 측정</li>
+      </ol>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>검사 전 준비사항</h3>
+      <ul class="list">
+        <li><strong>금식은 필요하지 않습니다.</strong></li>
+        <li>목걸이 등 액세서리는 검사 전 제거해주세요.</li>
+        <li>목이 노출되도록 단추가 있거나 분리되는 상의 착용을 권장합니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">04</span>
+      <h3>검사 후 안내</h3>
+      <ul class="list">
+        <li>검사 직후 일상생활이 가능합니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">05</span>
+      <h3>자주 묻는 질문</h3>
+      <div class="faq-item">
+        <div class="faq-q">검사 중 통증이 있나요?</div>
+        <div class="faq-a"><span>통증은 없습니다. 젤을 바른 탐촉자가 목 부위에 가볍게 닿는 정도이며, 검사 중 압박감은 거의 느끼지 못합니다.</span></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">경동맥 협착이 발견되면 어떻게 되나요?</div>
+        <div class="faq-a"><span>협착 정도와 증상 유무에 따라 약물치료(항혈소판제·스타틴 등) 또는 시술(경동맥 내막절제술·스텐트 삽입)을 고려합니다. 50% 이상 협착이거나 증상이 있는 경우 신경외과·신경과 협진이 권고됩니다.</span></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">얼마나 자주 받아야 하나요?</div>
+        <div class="faq-a"><span>특별한 증상이 없는 경우 <strong>2년 간격</strong>이 권장됩니다. 플라크, 협착 등 추적이 필요한 질환이 있는 경우 6–12개월 간격으로 담당 의사가 안내한 주기에 따라 받으시면 됩니다.</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Female Pelvic US Tab -->
+  <div class="tab-content" id="female-us">
+    <div class="page-header">
+      <div class="label">Examination · 07</div>
+      <h2>부인과 초음파 검사 안내</h2>
+      <p class="desc">자궁, 난소를 영상으로 관찰하는 검사입니다. 자궁근종, 자궁선근증, 난소낭종, 자궁내막 이상 등을 확인할 수 있습니다.</p>
+      <div class="meta">
+        <span>검사 시간 <strong>5분 내외</strong></span>
+        <span>금식 <strong>불필요</strong></span>
+        <span>권고 주기 <strong>1년 (정기검진)</strong></span>
+      </div>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>검사가 권장되는 분</h3>
+      <ul class="list">
+        <li>부인과 정기 검진을 원하시는 모든 여성</li>
+        <li>비정상 자궁 출혈, 생리 이상이 있는 분</li>
+        <li>골반통, 만성 생리통이 있는 분</li>
+        <li>자궁근종, 난소낭종 등 추적이 필요한 분</li>
+        <li>폐경 후 출혈이 있는 분</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>검사 종류</h3>
+      <h4>질 초음파 (Transvaginal)</h4>
+      <ul class="list">
+        <li>가는 탐촉자를 질 내로 부드럽게 삽입하여 검사합니다.</li>
+        <li>자궁과 난소를 가장 선명하게 관찰할 수 있어 부인과 초음파의 표준 방법으로 사용됩니다.</li>
+        <li>성관계 경험이 있는 여성을 대상으로 합니다.</li>
+      </ul>
+      <h4>항문 초음파 (Transrectal)</h4>
+      <ul class="list">
+        <li>항문(직장)을 통해 가는 탐촉자를 삽입하여 자궁·난소를 관찰합니다.</li>
+        <li>성관계 경험이 없어 질 초음파가 어려운 분에서 대안으로 시행합니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>검사 진행 과정</h3>
+      <ol class="steps">
+        <li>접수 및 문진 — 마지막 생리일, 임신 가능성, 과거력 확인</li>
+        <li>검사복으로 환복</li>
+        <li>질 초음파: 다리를 벌리는 자세에서 탐촉자를 부드럽게 삽입</li>
+        <li>항문 초음파: 다리를 벌리는 자세에서 항문에 탐촉자를 부드럽게 삽입</li>
+        <li>자궁, 난소를 다양한 각도에서 관찰</li>
+      </ol>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">04</span>
+      <h3>검사 전 준비사항</h3>
+      <ul class="list">
+        <li><strong>금식은 필요하지 않습니다.</strong> 평소대로 식사하셔도 됩니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">05</span>
+      <h3>검사 후 안내</h3>
+      <ul class="list">
+        <li>검사 직후 일상생활이 가능합니다.</li>
+      </ul>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">06</span>
+      <h3>자주 묻는 질문</h3>
+      <div class="faq-item">
+        <div class="faq-q">미혼이거나 성관계 경험이 없어도 검사 가능한가요?</div>
+        <div class="faq-a"><span>네, 가능합니다. 이 경우 질 초음파 대신 <strong>항문 초음파</strong>로 시행합니다.</span></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">얼마나 자주 받아야 하나요?</div>
+        <div class="faq-a"><span>특별한 증상이 없는 경우 <strong>1년 간격</strong>이 권장됩니다. 자궁근종, 난소낭종 등 추적이 필요한 질환이 있는 경우 6–12개월 간격으로 담당 의사가 안내한 주기에 따라 받으시면 됩니다.</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- National Health Checkup Tab -->
+  <div class="tab-content" id="nhc">
+    <div class="page-header">
+      <div class="label">National Health Screening</div>
+      <h2>국가건강검진 안내</h2>
+      <p class="desc">국민건강보험공단에서 시행하는 국가검진은 일반검진과 암검진으로 구성되며, 대상자에 해당하는 경우 본인부담 없이 또는 일부 부담(10%)으로 받을 수 있습니다.</p>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>국가 일반검진</h3>
+      <div class="info-box">
+        <span class="info-label">본인 부담</span>
+        <strong>무료</strong>
+      </div>
+
+      <h4>기본 검사 항목</h4>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr>
+              <th style="width: 30%">검사 항목</th>
+              <th>세부 내용</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-name">혈액검사</td>
+              <td class="col-detail">혈색소(빈혈), 공복혈당(당뇨), AST·ALT·γ-GTP(간기능), 크레아티닌·eGFR(신장기능)</td>
+            </tr>
+            <tr>
+              <td class="col-name">흉부 X-선</td>
+              <td class="col-detail">흉부 영상 검사</td>
+            </tr>
+            <tr>
+              <td class="col-name">단백뇨</td>
+              <td class="col-detail">소변 검사</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>추가 검사 항목 <span style="color: var(--color-text-light); font-weight: 400; font-size: 13px;">(대상자만 해당)</span></h4>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr>
+              <th style="width: 40%">검사 항목</th>
+              <th>대상 / 주기</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-name">고지혈증(콜레스테롤)</td>
+              <td class="col-detail">4년 주기</td>
+            </tr>
+            <tr>
+              <td class="col-name">B형간염</td>
+              <td class="col-detail">40세 남/여</td>
+            </tr>
+            <tr>
+              <td class="col-name">C형간염</td>
+              <td class="col-detail">56세 남/여</td>
+            </tr>
+            <tr>
+              <td class="col-name">골밀도(골다공증)</td>
+              <td class="col-detail">54세, 60세, 66세 여성</td>
+            </tr>
+            <tr>
+              <td class="col-name">폐기능</td>
+              <td class="col-detail">56세, 66세 남/여</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>국가 암검진</h3>
+      <div class="info-box">
+        <span class="info-label">본인 부담</span>
+        <strong>무료 또는 10% 본인부담</strong>
+      </div>
+
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr>
+              <th>암종</th>
+              <th>검사 방법</th>
+              <th>대상</th>
+              <th>주기</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-name">위암</td>
+              <td class="col-detail">위내시경</td>
+              <td class="col-detail">40세 이상 남/여</td>
+              <td class="col-detail">2년</td>
+            </tr>
+            <tr>
+              <td class="col-name">대장암</td>
+              <td class="col-detail">분변잠혈검사</td>
+              <td class="col-detail">50세 이상 남/여</td>
+              <td class="col-detail">1년</td>
+            </tr>
+            <tr>
+              <td class="col-name">간암</td>
+              <td class="col-detail">간초음파</td>
+              <td class="col-detail">간암 고위험군</td>
+              <td class="col-detail">6개월</td>
+            </tr>
+            <tr>
+              <td class="col-name">유방암</td>
+              <td class="col-detail">유방촬영</td>
+              <td class="col-detail">40세 이상 여성</td>
+              <td class="col-detail">2년</td>
+            </tr>
+            <tr>
+              <td class="col-name">자궁경부암</td>
+              <td class="col-detail">경부세포검사</td>
+              <td class="col-detail">20세 이상 여성</td>
+              <td class="col-detail">2년</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-box" style="margin-top: 18px;">
+        <span class="info-label">참고</span>
+        <strong>대장암 분변잠혈검사 양성 시 대장내시경 검사가 가능</strong>합니다.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>대상자 확인 방법</h3>
+      <ul class="list">
+        <li><strong>국민건강보험공단 홈페이지</strong> 또는 <strong>The건강보험 앱</strong>에서 본인 검진 대상 여부 확인 가능</li>
+        <li>검진 안내문이 우편/모바일로 발송됩니다.</li>
+        <li>본원 방문 전 신분증을 지참해주세요.</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- Extra Exams Index Tab -->
+  <div class="tab-content" id="extra-exams">
+    <div class="page-header">
+      <div class="label">Additional Examinations</div>
+      <h2>추가 검사 안내</h2>
+      <p class="desc">검진 목적의 검사인 경우 <strong>'비급여'</strong>이며, 실비보험은 적용되지 않습니다.<br>급여 적용 여부는 수검자의 증상 및 과거 검사결과에 따라 달라지며 원장님과 상담 후에 결정됩니다.<br>각 검사의 상세 안내는 상단 메뉴에서 해당 검사를 선택해주세요.</p>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>내시경 검사</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 22%">검사 항목</th><th>주요 적응증</th><th style="width: 20%">비용</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-name">위내시경</td>
+              <td class="col-detail">위염, 위궤양, 위암, 헬리코박터 감염 진단</td>
+              <td class="col-detail">30,000원</td>
+            </tr>
+            <tr>
+              <td class="col-name">대장내시경</td>
+              <td class="col-detail">대장 용종, 대장암, 염증성 장질환 진단 및 용종 절제</td>
+              <td class="col-detail">50,000원</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 12.5px; color: var(--color-text-light); margin-top: 10px;">※ 수면 내시경 진정제 비용은 별도입니다.<br>※ 조직검사, 용종절제술 시행 시 추가 비용이 발생합니다.</p>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>초음파 검사</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 26%">검사 항목</th><th>검사 부위</th><th style="width: 20%">비용</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">상복부 초음파</td><td class="col-detail">간, 췌장, 담낭, 담도, 비장</td><td class="col-detail">80,000원</td></tr>
+            <tr><td class="col-name">하복부 초음파</td><td class="col-detail">신장, 방광, 전립선</td><td class="col-detail">60,000원</td></tr>
+            <tr><td class="col-name">갑상선 초음파</td><td class="col-detail">갑상선, 경부 림프절</td><td class="col-detail">50,000원</td></tr>
+            <tr><td class="col-name">경동맥 초음파</td><td class="col-detail">경동맥 동맥경화 평가</td><td class="col-detail">50,000원</td></tr>
+            <tr><td class="col-name">부인과 초음파</td><td class="col-detail">자궁, 난소</td><td class="col-detail">35,000원</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="info-box">
+        <span class="info-label">동시 진행 시 할인</span>
+        상복부 + 하복부 <strong>100,000원</strong> · 갑상선 + 경동맥 <strong>80,000원</strong>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>혈액 추가 검사</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th>검사 항목</th><th style="width: 25%">비용</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">정밀 혈액검사 (50종)<br><span style="color: var(--color-text-light); font-weight: 400; font-size: 12.5px;">콜레스테롤·당화혈색소·비타민 D·갑상선 포함</span></td><td class="col-detail">80,000원</td></tr>
+            <tr><td class="col-name">콜레스테롤 (고지혈증)</td><td class="col-detail">10,000원</td></tr>
+            <tr><td class="col-name">당화혈색소 (당뇨병 정밀)</td><td class="col-detail">10,000원</td></tr>
+            <tr><td class="col-name">비타민 D</td><td class="col-detail">15,000원</td></tr>
+            <tr><td class="col-name">갑상선 기능 (호르몬)</td><td class="col-detail">30,000원</td></tr>
+            <tr><td class="col-name">난소 나이 (AMH)</td><td class="col-detail">60,000원</td></tr>
+            <tr><td class="col-name">암표지자 (간·췌장·대장·폐·전립선·난소·유방)</td><td class="col-detail">60,000원</td></tr>
+            <tr><td class="col-name">간염 항체 검사 (A·B·C형)</td><td class="col-detail">60,000원 <span style="color: var(--color-text-light); font-size: 12px;">(각 20,000원)</span></td></tr>
+            <tr><td class="col-name">알레르기 검사 <span style="color: var(--color-text-light); font-weight: 400; font-size: 12.5px;">(MAST, 176종)</span></td><td class="col-detail">110,000원</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">04</span>
+      <h3>기타 검사</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th>검사 항목</th><th style="width: 25%">비용</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">심전도 검사</td><td class="col-detail">10,000원</td></tr>
+            <tr><td class="col-name">폐기능 검사</td><td class="col-detail">25,000원</td></tr>
+            <tr><td class="col-name">골밀도 (DEXA, 1부위)</td><td class="col-detail">40,000원</td></tr>
+            <tr><td class="col-name">유방촬영검사 (Mammography)</td><td class="col-detail">40,000원</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="notice">
+      <span class="notice-label">안내</span>
+      위 검사들은 모두 <strong>비급여 항목</strong>으로 실비보험 적용이 불가합니다. 본인의 상태에 적합한 검사 조합은 본원 상담을 통해 안내해드립니다.
+    </div>
+  </div>
+
+  <!-- Exam Selection Guide Tab -->
+  <div class="tab-content active" id="exam-guide">
+    <div class="page-header">
+      <div class="label">Examination Guide</div>
+      <h2>검사 선택 가이드</h2>
+      <p class="desc">어떤 검사를 받아야 할지 고민이 되실 때 참고하실 수 있는 안내입니다.<br><strong>일반적인 권고사항일 뿐 개인별로 다를 수 있으며</strong>, 최종적인 검사 결정은 진료 후 담당 의사와 상의하여 정하시기를 권장드립니다.</p>
+    </div>
+
+    <section class="content-section">
+      <span class="section-num">01</span>
+      <h3>연령별 기본 권장</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 28%">연령 / 대상</th><th>기본 권장</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">모든 연령</td><td class="col-detail">정밀 혈액검사</td></tr>
+            <tr><td class="col-name">20세 이상</td><td class="col-detail">+ 자궁경부암 검진<strong>(여성)</strong> + 부인과 초음파<strong>(여성)</strong></td></tr>
+            <tr><td class="col-name">40세 이상</td><td class="col-detail">+ 위내시경 + 대장내시경 + 암표지자 검사 + 유방촬영<strong>(여성)</strong></td></tr>
+            <tr><td class="col-name">50세 이상</td><td class="col-detail">+ 경동맥 초음파 + 심전도 + 하복부 초음파 <strong>(남성, 전립선 평가)</strong></td></tr>
+            <tr><td class="col-name">폐경 후</td><td class="col-detail">+ 골밀도 검사 <strong>(여성)</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="info-box">
+        <span class="info-label">중요</span>
+        위 연령별 권장은 <strong>일반적인 기본 권장</strong>일 뿐입니다. 실제 검사 결정에서는 <strong>증상</strong>과 <strong>가족력</strong>이 연령보다 더 중요한 판단 기준이 됩니다. 아래 항목을 함께 확인해주세요.
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">02</span>
+      <h3>증상별 권장 검사</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 55%">증상</th><th>권장 검사</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">속쓰림, 명치 통증, 소화불량이 지속되는 경우</td><td class="col-detail">위내시경</td></tr>
+            <tr><td class="col-name">토혈, 혈변, 흑색변, 배변 습관 변화(만성 변비·설사), 원인 불명의 빈혈</td><td class="col-detail">위내시경 · 대장내시경</td></tr>
+            <tr><td class="col-name">복통, 체중 감소가 동반된 경우</td><td class="col-detail">위내시경 · 대장내시경 · 상복부 초음파</td></tr>
+            <tr><td class="col-name">우상복부 통증, 황달, 식후 복통</td><td class="col-detail">상복부 초음파</td></tr>
+            <tr><td class="col-name">옆구리 통증, 혈뇨, 단백뇨, 빈뇨, 야간뇨, 잔뇨감</td><td class="col-detail">하복부 초음파</td></tr>
+            <tr><td class="col-name">목 부위 결절이 만져지거나 압박감, 삼킴 곤란</td><td class="col-detail">갑상선 초음파</td></tr>
+            <tr><td class="col-name">어지럼증, 두통, 뒷목 통증, 혈압 상승</td><td class="col-detail">경동맥 초음파</td></tr>
+            <tr><td class="col-name">생리통, 생리양·주기 변화, 골반통, 비정상 질출혈</td><td class="col-detail">부인과 초음파</td></tr>
+            <tr><td class="col-name">잦은 골절, 폐경</td><td class="col-detail">골밀도 검사</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <span class="section-num">03</span>
+      <h3>가족력별 권장 검사</h3>
+      <div class="table-wrap">
+        <table class="exam-table">
+          <thead>
+            <tr><th style="width: 40%">가족력</th><th>권장 검사</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">위암</td><td class="col-detail">위내시경</td></tr>
+            <tr><td class="col-name">대장암 · 대장 용종</td><td class="col-detail">대장내시경</td></tr>
+            <tr><td class="col-name">간암 · 간경변 · 만성 간염</td><td class="col-detail">상복부 초음파 + 간염 항체 검사</td></tr>
+            <tr><td class="col-name">췌장암</td><td class="col-detail">상복부 초음파 + 암표지자</td></tr>
+            <tr><td class="col-name">갑상선암</td><td class="col-detail">갑상선 초음파 + 갑상선 기능 검사</td></tr>
+            <tr><td class="col-name">유방암</td><td class="col-detail">유방촬영검사</td></tr>
+            <tr><td class="col-name">자궁·난소암, 자궁근종, 조기폐경</td><td class="col-detail">부인과 초음파</td></tr>
+            <tr><td class="col-name">뇌졸중 · 심근경색</td><td class="col-detail">경동맥 초음파 + 심전도</td></tr>
+            <tr><td class="col-name">고혈압 · 당뇨 · 고지혈증</td><td class="col-detail">정밀 혈액검사 + 경동맥 초음파</td></tr>
+            <tr><td class="col-name">골다공증 (폐경 후 모계)</td><td class="col-detail">골밀도 검사</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="notice">
+      <span class="notice-label">안내</span>
+      본 가이드는 일반적인 권장 사항이며, 개인의 정확한 검사 항목은 진료 후 담당 의사와 상의하여 결정하시기를 권장합니다.
+    </div>
+  </div>
+
+  <!-- 항상 표시되는 연락처 카드 -->
+  <div class="contact-card">
+    <div class="name">88플러스내과산부인과</div>
+    <p class="desc">검사 예약 및 문의는 전화 또는 방문으로 가능합니다.</p>
+    <div class="info">
+      <div class="info-row">
+        <span class="info-label">TEL</span>
+        <a href="tel:0229728800">02-972-8800</a>
+      </div>
+      <div class="info-row">
+        <span class="info-label">MAP</span>
+        <a href="https://map.naver.com/p/entry/place/1126097266" target="_blank" rel="noopener">네이버 지도에서 보기</a>
+      </div>
+      <div class="info-row">
+        <span class="info-label">BLOG</span>
+        <a href="https://blog.naver.com/88plusim" target="_blank" rel="noopener">blog.naver.com/88plusim</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="disclaimer">본 안내는 일반적인 검사 정보를 제공하며, 개별 환자의 상태에 따라 달라질 수 있습니다.<br>정확한 진단과 처방은 진료를 통해 확인해주세요.</p>
+    <p>© 88플러스내과산부인과</p>
+  </div>
+</footer>
+
+<button class="to-top-btn" id="toTopBtn" aria-label="페이지 위로">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5 M5 12 L12 5 L19 12"/></svg>
+</button>
+
+<script>
+(function() {
+  const btn = document.getElementById('toTopBtn');
+  if (!btn) return;
+  function check() {
+    if (window.pageYOffset > 240) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+  window.addEventListener('scroll', check, { passive: true });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  check();
+})();
+</script>
+
+<script>
+(function() {
+  const tabs = document.querySelectorAll('.tab-btn');
+  const contents = document.querySelectorAll('.tab-content');
+
+  function activateTab(tabId) {
+    if (!tabId) tabId = 'exam-guide';
+    let found = false;
+    tabs.forEach(btn => {
+      if (btn.dataset.tab === tabId) {
+        btn.classList.add('active');
+        found = true;
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+    contents.forEach(c => {
+      c.classList.toggle('active', c.id === tabId);
+    });
+    if (!found) {
+      // fallback: exam-guide
+      document.querySelector('[data-tab="exam-guide"]').classList.add('active');
+      document.getElementById('exam-guide').classList.add('active');
+    }
+  }
+
+  // 탭 네비게이션 위치로 스크롤 (탭 버튼이 화면 상단에 보이도록)
+  function scrollToTabNav() {
+    const nav = document.querySelector('.tab-nav');
+    if (!nav) return;
+    const top = nav.getBoundingClientRect().top + window.pageYOffset - 8;
+    // 현재 위치보다 위에 있을 때만 스크롤(아래에서 탭 클릭 시 점프 방지 목적)
+    if (window.pageYOffset > top) {
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  }
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.dataset.tab;
+      history.pushState(null, '', '#' + tabId);
+      activateTab(tabId);
+      scrollToTabNav();
+    });
+  });
+
+  // Welcome 탭 항목 클릭 → 해당 탭으로 이동
+  const examMapping = {
+    '위내시경': 'gastroscopy',
+    '대장내시경': 'colonoscopy',
+    '상복부초음파': 'upper-abd',
+    '하복부초음파': 'lower-abd',
+    '갑상선초음파': 'thyroid',
+    '경동맥초음파': 'carotid',
+    '부인과 초음파': 'female-us',
+    '국가건강검진': 'nhc'
+  };
+  document.querySelectorAll('.exam-cat ul li').forEach(li => {
+    li.addEventListener('click', () => {
+      const target = examMapping[li.textContent.trim()];
+      if (target) {
+        history.pushState(null, '', '#' + target);
+        activateTab(target);
+        scrollToTabNav();
+      }
+    });
+  });
+
+  // 해시 변경 감지
+  window.addEventListener('hashchange', () => {
+    activateTab(location.hash.replace('#', ''));
+  });
+
+  // 초기 진입 시 해시 적용
+  if (location.hash) {
+    activateTab(location.hash.replace('#', ''));
+  }
+})();
+</script>
+
+</body>
+</html>

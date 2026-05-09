@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>건강검진 | 88플러스내과·산부인과</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <span>88플러스내과·산부인과 — 내과·산부인과 전문의 협진</span>
+    <a class="tel" href="tel:0229728800">진료문의 <strong>02-972-8800</strong></a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="site-logo">
+      <img src="logo.png" alt="88플러스내과산부인과" class="logo-img">
+    </a>
+    <nav class="main-nav">
+      <a href="index.html">홈</a>
+      <a href="about.html">병원 소개</a>
+      <a href="services.html">진료과목</a>
+      <a href="checkup.html" class="active">건강검진</a>
+      <a href="pricing.html">비급여 안내</a>
+      <a href="location.html">예약 안내</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="메뉴"><svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">홈</a>
+    <a href="about.html">병원 소개</a>
+    <a href="services.html">진료과목</a>
+    <a href="checkup.html" class="active">건강검진</a>
+    <a href="pricing.html">비급여 안내</a>
+    <a href="location.html">예약 안내</a>
+  </div>
+</header>
+
+<section class="page-banner">
+  <div class="container">
+    <div class="label">Health Checkup</div>
+    <h1>건강검진</h1>
+    <p>국가건강검진과 종합 정밀검진을 통합 제공합니다.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-narrow">
+    <div class="section-head">
+      <div class="label">Categories</div>
+      <h2>검진 종류</h2>
+    </div>
+
+    <div class="dept-grid" style="grid-template-columns: repeat(2, 1fr); gap:18px;">
+      <div class="dept-item"><div class="num">01</div><div class="name">국가건강검진</div><div class="info">일반·암·생애전환기·영유아</div></div>
+      <div class="dept-item"><div class="num">02</div><div class="name">자궁경부암 검진</div><div class="info">국가검진 / HPV / LBC</div></div>
+      <div class="dept-item"><div class="num">03</div><div class="name">위·대장 내시경</div><div class="info">진단·용종 절제·수면</div></div>
+      <div class="dept-item"><div class="num">04</div><div class="name">초음파 검사</div><div class="info">상·하복부·갑상선·경동맥·부인과</div></div>
+      <div class="dept-item"><div class="num">05</div><div class="name">정밀 혈액검사</div><div class="info">50종 종합검사</div></div>
+      <div class="dept-item"><div class="num">06</div><div class="name">암표지자</div><div class="info">간·췌장·대장·폐·전립선·난소·유방</div></div>
+    </div>
+
+    <div class="info-box" style="margin-top:36px;">
+      <span class="info-label">자세한 안내</span>
+      각 검사의 진행 과정·준비사항·비용은 별도 검사 안내 페이지에서 확인하실 수 있습니다.
+    </div>
+    <div style="text-align:center; margin-top:24px;">
+      <a href="exam-guide/" class="btn btn-primary">검사 안내 페이지로 이동 →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><h4>88플러스내과·산부인과</h4><p class="info-line"><strong>주소</strong> 서울시 노원구 동일로192길 74, 우은빌딩 2층<br><strong>전화</strong> 02-972-8800<br>사업자등록번호: 324-97-01375 · 대표자: 하영우</p></div>
+    </div>
+    <div class="copyright">© 2026 88플러스내과·산부인과. All rights reserved.</div>
+  </div>
+</footer>
+
+<button class="to-top-btn" id="toTopBtn" aria-label="페이지 위로"><svg viewBox="0 0 24 24"><path d="M12 19V5 M5 12 L12 5 L19 12"/></svg></button>
+<script>
+const toggle=document.getElementById('menuToggle'); const mobileNav=document.getElementById('mobileNav'); if(toggle)toggle.addEventListener('click',()=>mobileNav.classList.toggle('open'));
+(function(){const b=document.getElementById('toTopBtn');if(!b)return;function c(){if(window.pageYOffset>240)b.classList.add('visible');else b.classList.remove('visible');}window.addEventListener('scroll',c,{passive:true});b.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));c();})();
+</script>
+</body>
+</html>

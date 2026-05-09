@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>예약 안내 | 88플러스내과·산부인과</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <span>88플러스내과·산부인과 — 내과·산부인과 전문의 협진</span>
+    <a class="tel" href="tel:0229728800">진료문의 <strong>02-972-8800</strong></a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="site-logo">
+      <img src="logo.png" alt="88플러스내과산부인과" class="logo-img">
+    </a>
+    <nav class="main-nav">
+      <a href="index.html">홈</a>
+      <a href="about.html">병원 소개</a>
+      <a href="services.html">진료과목</a>
+      <a href="checkup.html">건강검진</a>
+      <a href="pricing.html">비급여 안내</a>
+      <a href="location.html" class="active">예약 안내</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="메뉴"><svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">홈</a>
+    <a href="about.html">병원 소개</a>
+    <a href="services.html">진료과목</a>
+    <a href="checkup.html">건강검진</a>
+    <a href="pricing.html">비급여 안내</a>
+    <a href="location.html" class="active">예약 안내</a>
+  </div>
+</header>
+
+<section class="page-banner">
+  <div class="container">
+    <div class="label">Reservation</div>
+    <h1>예약 안내</h1>
+    <p>진료시간·주소·교통편·예약 방법을 안내드립니다.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-narrow">
+    <div class="reservation-grid">
+      <div class="reservation-card">
+        <div class="reservation-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="reservation-title">건강검진 · 내시경 예약</div>
+        <p class="reservation-desc">전화 또는 직접 내원하여 예약하실 수 있습니다.</p>
+        <div class="reservation-contact">02-972-8800</div>
+        <div class="reservation-meta">평일 08:00 — 18:00<br>토요일 08:00 — 13:00<br>점심시간 13:00 — 14:00</div>
+      </div>
+      <div class="reservation-card">
+        <div class="reservation-icon" style="color:#03C75A;">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke-width="2"/>
+            <path d="M16 3v4M8 3v4M3 11h18" stroke-width="2"/>
+            <text x="12" y="18" text-anchor="middle" font-size="8" font-weight="700" fill="currentColor" stroke="none" font-family="sans-serif">N</text>
+          </svg>
+        </div>
+        <div class="reservation-title">산부인과 진료 예약</div>
+        <p class="reservation-desc">네이버 예약으로 24시간 신청 가능합니다.</p>
+        <a href="https://map.naver.com/p/search/88%ED%94%8C%EB%9F%AC%EC%8A%A4%EB%82%B4%EA%B3%BC/place/1126097266?c=15.00,0,0,0,dh&placePath=%3Fbk_query%253D88%2525ED%252594%25258C%2525EB%25259F%2525AC%2525EC%25258A%2525A4%2525EB%252582%2525B4%2525EA%2525B3%2525BC%2526entry%253Dbmp" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:10px;">네이버 예약하기 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="info-row">
+      <div class="hours-card">
+        <h3>진료시간</h3>
+        <ul class="hours-list">
+          <li><span class="day">평일 (월~금)</span><span class="time">오전 8:00 — 오후 6:00</span></li>
+          <li><span class="day">토요일</span><span class="time">오전 8:00 — 오후 1:00</span></li>
+          <li class="closed"><span class="day">일요일·공휴일</span><span class="time">휴진</span></li>
+          <li><span class="day">점심시간</span><span class="time">오후 1:00 — 오후 2:00</span></li>
+        </ul>
+        <div class="note">접수 마감은 진료 종료 <strong>10분 전</strong>입니다.</div>
+      </div>
+      <div class="map-card">
+        <h3>오시는 길</h3>
+        <div class="map-embed">[지도 임베드 자리 — 네이버맵/카카오맵 iframe]</div>
+        <div class="map-info">
+          <div class="row"><span class="label">주소</span><span><strong>서울시 노원구 동일로192길 74, 우은빌딩 2층</strong></span></div>
+          <div class="row"><span class="label">전화</span><span><a href="tel:0229728800" style="color:var(--color-primary); border-bottom:1px solid var(--color-primary);">02-972-8800</a></span></div>
+          <div class="row"><span class="label">지하철</span><span>7호선 공릉역 2번 출구 400m · 올리브영 건물 2층</span></div>
+          <div class="row"><span class="label">주차</span><span>건물 뒷편 · <a href="https://map.naver.com/p/search/%EC%9A%B0%EC%9D%80%EB%B9%8C%EB%94%A9%20%EC%9C%A0%EB%A3%8C%20%EC%A3%BC%EC%B0%A8%EC%9E%A5" target="_blank" rel="noopener" style="color:var(--color-primary); border-bottom:1px solid var(--color-line);">네이버 지도에서 "우은빌딩 유료 주차장" 검색</a></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><h4>88플러스내과·산부인과</h4><p class="info-line"><strong>주소</strong> 서울시 노원구 동일로192길 74, 우은빌딩 2층<br><strong>전화</strong> 02-972-8800<br>사업자등록번호: 324-97-01375 · 대표자: 하영우</p></div>
+    </div>
+    <div class="copyright">© 2026 88플러스내과·산부인과. All rights reserved.</div>
+  </div>
+</footer>
+
+<button class="to-top-btn" id="toTopBtn" aria-label="페이지 위로"><svg viewBox="0 0 24 24"><path d="M12 19V5 M5 12 L12 5 L19 12"/></svg></button>
+<script>
+const toggle=document.getElementById('menuToggle'); const mobileNav=document.getElementById('mobileNav'); if(toggle)toggle.addEventListener('click',()=>mobileNav.classList.toggle('open'));
+(function(){const b=document.getElementById('toTopBtn');if(!b)return;function c(){if(window.pageYOffset>240)b.classList.add('visible');else b.classList.remove('visible');}window.addEventListener('scroll',c,{passive:true});b.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));c();})();
+</script>
+</body>
+</html>
