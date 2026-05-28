@@ -1364,23 +1364,24 @@ a { color: inherit; text-decoration: none; }
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-  max-width: 360px;
-  width: 92vw;
   overflow: hidden;
   animation: popupSlide 0.3s ease;
 }
 .float-popup.visible {
   display: block;
 }
+/* PC: 두 창이 화면 좌/우로 멀리 떨어져서 독립적으로 표시 */
 #floatPopup1 {
   top: 100px;
-  left: 50%;
-  transform: translateX(calc(-100% - 12px));
+  left: 4%;
+  width: 480px;
+  max-width: 45vw;
 }
 #floatPopup2 {
   top: 100px;
-  left: 50%;
-  transform: translateX(12px);
+  right: 4%;
+  width: 660px;
+  max-width: 57vw;
 }
 .float-popup-close {
   position: absolute;

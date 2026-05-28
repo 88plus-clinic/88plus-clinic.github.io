@@ -68,39 +68,31 @@
     </p>
     <div class="signature-block">
       <span class="signature-text">- 88플러스내과·산부인과 의료진 일동 드림</span>
-      <img src="88plus_signature.png?v=2" alt="88플러스 사인" class="signature-img">
+      <img src="88plus_signature.png?v=3" alt="88플러스 사인" class="signature-img">
     </div>
     <style>
       .signature-block {
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
         margin-top: 8px;
-        line-height: 1.4;
       }
       .signature-text {
         font-size: 15px;
         color: var(--color-text-muted);
         white-space: nowrap;
-        display: inline-block;
-        vertical-align: middle;
       }
       .signature-img {
-        height: 64px;
-        width: auto;
-        vertical-align: middle;
-        margin-left: 8px;
+        height: 56px !important;
+        width: auto !important;
+        max-width: 200px;
+        flex: 0 0 auto;
       }
-      @media (max-width: 880px) {
-        .signature-text {
-          font-size: 13px;
-          display: block;
-          white-space: normal;
-          word-break: keep-all;
-        }
-        .signature-img {
-          height: 52px;
-          display: block;
-          margin: 8px auto 0;
-        }
+      @media (max-width: 640px) {
+        .signature-text { font-size: 13px; }
+        .signature-img { height: 48px !important; }
       }
     </style>
   </div>
