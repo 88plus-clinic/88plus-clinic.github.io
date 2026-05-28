@@ -1356,63 +1356,41 @@ a { color: inherit; text-decoration: none; }
   border-radius: 8px 8px 0 0;
 }
 
-/* 팝업 슬라이더 */
-.popup-slider {
-  position: relative;
-  background: #f4f4f4;
-  border-radius: 8px 8px 0 0;
-  overflow: hidden;
+/* 다중 팝업 (POP1 + POP3 동시 표시) */
+.popup-multi {
+  flex-direction: column;
 }
-.popup-slide {
-  display: none;
-}
-.popup-slide.active {
-  display: block;
-}
-.popup-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border: none;
-  background: rgba(0, 0, 0, 0.45);
-  color: #fff;
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-  border-radius: 50%;
+.popup-multi-wrap {
   display: flex;
-  align-items: center;
+  gap: 20px;
+  align-items: flex-start;
   justify-content: center;
-  transition: background 0.15s;
-  z-index: 2;
+  flex-wrap: wrap;
+  max-width: 95vw;
 }
-.popup-nav:hover { background: rgba(0, 0, 0, 0.7); }
-.popup-prev { left: 10px; }
-.popup-next { right: 10px; }
-.popup-dots {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 6px;
-  z-index: 2;
+.popup-multi .popup-box {
+  position: relative;
+  max-width: 360px;
+  flex: 0 1 auto;
+  max-height: none;
 }
-.popup-dot {
-  width: 8px;
-  height: 8px;
+.popup-multi .popup-image {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+.popup-actions-shared {
+  background: rgba(255, 255, 255, 0.96);
+  margin-top: 14px;
+  border-radius: 8px;
   border: none;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.6);
-  cursor: pointer;
-  padding: 0;
-  transition: background 0.15s, transform 0.15s;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 740px;
 }
-.popup-dot.active {
-  background: #fff;
-  transform: scale(1.25);
+@media (max-width: 880px) {
+  .popup-multi .popup-box { max-width: 90vw; }
+  .popup-multi-wrap { gap: 14px; }
 }
 
 .popup-actions {

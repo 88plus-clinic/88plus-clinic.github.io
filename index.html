@@ -225,29 +225,24 @@
   </div>
 </footer>
 
-<!-- 공지 팝업 -->
-<div class="popup-overlay" id="noticePopup" role="dialog" aria-modal="true">
-  <div class="popup-box">
-    <button class="popup-close" id="popupClose" aria-label="닫기">×</button>
-    <div class="popup-slider" id="popupSlider">
-      <div class="popup-slide active"><img src="pop1.jpg" alt="진료 안내 1" class="popup-image"></div>
-      <div class="popup-slide"><img src="pop2.png" alt="진료 안내 2" class="popup-image"></div>
-      <div class="popup-slide"><img src="pop3.jpg" alt="진료 안내 3" class="popup-image"></div>
-      <button class="popup-nav popup-prev" id="popupPrev" aria-label="이전">‹</button>
-      <button class="popup-nav popup-next" id="popupNext" aria-label="다음">›</button>
-      <div class="popup-dots" id="popupDots">
-        <button class="popup-dot active" data-idx="0" aria-label="1"></button>
-        <button class="popup-dot" data-idx="1" aria-label="2"></button>
-        <button class="popup-dot" data-idx="2" aria-label="3"></button>
-      </div>
+<!-- 공지 팝업 (POP1 + POP3 동시 표시) -->
+<div class="popup-overlay popup-multi" id="noticePopup" role="dialog" aria-modal="true">
+  <div class="popup-multi-wrap">
+    <div class="popup-box">
+      <button class="popup-close" data-close="single" aria-label="닫기">×</button>
+      <img src="pop1.jpg" alt="진료 안내 1" class="popup-image">
     </div>
-    <div class="popup-actions">
-      <label class="popup-checkbox">
-        <input type="checkbox" id="popupHide">
-        <span>오늘 하루 보지 않기</span>
-      </label>
-      <button class="popup-close-btn" id="popupCloseBtn">닫기</button>
+    <div class="popup-box">
+      <button class="popup-close" data-close="single" aria-label="닫기">×</button>
+      <img src="pop3.jpg" alt="진료 안내 2" class="popup-image">
     </div>
+  </div>
+  <div class="popup-actions popup-actions-shared">
+    <label class="popup-checkbox">
+      <input type="checkbox" id="popupHide">
+      <span>오늘 하루 보지 않기</span>
+    </label>
+    <button class="popup-close-btn" id="popupCloseBtn">모두 닫기</button>
   </div>
 </div>
 
@@ -283,30 +278,22 @@ if (toggle) toggle.addEventListener('click', () => mobileNav.classList.toggle('o
     }
   }
 
-  document.getElementById('popupClose').addEventListener('click', () => close(false));
+  // 개별 박스 닫기 (해당 박스만 사라짐)
+  popup.querySelectorAll('[data-close="single"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const box = btn.closest('.popup-box');
+      if (box) box.style.display = 'none';
+      const remaining = popup.querySelectorAll('.popup-box:not([style*="display: none"]):not([style*="display:none"])');
+      if (remaining.length === 0) close(false);
+    });
+  });
+
   document.getElementById('popupCloseBtn').addEventListener('click', () => {
     const cb = document.getElementById('popupHide');
     close(cb && cb.checked);
   });
   popup.addEventListener('click', (e) => { if (e.target === popup) close(false); });
-
-  // 팝업 슬라이더 (이전/다음/dot)
-  const slides = popup.querySelectorAll('.popup-slide');
-  const dots = popup.querySelectorAll('.popup-dot');
-  let curIdx = 0;
-  function showSlide(i) {
-    curIdx = (i + slides.length) % slides.length;
-    slides.forEach((s, k) => s.classList.toggle('active', k === curIdx));
-    dots.forEach((d, k) => d.classList.toggle('active', k === curIdx));
-  }
-  const prevBtn = document.getElementById('popupPrev');
-  const nextBtn = document.getElementById('popupNext');
-  if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showSlide(curIdx - 1); });
-  if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showSlide(curIdx + 1); });
-  dots.forEach(d => d.addEventListener('click', (e) => {
-    e.stopPropagation();
-    showSlide(parseInt(d.dataset.idx, 10));
-  }));
 })();
 
 // 위로가기 버튼
