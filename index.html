@@ -225,24 +225,27 @@
   </div>
 </footer>
 
-<!-- 공지 팝업 (POP1 + POP3 동시 표시) -->
-<div class="popup-overlay popup-multi" id="noticePopup" role="dialog" aria-modal="true">
-  <div class="popup-multi-wrap">
-    <div class="popup-box">
-      <button class="popup-close" data-close="single" aria-label="닫기">×</button>
-      <img src="pop1.jpg" alt="진료 안내 1" class="popup-image">
-    </div>
-    <div class="popup-box">
-      <button class="popup-close" data-close="single" aria-label="닫기">×</button>
-      <img src="pop3.jpg" alt="진료 안내 2" class="popup-image">
-    </div>
-  </div>
-  <div class="popup-actions popup-actions-shared">
-    <label class="popup-checkbox">
-      <input type="checkbox" id="popupHide">
+<!-- 공지 팝업 (POP1 + POP3, 각각 독립된 창) -->
+<div class="float-popup" id="floatPopup1" data-popup="1">
+  <button class="float-popup-close" data-close="1" aria-label="닫기">×</button>
+  <img src="pop1.jpg" alt="진료 안내 1" class="float-popup-image">
+  <div class="float-popup-actions">
+    <label class="float-popup-checkbox">
+      <input type="checkbox" class="popup-hide-cb" data-cb="1">
       <span>오늘 하루 보지 않기</span>
     </label>
-    <button class="popup-close-btn" id="popupCloseBtn">모두 닫기</button>
+    <button class="float-popup-closebtn" data-closebtn="1">닫기</button>
+  </div>
+</div>
+<div class="float-popup" id="floatPopup2" data-popup="2">
+  <button class="float-popup-close" data-close="2" aria-label="닫기">×</button>
+  <img src="pop3.jpg" alt="진료 안내 2" class="float-popup-image">
+  <div class="float-popup-actions">
+    <label class="float-popup-checkbox">
+      <input type="checkbox" class="popup-hide-cb" data-cb="2">
+      <span>오늘 하루 보지 않기</span>
+    </label>
+    <button class="float-popup-closebtn" data-closebtn="2">닫기</button>
   </div>
 </div>
 
@@ -258,42 +261,34 @@ const toggle = document.getElementById('menuToggle');
 const mobileNav = document.getElementById('mobileNav');
 if (toggle) toggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
 
-// 공지 팝업 (오늘 하루 보지 않기 지원)
+// 독립 팝업 2개 — 각자 닫기, 각자 "오늘 하루 보지 않기" 가능
 (function() {
-  const popup = document.getElementById('noticePopup');
-  if (!popup) return;
-  const STORAGE_KEY = 'popupHidden_multi_v1';
-  const hideUntil = localStorage.getItem(STORAGE_KEY);
-  if (hideUntil && Date.now() < parseInt(hideUntil, 10)) return;
+  const popups = document.querySelectorAll('.float-popup');
+  if (!popups.length) return;
 
-  popup.classList.add('visible');
+  popups.forEach(p => {
+    const id = p.dataset.popup;
+    const STORAGE_KEY = 'popupHidden_float_' + id;
+    const hideUntil = localStorage.getItem(STORAGE_KEY);
+    if (hideUntil && Date.now() < parseInt(hideUntil, 10)) return;
+    p.classList.add('visible');
 
-  function close(hideForToday) {
-    popup.classList.remove('visible');
-    if (hideForToday) {
-      const tomorrow = new Date();
-      tomorrow.setHours(0, 0, 0, 0);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      localStorage.setItem(STORAGE_KEY, tomorrow.getTime().toString());
+    function close(hideForToday) {
+      p.classList.remove('visible');
+      if (hideForToday) {
+        const tomorrow = new Date();
+        tomorrow.setHours(0, 0, 0, 0);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        localStorage.setItem(STORAGE_KEY, tomorrow.getTime().toString());
+      }
     }
-  }
 
-  // 개별 박스 닫기 (해당 박스만 사라짐)
-  popup.querySelectorAll('[data-close="single"]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const box = btn.closest('.popup-box');
-      if (box) box.style.display = 'none';
-      const remaining = popup.querySelectorAll('.popup-box:not([style*="display: none"]):not([style*="display:none"])');
-      if (remaining.length === 0) close(false);
+    p.querySelector('.float-popup-close').addEventListener('click', () => close(false));
+    p.querySelector('.float-popup-closebtn').addEventListener('click', () => {
+      const cb = p.querySelector('.popup-hide-cb');
+      close(cb && cb.checked);
     });
   });
-
-  document.getElementById('popupCloseBtn').addEventListener('click', () => {
-    const cb = document.getElementById('popupHide');
-    close(cb && cb.checked);
-  });
-  popup.addEventListener('click', (e) => { if (e.target === popup) close(false); });
 })();
 
 // 위로가기 버튼
