@@ -1383,6 +1383,14 @@ a { color: inherit; text-decoration: none; }
   width: 660px;
   max-width: 57vw;
 }
+#floatPopup3 {
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  max-width: 60vw;
+  z-index: 1001;
+}
 .float-popup-close {
   position: absolute;
   top: 8px;
@@ -1443,19 +1451,27 @@ a { color: inherit; text-decoration: none; }
   background: var(--color-primary-dark);
 }
 @media (max-width: 880px) {
-  /* 모바일: 두 팝업을 위쪽에 겹치게 (계단식) 배치 — 아래 콘텐츠 가림 최소화 */
+  /* 모바일: 세 팝업을 상단에 계단식으로 배치 — 아래 콘텐츠 가림 최소화 */
   .float-popup { width: 70vw; max-width: 260px; }
   #floatPopup1 {
     top: 60px;
     left: 50%;
-    transform: translateX(calc(-50% - 35px));
+    transform: translateX(calc(-50% - 40px));
+  }
+  #floatPopup3 {
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70vw;
+    max-width: 260px;
+    z-index: 1001;
   }
   #floatPopup2 {
-    top: 100px;
+    top: 120px;
     left: 50%;
     right: auto;
     bottom: auto;
-    transform: translateX(calc(-50% + 35px));
+    transform: translateX(calc(-50% + 40px));
     z-index: 999;
   }
 }
