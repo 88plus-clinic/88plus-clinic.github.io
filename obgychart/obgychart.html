@@ -22,12 +22,12 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 
 /* ── Header ── */
 .pg-header{background:var(--bg);border-bottom:1px solid var(--border);padding:14px 20px;text-align:center;position:relative}
-.pg-clinic{font-family:'Noto Serif KR',serif;font-size:12px;color:var(--muted);letter-spacing:.06em;margin-bottom:2px}
-.pg-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:600;color:var(--g)}
+.pg-clinic{font-family:'Noto Serif KR',serif;font-size:14px;color:var(--muted);letter-spacing:.06em;margin-bottom:2px}
+.pg-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:600;color:var(--g)}
 
 /* ── Language toggle ── */
 .lang-toggle{position:absolute;top:12px;right:14px;display:flex;border:1px solid var(--bi);border-radius:8px;overflow:hidden}
-.lang-toggle button{border:none;background:var(--bg);color:var(--muted);font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;cursor:pointer;transition:all .15s}
+.lang-toggle button{border:none;background:var(--bg);color:var(--muted);font-family:inherit;font-size:14px;font-weight:600;padding:5px 11px;cursor:pointer;transition:all .15s}
 .lang-toggle button.on{background:var(--g);color:#fff}
 
 /* ── Progress ── */
@@ -36,10 +36,10 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 .prog-track{position:absolute;top:15px;left:calc(12.5% + 16px);right:calc(12.5% + 16px);height:2px;background:var(--border)}
 .prog-fill{position:absolute;top:15px;left:calc(12.5% + 16px);height:2px;background:var(--g);transition:width .4s ease;width:0}
 .s-dot{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;position:relative;z-index:2}
-.s-circle{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--muted);transition:all .25s}
+.s-circle{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--muted);transition:all .25s}
 .s-dot.active .s-circle{border-color:var(--g);background:var(--g);color:#fff}
 .s-dot.done .s-circle{border-color:var(--g);background:var(--g-light);color:var(--g-dark)}
-.s-lbl{font-size:10px;color:var(--muted);white-space:nowrap;font-weight:500;text-align:center}
+.s-lbl{font-size:12px;color:var(--muted);white-space:nowrap;font-weight:500;text-align:center}
 .s-dot.active .s-lbl{color:var(--g);font-weight:700}
 
 /* ── Wrap ── */
@@ -47,27 +47,27 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 .step-panel{display:none}
 .step-panel.active{display:block}
 .s-head{margin-bottom:20px}
-.s-head .lbl{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:3px}
-.s-head h2{font-family:'Noto Serif KR',serif;font-size:21px;font-weight:600}
-.s-head p{font-size:13px;color:var(--sub);margin-top:3px}
+.s-head .lbl{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:3px}
+.s-head h2{font-family:'Noto Serif KR',serif;font-size:23px;font-weight:600}
+.s-head p{font-size:15px;color:var(--sub);margin-top:3px}
 
 /* ── Cards ── */
 .card{background:var(--bg);border-radius:var(--r);border:1px solid var(--border);padding:18px;margin-bottom:10px;box-shadow:var(--sh)}
-.ft{font-size:13px;font-weight:600;color:var(--text);margin-bottom:9px;display:flex;align-items:center;gap:5px}
-.req{color:var(--g);font-size:15px}
+.ft{font-size:15px;font-weight:600;color:var(--text);margin-bottom:9px;display:flex;align-items:center;gap:5px}
+.req{color:var(--g);font-size:17px}
 
 /* ── Inputs ── */
-.inp{width:100%;padding:10px 13px;border:1.5px solid var(--bi);border-radius:8px;font-family:inherit;font-size:15px;color:var(--text);background:var(--bg);transition:border-color .2s;-webkit-appearance:none}
+.inp{width:100%;padding:10px 13px;border:1.5px solid var(--bi);border-radius:8px;font-family:inherit;font-size:17px;color:var(--text);background:var(--bg);transition:border-color .2s;-webkit-appearance:none}
 .inp:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(92,127,34,.1)}
-.inp::placeholder{color:var(--muted);font-size:13px}
-.addr-btn{padding:10px 16px;border:none;border-radius:8px;background:var(--g);color:#fff;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;flex-shrink:0;white-space:nowrap}
+.inp::placeholder{color:var(--muted);font-size:15px}
+.addr-btn{padding:10px 16px;border:none;border-radius:8px;background:var(--g);color:#fff;font-family:inherit;font-size:16px;font-weight:600;cursor:pointer;flex-shrink:0;white-space:nowrap}
 .addr-btn:hover{background:var(--g-dark)}
 .irow{display:flex;gap:8px;align-items:center}
-.hint{font-size:11px;color:var(--muted);margin-top:4px}
+.hint{font-size:13px;color:var(--muted);margin-top:4px}
 
 /* ── Radio / Checkbox ── */
 .rg,.cg{display:flex;flex-wrap:wrap;gap:7px}
-.rl,.cl{display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;padding:9px 13px;border:1.5px solid var(--bi);border-radius:8px;font-size:14px;color:var(--sub);background:var(--bg);transition:all .18s;flex-shrink:0}
+.rl,.cl{display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;padding:9px 13px;border:1.5px solid var(--bi);border-radius:8px;font-size:16px;color:var(--sub);background:var(--bg);transition:all .18s;flex-shrink:0}
 .rl:hover,.cl:hover{border-color:var(--g);background:var(--g-pale)}
 .rl input,.cl input{display:none}
 .rl .dot,.cl .dot{width:15px;height:15px;border-radius:50%;border:2px solid var(--bi);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s}
@@ -80,7 +80,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 /* ── Sub-opts ── */
 .sub{display:none;margin-top:9px;padding:12px;background:var(--g-pale);border-radius:8px;border:1px solid var(--border)}
 .sub.on{display:block}
-.sub .ft{font-size:11px;color:var(--sub);margin-bottom:6px}
+.sub .ft{font-size:13px;color:var(--sub);margin-bottom:6px}
 
 /* ── Symptoms grid ── */
 .sym-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:5px}
@@ -91,34 +91,34 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 .ins-card{padding:14px 16px;border:1.5px solid var(--bi);border-radius:10px;cursor:pointer;transition:all .18s;margin-bottom:9px;display:block}
 .ins-card.sel{border-color:var(--g);background:var(--g-light)}
 .ins-card input{display:none}
-.ins-name{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--text)}
-.ins-desc{font-size:12px;color:var(--sub);margin-top:3px;line-height:1.5}
-.badge{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.ins-name{font-size:17px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--text)}
+.ins-desc{font-size:14px;color:var(--sub);margin-top:3px;line-height:1.5}
+.badge{display:inline-block;padding:1px 8px;border-radius:20px;font-size:13px;font-weight:600}
 .badge.h{background:#E8F0FE;color:#1a73e8}
 .badge.p{background:var(--g-light);color:var(--g-dark)}
 
 /* ── Consent ── */
-.consent-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:13px;font-size:11.5px;color:var(--sub);line-height:1.7;max-height:150px;overflow-y:auto;margin-bottom:10px}
+.consent-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:13px;font-size:13.5px;color:var(--sub);line-height:1.7;max-height:150px;overflow-y:auto;margin-bottom:10px}
 
 /* ── Signature ── */
 .sig-wrap{border:1.5px solid var(--bi);border-radius:8px;overflow:hidden;position:relative;background:#fff}
 .sig-wrap canvas{display:block;width:100%;touch-action:none;cursor:crosshair}
-.sig-clear-btn{position:absolute;top:7px;right:7px;font-size:11px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:3px 9px;cursor:pointer;font-family:inherit}
+.sig-clear-btn{position:absolute;top:7px;right:7px;font-size:13px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:3px 9px;cursor:pointer;font-family:inherit}
 
 /* ── Nav ── */
 .fnav{display:flex;gap:10px;margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
-.btn-p{flex:1;padding:13px;border:1.5px solid var(--bi);border-radius:10px;background:var(--bg);font-family:inherit;font-size:14px;font-weight:500;color:var(--sub);cursor:pointer;transition:all .18s;text-align:center;display:flex;align-items:center;justify-content:center}
+.btn-p{flex:1;padding:13px;border:1.5px solid var(--bi);border-radius:10px;background:var(--bg);font-family:inherit;font-size:16px;font-weight:500;color:var(--sub);cursor:pointer;transition:all .18s;text-align:center;display:flex;align-items:center;justify-content:center}
 .btn-p:hover:not(:disabled){border-color:var(--g);color:var(--g)}
 .btn-p:disabled{opacity:.3;cursor:default}
-.btn-n,.btn-s{flex:1;padding:13px;border:none;border-radius:10px;background:var(--g);font-family:inherit;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:background .18s;text-align:center;display:flex;align-items:center;justify-content:center}
+.btn-n,.btn-s{flex:1;padding:13px;border:none;border-radius:10px;background:var(--g);font-family:inherit;font-size:17px;font-weight:700;color:#fff;cursor:pointer;transition:background .18s;text-align:center;display:flex;align-items:center;justify-content:center}
 .btn-n:hover,.btn-s:hover{background:var(--g-dark)}
 .btn-s{display:none}
 
 /* ── Done ── */
 .done-screen{display:none;text-align:center;padding:48px 20px;background:var(--bg);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--sh)}
-.done-icon{width:64px;height:64px;background:var(--g-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:26px;color:var(--g)}
-.done-screen h3{font-family:'Noto Serif KR',serif;font-size:21px;font-weight:600;margin-bottom:8px}
-.done-screen p{font-size:14px;color:var(--sub);line-height:1.8}
+.done-icon{width:64px;height:64px;background:var(--g-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:var(--g)}
+.done-screen h3{font-family:'Noto Serif KR',serif;font-size:23px;font-weight:600;margin-bottom:8px}
+.done-screen p{font-size:16px;color:var(--sub);line-height:1.8}
 </style>
 </head>
 <body>
@@ -161,10 +161,10 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft"><span data-ko="주민등록번호" data-en="ID Number (RRN)">주민등록번호</span> <span class="req">*</span></div>
+      <div class="ft"><span data-ko="주민등록번호" data-en="Resident Reg. No. / ARC">주민등록번호</span> <span class="req">*</span></div>
       <div class="irow">
         <input class="inp" id="rrn1" type="text" inputmode="numeric" maxlength="6" placeholder="앞 6자리" data-ko-ph="앞 6자리" data-en-ph="First 6" style="flex:1">
-        <span style="color:var(--muted);font-size:20px;flex-shrink:0">—</span>
+        <span style="color:var(--muted);font-size:22px;flex-shrink:0">—</span>
         <input class="inp" id="rrn2" type="password" inputmode="numeric" maxlength="7" placeholder="뒤 7자리" data-ko-ph="뒤 7자리" data-en-ph="Last 7" style="flex:1">
       </div>
       <div class="hint" data-ko="뒷자리는 화면에 표시되지 않습니다." data-en="The last 7 digits are not shown on screen.">뒷자리는 화면에 표시되지 않습니다.</div>
@@ -233,7 +233,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
         <label class="rl"><input type="radio" name="sex" value="무" data-sub="sub-sex"><div class="dot"></div><span data-ko="무" data-en="No">무</span></label>
       </div>
       <div class="sub" id="sub-sex">
-        <span style="font-size:12px;color:var(--g-dark)" data-ko="⚠ 진료 방법이 달라질 수 있습니다. 접수 후 담당 선생님께 확인해 주세요." data-en="⚠ The examination method may differ. Please confirm with your doctor after registration.">⚠ 진료 방법이 달라질 수 있습니다. 접수 후 담당 선생님께 확인해 주세요.</span>
+        <span style="font-size:14px;color:var(--g-dark)" data-ko="⚠ 진료 방법이 달라질 수 있습니다. 접수 후 담당 선생님께 확인해 주세요." data-en="⚠ The examination method may differ. Please confirm with your doctor after registration.">⚠ 진료 방법이 달라질 수 있습니다. 접수 후 담당 선생님께 확인해 주세요.</span>
       </div>
     </div>
 
@@ -313,7 +313,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
       <div class="sub" id="sub-pap">
         <div class="irow">
           <input class="inp" id="papMonths" type="number" min="1" placeholder="예: 12" data-ko-ph="예: 12" data-en-ph="e.g. 12" style="max-width:110px">
-          <span style="font-size:14px;color:var(--sub)" data-ko="개월 전" data-en="months ago">개월 전</span>
+          <span style="font-size:16px;color:var(--sub)" data-ko="개월 전" data-en="months ago">개월 전</span>
         </div>
       </div>
     </div>
@@ -350,7 +350,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="과거 및 현 병력" data-en="Past / Current Conditions">과거 및 현 병력</div>
+      <div class="ft" data-ko="과거 및 현 병력" data-en="Past / Current Medical History">과거 및 현 병력</div>
       <div class="rg" id="rg-pmhx">
         <label class="rl"><input type="radio" name="pmhx" value="없음" data-hide="sub-pmhx"><div class="dot"></div><span data-ko="없음" data-en="None">없음</span></label>
         <label class="rl"><input type="radio" name="pmhx" value="있음" data-sub="sub-pmhx"><div class="dot"></div><span data-ko="있음" data-en="Yes">있음</span></label>
@@ -456,7 +456,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 
       <!-- 종합검진 -->
       <div style="margin-top:5px">
-        <label class="cl sym-full" id="checkupCheck"><input type="checkbox" name="symptom" value="종합검진"><div class="dot"></div><span data-ko="종합검진" data-en="Comprehensive checkup">종합검진</span></label>
+        <label class="cl sym-full" id="checkupCheck"><input type="checkbox" name="symptom" value="종합검진"><div class="dot"></div><span data-ko="종합검진" data-en="Regular check up">종합검진</span></label>
         <div class="sub" id="sub-checkup">
           <div class="cg" id="cg-checkupSub">
             <label class="cl"><input type="checkbox" name="checkupSub" value="산전검진"><div class="dot"></div><span data-ko="산전검진" data-en="Prenatal">산전검진</span></label>
@@ -503,7 +503,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
       </div>
       <label class="cl" id="consentLabel" style="width:100%">
         <input type="checkbox" id="consent"><div class="dot"></div>
-        <span style="font-size:13px;font-weight:600" data-ko="위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다." data-en="I have read and agree to the collection and use of my personal information.">위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다.</span>
+        <span style="font-size:15px;font-weight:600" data-ko="위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다." data-en="I have read and agree to the collection and use of my personal information.">위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다.</span>
       </label>
     </div>
 
@@ -522,7 +522,8 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     <div class="done-icon">✓</div>
     <h3 data-ko="접수가 완료되었습니다" data-en="Registration Complete">접수가 완료되었습니다</h3>
     <p data-ko="잠시 후 안내해 드리겠습니다. 편안히 기다려 주세요." data-en="We will assist you shortly. Please wait comfortably.">잠시 후 안내해 드리겠습니다. 편안히 기다려 주세요.</p>
-    <p style="margin-top:14px;font-size:12px;color:var(--muted)">88플러스내과·산부인과 · 02-972-8800</p>
+    <p style="margin-top:14px;font-size:14px;color:var(--muted)">88플러스내과·산부인과 · 02-972-8800</p>
+    <button type="button" onclick="location.reload()" data-ko="처음으로" data-en="Start over" style="margin-top:24px;padding:13px 32px;border:none;border-radius:10px;background:var(--g);color:#fff;font-family:inherit;font-size:17px;font-weight:700;cursor:pointer">처음으로</button>
   </div>
 
   <!-- Nav -->
@@ -713,7 +714,8 @@ function submitForm(){
     symptoms: [].map.call(document.querySelectorAll('input[name="symptom"]:checked'),function(x){return x.value;}),
     vag_sub: cvals('vagSub'), men_sub: cvals('menSub'), cys_sub: cvals('cysSub'),
     checkup_sub: cvals('checkupSub'), mother_sub: cvals('motherSub'),
-    insurance: rval('insurance')
+    insurance: rval('insurance'),
+    signature: sigDrawn ? document.getElementById('sigCanvas').toDataURL('image/png') : ''
   };
 
   var API = 'https://script.google.com/macros/s/AKfycbxUVBCaJN5HtyO0ru8algX_fqRRtIBpgx8H_WNXhh4PS4Cq42dUsE_4vdJe5wQ6JGM/exec';
@@ -736,12 +738,12 @@ function submitForm(){
 
 // ── 서명 ──
 var canvas=document.getElementById('sigCanvas'), ctx=canvas.getContext('2d');
-var drawing=false, lx=0, ly=0;
+var drawing=false, lx=0, ly=0, sigDrawn=false;
 function resize(){ canvas.width=canvas.parentElement.getBoundingClientRect().width; canvas.height=120; }
 window.addEventListener('load', resize);
 window.addEventListener('resize', resize);
 function pos(e){ var r=canvas.getBoundingClientRect(); var sx=canvas.width/r.width, sy=canvas.height/r.height; var s=e.touches?e.touches[0]:e; return {x:(s.clientX-r.left)*sx, y:(s.clientY-r.top)*sy}; }
-function draw(e){ if(!drawing) return; var p=pos(e); ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(p.x,p.y); ctx.strokeStyle='#1a1a1a'; ctx.lineWidth=2; ctx.lineCap='round'; ctx.stroke(); lx=p.x; ly=p.y; }
+function draw(e){ if(!drawing) return; sigDrawn=true; var p=pos(e); ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(p.x,p.y); ctx.strokeStyle='#1a1a1a'; ctx.lineWidth=2; ctx.lineCap='round'; ctx.stroke(); lx=p.x; ly=p.y; }
 canvas.addEventListener('mousedown', function(e){ drawing=true; var p=pos(e); lx=p.x; ly=p.y; });
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', function(){ drawing=false; });
@@ -749,7 +751,7 @@ canvas.addEventListener('mouseleave', function(){ drawing=false; });
 canvas.addEventListener('touchstart', function(e){ e.preventDefault(); drawing=true; var p=pos(e); lx=p.x; ly=p.y; }, {passive:false});
 canvas.addEventListener('touchmove', function(e){ e.preventDefault(); draw(e); }, {passive:false});
 canvas.addEventListener('touchend', function(){ drawing=false; });
-function clearSig(){ ctx.clearRect(0,0,canvas.width,canvas.height); }
+function clearSig(){ ctx.clearRect(0,0,canvas.width,canvas.height); sigDrawn=false; }
 
 showStep(1);
 </script>
