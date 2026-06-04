@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>산부인과 초진 접수 | 88플러스내과·산부인과</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --g:#5C7F22;
+  --g-dark:#4a6918;
+  --g-light:#EBF3D6;
+  --g-pale:#F5FAF0;
+  --text:#1A1A1A;
+  --sub:#555;
+  --muted:#888;
+  --border:#D4DFC4;
+  --bi:#C8D4B8;
+  --bg:#fff;
+  --bg2:#F8FAF4;
+  --r:12px;
+  --sh:0 2px 16px rgba(0,0,0,.06);
+}
+
+body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;background:var(--bg2);color:var(--text);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* ── Header ── */
+.pg-header{background:var(--bg);border-bottom:1px solid var(--border);padding:14px 20px;text-align:center}
+.pg-clinic{font-family:'Noto Serif KR',serif;font-size:12px;color:var(--muted);letter-spacing:.06em;margin-bottom:2px}
+.pg-title{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:600;color:var(--g)}
+
+/* ── Progress ── */
+.prog-wrap{background:var(--bg);border-bottom:1px solid var(--border);padding:18px 20px 0;position:sticky;top:0;z-index:100}
+.prog-steps{display:flex;align-items:flex-start;justify-content:center;max-width:340px;margin:0 auto 16px;position:relative}
+.prog-track{position:absolute;top:15px;left:calc(12.5% + 16px);right:calc(12.5% + 16px);height:2px;background:var(--border)}
+.prog-fill{position:absolute;top:15px;left:calc(12.5% + 16px);height:2px;background:var(--g);transition:width .4s ease;width:0}
+.s-dot{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;position:relative;z-index:2}
+.s-circle{width:30px;height:30px;border-radius:50%;border:2px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--muted);transition:all .25s}
+.s-dot.active .s-circle{border-color:var(--g);background:var(--g);color:#fff}
+.s-dot.done .s-circle{border-color:var(--g);background:var(--g-light);color:var(--g-dark)}
+.s-lbl{font-size:10px;color:var(--muted);white-space:nowrap;font-weight:500}
+.s-dot.active .s-lbl{color:var(--g);font-weight:700}
+
+/* ── Wrap ── */
+.fw{max-width:540px;margin:24px auto;padding:0 14px 60px}
+
+.step-panel{display:none}
+.step-panel.active{display:block}
+
+.s-head{margin-bottom:20px}
+.s-head .lbl{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:3px}
+.s-head h2{font-family:'Noto Serif KR',serif;font-size:21px;font-weight:600}
+.s-head p{font-size:13px;color:var(--sub);margin-top:3px}
+
+/* ── Cards ── */
+.card{background:var(--bg);border-radius:var(--r);border:1px solid var(--border);padding:18px;margin-bottom:10px;box-shadow:var(--sh)}
+.ft{font-size:13px;font-weight:600;color:var(--text);margin-bottom:9px;display:flex;align-items:center;gap:5px}
+.req{color:var(--g);font-size:15px}
+
+/* ── Inputs ── */
+.inp{width:100%;padding:10px 13px;border:1.5px solid var(--bi);border-radius:8px;font-family:inherit;font-size:15px;color:var(--text);background:var(--bg);transition:border-color .2s;-webkit-appearance:none}
+.inp:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(92,127,34,.1)}
+.inp::placeholder{color:var(--muted);font-size:13px}
+.irow{display:flex;gap:8px;align-items:center}
+.hint{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* ── Radio / Checkbox ── */
+.rg,.cg{display:flex;flex-wrap:wrap;gap:7px}
+.rg.col{flex-direction:column;gap:5px}
+
+.rl,.cl{display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;padding:9px 13px;border:1.5px solid var(--bi);border-radius:8px;font-size:14px;color:var(--sub);background:var(--bg);transition:all .18s;flex-shrink:0}
+.rl:hover,.cl:hover{border-color:var(--g);background:var(--g-pale)}
+.rl input,.cl input{display:none}
+
+.rl .dot,.cl .dot{width:15px;height:15px;border-radius:50%;border:2px solid var(--bi);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s}
+.cl .dot{border-radius:4px}
+
+.rl.sel,.cl.sel{border-color:var(--g);background:var(--g-light);color:var(--g-dark);font-weight:600}
+.rl.sel .dot,.cl.sel .dot{border-color:var(--g);background:var(--g)}
+.rl.sel .dot::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff}
+.cl.sel .dot::after{content:'';width:4px;height:7px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);display:block}
+
+/* ── Sub-opts ── */
+.sub{display:none;margin-top:9px;padding:12px;background:var(--g-pale);border-radius:8px;border:1px solid var(--border)}
+.sub.on{display:block}
+.sub .ft{font-size:11px;color:var(--sub);margin-bottom:6px}
+
+/* ── Symptoms grid ── */
+.sym-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+@media(max-width:380px){.sym-grid{grid-template-columns:1fr}}
+.sym-full{width:100%;margin-top:2px}
+
+/* ── Insurance cards ── */
+.ins-card{padding:14px 16px;border:1.5px solid var(--bi);border-radius:10px;cursor:pointer;transition:all .18s;margin-bottom:9px;display:block}
+.ins-card.sel{border-color:var(--g);background:var(--g-light)}
+.ins-card input{display:none}
+.ins-name{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--text)}
+.ins-desc{font-size:12px;color:var(--sub);margin-top:3px;line-height:1.5}
+.badge{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge.h{background:#E8F0FE;color:#1a73e8}
+.badge.p{background:var(--g-light);color:var(--g-dark)}
+
+/* ── Consent ── */
+.consent-box{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:13px;font-size:11.5px;color:var(--sub);line-height:1.7;max-height:150px;overflow-y:auto;margin-bottom:10px}
+
+/* ── Signature ── */
+.sig-wrap{border:1.5px solid var(--bi);border-radius:8px;overflow:hidden;position:relative;background:#fff}
+.sig-wrap canvas{display:block;width:100%;touch-action:none;cursor:crosshair}
+.sig-clear-btn{position:absolute;top:7px;right:7px;font-size:11px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:3px 9px;cursor:pointer;font-family:inherit}
+
+/* ── Nav ── */
+.fnav{display:flex;gap:10px;margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
+.btn-p{flex:1;padding:13px;border:1.5px solid var(--bi);border-radius:10px;background:var(--bg);font-family:inherit;font-size:14px;font-weight:500;color:var(--sub);cursor:pointer;transition:all .18s}
+.btn-p:hover:not(:disabled){border-color:var(--g);color:var(--g)}
+.btn-p:disabled{opacity:.3;cursor:default}
+.btn-n,.btn-s{flex:2;padding:13px;border:none;border-radius:10px;background:var(--g);font-family:inherit;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:background .18s}
+.btn-n:hover,.btn-s:hover{background:var(--g-dark)}
+.btn-s{display:none}
+
+/* ── Done screen ── */
+.done-screen{display:none;text-align:center;padding:48px 20px;background:var(--bg);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--sh)}
+.done-icon{width:64px;height:64px;background:var(--g-light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:26px;color:var(--g)}
+.done-screen h3{font-family:'Noto Serif KR',serif;font-size:21px;font-weight:600;margin-bottom:8px}
+.done-screen p{font-size:14px;color:var(--sub);line-height:1.8}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="pg-header">
+  <div class="pg-clinic">88플러스내과·산부인과</div>
+  <div class="pg-title">산부인과 초진 접수</div>
+</div>
+
+<!-- Progress -->
+<div class="prog-wrap">
+  <div class="prog-steps">
+    <div class="prog-track"></div>
+    <div class="prog-fill" id="progFill"></div>
+    <div class="s-dot active" data-step="1"><div class="s-circle"><span>1</span></div><div class="s-lbl">기본 정보</div></div>
+    <div class="s-dot" data-step="2"><div class="s-circle"><span>2</span></div><div class="s-lbl">예진</div></div>
+    <div class="s-dot" data-step="3"><div class="s-circle"><span>3</span></div><div class="s-lbl">증상</div></div>
+    <div class="s-dot" data-step="4"><div class="s-circle"><span>4</span></div><div class="s-lbl">접수</div></div>
+  </div>
+</div>
+
+<!-- Form -->
+<div class="fw">
+
+  <!-- STEP 1 -->
+  <div class="step-panel active" id="panel1">
+    <div class="s-head">
+      <div class="lbl">Step 1 / 4</div>
+      <h2>기본 정보</h2>
+      <p>인적사항을 정확히 입력해주세요.</p>
+    </div>
+
+    <div class="card">
+      <div class="ft">성함 <span class="req">*</span></div>
+      <input class="inp" id="name" type="text" placeholder="이름을 입력하세요">
+    </div>
+
+    <div class="card">
+      <div class="ft">주민등록번호 <span class="req">*</span></div>
+      <div class="irow">
+        <input class="inp" id="rrn1" type="text" inputmode="numeric" maxlength="6" placeholder="앞 6자리" style="flex:1">
+        <span style="color:var(--muted);font-size:20px;flex-shrink:0">—</span>
+        <input class="inp" id="rrn2" type="password" inputmode="numeric" maxlength="7" placeholder="뒤 7자리" style="flex:1">
+      </div>
+      <div class="hint">뒷자리는 화면에 표시되지 않습니다.</div>
+    </div>
+
+    <div class="card">
+      <div class="ft">전화번호 <span class="req">*</span></div>
+      <div class="irow" style="gap:6px;align-items:center">
+        <input class="inp phone-part" id="phone1" type="tel" inputmode="numeric" maxlength="3" value="010" style="width:72px;text-align:center" oninput="phoneAutoNext(this,'phone2',3)">
+        <span style="color:var(--muted);font-weight:300">-</span>
+        <input class="inp phone-part" id="phone2" type="tel" inputmode="numeric" maxlength="4" placeholder="0000" style="width:88px;text-align:center" oninput="phoneAutoNext(this,'phone3',4)">
+        <span style="color:var(--muted);font-weight:300">-</span>
+        <input class="inp phone-part" id="phone3" type="tel" inputmode="numeric" maxlength="4" placeholder="0000" style="width:88px;text-align:center">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">주소</div>
+      <input class="inp" id="address" type="text" placeholder="주소를 입력하세요">
+    </div>
+
+    <div class="card">
+      <div class="ft">결혼 여부 <span class="req">*</span></div>
+      <div class="rg" id="rg-marital">
+        <label class="rl"><input type="radio" name="marital" value="기혼"><div class="dot"></div>기혼</label>
+        <label class="rl"><input type="radio" name="marital" value="미혼"><div class="dot"></div>미혼</label>
+        <label class="rl"><input type="radio" name="marital" value="이혼"><div class="dot"></div>이혼</label>
+        <label class="rl"><input type="radio" name="marital" value="사별"><div class="dot"></div>사별</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-panel" id="panel2">
+    <div class="s-head">
+      <div class="lbl">Step 2 / 4</div>
+      <h2>기본 예진</h2>
+      <p>모르시는 항목은 비워두셔도 됩니다.</p>
+    </div>
+
+    <div class="card">
+      <div class="ft">마지막 생리 시작일 (LMP)</div>
+      <input class="inp" id="lmp" type="date" style="max-width:200px">
+    </div>
+
+    <div class="card">
+      <div class="ft">생리 주기</div>
+      <div class="rg" id="rg-cycle">
+        <label class="rl"><input type="radio" name="cycle" value="규칙적" data-sub="sub-cycle"><div class="dot"></div>규칙적</label>
+        <label class="rl"><input type="radio" name="cycle" value="불규칙적" data-hide="sub-cycle"><div class="dot"></div>불규칙적</label>
+      </div>
+      <div class="sub" id="sub-cycle">
+        <div class="ft">주기 (일)</div>
+        <input class="inp" id="cycleDays" type="number" min="14" max="60" placeholder="예: 28" style="max-width:110px">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">성경험 여부 <span class="req">*</span></div>
+      <div class="rg" id="rg-sex">
+        <label class="rl"><input type="radio" name="sex" value="유" data-hide="sub-sex"><div class="dot"></div>유</label>
+        <label class="rl"><input type="radio" name="sex" value="무" data-sub="sub-sex"><div class="dot"></div>무</label>
+      </div>
+      <div class="sub" id="sub-sex">
+        <span style="font-size:12px;color:var(--g-dark)">⚠ 진료 방법이 달라질 수 있습니다. 접수 후 담당 선생님께 확인해 주세요.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">출산 여부</div>
+      <div class="rg" id="rg-delivery">
+        <label class="rl"><input type="radio" name="delivery" value="무" data-hide="sub-delivery"><div class="dot"></div>무</label>
+        <label class="rl"><input type="radio" name="delivery" value="유" data-sub="sub-delivery"><div class="dot"></div>유</label>
+      </div>
+      <div class="sub" id="sub-delivery">
+        <div class="ft">출산 횟수</div>
+        <input class="inp" id="deliveryCnt" type="number" min="1" placeholder="명" style="max-width:100px;margin-bottom:10px">
+        <div class="ft">분만 방법</div>
+        <div class="cg" id="cg-deliveryType">
+          <label class="cl"><input type="checkbox" name="deliveryType" value="자연분만"><div class="dot"></div>자연분만</label>
+          <label class="cl"><input type="checkbox" name="deliveryType" value="제왕절개"><div class="dot"></div>제왕절개</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">유산 여부</div>
+      <div class="rg" id="rg-abortion">
+        <label class="rl"><input type="radio" name="abortion" value="무" data-hide="sub-abortion"><div class="dot"></div>무</label>
+        <label class="rl"><input type="radio" name="abortion" value="유" data-sub="sub-abortion"><div class="dot"></div>유</label>
+      </div>
+      <div class="sub" id="sub-abortion">
+        <div class="ft">횟수</div>
+        <input class="inp" id="abortionCnt" type="number" min="1" placeholder="회" style="max-width:100px;margin-bottom:10px">
+        <div class="ft">종류</div>
+        <div class="cg" id="cg-abortionType">
+          <label class="cl"><input type="checkbox" name="abortionType" value="자연유산"><div class="dot"></div>자연유산</label>
+          <label class="cl"><input type="checkbox" name="abortionType" value="인공유산"><div class="dot"></div>인공유산</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">분만 예정일 (해당자만)</div>
+      <input class="inp" id="edd" type="date" style="max-width:200px;margin-bottom:9px">
+      <div class="rg" id="rg-fetus">
+        <label class="rl"><input type="radio" name="fetus" value="단태아"><div class="dot"></div>단태아</label>
+        <label class="rl"><input type="radio" name="fetus" value="다태아"><div class="dot"></div>다태아</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">자궁경부암(HPV) 백신</div>
+      <div class="rg" id="rg-hpv">
+        <label class="rl"><input type="radio" name="hpv" value="무" data-hide="sub-hpv"><div class="dot"></div>무</label>
+        <label class="rl"><input type="radio" name="hpv" value="유" data-sub="sub-hpv"><div class="dot"></div>유</label>
+      </div>
+      <div class="sub" id="sub-hpv">
+        <div class="ft">백신 종류</div>
+        <div class="rg" id="rg-hpvType" style="margin-bottom:9px">
+          <label class="rl"><input type="radio" name="hpvType" value="가다실4"><div class="dot"></div>가다실4</label>
+          <label class="rl"><input type="radio" name="hpvType" value="가다실9"><div class="dot"></div>가다실9</label>
+          <label class="rl"><input type="radio" name="hpvType" value="서바릭스"><div class="dot"></div>서바릭스</label>
+          <label class="rl"><input type="radio" name="hpvType" value="모름"><div class="dot"></div>모름</label>
+        </div>
+        <div class="ft">접종 차수</div>
+        <div class="rg" id="rg-hpvDose">
+          <label class="rl"><input type="radio" name="hpvDose" value="1차"><div class="dot"></div>1차</label>
+          <label class="rl"><input type="radio" name="hpvDose" value="2차"><div class="dot"></div>2차</label>
+          <label class="rl"><input type="radio" name="hpvDose" value="3차 완료"><div class="dot"></div>3차 완료</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">마지막 자궁경부암 검사</div>
+      <div class="rg" id="rg-pap">
+        <label class="rl"><input type="radio" name="pap" value="무" data-hide="sub-pap"><div class="dot"></div>무</label>
+        <label class="rl"><input type="radio" name="pap" value="유" data-sub="sub-pap"><div class="dot"></div>유</label>
+        <label class="rl"><input type="radio" name="pap" value="모름" data-hide="sub-pap"><div class="dot"></div>모름</label>
+      </div>
+      <div class="sub" id="sub-pap">
+        <div class="irow">
+          <input class="inp" id="papMonths" type="number" min="1" placeholder="예: 12" style="max-width:110px">
+          <span style="font-size:14px;color:var(--sub)">개월 전</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">약물 알러지</div>
+      <div class="rg" id="rg-allergy">
+        <label class="rl"><input type="radio" name="allergy" value="무" data-hide="sub-allergy"><div class="dot"></div>무</label>
+        <label class="rl"><input type="radio" name="allergy" value="유" data-sub="sub-allergy"><div class="dot"></div>유</label>
+      </div>
+      <div class="sub" id="sub-allergy">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="flex:1;min-width:130px">
+            <div class="ft">약물 종류</div>
+            <input class="inp" id="allergyDrug" type="text" placeholder="예: 페니실린">
+          </div>
+          <div style="flex:1;min-width:130px">
+            <div class="ft">증상</div>
+            <input class="inp" id="allergySymptom" type="text" placeholder="예: 두드러기">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">현재 복용 약물</div>
+      <div class="rg" id="rg-meds">
+        <label class="rl"><input type="radio" name="meds" value="없음" data-hide="sub-meds"><div class="dot"></div>없음</label>
+        <label class="rl"><input type="radio" name="meds" value="있음" data-sub="sub-meds"><div class="dot"></div>있음</label>
+      </div>
+      <div class="sub" id="sub-meds">
+        <textarea class="inp" id="medsText" rows="2" placeholder="약물명을 입력해주세요" style="resize:none"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">과거 및 현 병력</div>
+      <div class="rg" id="rg-pmhx">
+        <label class="rl"><input type="radio" name="pmhx" value="없음" data-hide="sub-pmhx"><div class="dot"></div>없음</label>
+        <label class="rl"><input type="radio" name="pmhx" value="있음" data-sub="sub-pmhx"><div class="dot"></div>있음</label>
+      </div>
+      <div class="sub" id="sub-pmhx">
+        <div class="cg" id="cg-pmhxType" style="flex-wrap:wrap;margin-bottom:8px">
+          <label class="cl"><input type="checkbox" name="pmhxType" value="고혈압"><div class="dot"></div>고혈압</label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="당뇨"><div class="dot"></div>당뇨</label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="갑상선"><div class="dot"></div>갑상선</label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="A형간염"><div class="dot"></div>A형간염</label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="B형간염"><div class="dot"></div>B형간염</label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="C형간염"><div class="dot"></div>C형간염</label>
+        </div>
+        <input class="inp" id="pmhxOther" type="text" placeholder="기타 (직접 입력)">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ft">수술력</div>
+      <div class="rg" id="rg-surg">
+        <label class="rl"><input type="radio" name="surg" value="없음" data-hide="sub-surg"><div class="dot"></div>없음</label>
+        <label class="rl"><input type="radio" name="surg" value="있음" data-sub="sub-surg"><div class="dot"></div>있음</label>
+      </div>
+      <div class="sub" id="sub-surg">
+        <textarea class="inp" id="surgText" rows="2" placeholder="수술 종류를 입력해주세요" style="resize:none"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-panel" id="panel3">
+    <div class="s-head">
+      <div class="lbl">Step 3 / 4</div>
+      <h2>내원 목적 · 증상</h2>
+      <p>오늘 방문하신 이유를 선택해주세요. (복수 선택 가능)</p>
+    </div>
+
+    <div class="card">
+      <div class="sym-grid" id="cg-symptom">
+        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 검사"><div class="dot"></div>자궁경부암 검사</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 백신"><div class="dot"></div>자궁경부암 백신</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="임신확인"><div class="dot"></div>임신확인</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="임신·난임 상담"><div class="dot"></div>임신·난임 상담</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="질출혈"><div class="dot"></div>질출혈</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="성병검사"><div class="dot"></div>성병검사</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="피임상담"><div class="dot"></div>피임상담</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="응급피임약"><div class="dot"></div>응급피임약</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="폐경상담"><div class="dot"></div>폐경상담</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="복통·골반통·요통"><div class="dot"></div>복통·골반통·요통</label>
+      </div>
+
+      <!-- 질염 -->
+      <div style="margin-top:8px">
+        <label class="cl sym-full" id="vagCheck">
+          <input type="checkbox" name="symptom" value="질염"><div class="dot"></div>질염
+        </label>
+        <div class="sub" id="sub-vag">
+          <div class="cg" id="cg-vagSub">
+            <label class="cl"><input type="checkbox" name="vagSub" value="분비물"><div class="dot"></div>분비물</label>
+            <label class="cl"><input type="checkbox" name="vagSub" value="냄새"><div class="dot"></div>냄새</label>
+            <label class="cl"><input type="checkbox" name="vagSub" value="가려움"><div class="dot"></div>가려움</label>
+            <label class="cl"><input type="checkbox" name="vagSub" value="통증"><div class="dot"></div>통증</label>
+            <label class="cl"><input type="checkbox" name="vagSub" value="기타"><div class="dot"></div>기타</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 생리관련 -->
+      <div style="margin-top:5px">
+        <label class="cl sym-full" id="menCheck">
+          <input type="checkbox" name="symptom" value="생리관련"><div class="dot"></div>생리 관련
+        </label>
+        <div class="sub" id="sub-men">
+          <div class="cg" id="cg-menSub">
+            <label class="cl"><input type="checkbox" name="menSub" value="무월경"><div class="dot"></div>무월경</label>
+            <label class="cl"><input type="checkbox" name="menSub" value="생리통"><div class="dot"></div>생리통</label>
+            <label class="cl"><input type="checkbox" name="menSub" value="주기변화"><div class="dot"></div>주기변화</label>
+            <label class="cl"><input type="checkbox" name="menSub" value="양변화"><div class="dot"></div>양변화</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 방광염 -->
+      <div style="margin-top:5px">
+        <label class="cl sym-full" id="cysCheck">
+          <input type="checkbox" name="symptom" value="방광염"><div class="dot"></div>방광염
+        </label>
+        <div class="sub" id="sub-cys">
+          <div class="cg" id="cg-cysSub">
+            <label class="cl"><input type="checkbox" name="cysSub" value="배뇨통"><div class="dot"></div>배뇨통</label>
+            <label class="cl"><input type="checkbox" name="cysSub" value="빈뇨"><div class="dot"></div>빈뇨</label>
+            <label class="cl"><input type="checkbox" name="cysSub" value="잔뇨감"><div class="dot"></div>잔뇨감</label>
+            <label class="cl"><input type="checkbox" name="cysSub" value="혈뇨"><div class="dot"></div>혈뇨</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 종합검진 -->
+      <div style="margin-top:5px">
+        <label class="cl sym-full" id="checkupCheck">
+          <input type="checkbox" name="symptom" value="종합검진"><div class="dot"></div>종합검진
+        </label>
+        <div class="sub" id="sub-checkup">
+          <div class="cg" id="cg-checkupSub">
+            <label class="cl"><input type="checkbox" name="checkupSub" value="산전검진"><div class="dot"></div>산전검진</label>
+            <label class="cl"><input type="checkbox" name="checkupSub" value="웨딩검진"><div class="dot"></div>웨딩검진</label>
+            <label class="cl"><input type="checkbox" name="checkupSub" value="폐경검진"><div class="dot"></div>폐경검진</label>
+            <label class="cl"><input type="checkbox" name="checkupSub" value="정기검진"><div class="dot"></div>정기검진</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 산모 -->
+      <div style="margin-top:5px">
+        <label class="cl sym-full" id="motherCheck">
+          <input type="checkbox" name="symptom" value="산모"><div class="dot"></div>산모
+        </label>
+        <div class="sub" id="sub-mother">
+          <div class="cg" id="cg-motherSub">
+            <label class="cl"><input type="checkbox" name="motherSub" value="초음파 정기검진"><div class="dot"></div>초음파 정기검진</label>
+            <label class="cl"><input type="checkbox" name="motherSub" value="일반진료"><div class="dot"></div>일반진료</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-panel" id="panel4">
+    <div class="s-head">
+      <div class="lbl">Step 4 / 4</div>
+      <h2>접수 유형 · 동의</h2>
+    </div>
+
+    <div class="card">
+      <div class="ft">접수 유형 선택 <span class="req">*</span></div>
+      <label class="ins-card" id="ins1">
+        <input type="radio" name="insurance" value="보험" onclick="selIns(0)">
+        <div class="ins-name"><span class="badge h">건강보험</span>보험 접수</div>
+        <div class="ins-desc">건강보험공단에 접수되어 일반 접수보다 진료비가 저렴합니다.</div>
+      </label>
+      <label class="ins-card" id="ins2">
+        <input type="radio" name="insurance" value="일반" onclick="selIns(1)">
+        <div class="ins-name"><span class="badge p">비급여</span>일반 접수</div>
+        <div class="ins-desc">건강보험공단에 기록이 남지 않는 접수 방법입니다.</div>
+      </label>
+    </div>
+
+    <div class="card">
+      <div class="ft">개인정보 수집·이용 동의 <span class="req">*</span></div>
+      <div class="consent-box">
+        작성하신 내용은 개인정보 보호법에 의거하여 국민건강보험 적용과 진료기록부 작성 외에는 사용되지 않습니다.<br><br>
+        <strong>이용 및 보유기간:</strong> 작성일로부터 5년<br>
+        <strong>수집 항목:</strong> 성명, 생년월일, 주민등록번호, 연락처, 주소, 진료 관련 건강 정보<br>
+        <strong>수집 목적:</strong> 진료 및 진료기록부 작성, 건강보험공단 청구<br><br>
+        * 본원은 범죄예방 및 시설안전의 목적으로 CCTV 촬영(대기실, 복도, 진료실 및 시술실) 중에 있습니다.<br>
+        * 비급여항목(종합검진, 수액, 주사제 등)은 실비보험 청구가 불가할 수 있습니다.<br>
+        * 검사 결과 및 예약 일정 안내를 위한 SMS/알림 서비스를 제공 중입니다.
+      </div>
+      <label class="cl" id="consentLabel" style="width:100%">
+        <input type="checkbox" id="consent"><div class="dot"></div>
+        <span style="font-size:13px;font-weight:600">위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다.</span>
+      </label>
+    </div>
+
+    <div class="card">
+      <div class="ft">서명</div>
+      <div class="sig-wrap">
+        <canvas id="sigCanvas" height="120"></canvas>
+        <button class="sig-clear-btn" type="button" onclick="clearSig()">지우기</button>
+      </div>
+      <div class="hint">손가락 또는 펜으로 서명해주세요.</div>
+    </div>
+  </div>
+
+  <!-- Done -->
+  <div class="done-screen" id="doneScreen">
+    <div class="done-icon">✓</div>
+    <h3>접수가 완료되었습니다</h3>
+    <p>잠시 후 안내해 드리겠습니다.<br>편안히 기다려 주세요.</p>
+    <p style="margin-top:14px;font-size:12px;color:var(--muted)">88플러스내과·산부인과 · 02-972-8800</p>
+  </div>
+
+  <!-- Nav -->
+  <div class="fnav" id="fnav">
+    <button class="btn-p" id="btnP" disabled type="button">이전</button>
+    <button class="btn-n" id="btnN" type="button">다음</button>
+    <button class="btn-s" id="btnS" type="button">접수 완료</button>
+  </div>
+
+</div>
+
+<script>
+// ── State ──
+let cur = 1;
+const TOTAL = 4;
+
+// ── Radio/Checkbox styling ──
+function initSelectable(container, type) {
+  if (!container) return;
+  const items = container.querySelectorAll('.' + (type === 'radio' ? 'rl' : 'cl'));
+  items.forEach(item => {
+    const inp = item.querySelector('input');
+    if (!inp) return;
+    inp.addEventListener('change', () => {
+      if (type === 'radio') {
+        items.forEach(i => i.classList.remove('sel'));
+        if (inp.checked) item.classList.add('sel');
+      } else {
+        item.classList.toggle('sel', inp.checked);
+      }
+      // Handle sub-opt toggle
+      const subId = inp.dataset.sub;
+      const hideId = inp.dataset.hide;
+      if (subId) document.getElementById(subId)?.classList.add('on');
+      if (hideId) document.getElementById(hideId)?.classList.remove('on');
+    });
+  });
+}
+
+// Init all radio groups
+document.querySelectorAll('.rg').forEach(rg => initSelectable(rg, 'radio'));
+// Init all checkbox groups
+document.querySelectorAll('.cg').forEach(cg => initSelectable(cg, 'check'));
+// Init symptom checkboxes (individual ones with sub-opts)
+['vagCheck','menCheck','cysCheck','checkupCheck','motherCheck','consentLabel'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const inp = el.querySelector('input');
+  if (!inp) return;
+  inp.addEventListener('change', () => {
+    el.classList.toggle('sel', inp.checked);
+    const subMap = {
+      'vagCheck': 'sub-vag', 'menCheck': 'sub-men',
+      'cysCheck': 'sub-cys', 'checkupCheck': 'sub-checkup',
+      'motherCheck': 'sub-mother'
+    };
+    if (subMap[id]) document.getElementById(subMap[id])?.classList.toggle('on', inp.checked);
+  });
+});
+// Symptom grid checkboxes
+document.querySelectorAll('#cg-symptom .cl').forEach(cl => {
+  const inp = cl.querySelector('input');
+  inp?.addEventListener('change', () => cl.classList.toggle('sel', inp.checked));
+});
+
+// Insurance card selection
+function selIns(idx) {
+  ['ins1','ins2'].forEach((id, i) => {
+    document.getElementById(id)?.classList.toggle('sel', i === idx);
+  });
+}
+
+// ── Progress ──
+function updateProgress() {
+  document.querySelectorAll('.s-dot').forEach((dot, i) => {
+    dot.classList.remove('active','done');
+    const sp = dot.querySelector('span');
+    if (i + 1 < cur) { dot.classList.add('done'); if(sp) sp.textContent='✓'; }
+    else if (i + 1 === cur) { dot.classList.add('active'); if(sp) sp.textContent=i+1; }
+    else { if(sp) sp.textContent=i+1; }
+  });
+  const pct = ((cur - 1) / (TOTAL - 1)) * 100;
+  document.getElementById('progFill').style.width = pct + '%';
+}
+
+// ── Show step ──
+function showStep(n) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel' + n)?.classList.add('active');
+  document.getElementById('btnP').disabled = n === 1;
+  const btnN = document.getElementById('btnN');
+  const btnS = document.getElementById('btnS');
+  if (n === TOTAL) { btnN.style.display='none'; btnS.style.display='flex'; btnS.style.flex='2'; }
+  else { btnN.style.display='flex'; btnS.style.display='none'; }
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── Validation ──
+function validate(n) {
+  if (n === 1) {
+    if (!document.getElementById('name').value.trim()) { alert('성함을 입력해주세요.'); return false; }
+    if (document.getElementById('rrn1').value.length !== 6) { alert('주민등록번호 앞 6자리를 입력해주세요.'); return false; }
+    if (!document.getElementById('phone1').value.trim() || !document.getElementById('phone2').value.trim() || !document.getElementById('phone3').value.trim()) { alert('전화번호를 모두 입력해주세요.'); return false; }
+    if (!document.querySelector('input[name="marital"]:checked')) { alert('결혼 여부를 선택해주세요.'); return false; }
+  }
+  if (n === 2) {
+    if (!document.querySelector('input[name="sex"]:checked')) { alert('성경험 여부를 선택해주세요.'); return false; }
+  }
+  if (n === 3) {
+    if (!document.querySelector('input[name="symptom"]:checked')) { alert('내원 목적을 하나 이상 선택해주세요.'); return false; }
+  }
+  if (n === 4) {
+    if (!document.querySelector('input[name="insurance"]:checked')) { alert('접수 유형을 선택해주세요.'); return false; }
+    if (!document.getElementById('consent').checked) { alert('개인정보 수집·이용에 동의해주세요.'); return false; }
+  }
+  return true;
+}
+
+// ── Nav buttons ──
+document.getElementById('btnN').addEventListener('click', () => {
+  if (!validate(cur)) return;
+  if (cur < TOTAL) { cur++; showStep(cur); }
+});
+document.getElementById('btnP').addEventListener('click', () => {
+  if (cur > 1) { cur--; showStep(cur); }
+});
+document.getElementById('btnS').addEventListener('click', () => {
+  if (!validate(cur)) return;
+  submitForm();
+});
+
+// ── Submit ──
+function submitForm() {
+  const v = k => document.getElementById(k)?.value || '';
+  const rval = name => document.querySelector(`input[name="${name}"]:checked`)?.value || '';
+  const cvals = name => [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value).join(', ');
+
+  const data = {
+    submitted_at: new Date().toISOString(),
+    name: v('name'), rrn_front: v('rrn1'), phone: v('phone1') + v('phone2') + v('phone3'), address: v('address'),
+    marital: rval('marital'), lmp: v('lmp'),
+    cycle: rval('cycle'), cycle_days: v('cycleDays'),
+    sex_exp: rval('sex'),
+    delivery: rval('delivery'), delivery_count: v('deliveryCnt'), delivery_type: cvals('deliveryType'),
+    abortion: rval('abortion'), abortion_count: v('abortionCnt'), abortion_type: cvals('abortionType'),
+    edd: v('edd'), fetus: rval('fetus'),
+    hpv_vax: rval('hpv'), hpv_type: rval('hpvType'), hpv_dose: rval('hpvDose'),
+    pap: rval('pap'), pap_months: v('papMonths'),
+    allergy: rval('allergy'), allergy_drug: v('allergyDrug'), allergy_symptom: v('allergySymptom'),
+    meds: rval('meds'), meds_text: v('medsText'),
+    pmhx: rval('pmhx'), pmhx_types: cvals('pmhxType'), pmhx_other: v('pmhxOther'),
+    surg: rval('surg'), surg_text: v('surgText'),
+    symptoms: [...document.querySelectorAll('input[name="symptom"]:checked')].map(x=>x.value),
+    vag_sub: cvals('vagSub'), men_sub: cvals('menSub'),
+    cys_sub: cvals('cysSub'), checkup_sub: cvals('checkupSub'), mother_sub: cvals('motherSub'),
+    insurance: rval('insurance')
+  };
+
+  const API = 'https://script.google.com/macros/s/AKfycbxUVBCaJN5HtyO0ru8algX_fqRRtIBpgx8H_WNXhh4PS4Cq42dUsE_4vdJe5wQ6JGM/exec';
+  const btn = document.getElementById('btnS');
+  btn.disabled = true;
+  btn.textContent = '저장 중...';
+
+  fetch(API, {method:'POST', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(data)})
+    .then(res => res.json())
+    .then(result => {
+      if (result.ok) {
+        document.querySelector('.prog-wrap').style.display = 'none';
+        document.querySelectorAll('.step-panel').forEach(p => p.style.display='none');
+        document.getElementById('fnav').style.display = 'none';
+        document.getElementById('doneScreen').style.display = 'block';
+        window.scrollTo({top:0,behavior:'smooth'});
+      } else {
+        alert('저장 오류\n\n' + (result.error || '알 수 없는 오류'));
+        btn.disabled = false;
+        btn.textContent = '접수 완료';
+      }
+    })
+    .catch(err => {
+      alert('전송 실패\n\n확인사항:\n1. Apps Script 배포 > 액세스: 모든 사용자\n2. 권한 승인 완료 여부\n\n오류: ' + err.message);
+      btn.disabled = false;
+      btn.textContent = '접수 완료';
+    });
+}
+
+// ── Signature Canvas ──
+const canvas = document.getElementById('sigCanvas');
+const ctx = canvas.getContext('2d');
+let drawing = false, lx = 0, ly = 0;
+
+function resize() {
+  const w = canvas.parentElement.getBoundingClientRect().width;
+  canvas.width = w; canvas.height = 120;
+}
+window.addEventListener('load', resize);
+window.addEventListener('resize', resize);
+
+function pos(e) {
+  const r = canvas.getBoundingClientRect();
+  const sx = canvas.width / r.width, sy = canvas.height / r.height;
+  const src = e.touches ? e.touches[0] : e;
+  return { x: (src.clientX - r.left) * sx, y: (src.clientY - r.top) * sy };
+}
+function draw(e) {
+  if (!drawing) return;
+  const p = pos(e);
+  ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(p.x, p.y);
+  ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.stroke();
+  lx = p.x; ly = p.y;
+}
+canvas.addEventListener('mousedown', e => { drawing=true; const p=pos(e); lx=p.x; ly=p.y; });
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', ()=>drawing=false);
+canvas.addEventListener('mouseleave', ()=>drawing=false);
+canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing=true; const p=pos(e); lx=p.x; ly=p.y; }, {passive:false});
+canvas.addEventListener('touchmove', e => { e.preventDefault(); draw(e); }, {passive:false});
+canvas.addEventListener('touchend', ()=>drawing=false);
+
+function clearSig() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+// ── Radio toggle (클릭 시 선택 취소) ──
+document.querySelectorAll('.rl input[type="radio"]').forEach(inp => {
+  inp.addEventListener('mousedown', function() {
+    this.dataset.pre = this.checked ? '1' : '0';
+  });
+  inp.addEventListener('touchstart', function() {
+    this.dataset.pre = this.checked ? '1' : '0';
+  }, {passive: true});
+  inp.addEventListener('click', function() {
+    if (this.dataset.pre === '1') {
+      this.checked = false;
+      this.closest('.rl').classList.remove('sel');
+      // sub-opt 닫기
+      const hideId = this.dataset.sub || this.dataset.hide;
+      if (this.dataset.sub) document.getElementById(this.dataset.sub)?.classList.remove('on');
+      if (this.dataset.hide) document.getElementById(this.dataset.hide)?.classList.remove('on');
+    }
+    this.dataset.pre = '0';
+  });
+});
+
+// ── Phone auto-advance ──
+function phoneAutoNext(el, nextId, maxLen) {
+  if (el.value.length >= maxLen) {
+    var next = document.getElementById(nextId);
+    if (next) next.focus();
+  }
+}
+
+// Init
+showStep(1);
+</script>
+</body>
+</html>
