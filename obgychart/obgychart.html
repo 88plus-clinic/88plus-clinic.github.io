@@ -118,10 +118,10 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 
 /* ── Nav ── */
 .fnav{display:flex;gap:10px;margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
-.btn-p{flex:1;padding:13px;border:1.5px solid var(--bi);border-radius:10px;background:var(--bg);font-family:inherit;font-size:14px;font-weight:500;color:var(--sub);cursor:pointer;transition:all .18s}
+.btn-p{flex:1;padding:13px;border:1.5px solid var(--bi);border-radius:10px;background:var(--bg);font-family:inherit;font-size:14px;font-weight:500;color:var(--sub);cursor:pointer;transition:all .18s;text-align:center;display:flex;align-items:center;justify-content:center}
 .btn-p:hover:not(:disabled){border-color:var(--g);color:var(--g)}
 .btn-p:disabled{opacity:.3;cursor:default}
-.btn-n,.btn-s{flex:2;padding:13px;border:none;border-radius:10px;background:var(--g);font-family:inherit;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:background .18s}
+.btn-n,.btn-s{flex:1;padding:13px;border:none;border-radius:10px;background:var(--g);font-family:inherit;font-size:15px;font-weight:700;color:#fff;cursor:pointer;transition:background .18s;text-align:center;display:flex;align-items:center;justify-content:center}
 .btn-n:hover,.btn-s:hover{background:var(--g-dark)}
 .btn-s{display:none}
 
@@ -397,22 +397,10 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="sym-grid" id="cg-symptom">
-        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 검사"><div class="dot"></div>자궁경부암 검사</label>
-        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 백신"><div class="dot"></div>자궁경부암 백신</label>
-        <label class="cl"><input type="checkbox" name="symptom" value="임신확인"><div class="dot"></div>임신확인</label>
-        <label class="cl"><input type="checkbox" name="symptom" value="임신·난임 상담"><div class="dot"></div>임신·난임 상담</label>
-        <label class="cl"><input type="checkbox" name="symptom" value="질출혈"><div class="dot"></div>질출혈</label>
-        <label class="cl"><input type="checkbox" name="symptom" value="성병검사"><div class="dot"></div>성병검사</label>
-        <label class="cl"><input type="checkbox" name="symptom" value="피임상담"><div class="dot"></div>피임상담</label>
-        <label class="cl"><input type="checkbox" name="symptom" value="응급피임약"><div class="dot"></div>응급피임약</label>
-        <label class="cl"><input type="checkbox" name="symptom" value="폐경상담"><div class="dot"></div>폐경상담</label>
-        <label class="cl"><input type="checkbox" name="symptom" value="복통·골반통·요통"><div class="dot"></div>복통·골반통·요통</label>
-      </div>
-
+      <!-- 세부 항목 있는 증상 (위로) -->
       <!-- 질염 -->
-      <div style="margin-top:8px">
-        <label class="cl sym-full" id="vagCheck">
+      <div>
+        <label class="cl sym-full" id="vagCheck" style="margin-top:0">
           <input type="checkbox" name="symptom" value="질염"><div class="dot"></div>질염
         </label>
         <div class="sub" id="sub-vag">
@@ -422,21 +410,6 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
             <label class="cl"><input type="checkbox" name="vagSub" value="가려움"><div class="dot"></div>가려움</label>
             <label class="cl"><input type="checkbox" name="vagSub" value="통증"><div class="dot"></div>통증</label>
             <label class="cl"><input type="checkbox" name="vagSub" value="기타"><div class="dot"></div>기타</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- 생리관련 -->
-      <div style="margin-top:5px">
-        <label class="cl sym-full" id="menCheck">
-          <input type="checkbox" name="symptom" value="생리관련"><div class="dot"></div>생리 관련
-        </label>
-        <div class="sub" id="sub-men">
-          <div class="cg" id="cg-menSub">
-            <label class="cl"><input type="checkbox" name="menSub" value="무월경"><div class="dot"></div>무월경</label>
-            <label class="cl"><input type="checkbox" name="menSub" value="생리통"><div class="dot"></div>생리통</label>
-            <label class="cl"><input type="checkbox" name="menSub" value="주기변화"><div class="dot"></div>주기변화</label>
-            <label class="cl"><input type="checkbox" name="menSub" value="양변화"><div class="dot"></div>양변화</label>
           </div>
         </div>
       </div>
@@ -456,19 +429,33 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
         </div>
       </div>
 
-      <!-- 종합검진 -->
+      <!-- 생리관련 -->
       <div style="margin-top:5px">
-        <label class="cl sym-full" id="checkupCheck">
-          <input type="checkbox" name="symptom" value="종합검진"><div class="dot"></div>종합검진
+        <label class="cl sym-full" id="menCheck">
+          <input type="checkbox" name="symptom" value="생리관련"><div class="dot"></div>생리 관련
         </label>
-        <div class="sub" id="sub-checkup">
-          <div class="cg" id="cg-checkupSub">
-            <label class="cl"><input type="checkbox" name="checkupSub" value="산전검진"><div class="dot"></div>산전검진</label>
-            <label class="cl"><input type="checkbox" name="checkupSub" value="웨딩검진"><div class="dot"></div>웨딩검진</label>
-            <label class="cl"><input type="checkbox" name="checkupSub" value="폐경검진"><div class="dot"></div>폐경검진</label>
-            <label class="cl"><input type="checkbox" name="checkupSub" value="정기검진"><div class="dot"></div>정기검진</label>
+        <div class="sub" id="sub-men">
+          <div class="cg" id="cg-menSub">
+            <label class="cl"><input type="checkbox" name="menSub" value="무월경"><div class="dot"></div>무월경</label>
+            <label class="cl"><input type="checkbox" name="menSub" value="생리통"><div class="dot"></div>생리통</label>
+            <label class="cl"><input type="checkbox" name="menSub" value="주기변화"><div class="dot"></div>주기변화</label>
+            <label class="cl"><input type="checkbox" name="menSub" value="양변화"><div class="dot"></div>양변화</label>
           </div>
         </div>
+      </div>
+
+      <!-- 단순 증상 (2열 그리드) -->
+      <div class="sym-grid" id="cg-symptom" style="margin-top:5px">
+        <label class="cl"><input type="checkbox" name="symptom" value="질출혈"><div class="dot"></div>질출혈</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="복통·골반통·요통"><div class="dot"></div>복통·골반통·요통</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 검사"><div class="dot"></div>자궁경부암 검사</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 백신"><div class="dot"></div>자궁경부암 백신</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="임신 확인"><div class="dot"></div>임신 확인</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="난임 상담"><div class="dot"></div>난임 상담</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="응급피임약"><div class="dot"></div>응급피임약</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="피임 상담"><div class="dot"></div>피임 상담</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="성병 검사"><div class="dot"></div>성병 검사</label>
+        <label class="cl"><input type="checkbox" name="symptom" value="갱년기 상담"><div class="dot"></div>갱년기 상담</label>
       </div>
 
       <!-- 산모 -->
@@ -480,6 +467,21 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
           <div class="cg" id="cg-motherSub">
             <label class="cl"><input type="checkbox" name="motherSub" value="초음파 정기검진"><div class="dot"></div>초음파 정기검진</label>
             <label class="cl"><input type="checkbox" name="motherSub" value="일반진료"><div class="dot"></div>일반진료</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 종합검진 -->
+      <div style="margin-top:5px">
+        <label class="cl sym-full" id="checkupCheck">
+          <input type="checkbox" name="symptom" value="종합검진"><div class="dot"></div>종합검진
+        </label>
+        <div class="sub" id="sub-checkup">
+          <div class="cg" id="cg-checkupSub">
+            <label class="cl"><input type="checkbox" name="checkupSub" value="산전검진"><div class="dot"></div>산전검진</label>
+            <label class="cl"><input type="checkbox" name="checkupSub" value="웨딩검진"><div class="dot"></div>웨딩검진</label>
+            <label class="cl"><input type="checkbox" name="checkupSub" value="폐경검진"><div class="dot"></div>폐경검진</label>
+            <label class="cl"><input type="checkbox" name="checkupSub" value="정기검진"><div class="dot"></div>정기검진</label>
           </div>
         </div>
       </div>
@@ -632,7 +634,7 @@ function showStep(n) {
   document.getElementById('btnP').disabled = n === 1;
   const btnN = document.getElementById('btnN');
   const btnS = document.getElementById('btnS');
-  if (n === TOTAL) { btnN.style.display='none'; btnS.style.display='flex'; btnS.style.flex='2'; }
+  if (n === TOTAL) { btnN.style.display='none'; btnS.style.display='flex'; btnS.style.flex='1'; }
   else { btnN.style.display='flex'; btnS.style.display='none'; }
   updateProgress();
   window.scrollTo({top:0,behavior:'smooth'});
