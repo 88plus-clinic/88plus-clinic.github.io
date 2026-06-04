@@ -34,9 +34,9 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 .pg-title{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:600;color:var(--g)}
 
 /* ── Language toggle ── */
-.lang-toggle{position:absolute;top:12px;right:14px;display:flex;border:1px solid var(--bi);border-radius:8px;overflow:hidden}
-.lang-toggle button{border:none;background:var(--bg);color:var(--muted);font-family:inherit;font-size:14px;font-weight:600;padding:5px 11px;cursor:pointer;transition:all .15s}
-.lang-toggle button.on{background:var(--g);color:#fff}
+.lang-bar{display:flex;background:var(--bg);border-bottom:1px solid var(--border)}
+.lang-tab{flex:1;border:none;background:var(--bg);color:var(--muted);font-family:inherit;font-size:16px;font-weight:600;padding:14px;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s}
+.lang-tab.on{color:var(--g);border-bottom-color:var(--g);background:var(--g-pale)}
 
 /* ── Progress ── */
 .prog-wrap{background:var(--bg);border-bottom:1px solid var(--border);padding:18px 20px 0;position:sticky;top:0;z-index:100}
@@ -131,14 +131,16 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 </head>
 <body>
 
+<!-- Language bar -->
+<div class="lang-bar">
+  <button id="btnKo" class="lang-tab on" onclick="setLang('ko')">한국어</button>
+  <button id="btnEn" class="lang-tab" onclick="setLang('en')">English</button>
+</div>
+
 <!-- Header -->
 <div class="pg-header">
   <div class="pg-clinic" data-ko="88플러스내과·산부인과" data-en="88 Plus Internal Medicine &amp; OB/GYN">88플러스내과·산부인과</div>
   <div class="pg-title" data-ko="산부인과 초진 접수" data-en="OB/GYN New Patient Registration">산부인과 초진 접수</div>
-  <div class="lang-toggle">
-    <button id="btnKo" class="on" onclick="setLang('ko')">한국어</button>
-    <button id="btnEn" onclick="setLang('en')">EN</button>
-  </div>
 </div>
 
 <!-- Progress -->
