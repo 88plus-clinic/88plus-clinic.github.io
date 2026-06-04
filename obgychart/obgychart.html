@@ -668,7 +668,7 @@ function showStep(n){
   document.getElementById('panel'+n).classList.add('active');
   document.getElementById('btnP').disabled = n===1;
   var btnN=document.getElementById('btnN'), btnS=document.getElementById('btnS');
-  if(n===TOTAL){ btnN.style.display='none'; btnS.style.display='flex'; btnS.style.flex='1'; }
+  if(n===TOTAL){ btnN.style.display='none'; btnS.style.display='flex'; btnS.style.flex='1'; setTimeout(resize, 60); }
   else { btnN.style.display='flex'; btnS.style.display='none'; }
   updateProgress();
   window.scrollTo({top:0,behavior:'smooth'});
@@ -747,7 +747,7 @@ function submitForm(){
 // ── 서명 ──
 var canvas=document.getElementById('sigCanvas'), ctx=canvas.getContext('2d');
 var drawing=false, lx=0, ly=0, sigDrawn=false;
-function resize(){ canvas.width=canvas.parentElement.getBoundingClientRect().width; canvas.height=120; }
+function resize(){ var w=canvas.parentElement.getBoundingClientRect().width; if(w && Math.abs(w-canvas.width)>1){ canvas.width=w; canvas.height=120; sigDrawn=false; } }
 window.addEventListener('load', resize);
 window.addEventListener('resize', resize);
 function pos(e){ var r=canvas.getBoundingClientRect(); var sx=canvas.width/r.width, sy=canvas.height/r.height; var s=e.touches?e.touches[0]:e; return {x:(s.clientX-r.left)*sx, y:(s.clientY-r.top)*sy}; }
