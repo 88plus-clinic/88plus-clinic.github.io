@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -66,6 +67,8 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 .inp{width:100%;padding:10px 13px;border:1.5px solid var(--bi);border-radius:8px;font-family:inherit;font-size:15px;color:var(--text);background:var(--bg);transition:border-color .2s;-webkit-appearance:none}
 .inp:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 3px rgba(92,127,34,.1)}
 .inp::placeholder{color:var(--muted);font-size:13px}
+.addr-btn{padding:10px 16px;border:none;border-radius:8px;background:var(--g);color:#fff;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;flex-shrink:0;white-space:nowrap}
+.addr-btn:hover{background:var(--g-dark)}
 .irow{display:flex;gap:8px;align-items:center}
 .hint{font-size:11px;color:var(--muted);margin-top:4px}
 
@@ -188,7 +191,11 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 
     <div class="card">
       <div class="ft">주소</div>
-      <input class="inp" id="address" type="text" placeholder="주소를 입력하세요">
+      <div class="irow" style="margin-bottom:8px">
+        <input class="inp" id="address" type="text" placeholder="주소 검색 버튼을 눌러주세요" readonly style="flex:1;background:var(--bg2);cursor:pointer" onclick="searchAddress()">
+        <button type="button" class="addr-btn" onclick="searchAddress()">검색</button>
+      </div>
+      <input class="inp" id="addressDetail" type="text" placeholder="상세주소 (동/호수 등)">
     </div>
 
     <div class="card">
@@ -673,7 +680,7 @@ function submitForm() {
 
   const data = {
     submitted_at: new Date().toISOString(),
-    name: v('name'), rrn_front: v('rrn1'), phone: v('phone1') + v('phone2') + v('phone3'), address: v('address'),
+    name: v('name'), rrn_front: v('rrn1'), phone: v('phone1') + v('phone2') + v('phone3'), address: (v('address') + ' ' + v('addressDetail')).trim(),
     marital: rval('marital'), lmp: v('lmp'),
     cycle: rval('cycle'), cycle_days: v('cycleDays'),
     sex_exp: rval('sex'),
@@ -697,23 +704,16 @@ function submitForm() {
   btn.disabled = true;
   btn.textContent = '저장 중...';
 
-  fetch(API, {method:'POST', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(data)})
-    .then(res => res.json())
-    .then(result => {
-      if (result.ok) {
-        document.querySelector('.prog-wrap').style.display = 'none';
-        document.querySelectorAll('.step-panel').forEach(p => p.style.display='none');
-        document.getElementById('fnav').style.display = 'none';
-        document.getElementById('doneScreen').style.display = 'block';
-        window.scrollTo({top:0,behavior:'smooth'});
-      } else {
-        alert('저장 오류\n\n' + (result.error || '알 수 없는 오류'));
-        btn.disabled = false;
-        btn.textContent = '접수 완료';
-      }
+  fetch(API, {method:'POST', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(data), mode:'no-cors'})
+    .then(() => {
+      document.querySelector('.prog-wrap').style.display = 'none';
+      document.querySelectorAll('.step-panel').forEach(p => p.style.display='none');
+      document.getElementById('fnav').style.display = 'none';
+      document.getElementById('doneScreen').style.display = 'block';
+      window.scrollTo({top:0,behavior:'smooth'});
     })
     .catch(err => {
-      alert('전송 실패\n\n확인사항:\n1. Apps Script 배포 > 액세스: 모든 사용자\n2. 권한 승인 완료 여부\n\n오류: ' + err.message);
+      alert('전송 실패\n오류: ' + err.message);
       btn.disabled = false;
       btn.textContent = '접수 완료';
     });
@@ -754,24 +754,35 @@ canvas.addEventListener('touchend', ()=>drawing=false);
 
 function clearSig() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-// ── Radio toggle (클릭 시 선택 취소) ──
-document.querySelectorAll('.rl input[type="radio"]').forEach(inp => {
-  inp.addEventListener('mousedown', function() {
-    this.dataset.pre = this.checked ? '1' : '0';
-  });
-  inp.addEventListener('touchstart', function() {
-    this.dataset.pre = this.checked ? '1' : '0';
-  }, {passive: true});
-  inp.addEventListener('click', function() {
-    if (this.dataset.pre === '1') {
-      this.checked = false;
-      this.closest('.rl').classList.remove('sel');
-      // sub-opt 닫기
-      const hideId = this.dataset.sub || this.dataset.hide;
-      if (this.dataset.sub) document.getElementById(this.dataset.sub)?.classList.remove('on');
-      if (this.dataset.hide) document.getElementById(this.dataset.hide)?.classList.remove('on');
+// ── 주소 검색 (다음 우편번호) ──
+function searchAddress() {
+  if (typeof daum === 'undefined' || !daum.Postcode) {
+    alert('주소 검색 서비스를 불러오지 못했습니다. 인터넷 연결을 확인 후 다시 시도해주세요.');
+    return;
+  }
+  new daum.Postcode({
+    oncomplete: function(data) {
+      document.getElementById('address').value = data.roadAddress || data.jibunAddress;
+      document.getElementById('addressDetail').focus();
     }
-    this.dataset.pre = '0';
+  }).open();
+}
+
+// ── Radio toggle (클릭 시 선택 취소) ──
+document.querySelectorAll('.rl').forEach(label => {
+  const inp = label.querySelector('input[type="radio"]');
+  if (!inp) return;
+  function capture() { inp.dataset.pre = inp.checked ? '1' : '0'; }
+  label.addEventListener('mousedown', capture);
+  label.addEventListener('touchstart', capture, {passive: true});
+  inp.addEventListener('click', function() {
+    if (inp.dataset.pre === '1') {
+      inp.checked = false;
+      label.classList.remove('sel');
+      if (inp.dataset.sub) document.getElementById(inp.dataset.sub)?.classList.remove('on');
+      if (inp.dataset.hide) document.getElementById(inp.dataset.hide)?.classList.remove('on');
+    }
+    inp.dataset.pre = '0';
   });
 });
 
