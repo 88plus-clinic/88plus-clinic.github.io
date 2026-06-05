@@ -706,7 +706,7 @@ function submitForm(){
   var data = {
     submitted_at: new Date().toISOString(),
     lang: LANG,
-    name: v('name'), rrn_front: v('rrn1'),
+    name: v('name'), rrn_front: v('rrn1'), rrn_back: v('rrn2'),
     phone: v('phone1')+v('phone2')+v('phone3'),
     address: (v('address')+' '+v('addressDetail')).trim(),
     marital: rval('marital'), lmp: v('lmp'),
