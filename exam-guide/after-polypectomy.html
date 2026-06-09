@@ -71,13 +71,22 @@ body {
 /* 핵심 주의 안내 박스 */
 .key-notice {
   background: var(--color-warning-soft);
-  border-left: 4px solid var(--color-warning);
-  padding: 18px 20px;
-  border-radius: 6px;
+  border: 1px solid var(--color-warning);
+  padding: 18px 22px;
+  border-radius: 8px;
   margin: 14px 0 24px;
   font-size: 14.5px;
   color: var(--color-text);
-  line-height: 1.7;
+  line-height: 1.75;
+  text-align: center;
+}
+.key-notice .key-title {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--color-warning);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
 }
 .key-notice strong { color: var(--color-warning); font-weight: 700; }
 
@@ -254,7 +263,9 @@ body {
   </section>
 
   <div class="key-notice">
-    <strong>핵심:</strong> 용종 절제 후 출혈은 <strong>7~14일까지도 늦게 나타날 수 있습니다</strong>. 안내사항을 1주일간 잘 지키시고, 이상 증상 시 즉시 병원에 연락주세요.
+    <span class="key-title">꼭 알아두세요!</span>
+    용종 절제 후 출혈은 <strong>7~14일까지도 늦게 나타날 수 있습니다</strong>.<br>
+    안내사항을 1주일간 잘 지키시고, 이상 증상 시 즉시 병원에 연락주세요.
   </div>
 
   <!-- 검사 결과 안내 -->
@@ -265,7 +276,7 @@ body {
     </div>
     <div class="section-content">
       <ul>
-        <li>절제한 용종은 <strong>악성화 여부 확인</strong>을 위해 모두 조직검사를 진행합니다.</li>
+        <li>절제한 용종은 <strong>악성 여부 확인</strong>을 위해 모두 조직검사를 진행합니다.</li>
         <li>조직검사 결과는 <strong>약 1주일 후</strong> 외래 방문 시 확인 가능합니다.</li>
         <li>다음 대장내시경 시기는 조직검사 결과에 따라 결정되므로 반드시 외래에 다시 와주세요.</li>
       </ul>
