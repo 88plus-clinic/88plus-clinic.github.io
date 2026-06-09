@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>검사 후 안내사항 | 88플러스내과산부인과</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+:root {
+  --color-bg: #fafaf8;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #5a5a5a;
+  --color-text-light: #8a8a8a;
+  --color-primary: #6E9230;
+  --color-primary-text: #5C7F22;
+  --color-primary-dark: #547321;
+  --color-primary-soft: #F2F7E5;
+  --color-line: #e5e5e0;
+  --color-warning: #8b5a00;
+  --color-warning-soft: #fdf6e3;
+  --color-alert: #c9302c;
+  --color-alert-soft: #fdecea;
+  --font-serif: 'Noto Serif KR', serif;
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.75;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.top-bar > .container,
+.site-header > .container { max-width: 1100px; }
+
+.hero { padding: 40px 0 24px; text-align: center; }
+.hero .label {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--color-primary-text);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+.hero h1 strong { color: var(--color-primary-text); font-weight: 600; }
+.hero p { font-size: 15px; color: var(--color-text-muted); line-height: 1.8; }
+
+/* 검사 선택 영역 */
+.exam-tabs {
+  display: flex;
+  gap: 8px;
+  background: var(--color-primary-soft);
+  padding: 10px;
+  border-radius: 12px;
+  margin: 14px 0 18px;
+  border: 1px solid #d6e3bf;
+}
+.exam-tab {
+  flex: 1;
+  text-align: center;
+  padding: 14px 12px;
+  background: #fff;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.exam-tab.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary-dark);
+}
+.exam-tab small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+/* 부가 조건 (수면/조직검사) */
+.cond-box {
+  background: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 24px;
+}
+.cond-box .cond-title {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+.cond-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.cond-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: #f8f8f5;
+  border: 1px solid var(--color-line);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13.5px;
+  color: var(--color-text);
+  user-select: none;
+  transition: all 0.15s;
+}
+.cond-check input {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+.cond-check.checked {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  color: var(--color-primary-text);
+  font-weight: 600;
+}
+
+/* 섹션 */
+.section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  padding: 22px 20px;
+  margin-bottom: 16px;
+}
+.section[data-only] { display: none; }
+.section[data-only].show { display: block; }
+.section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.section-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.section h2 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+.section-content { font-size: 14.5px; line-height: 1.85; }
+.section-content p { margin-bottom: 10px; }
+.section-content ul { list-style: none; padding-left: 0; }
+.section-content ul li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 6px;
+}
+.section-content ul li::before {
+  content: '•';
+  position: absolute;
+  left: 4px;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+.section-content strong { color: var(--color-primary-text); font-weight: 600; }
+.section-content h3 {
+  font-size: 14.5px;
+  margin: 14px 0 6px;
+  color: var(--color-primary-text);
+  font-weight: 600;
+}
+
+/* 응급 알림 */
+.alert-box {
+  background: var(--color-alert-soft);
+  border-left: 4px solid var(--color-alert);
+  padding: 18px 20px;
+  border-radius: 6px;
+  margin: 18px 0;
+}
+.alert-box .alert-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-alert);
+  margin-bottom: 8px;
+}
+.alert-box .alert-content { font-size: 14px; line-height: 1.7; }
+.alert-box ul { list-style: none; padding-left: 0; }
+.alert-box ul li { position: relative; padding-left: 14px; margin-bottom: 4px; }
+.alert-box ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-alert);
+  font-weight: 700;
+}
+
+/* 연락처 카드 */
+.contact-card {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 26px 22px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 26px 0;
+}
+.contact-card .name { font-family: var(--font-serif); font-size: 17px; margin-bottom: 6px; }
+.contact-card .tel { font-size: 26px; font-weight: 700; margin: 6px 0 10px; }
+.contact-card .tel a { color: #fff; text-decoration: none; }
+.contact-card .hours { font-size: 13px; opacity: 0.9; line-height: 1.7; }
+
+/* 용종 절제 안내 링크 */
+.polyp-link {
+  display: block;
+  background: #fff;
+  border: 2px dashed var(--color-primary);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin: 14px 0 22px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--color-primary-text);
+  font-weight: 600;
+  font-size: 15px;
+  transition: background 0.15s;
+}
+.polyp-link:hover { background: var(--color-primary-soft); }
+.polyp-link span {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.simple-footer {
+  text-align: center;
+  padding: 30px 20px 40px;
+  color: var(--color-text-light);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 22px; }
+  .section { padding: 18px 16px; }
+  .section h2 { font-size: 16px; }
+  .exam-tab { padding: 12px 8px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <span>88플러스내과·산부인과 │ 내과·산부인과 전문의 3인 협진</span>
+    <a class="tel" href="tel:0229728800">진료문의 <strong>02-972-8800</strong></a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../index.html" class="site-logo">
+      <img src="../logo.png" alt="88플러스내과산부인과" class="logo-img">
+    </a>
+    <nav class="main-nav">
+      <a href="../index.html">홈</a>
+      <a href="../about.html">병원 소개</a>
+      <a href="../services.html">진료과목</a>
+      <a href="../checkup.html">건강검진</a>
+      <a href="../pricing.html">비급여 안내</a>
+      <a href="../location.html">예약 안내</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="메뉴">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="../index.html">홈</a>
+    <a href="../about.html">병원 소개</a>
+    <a href="../services.html">진료과목</a>
+    <a href="../checkup.html">건강검진</a>
+    <a href="../pricing.html">비급여 안내</a>
+    <a href="../location.html">예약 안내</a>
+  </div>
+</header>
+
+<div class="container">
+  <section class="hero">
+    <div class="label">After Examination</div>
+    <h1>내시경 검사<br><strong>수고하셨습니다</strong></h1>
+    <p>오늘 검사를 받으시느라 수고 많으셨습니다.<br>회복과 안전을 위해 다음 안내사항을 꼭 확인해주세요.</p>
+  </section>
+
+  <!-- 검사 종류 선택 -->
+  <div class="exam-tabs">
+    <button class="exam-tab active" data-exam="gastro">위내시경<small>Gastroscopy</small></button>
+    <button class="exam-tab" data-exam="colono">대장내시경<small>Colonoscopy</small></button>
+  </div>
+
+  <!-- 용종 절제 시 별도 페이지 안내 -->
+  <a href="after-polypectomy.html" class="polyp-link" id="polypLink" style="display:none;">
+    용종 절제를 받으셨나요? →
+    <span>용종 절제 후 안내사항은 별도 페이지를 확인해주세요</span>
+  </a>
+
+  <!-- 조직검사 결과 안내 (공통) -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">📋</div>
+      <h2>조직검사 결과 안내</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li>조직검사를 진행하신 경우 결과는 <strong>약 1주일 후</strong> 외래 방문 시 확인 가능합니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 수면 내시경 (공통, 조건부) -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">💤</div>
+      <h2>수면 내시경 받으신 경우</h2>
+    </div>
+    <div class="section-content">
+      <p><strong>검사 후 24시간</strong>은 다음 활동을 피해주세요.</p>
+      <ul>
+        <li>운전, 자전거, 오토바이 등 모든 기계 조작</li>
+        <li>중요한 의사결정 (계약, 서명 등)</li>
+        <li>음주</li>
+        <li>격렬한 운동</li>
+      </ul>
+      <p style="margin-top:10px;">검사 직후 어지럼증, 졸음, 일시적 기억 저하가 있을 수 있습니다.<br><strong>검사 당일 충분히 휴식</strong>을 취해주세요.</p>
+    </div>
+  </div>
+
+  <!-- 위내시경 전용: 식이 -->
+  <div class="section" data-only="gastro">
+    <div class="section-head">
+      <div class="section-icon">🍽️</div>
+      <h2>식이 안내</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li>검사 후 <strong>1시간 정도는 금식</strong>해주세요. 인후 마취가 풀리면 드실 수 있습니다.</li>
+        <li><strong>당일 점심부터</strong> 자극 없는 일반식이 가능합니다.</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>당일은 피해주세요</strong>: 매운·짠·뜨거운 음식, 술, 카페인 음료, 탄산음료</p>
+    </div>
+  </div>
+
+  <!-- 위내시경 전용: 알아두실 점 -->
+  <div class="section" data-only="gastro">
+    <div class="section-head">
+      <div class="section-icon">📌</div>
+      <h2>알아두실 점</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li><strong>인후통·이물감</strong>: 1~2일 정도 목이 칼칼하거나 가벼운 통증이 있을 수 있으며 자연스럽게 호전됩니다.</li>
+        <li><strong>복부 불편감</strong>: 검사 중 주입된 공기로 인해 일시적인 트림이나 더부룩함이 있을 수 있습니다.</li>
+        <li><strong>구역감</strong>: 마취제 영향으로 가벼운 메스꺼움이 있을 수 있습니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 대장내시경 전용: 식이 -->
+  <div class="section" data-only="colono">
+    <div class="section-head">
+      <div class="section-icon">🍽️</div>
+      <h2>식이 안내</h2>
+    </div>
+    <div class="section-content">
+      <p>검사 후 <strong>1~2시간 후</strong>부터 가벼운 식사를 시작하실 수 있습니다.</p>
+      <ul>
+        <li><strong>1단계 (1~2시간 후)</strong>: 미음, 흰죽 등 부드러운 음식</li>
+        <li><strong>당일 저녁</strong>: 자극 없는 일반식 가능</li>
+        <li><strong>다음 날부터</strong>: 평소 식사로 복귀</li>
+      </ul>
+      <p style="margin-top:10px;"><strong>당일은 피해주세요</strong>: 매운·짠 음식, 술, 카페인 음료, 탄산음료, 견과류·씨 있는 과일</p>
+    </div>
+  </div>
+
+  <!-- 대장내시경 전용: 알아두실 점 -->
+  <div class="section" data-only="colono">
+    <div class="section-head">
+      <div class="section-icon">📌</div>
+      <h2>알아두실 점</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li><strong>복부 팽만·가스 배출</strong>: 검사 시 대장을 부풀리기 위해 공기를 주입하므로 검사 후 복부 팽만감과 가스 배출이 있을 수 있습니다. <strong>정상적인 반응</strong>이며 시간이 지나면 자연스럽게 해소됩니다. 걷기 등 가벼운 활동이나 복부 마사지가 도움이 됩니다.</li>
+        <li><strong>항문 불편감</strong>: 내시경 삽입 부위인 항문 주변에 가벼운 통증, 따끔거림, 이물감이 1~2일 정도 있을 수 있으며 자연스럽게 호전됩니다. <strong>증상이 심한 경우 따뜻한 물로 좌욕</strong>을 권장합니다 (하루 2~3회, 10~15분).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 조직검사 (공통, 조건부) -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">🔬</div>
+      <h2>조직검사 받으신 경우</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li>조직을 채취한 부위에 <strong>미세한 출혈</strong>이 1~2일간 있을 수 있으나 대부분 자연 지혈됩니다.</li>
+        <li>자극적인 음식과 술은 <strong>검사 당일은</strong> 피해주세요.</li>
+        <li>아스피린·항응고제를 복용 중이신 경우 담당 의사 안내에 따라 복용 시점을 결정합니다.</li>
+        <li>결과는 <strong>약 1주일 후</strong> 외래에서 확인 가능합니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 응급 경고 (공통) -->
+  <div class="alert-box">
+    <div class="alert-title">⚠️ 다음 증상이 있으면 즉시 병원에 연락해주세요</div>
+    <div class="alert-content">
+      <ul>
+        <li>심한 복통이 지속됨</li>
+        <li>토혈 (피를 토함), 흑변 (검은색 변)</li>
+        <li>다량의 혈변 (반복적·붉은 피)</li>
+        <li>복부 팽만이 심해지고 가스도 안 나옴</li>
+        <li>호흡 곤란, 가슴 통증</li>
+        <li>38℃ 이상 발열</li>
+        <li>어지럼증, 식은땀, 의식 저하</li>
+      </ul>
+      <p style="margin-top:8px; font-size:13px; color:var(--color-text-muted);">진료 시간 외에는 가까운 응급실을 이용해주세요.</p>
+    </div>
+  </div>
+
+  <!-- 연락처 -->
+  <div class="contact-card">
+    <div class="name">88플러스내과·산부인과</div>
+    <div class="tel"><a href="tel:0229728800">02-972-8800</a></div>
+    <div class="hours">
+      평일 08:00 — 18:00<br>
+      토요일 08:00 — 13:00<br>
+      점심시간 13:00 — 14:00
+    </div>
+  </div>
+
+  <!-- 다음 검진 (위내시경 전용) -->
+  <div class="section" data-only="gastro">
+    <div class="section-head">
+      <div class="section-icon">🗓️</div>
+      <h2>다음 위내시경 권고 주기</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li><strong>위암 검진</strong>: 2년 간격</li>
+        <li><strong>위암 가족력, 헬리코박터 양성, 위축성위염 등 위암 발생 고위험군</strong>: 매년</li>
+        <li><strong>위궤양·위암 의심 병변 등 추적 필요</strong>: 조직검사 결과 확인 후 결정</li>
+      </ul>
+      <p style="margin-top:10px; font-size:13px; color:var(--color-text-muted);">정확한 주기는 검사 결과와 개인 위험요인에 따라 달라지며, 담당 의사가 안내드립니다.</p>
+    </div>
+  </div>
+
+  <!-- 다음 검진 (대장내시경 전용) -->
+  <div class="section" data-only="colono">
+    <div class="section-head">
+      <div class="section-icon">🗓️</div>
+      <h2>다음 대장내시경 권고 주기</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li><strong>이상 없음</strong>: 5년 간격</li>
+        <li><strong>저위험 선종 (1~2개, 1cm 미만)</strong>: 2년 간격</li>
+        <li><strong>고위험 선종 (3개 이상, 1cm 이상, 고도이형성 등)</strong>: 1년 간격</li>
+        <li><strong>대장암 가족력, 염증성장질환 등 고위험군</strong>: 의사 안내에 따라 1~2년 간격</li>
+      </ul>
+      <p style="margin-top:10px; font-size:13px; color:var(--color-text-muted);">정확한 주기는 검사 결과와 개인 위험요인에 따라 달라지며, 담당 의사가 안내드립니다.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="simple-footer">
+  <p>본 안내는 일반적인 검사 후 권고사항입니다.<br>개인의 상태에 따라 의사 지시가 우선합니다.</p>
+  <p style="margin-top:8px;">© 88플러스내과·산부인과</p>
+</footer>
+
+<script>
+const toggle = document.getElementById('menuToggle');
+const mobileNav = document.getElementById('mobileNav');
+if (toggle) toggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
+
+(function() {
+  const tabs = document.querySelectorAll('.exam-tab');
+  const polypLink = document.getElementById('polypLink');
+  let currentExam = 'gastro';
+
+  function refresh() {
+    document.querySelectorAll('[data-only]').forEach(el => {
+      const cond = el.dataset.only;
+      let show = false;
+      if (cond === 'gastro' && currentExam === 'gastro') show = true;
+      if (cond === 'colono' && currentExam === 'colono') show = true;
+      el.classList.toggle('show', show);
+    });
+    // 대장내시경 선택 시 용종 절제 안내 링크 표시
+    polypLink.style.display = (currentExam === 'colono') ? 'block' : 'none';
+  }
+
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      currentExam = t.dataset.exam;
+      refresh();
+    });
+  });
+
+  refresh();
+})();
+</script>
+
+</body>
+</html>

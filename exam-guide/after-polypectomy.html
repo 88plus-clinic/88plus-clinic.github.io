@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>용종 절제술 후 안내사항 | 88플러스내과산부인과</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+:root {
+  --color-bg: #fafaf8;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #5a5a5a;
+  --color-text-light: #8a8a8a;
+  --color-primary: #6E9230;
+  --color-primary-text: #5C7F22;
+  --color-primary-dark: #547321;
+  --color-primary-soft: #F2F7E5;
+  --color-line: #e5e5e0;
+  --color-warning: #8b5a00;
+  --color-warning-soft: #fdf6e3;
+  --color-alert: #c9302c;
+  --color-alert-soft: #fdecea;
+  --font-serif: 'Noto Serif KR', serif;
+  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.top-bar > .container,
+.site-header > .container { max-width: 1100px; }
+
+.hero { padding: 40px 0 24px; text-align: center; }
+.hero .label {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--color-primary-text);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+.hero h1 strong { color: var(--color-primary-text); font-weight: 600; }
+.hero p { font-size: 15px; color: var(--color-text-muted); line-height: 1.8; }
+
+/* 핵심 주의 안내 박스 */
+.key-notice {
+  background: var(--color-warning-soft);
+  border-left: 4px solid var(--color-warning);
+  padding: 18px 20px;
+  border-radius: 6px;
+  margin: 14px 0 24px;
+  font-size: 14.5px;
+  color: var(--color-text);
+  line-height: 1.7;
+}
+.key-notice strong { color: var(--color-warning); font-weight: 700; }
+
+.section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  padding: 22px 20px;
+  margin-bottom: 16px;
+}
+.section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.section-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  color: var(--color-primary-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.section h2 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+.section-content { font-size: 14.5px; line-height: 1.85; }
+.section-content p { margin-bottom: 10px; }
+.section-content ul { list-style: none; padding-left: 0; }
+.section-content ul li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 6px;
+}
+.section-content ul li::before {
+  content: '•';
+  position: absolute;
+  left: 4px;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+.section-content strong { color: var(--color-primary-text); font-weight: 600; }
+.section-content h3 {
+  font-size: 14.5px;
+  margin: 14px 0 6px;
+  color: var(--color-primary-text);
+  font-weight: 600;
+}
+
+/* 시간표 카드 */
+.timeline {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+.timeline-item {
+  background: #f8f8f5;
+  border-left: 3px solid var(--color-primary);
+  border-radius: 4px;
+  padding: 12px 14px;
+}
+.timeline-item .when {
+  font-weight: 700;
+  color: var(--color-primary-text);
+  font-size: 13.5px;
+  margin-bottom: 4px;
+}
+.timeline-item .what {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* 응급 알림 */
+.alert-box {
+  background: var(--color-alert-soft);
+  border-left: 4px solid var(--color-alert);
+  padding: 18px 20px;
+  border-radius: 6px;
+  margin: 18px 0;
+}
+.alert-box .alert-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-alert);
+  margin-bottom: 8px;
+}
+.alert-box .alert-content { font-size: 14px; line-height: 1.7; }
+.alert-box ul { list-style: none; padding-left: 0; }
+.alert-box ul li { position: relative; padding-left: 14px; margin-bottom: 4px; }
+.alert-box ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-alert);
+  font-weight: 700;
+}
+
+.contact-card {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 26px 22px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 26px 0;
+}
+.contact-card .name { font-family: var(--font-serif); font-size: 17px; margin-bottom: 6px; }
+.contact-card .tel { font-size: 26px; font-weight: 700; margin: 6px 0 10px; }
+.contact-card .tel a { color: #fff; text-decoration: none; }
+.contact-card .hours { font-size: 13px; opacity: 0.9; line-height: 1.7; }
+
+.simple-footer {
+  text-align: center;
+  padding: 30px 20px 40px;
+  color: var(--color-text-light);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 22px; }
+  .section { padding: 18px 16px; }
+  .section h2 { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <span>88플러스내과·산부인과 │ 내과·산부인과 전문의 3인 협진</span>
+    <a class="tel" href="tel:0229728800">진료문의 <strong>02-972-8800</strong></a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <a href="../index.html" class="site-logo">
+      <img src="../logo.png" alt="88플러스내과산부인과" class="logo-img">
+    </a>
+    <nav class="main-nav">
+      <a href="../index.html">홈</a>
+      <a href="../about.html">병원 소개</a>
+      <a href="../services.html">진료과목</a>
+      <a href="../checkup.html">건강검진</a>
+      <a href="../pricing.html">비급여 안내</a>
+      <a href="../location.html">예약 안내</a>
+    </nav>
+    <button class="menu-toggle" id="menuToggle" aria-label="메뉴">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="../index.html">홈</a>
+    <a href="../about.html">병원 소개</a>
+    <a href="../services.html">진료과목</a>
+    <a href="../checkup.html">건강검진</a>
+    <a href="../pricing.html">비급여 안내</a>
+    <a href="../location.html">예약 안내</a>
+  </div>
+</header>
+
+<div class="container">
+  <section class="hero">
+    <div class="label">After Polypectomy</div>
+    <h1>대장내시경<br><strong>수고하셨습니다</strong></h1>
+    <p>대장 용종 절제 부위는 일정 시간이 지나야 완전히 아물기 때문에<br>출혈·천공 예방을 위해 다음 안내사항을 꼭 지켜주세요.</p>
+  </section>
+
+  <div class="key-notice">
+    <strong>핵심:</strong> 용종 절제 후 출혈은 <strong>7~14일까지도 늦게 나타날 수 있습니다</strong>. 안내사항을 1주일간 잘 지키시고, 이상 증상 시 즉시 병원에 연락주세요.
+  </div>
+
+  <!-- 검사 결과 안내 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">1</div>
+      <h2>검사 결과 안내</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li>절제한 용종은 <strong>악성화 여부 확인</strong>을 위해 모두 조직검사를 진행합니다.</li>
+        <li>조직검사 결과는 <strong>약 1주일 후</strong> 외래 방문 시 확인 가능합니다.</li>
+        <li>다음 대장내시경 시기는 조직검사 결과에 따라 결정되므로 반드시 외래에 다시 와주세요.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 식이 (단계별) -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">🍽️</div>
+      <h2>단계별 식이 안내</h2>
+    </div>
+    <div class="section-content">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="when">검사 당일</div>
+          <div class="what">미음, 흰죽 등 <strong>부드럽고 소화 잘되는 음식</strong>만 섭취</div>
+        </div>
+        <div class="timeline-item">
+          <div class="when">2~3일</div>
+          <div class="what">자극 없는 <strong>일반식</strong> 가능 (밥, 국, 부드러운 반찬)</div>
+        </div>
+        <div class="timeline-item">
+          <div class="when">4~7일</div>
+          <div class="what">일반식 가능하나 <strong>자극 음식·견과류·거친 음식은 계속 피하기</strong></div>
+        </div>
+        <div class="timeline-item">
+          <div class="when">1주일 후</div>
+          <div class="what">평소 식사로 복귀 가능</div>
+        </div>
+      </div>
+
+      <h3>1주일간 반드시 피해주세요</h3>
+      <ul>
+        <li><strong>술 (음주 절대 금지)</strong></li>
+        <li>매운 음식, 짠 음식, 자극적인 양념</li>
+        <li>견과류, 씨 있는 과일, 옥수수, 콩 등 거친 음식</li>
+        <li>현미·잡곡밥 등 식이섬유가 많은 식품</li>
+        <li>탄산음료, 카페인 음료</li>
+        <li>너무 뜨거운 음식·음료</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 활동 제한 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">🏃</div>
+      <h2>활동 제한 (1주일간)</h2>
+    </div>
+    <div class="section-content">
+      <p>출혈 위험을 낮추기 위해 <strong>1주일간</strong> 다음 활동을 피해주세요.</p>
+      <ul>
+        <li>격렬한 운동 (헬스, 등산, 골프, 달리기 등)</li>
+        <li>무거운 짐 들기, 힘쓰는 작업</li>
+        <li>사우나, 찜질방, 뜨거운 목욕 (반신욕도 자제)</li>
+        <li>장거리 여행, 비행기 탑승</li>
+        <li>음주</li>
+      </ul>
+      <p style="margin-top:10px;">가벼운 산책이나 일상생활은 가능합니다.</p>
+    </div>
+  </div>
+
+  <!-- 약물 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">💊</div>
+      <h2>복용 약물 안내</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li><strong>아스피린·항응고제(와파린·자렐토 등)</strong>: 출혈 위험 약물은 담당 의사 안내에 따라 재개 시점 결정</li>
+        <li><strong>혈압약·당뇨약 등 만성질환 약</strong>: 평소대로 복용</li>
+        <li>처방받은 위장약·지혈제가 있다면 안내에 따라 복용</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 출혈 안내 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">💧</div>
+      <h2>출혈에 대해</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li>절제 후 변에 <strong>소량의 피</strong>가 섞여 나올 수 있으나 1~2회 정도면 정상 범위입니다.</li>
+        <li>지연 출혈은 <strong>7~14일까지도</strong> 발생할 수 있어 1주일 후라도 출혈 시 즉시 연락해주세요.</li>
+        <li>변이 검은색이거나 다량의 붉은 피가 반복적으로 나오면 응급 상황입니다.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 응급 경고 -->
+  <div class="alert-box">
+    <div class="alert-title">⚠️ 다음 증상이 있으면 즉시 병원에 연락해주세요</div>
+    <div class="alert-content">
+      <ul>
+        <li>다량의 혈변 (반복적·붉은 피, 핏덩어리)</li>
+        <li>검은색 변(흑변)</li>
+        <li>심하고 지속되는 복통</li>
+        <li>복부 팽만이 심해지고 가스가 안 나옴</li>
+        <li>38℃ 이상 발열, 오한</li>
+        <li>어지럼증, 식은땀, 의식 저하</li>
+      </ul>
+      <p style="margin-top:8px; font-size:13px; color:var(--color-text-muted);">진료 시간 외에는 가까운 응급실을 이용해주세요.<br>응급실 방문 시 <strong>"대장 용종 절제술 시행"</strong> 사실을 반드시 알려주세요.</p>
+    </div>
+  </div>
+
+  <!-- 연락처 -->
+  <div class="contact-card">
+    <div class="name">88플러스내과·산부인과</div>
+    <div class="tel"><a href="tel:0229728800">02-972-8800</a></div>
+    <div class="hours">
+      평일 08:00 — 18:00<br>
+      토요일 08:00 — 13:00<br>
+      점심시간 13:00 — 14:00
+    </div>
+  </div>
+
+  <!-- 다음 대장내시경 -->
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon">🗓️</div>
+      <h2>다음 대장내시경 권고 주기</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li><strong>저위험 선종 (1~2개, 1cm 미만)</strong>: 2년 간격</li>
+        <li><strong>고위험 선종 (3개 이상, 1cm 이상, 고도이형성)</strong>: 1년 간격</li>
+        <li><strong>대장암 가족력, 염증성장질환 등 고위험군</strong>: 의사 안내에 따라 1~2년 간격</li>
+      </ul>
+      <p style="margin-top:10px; font-size:13px; color:var(--color-text-muted);">정확한 주기는 조직검사 결과 확인 후 담당 의사가 안내드립니다. 외래 방문 시점을 놓치지 마세요.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer class="simple-footer">
+  <p>본 안내는 일반적인 용종 절제 후 권고사항입니다.<br>개인의 상태에 따라 의사 지시가 우선합니다.</p>
+  <p style="margin-top:8px;">© 88플러스내과·산부인과</p>
+</footer>
+
+<script>
+const toggle = document.getElementById('menuToggle');
+const mobileNav = document.getElementById('mobileNav');
+if (toggle) toggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
+</script>
+
+</body>
+</html>
