@@ -135,12 +135,13 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 <div class="lang-bar">
   <button id="btnKo" class="lang-tab on" onclick="setLang('ko')">한국어</button>
   <button id="btnEn" class="lang-tab" onclick="setLang('en')">English</button>
+  <button id="btnRu" class="lang-tab" onclick="setLang('ru')">Русский</button>
 </div>
 
 <!-- Header -->
 <div class="pg-header">
-  <div class="pg-clinic" data-ko="88플러스내과·산부인과" data-en="88 Plus Internal Medicine &amp; OB/GYN">88플러스내과·산부인과</div>
-  <div class="pg-title" data-ko="산부인과 초진 접수" data-en="OB/GYN New Patient Registration">산부인과 초진 접수</div>
+  <div class="pg-clinic" data-ko="88플러스내과·산부인과" data-en="88 Plus Internal Medicine &amp; OB/GYN" data-ru="Клиника «88 Plus»: терапия и гинекология">88플러스내과·산부인과</div>
+  <div class="pg-title" data-ko="산부인과 초진 접수" data-en="OB/GYN New Patient Registration" data-ru="Регистрация нового пациента (гинекология)">산부인과 초진 접수</div>
 </div>
 
 <!-- Progress -->
@@ -148,10 +149,10 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
   <div class="prog-steps">
     <div class="prog-track"></div>
     <div class="prog-fill" id="progFill"></div>
-    <div class="s-dot active" data-step="1"><div class="s-circle"><span>1</span></div><div class="s-lbl" data-ko="기본 정보" data-en="Basic Info">기본 정보</div></div>
-    <div class="s-dot" data-step="2"><div class="s-circle"><span>2</span></div><div class="s-lbl" data-ko="예진" data-en="History">예진</div></div>
-    <div class="s-dot" data-step="3"><div class="s-circle"><span>3</span></div><div class="s-lbl" data-ko="증상" data-en="Symptoms">증상</div></div>
-    <div class="s-dot" data-step="4"><div class="s-circle"><span>4</span></div><div class="s-lbl" data-ko="접수" data-en="Submit">접수</div></div>
+    <div class="s-dot active" data-step="1"><div class="s-circle"><span>1</span></div><div class="s-lbl" data-ko="기본 정보" data-en="Basic Info" data-ru="Данные">기본 정보</div></div>
+    <div class="s-dot" data-step="2"><div class="s-circle"><span>2</span></div><div class="s-lbl" data-ko="예진" data-en="History" data-ru="Анамнез">예진</div></div>
+    <div class="s-dot" data-step="3"><div class="s-circle"><span>3</span></div><div class="s-lbl" data-ko="증상" data-en="Symptoms" data-ru="Симптомы">증상</div></div>
+    <div class="s-dot" data-step="4"><div class="s-circle"><span>4</span></div><div class="s-lbl" data-ko="접수" data-en="Submit" data-ru="Отправка">접수</div></div>
   </div>
 </div>
 
@@ -161,27 +162,27 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
   <div class="step-panel active" id="panel1">
     <div class="s-head">
       <div class="lbl">Step 1 / 4</div>
-      <h2 data-ko="기본 정보" data-en="Basic Information">기본 정보</h2>
-      <p data-ko="인적사항을 정확히 입력해주세요." data-en="Please enter your personal details accurately.">인적사항을 정확히 입력해주세요.</p>
+      <h2 data-ko="기본 정보" data-en="Basic Information" data-ru="Основная информация">기본 정보</h2>
+      <p data-ko="인적사항을 정확히 입력해주세요." data-en="Please enter your personal details accurately." data-ru="Пожалуйста, точно укажите свои личные данные.">인적사항을 정확히 입력해주세요.</p>
     </div>
 
     <div class="card">
-      <div class="ft"><span data-ko="성함" data-en="Name">성함</span> <span class="req">*</span></div>
-      <input class="inp" id="name" type="text" placeholder="이름을 입력하세요" data-ko-ph="이름을 입력하세요" data-en-ph="Enter your name">
+      <div class="ft"><span data-ko="성함" data-en="Name" data-ru="Имя">성함</span> <span class="req">*</span></div>
+      <input class="inp" id="name" type="text" placeholder="이름을 입력하세요" data-ko-ph="이름을 입력하세요" data-en-ph="Enter your name" data-ru-ph="Введите ваше имя">
     </div>
 
     <div class="card">
-      <div class="ft"><span data-ko="주민등록번호" data-en="Resident Reg. No. / ARC">주민등록번호</span> <span class="req">*</span></div>
+      <div class="ft"><span data-ko="주민등록번호" data-en="Resident Reg. No. / ARC" data-ru="Рег. номер / номер карты иностранца (ARC)">주민등록번호</span> <span class="req">*</span></div>
       <div class="irow">
-        <input class="inp" id="rrn1" type="text" inputmode="numeric" maxlength="6" placeholder="앞 6자리" data-ko-ph="앞 6자리" data-en-ph="First 6" style="flex:1">
+        <input class="inp" id="rrn1" type="text" inputmode="numeric" maxlength="6" placeholder="앞 6자리" data-ko-ph="앞 6자리" data-en-ph="First 6" data-ru-ph="Первые 6" style="flex:1">
         <span style="color:var(--muted);font-size:22px;flex-shrink:0">—</span>
-        <input class="inp" id="rrn2" type="password" inputmode="numeric" maxlength="7" placeholder="뒤 7자리" data-ko-ph="뒤 7자리" data-en-ph="Last 7" style="flex:1">
+        <input class="inp" id="rrn2" type="password" inputmode="numeric" maxlength="7" placeholder="뒤 7자리" data-ko-ph="뒤 7자리" data-en-ph="Last 7" data-ru-ph="Последние 7" style="flex:1">
       </div>
-      <div class="hint" data-ko="뒷자리는 화면에 표시되지 않습니다." data-en="The last 7 digits are not shown on screen.">뒷자리는 화면에 표시되지 않습니다.</div>
+      <div class="hint" data-ko="뒷자리는 화면에 표시되지 않습니다." data-en="The last 7 digits are not shown on screen." data-ru="Последние 7 цифр не отображаются на экране.">뒷자리는 화면에 표시되지 않습니다.</div>
     </div>
 
     <div class="card">
-      <div class="ft"><span data-ko="전화번호" data-en="Phone Number">전화번호</span> <span class="req">*</span></div>
+      <div class="ft"><span data-ko="전화번호" data-en="Phone Number" data-ru="Номер телефона">전화번호</span> <span class="req">*</span></div>
       <div class="irow" style="gap:6px;align-items:center">
         <input class="inp phone-part" id="phone1" type="tel" inputmode="numeric" maxlength="3" value="010" style="width:72px;text-align:center" oninput="phoneAutoNext(this,'phone2',3)">
         <span style="color:var(--muted);font-weight:300">-</span>
@@ -192,21 +193,21 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="주소" data-en="Address">주소</div>
+      <div class="ft" data-ko="주소" data-en="Address" data-ru="Адрес">주소</div>
       <div class="irow" style="margin-bottom:8px">
-        <input class="inp" id="address" type="text" placeholder="주소 검색 버튼을 눌러주세요" data-ko-ph="주소 검색 버튼을 눌러주세요" data-en-ph="Tap the search button" readonly style="flex:1;background:var(--bg2);cursor:pointer" onclick="searchAddress()">
-        <button type="button" class="addr-btn" onclick="searchAddress()" data-ko="검색" data-en="Search">검색</button>
+        <input class="inp" id="address" type="text" placeholder="주소 검색 버튼을 눌러주세요" data-ko-ph="주소 검색 버튼을 눌러주세요" data-en-ph="Tap the search button" data-ru-ph="Нажмите кнопку поиска" readonly style="flex:1;background:var(--bg2);cursor:pointer" onclick="searchAddress()">
+        <button type="button" class="addr-btn" onclick="searchAddress()" data-ko="검색" data-en="Search" data-ru="Поиск">검색</button>
       </div>
-      <input class="inp" id="addressDetail" type="text" placeholder="상세주소 (동/호수 등)" data-ko-ph="상세주소 (동/호수 등)" data-en-ph="Detailed address (unit/floor)">
+      <input class="inp" id="addressDetail" type="text" placeholder="상세주소 (동/호수 등)" data-ko-ph="상세주소 (동/호수 등)" data-en-ph="Detailed address (unit/floor)" data-ru-ph="Уточнение адреса (квартира/этаж)">
     </div>
 
     <div class="card">
-      <div class="ft"><span data-ko="결혼 여부" data-en="Marital Status">결혼 여부</span> <span class="req">*</span></div>
+      <div class="ft"><span data-ko="결혼 여부" data-en="Marital Status" data-ru="Семейное положение">결혼 여부</span> <span class="req">*</span></div>
       <div class="rg" id="rg-marital">
-        <label class="rl"><input type="radio" name="marital" value="기혼"><div class="dot"></div><span data-ko="기혼" data-en="Married">기혼</span></label>
-        <label class="rl"><input type="radio" name="marital" value="미혼"><div class="dot"></div><span data-ko="미혼" data-en="Single">미혼</span></label>
-        <label class="rl"><input type="radio" name="marital" value="이혼"><div class="dot"></div><span data-ko="이혼" data-en="Divorced">이혼</span></label>
-        <label class="rl"><input type="radio" name="marital" value="사별"><div class="dot"></div><span data-ko="사별" data-en="Widowed">사별</span></label>
+        <label class="rl"><input type="radio" name="marital" value="기혼"><div class="dot"></div><span data-ko="기혼" data-en="Married" data-ru="Замужем">기혼</span></label>
+        <label class="rl"><input type="radio" name="marital" value="미혼"><div class="dot"></div><span data-ko="미혼" data-en="Single" data-ru="Не замужем">미혼</span></label>
+        <label class="rl"><input type="radio" name="marital" value="이혼"><div class="dot"></div><span data-ko="이혼" data-en="Divorced" data-ru="В разводе">이혼</span></label>
+        <label class="rl"><input type="radio" name="marital" value="사별"><div class="dot"></div><span data-ko="사별" data-en="Widowed" data-ru="Вдова">사별</span></label>
       </div>
     </div>
   </div>
@@ -215,177 +216,189 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
   <div class="step-panel" id="panel2">
     <div class="s-head">
       <div class="lbl">Step 2 / 4</div>
-      <h2 data-ko="기본 예진" data-en="Medical History">기본 예진</h2>
-      <p data-ko="모르시는 항목은 비워두셔도 됩니다." data-en="You may leave unknown items blank.">모르시는 항목은 비워두셔도 됩니다.</p>
+      <h2 data-ko="기본 예진" data-en="Medical History" data-ru="Медицинский анамнез">기본 예진</h2>
+      <p data-ko="모르시는 항목은 비워두셔도 됩니다." data-en="You may leave unknown items blank." data-ru="Неизвестные пункты можно оставить пустыми.">모르시는 항목은 비워두셔도 됩니다.</p>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="마지막 생리 시작일 (LMP)" data-en="Last Menstrual Period (LMP)">마지막 생리 시작일 (LMP)</div>
+      <div class="ft" data-ko="마지막 생리 시작일 (LMP)" data-en="Last Menstrual Period (LMP)" data-ru="Первый день последней менструации (LMP)">마지막 생리 시작일 (LMP)</div>
       <input class="inp" id="lmp" type="date" style="max-width:200px">
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="생리 주기" data-en="Menstrual Cycle">생리 주기</div>
+      <div class="ft" data-ko="생리 주기" data-en="Menstrual Cycle" data-ru="Менструальный цикл">생리 주기</div>
       <div class="rg" id="rg-cycle">
-        <label class="rl"><input type="radio" name="cycle" value="규칙적" data-sub="sub-cycle"><div class="dot"></div><span data-ko="규칙적" data-en="Regular">규칙적</span></label>
-        <label class="rl"><input type="radio" name="cycle" value="불규칙적" data-hide="sub-cycle"><div class="dot"></div><span data-ko="불규칙적" data-en="Irregular">불규칙적</span></label>
+        <label class="rl"><input type="radio" name="cycle" value="규칙적" data-sub="sub-cycle" data-hide="sub-cycle-irr"><div class="dot"></div><span data-ko="규칙적" data-en="Regular" data-ru="Регулярный">규칙적</span></label>
+        <label class="rl"><input type="radio" name="cycle" value="불규칙적" data-sub="sub-cycle-irr" data-hide="sub-cycle"><div class="dot"></div><span data-ko="불규칙적" data-en="Irregular" data-ru="Нерегулярный">불규칙적</span></label>
       </div>
       <div class="sub" id="sub-cycle">
-        <div class="ft" data-ko="주기 (일)" data-en="Cycle length (days)">주기 (일)</div>
-        <input class="inp" id="cycleDays" type="number" min="14" max="60" placeholder="예: 28" data-ko-ph="예: 28" data-en-ph="e.g. 28" style="max-width:110px">
+        <div class="ft" data-ko="주기 (일)" data-en="Cycle length (days)" data-ru="Длина цикла (дней)">주기 (일)</div>
+        <input class="inp" id="cycleDays" type="number" min="14" max="60" placeholder="예: 28" data-ko-ph="예: 28" data-en-ph="e.g. 28" data-ru-ph="напр. 28" style="max-width:110px">
+      </div>
+      <div class="sub" id="sub-cycle-irr">
+        <div class="ft" data-ko="주기 범위 (대략)" data-en="Cycle range (approx.)" data-ru="Диапазон цикла (примерно)">주기 범위 (대략)</div>
+        <div class="irow" style="gap:7px;flex-wrap:wrap">
+          <span style="font-size:15px;color:var(--sub)" data-ko="최소" data-en="Min" data-ru="Мин.">최소</span>
+          <input class="inp" id="cycleMinWeeks" type="number" min="1" max="52" placeholder="예: 2" data-ko-ph="예: 2" data-en-ph="e.g. 2" data-ru-ph="напр. 2" style="max-width:80px">
+          <span style="font-size:15px;color:var(--sub)" data-ko="주" data-en="wk" data-ru="нед.">주</span>
+          <span style="color:var(--muted)">~</span>
+          <span style="font-size:15px;color:var(--sub)" data-ko="최대" data-en="Max" data-ru="Макс.">최대</span>
+          <input class="inp" id="cycleMaxMonths" type="number" min="1" max="24" placeholder="예: 3" data-ko-ph="예: 3" data-en-ph="e.g. 3" data-ru-ph="напр. 3" style="max-width:80px">
+          <span style="font-size:15px;color:var(--sub)" data-ko="달" data-en="mo" data-ru="мес.">달</span>
+        </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="ft"><span data-ko="성경험 여부" data-en="Sexual Activity">성경험 여부</span> <span class="req">*</span></div>
+      <div class="ft"><span data-ko="성경험 여부" data-en="Sexual Activity" data-ru="Половая жизнь">성경험 여부</span> <span class="req">*</span></div>
       <div class="rg" id="rg-sex">
-        <label class="rl"><input type="radio" name="sex" value="유" data-hide="sub-sex"><div class="dot"></div><span data-ko="유" data-en="Yes">유</span></label>
-        <label class="rl"><input type="radio" name="sex" value="무" data-sub="sub-sex"><div class="dot"></div><span data-ko="무" data-en="No">무</span></label>
+        <label class="rl"><input type="radio" name="sex" value="유" data-hide="sub-sex"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
+        <label class="rl"><input type="radio" name="sex" value="무" data-sub="sub-sex"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
       </div>
       <div class="sub" id="sub-sex">
-        <span style="font-size:14px;color:var(--g-dark)" data-ko="⚠ 진료 방법이 달라질 수 있습니다. 접수 후 담당 선생님께 확인해 주세요." data-en="⚠ The examination method may differ. Please confirm with your doctor after registration.">⚠ 진료 방법이 달라질 수 있습니다. 접수 후 담당 선생님께 확인해 주세요.</span>
+        <span style="font-size:14px;color:var(--g-dark)" data-ko="⚠ 진료 방법이 달라질 수 있습니다. 접수 후 담당 선생님께 확인해 주세요." data-en="⚠ The examination method may differ. Please confirm with your doctor after registration." data-ru="⚠ Метод обследования может отличаться. Уточните у врача после регистрации.">⚠ 진료 방법이 달라질 수 있습니다. 접수 후 담당 선생님께 확인해 주세요.</span>
       </div>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="출산 여부" data-en="Childbirth History">출산 여부</div>
+      <div class="ft" data-ko="출산 여부" data-en="Childbirth History" data-ru="Роды в анамнезе">출산 여부</div>
       <div class="rg" id="rg-delivery">
-        <label class="rl"><input type="radio" name="delivery" value="무" data-hide="sub-delivery"><div class="dot"></div><span data-ko="무" data-en="No">무</span></label>
-        <label class="rl"><input type="radio" name="delivery" value="유" data-sub="sub-delivery"><div class="dot"></div><span data-ko="유" data-en="Yes">유</span></label>
+        <label class="rl"><input type="radio" name="delivery" value="무" data-hide="sub-delivery"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
+        <label class="rl"><input type="radio" name="delivery" value="유" data-sub="sub-delivery"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
       </div>
       <div class="sub" id="sub-delivery">
-        <div class="ft" data-ko="출산 횟수" data-en="Number of births">출산 횟수</div>
-        <input class="inp" id="deliveryCnt" type="number" min="1" placeholder="명" data-ko-ph="명" data-en-ph="count" style="max-width:100px;margin-bottom:10px">
-        <div class="ft" data-ko="분만 방법" data-en="Delivery method">분만 방법</div>
+        <div class="ft" data-ko="출산 횟수" data-en="Number of births" data-ru="Количество родов">출산 횟수</div>
+        <input class="inp" id="deliveryCnt" type="number" min="1" placeholder="명" data-ko-ph="명" data-en-ph="count" data-ru-ph="кол-во" style="max-width:100px;margin-bottom:10px">
+        <div class="ft" data-ko="분만 방법" data-en="Delivery method" data-ru="Способ родоразрешения">분만 방법</div>
         <div class="cg" id="cg-deliveryType">
-          <label class="cl"><input type="checkbox" name="deliveryType" value="자연분만"><div class="dot"></div><span data-ko="자연분만" data-en="Vaginal">자연분만</span></label>
-          <label class="cl"><input type="checkbox" name="deliveryType" value="제왕절개"><div class="dot"></div><span data-ko="제왕절개" data-en="Cesarean">제왕절개</span></label>
+          <label class="cl"><input type="checkbox" name="deliveryType" value="자연분만"><div class="dot"></div><span data-ko="자연분만" data-en="Vaginal" data-ru="Естественные роды">자연분만</span></label>
+          <label class="cl"><input type="checkbox" name="deliveryType" value="제왕절개"><div class="dot"></div><span data-ko="제왕절개" data-en="Cesarean" data-ru="Кесарево сечение">제왕절개</span></label>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="유산 여부" data-en="Miscarriage / Abortion">유산 여부</div>
+      <div class="ft" data-ko="유산 여부" data-en="Miscarriage / Abortion" data-ru="Выкидыш / аборт">유산 여부</div>
       <div class="rg" id="rg-abortion">
-        <label class="rl"><input type="radio" name="abortion" value="무" data-hide="sub-abortion"><div class="dot"></div><span data-ko="무" data-en="No">무</span></label>
-        <label class="rl"><input type="radio" name="abortion" value="유" data-sub="sub-abortion"><div class="dot"></div><span data-ko="유" data-en="Yes">유</span></label>
+        <label class="rl"><input type="radio" name="abortion" value="무" data-hide="sub-abortion"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
+        <label class="rl"><input type="radio" name="abortion" value="유" data-sub="sub-abortion"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
       </div>
       <div class="sub" id="sub-abortion">
-        <div class="ft" data-ko="횟수" data-en="Count">횟수</div>
-        <input class="inp" id="abortionCnt" type="number" min="1" placeholder="회" data-ko-ph="회" data-en-ph="times" style="max-width:100px;margin-bottom:10px">
-        <div class="ft" data-ko="종류" data-en="Type">종류</div>
+        <div class="ft" data-ko="횟수" data-en="Count" data-ru="Количество">횟수</div>
+        <input class="inp" id="abortionCnt" type="number" min="1" placeholder="회" data-ko-ph="회" data-en-ph="times" data-ru-ph="раз" style="max-width:100px;margin-bottom:10px">
+        <div class="ft" data-ko="종류" data-en="Type" data-ru="Тип">종류</div>
         <div class="cg" id="cg-abortionType">
-          <label class="cl"><input type="checkbox" name="abortionType" value="자연유산"><div class="dot"></div><span data-ko="자연유산" data-en="Miscarriage">자연유산</span></label>
-          <label class="cl"><input type="checkbox" name="abortionType" value="인공유산"><div class="dot"></div><span data-ko="인공유산" data-en="Induced">인공유산</span></label>
+          <label class="cl"><input type="checkbox" name="abortionType" value="자연유산"><div class="dot"></div><span data-ko="자연유산" data-en="Miscarriage" data-ru="Самопроизвольный (выкидыш)">자연유산</span></label>
+          <label class="cl"><input type="checkbox" name="abortionType" value="인공유산"><div class="dot"></div><span data-ko="인공유산" data-en="Induced" data-ru="Искусственный (аборт)">인공유산</span></label>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="분만 예정일 (해당자만)" data-en="Expected Due Date (if applicable)">분만 예정일 (해당자만)</div>
+      <div class="ft" data-ko="분만 예정일 (해당자만)" data-en="Expected Due Date (if applicable)" data-ru="Предполагаемая дата родов (если применимо)">분만 예정일 (해당자만)</div>
       <input class="inp" id="edd" type="date" style="max-width:200px;margin-bottom:9px">
       <div class="rg" id="rg-fetus">
-        <label class="rl"><input type="radio" name="fetus" value="단태아"><div class="dot"></div><span data-ko="단태아" data-en="Singleton">단태아</span></label>
-        <label class="rl"><input type="radio" name="fetus" value="다태아"><div class="dot"></div><span data-ko="다태아" data-en="Multiple">다태아</span></label>
+        <label class="rl"><input type="radio" name="fetus" value="단태아"><div class="dot"></div><span data-ko="단태아" data-en="Singleton" data-ru="Один плод">단태아</span></label>
+        <label class="rl"><input type="radio" name="fetus" value="다태아"><div class="dot"></div><span data-ko="다태아" data-en="Multiple" data-ru="Многоплодная">다태아</span></label>
       </div>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="자궁경부암(HPV) 백신" data-en="Cervical Cancer (HPV) Vaccine">자궁경부암(HPV) 백신</div>
+      <div class="ft" data-ko="자궁경부암(HPV) 백신" data-en="Cervical Cancer (HPV) Vaccine" data-ru="Вакцина от рака шейки матки (ВПЧ)">자궁경부암(HPV) 백신</div>
       <div class="rg" id="rg-hpv">
-        <label class="rl"><input type="radio" name="hpv" value="무" data-hide="sub-hpv"><div class="dot"></div><span data-ko="무" data-en="No">무</span></label>
-        <label class="rl"><input type="radio" name="hpv" value="유" data-sub="sub-hpv"><div class="dot"></div><span data-ko="유" data-en="Yes">유</span></label>
+        <label class="rl"><input type="radio" name="hpv" value="무" data-hide="sub-hpv"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
+        <label class="rl"><input type="radio" name="hpv" value="유" data-sub="sub-hpv"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
       </div>
       <div class="sub" id="sub-hpv">
-        <div class="ft" data-ko="백신 종류" data-en="Vaccine type">백신 종류</div>
+        <div class="ft" data-ko="백신 종류" data-en="Vaccine type" data-ru="Тип вакцины">백신 종류</div>
         <div class="rg" id="rg-hpvType" style="margin-bottom:9px">
-          <label class="rl"><input type="radio" name="hpvType" value="가다실4"><div class="dot"></div><span data-ko="가다실4" data-en="Gardasil 4">가다실4</span></label>
-          <label class="rl"><input type="radio" name="hpvType" value="가다실9"><div class="dot"></div><span data-ko="가다실9" data-en="Gardasil 9">가다실9</span></label>
-          <label class="rl"><input type="radio" name="hpvType" value="서바릭스"><div class="dot"></div><span data-ko="서바릭스" data-en="Cervarix">서바릭스</span></label>
-          <label class="rl"><input type="radio" name="hpvType" value="모름"><div class="dot"></div><span data-ko="모름" data-en="Unknown">모름</span></label>
+          <label class="rl"><input type="radio" name="hpvType" value="가다실4"><div class="dot"></div><span data-ko="가다실4" data-en="Gardasil 4" data-ru="Гардасил 4">가다실4</span></label>
+          <label class="rl"><input type="radio" name="hpvType" value="가다실9"><div class="dot"></div><span data-ko="가다실9" data-en="Gardasil 9" data-ru="Гардасил 9">가다실9</span></label>
+          <label class="rl"><input type="radio" name="hpvType" value="서바릭스"><div class="dot"></div><span data-ko="서바릭스" data-en="Cervarix" data-ru="Церварикс">서바릭스</span></label>
+          <label class="rl"><input type="radio" name="hpvType" value="모름"><div class="dot"></div><span data-ko="모름" data-en="Unknown" data-ru="Не знаю">모름</span></label>
         </div>
-        <div class="ft" data-ko="접종 차수" data-en="Doses received">접종 차수</div>
+        <div class="ft" data-ko="접종 차수" data-en="Doses received" data-ru="Количество доз">접종 차수</div>
         <div class="rg" id="rg-hpvDose">
-          <label class="rl"><input type="radio" name="hpvDose" value="1차"><div class="dot"></div><span data-ko="1차" data-en="1st">1차</span></label>
-          <label class="rl"><input type="radio" name="hpvDose" value="2차"><div class="dot"></div><span data-ko="2차" data-en="2nd">2차</span></label>
-          <label class="rl"><input type="radio" name="hpvDose" value="3차 완료"><div class="dot"></div><span data-ko="3차 완료" data-en="3rd (complete)">3차 완료</span></label>
+          <label class="rl"><input type="radio" name="hpvDose" value="1차"><div class="dot"></div><span data-ko="1차" data-en="1st" data-ru="1 доза">1차</span></label>
+          <label class="rl"><input type="radio" name="hpvDose" value="2차"><div class="dot"></div><span data-ko="2차" data-en="2nd" data-ru="2 дозы">2차</span></label>
+          <label class="rl"><input type="radio" name="hpvDose" value="3차 완료"><div class="dot"></div><span data-ko="3차 완료" data-en="3rd (complete)" data-ru="3 дозы (полный курс)">3차 완료</span></label>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="마지막 자궁경부암 검사" data-en="Last Pap Smear">마지막 자궁경부암 검사</div>
+      <div class="ft" data-ko="마지막 자궁경부암 검사" data-en="Last Pap Smear" data-ru="Последний ПАП-тест (мазок)">마지막 자궁경부암 검사</div>
       <div class="rg" id="rg-pap">
-        <label class="rl"><input type="radio" name="pap" value="무" data-hide="sub-pap"><div class="dot"></div><span data-ko="무" data-en="No">무</span></label>
-        <label class="rl"><input type="radio" name="pap" value="유" data-sub="sub-pap"><div class="dot"></div><span data-ko="유" data-en="Yes">유</span></label>
-        <label class="rl"><input type="radio" name="pap" value="모름" data-hide="sub-pap"><div class="dot"></div><span data-ko="모름" data-en="Unknown">모름</span></label>
+        <label class="rl"><input type="radio" name="pap" value="무" data-hide="sub-pap"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
+        <label class="rl"><input type="radio" name="pap" value="유" data-sub="sub-pap"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
+        <label class="rl"><input type="radio" name="pap" value="모름" data-hide="sub-pap"><div class="dot"></div><span data-ko="모름" data-en="Unknown" data-ru="Не знаю">모름</span></label>
       </div>
       <div class="sub" id="sub-pap">
         <div class="irow">
-          <input class="inp" id="papMonths" type="number" min="1" placeholder="예: 12" data-ko-ph="예: 12" data-en-ph="e.g. 12" style="max-width:110px">
-          <span style="font-size:16px;color:var(--sub)" data-ko="개월 전" data-en="months ago">개월 전</span>
+          <input class="inp" id="papMonths" type="number" min="1" placeholder="예: 12" data-ko-ph="예: 12" data-en-ph="e.g. 12" data-ru-ph="напр. 12" style="max-width:110px">
+          <span style="font-size:16px;color:var(--sub)" data-ko="개월 전" data-en="months ago" data-ru="мес. назад">개월 전</span>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="약물 알러지" data-en="Drug Allergy">약물 알러지</div>
+      <div class="ft" data-ko="약물 알러지" data-en="Drug Allergy" data-ru="Лекарственная аллергия">약물 알러지</div>
       <div class="rg" id="rg-allergy">
-        <label class="rl"><input type="radio" name="allergy" value="무" data-hide="sub-allergy"><div class="dot"></div><span data-ko="무" data-en="No">무</span></label>
-        <label class="rl"><input type="radio" name="allergy" value="유" data-sub="sub-allergy"><div class="dot"></div><span data-ko="유" data-en="Yes">유</span></label>
+        <label class="rl"><input type="radio" name="allergy" value="무" data-hide="sub-allergy"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
+        <label class="rl"><input type="radio" name="allergy" value="유" data-sub="sub-allergy"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
       </div>
       <div class="sub" id="sub-allergy">
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <div style="flex:1;min-width:130px">
-            <div class="ft" data-ko="약물 종류" data-en="Drug name">약물 종류</div>
-            <input class="inp" id="allergyDrug" type="text" placeholder="예: 페니실린" data-ko-ph="예: 페니실린" data-en-ph="e.g. Penicillin">
+            <div class="ft" data-ko="약물 종류" data-en="Drug name" data-ru="Название препарата">약물 종류</div>
+            <input class="inp" id="allergyDrug" type="text" placeholder="예: 페니실린" data-ko-ph="예: 페니실린" data-en-ph="e.g. Penicillin" data-ru-ph="напр. пенициллин">
           </div>
           <div style="flex:1;min-width:130px">
-            <div class="ft" data-ko="증상" data-en="Reaction">증상</div>
-            <input class="inp" id="allergySymptom" type="text" placeholder="예: 두드러기" data-ko-ph="예: 두드러기" data-en-ph="e.g. Hives">
+            <div class="ft" data-ko="증상" data-en="Reaction" data-ru="Реакция">증상</div>
+            <input class="inp" id="allergySymptom" type="text" placeholder="예: 두드러기" data-ko-ph="예: 두드러기" data-en-ph="e.g. Hives" data-ru-ph="напр. крапивница">
           </div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="현재 복용 약물" data-en="Current Medications">현재 복용 약물</div>
+      <div class="ft" data-ko="현재 복용 약물" data-en="Current Medications" data-ru="Текущие лекарства">현재 복용 약물</div>
       <div class="rg" id="rg-meds">
-        <label class="rl"><input type="radio" name="meds" value="없음" data-hide="sub-meds"><div class="dot"></div><span data-ko="없음" data-en="None">없음</span></label>
-        <label class="rl"><input type="radio" name="meds" value="있음" data-sub="sub-meds"><div class="dot"></div><span data-ko="있음" data-en="Yes">있음</span></label>
+        <label class="rl"><input type="radio" name="meds" value="없음" data-hide="sub-meds"><div class="dot"></div><span data-ko="없음" data-en="None" data-ru="Нет">없음</span></label>
+        <label class="rl"><input type="radio" name="meds" value="있음" data-sub="sub-meds"><div class="dot"></div><span data-ko="있음" data-en="Yes" data-ru="Есть">있음</span></label>
       </div>
       <div class="sub" id="sub-meds">
-        <textarea class="inp" id="medsText" rows="2" placeholder="약물명을 입력해주세요" data-ko-ph="약물명을 입력해주세요" data-en-ph="Enter medication names" style="resize:none"></textarea>
+        <textarea class="inp" id="medsText" rows="2" placeholder="약물명을 입력해주세요" data-ko-ph="약물명을 입력해주세요" data-en-ph="Enter medication names" data-ru-ph="Укажите названия лекарств" style="resize:none"></textarea>
       </div>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="과거 및 현 병력" data-en="Past / Current Medical History">과거 및 현 병력</div>
+      <div class="ft" data-ko="과거 및 현 병력" data-en="Past / Current Medical History" data-ru="Перенесённые и текущие заболевания">과거 및 현 병력</div>
       <div class="rg" id="rg-pmhx">
-        <label class="rl"><input type="radio" name="pmhx" value="없음" data-hide="sub-pmhx"><div class="dot"></div><span data-ko="없음" data-en="None">없음</span></label>
-        <label class="rl"><input type="radio" name="pmhx" value="있음" data-sub="sub-pmhx"><div class="dot"></div><span data-ko="있음" data-en="Yes">있음</span></label>
+        <label class="rl"><input type="radio" name="pmhx" value="없음" data-hide="sub-pmhx"><div class="dot"></div><span data-ko="없음" data-en="None" data-ru="Нет">없음</span></label>
+        <label class="rl"><input type="radio" name="pmhx" value="있음" data-sub="sub-pmhx"><div class="dot"></div><span data-ko="있음" data-en="Yes" data-ru="Есть">있음</span></label>
       </div>
       <div class="sub" id="sub-pmhx">
         <div class="cg" id="cg-pmhxType" style="flex-wrap:wrap;margin-bottom:8px">
-          <label class="cl"><input type="checkbox" name="pmhxType" value="고혈압"><div class="dot"></div><span data-ko="고혈압" data-en="Hypertension">고혈압</span></label>
-          <label class="cl"><input type="checkbox" name="pmhxType" value="당뇨"><div class="dot"></div><span data-ko="당뇨" data-en="Diabetes">당뇨</span></label>
-          <label class="cl"><input type="checkbox" name="pmhxType" value="갑상선"><div class="dot"></div><span data-ko="갑상선" data-en="Thyroid">갑상선</span></label>
-          <label class="cl"><input type="checkbox" name="pmhxType" value="A형간염"><div class="dot"></div><span data-ko="A형간염" data-en="Hepatitis A">A형간염</span></label>
-          <label class="cl"><input type="checkbox" name="pmhxType" value="B형간염"><div class="dot"></div><span data-ko="B형간염" data-en="Hepatitis B">B형간염</span></label>
-          <label class="cl"><input type="checkbox" name="pmhxType" value="C형간염"><div class="dot"></div><span data-ko="C형간염" data-en="Hepatitis C">C형간염</span></label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="고혈압"><div class="dot"></div><span data-ko="고혈압" data-en="Hypertension" data-ru="Гипертония">고혈압</span></label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="당뇨"><div class="dot"></div><span data-ko="당뇨" data-en="Diabetes" data-ru="Диабет">당뇨</span></label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="갑상선"><div class="dot"></div><span data-ko="갑상선" data-en="Thyroid" data-ru="Щитовидная железа">갑상선</span></label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="A형간염"><div class="dot"></div><span data-ko="A형간염" data-en="Hepatitis A" data-ru="Гепатит A">A형간염</span></label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="B형간염"><div class="dot"></div><span data-ko="B형간염" data-en="Hepatitis B" data-ru="Гепатит B">B형간염</span></label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="C형간염"><div class="dot"></div><span data-ko="C형간염" data-en="Hepatitis C" data-ru="Гепатит C">C형간염</span></label>
         </div>
-        <input class="inp" id="pmhxOther" type="text" placeholder="기타 (직접 입력)" data-ko-ph="기타 (직접 입력)" data-en-ph="Other (please specify)">
+        <input class="inp" id="pmhxOther" type="text" placeholder="기타 (직접 입력)" data-ko-ph="기타 (직접 입력)" data-en-ph="Other (please specify)" data-ru-ph="Другое (укажите)">
       </div>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="수술력" data-en="Surgical History">수술력</div>
+      <div class="ft" data-ko="수술력" data-en="Surgical History" data-ru="Перенесённые операции">수술력</div>
       <div class="rg" id="rg-surg">
-        <label class="rl"><input type="radio" name="surg" value="없음" data-hide="sub-surg"><div class="dot"></div><span data-ko="없음" data-en="None">없음</span></label>
-        <label class="rl"><input type="radio" name="surg" value="있음" data-sub="sub-surg"><div class="dot"></div><span data-ko="있음" data-en="Yes">있음</span></label>
+        <label class="rl"><input type="radio" name="surg" value="없음" data-hide="sub-surg"><div class="dot"></div><span data-ko="없음" data-en="None" data-ru="Нет">없음</span></label>
+        <label class="rl"><input type="radio" name="surg" value="있음" data-sub="sub-surg"><div class="dot"></div><span data-ko="있음" data-en="Yes" data-ru="Есть">있음</span></label>
       </div>
       <div class="sub" id="sub-surg">
-        <textarea class="inp" id="surgText" rows="2" placeholder="수술 종류를 입력해주세요" data-ko-ph="수술 종류를 입력해주세요" data-en-ph="Enter type of surgery" style="resize:none"></textarea>
+        <textarea class="inp" id="surgText" rows="2" placeholder="수술 종류를 입력해주세요" data-ko-ph="수술 종류를 입력해주세요" data-en-ph="Enter type of surgery" data-ru-ph="Укажите вид операции" style="resize:none"></textarea>
       </div>
     </div>
   </div>
@@ -394,85 +407,85 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
   <div class="step-panel" id="panel3">
     <div class="s-head">
       <div class="lbl">Step 3 / 4</div>
-      <h2 data-ko="내원 목적 · 증상" data-en="Reason for Visit / Symptoms">내원 목적 · 증상</h2>
-      <p data-ko="오늘 방문하신 이유를 선택해주세요. (복수 선택 가능)" data-en="Select your reason(s) for today's visit. (multiple allowed)">오늘 방문하신 이유를 선택해주세요. (복수 선택 가능)</p>
+      <h2 data-ko="내원 목적 · 증상" data-en="Reason for Visit / Symptoms" data-ru="Цель визита / симптомы">내원 목적 · 증상</h2>
+      <p data-ko="오늘 방문하신 이유를 선택해주세요. (복수 선택 가능)" data-en="Select your reason(s) for today's visit. (multiple allowed)" data-ru="Выберите причину(ы) визита. (можно несколько)">오늘 방문하신 이유를 선택해주세요. (복수 선택 가능)</p>
     </div>
 
     <div class="card">
       <!-- 질염 -->
       <div>
-        <label class="cl sym-full" id="vagCheck" style="margin-top:0"><input type="checkbox" name="symptom" value="질염"><div class="dot"></div><span data-ko="질염" data-en="Vaginitis">질염</span></label>
+        <label class="cl sym-full" id="vagCheck" style="margin-top:0"><input type="checkbox" name="symptom" value="질염"><div class="dot"></div><span data-ko="질염" data-en="Vaginitis" data-ru="Вагинит">질염</span></label>
         <div class="sub" id="sub-vag">
           <div class="cg" id="cg-vagSub">
-            <label class="cl"><input type="checkbox" name="vagSub" value="분비물"><div class="dot"></div><span data-ko="분비물" data-en="Discharge">분비물</span></label>
-            <label class="cl"><input type="checkbox" name="vagSub" value="냄새"><div class="dot"></div><span data-ko="냄새" data-en="Odor">냄새</span></label>
-            <label class="cl"><input type="checkbox" name="vagSub" value="가려움"><div class="dot"></div><span data-ko="가려움" data-en="Itching">가려움</span></label>
-            <label class="cl"><input type="checkbox" name="vagSub" value="통증"><div class="dot"></div><span data-ko="통증" data-en="Pain">통증</span></label>
-            <label class="cl"><input type="checkbox" name="vagSub" value="기타"><div class="dot"></div><span data-ko="기타" data-en="Other">기타</span></label>
+            <label class="cl"><input type="checkbox" name="vagSub" value="분비물"><div class="dot"></div><span data-ko="분비물" data-en="Discharge" data-ru="Выделения">분비물</span></label>
+            <label class="cl"><input type="checkbox" name="vagSub" value="냄새"><div class="dot"></div><span data-ko="냄새" data-en="Odor" data-ru="Запах">냄새</span></label>
+            <label class="cl"><input type="checkbox" name="vagSub" value="가려움"><div class="dot"></div><span data-ko="가려움" data-en="Itching" data-ru="Зуд">가려움</span></label>
+            <label class="cl"><input type="checkbox" name="vagSub" value="통증"><div class="dot"></div><span data-ko="통증" data-en="Pain" data-ru="Боль">통증</span></label>
+            <label class="cl"><input type="checkbox" name="vagSub" value="기타"><div class="dot"></div><span data-ko="기타" data-en="Other" data-ru="Другое">기타</span></label>
           </div>
         </div>
       </div>
 
       <!-- 방광염 -->
       <div style="margin-top:5px">
-        <label class="cl sym-full" id="cysCheck"><input type="checkbox" name="symptom" value="방광염"><div class="dot"></div><span data-ko="방광염" data-en="Cystitis">방광염</span></label>
+        <label class="cl sym-full" id="cysCheck"><input type="checkbox" name="symptom" value="방광염"><div class="dot"></div><span data-ko="방광염" data-en="Cystitis" data-ru="Цистит">방광염</span></label>
         <div class="sub" id="sub-cys">
           <div class="cg" id="cg-cysSub">
-            <label class="cl"><input type="checkbox" name="cysSub" value="배뇨통"><div class="dot"></div><span data-ko="배뇨통" data-en="Painful urination">배뇨통</span></label>
-            <label class="cl"><input type="checkbox" name="cysSub" value="빈뇨"><div class="dot"></div><span data-ko="빈뇨" data-en="Frequent urination">빈뇨</span></label>
-            <label class="cl"><input type="checkbox" name="cysSub" value="잔뇨감"><div class="dot"></div><span data-ko="잔뇨감" data-en="Residual sensation">잔뇨감</span></label>
-            <label class="cl"><input type="checkbox" name="cysSub" value="혈뇨"><div class="dot"></div><span data-ko="혈뇨" data-en="Blood in urine">혈뇨</span></label>
+            <label class="cl"><input type="checkbox" name="cysSub" value="배뇨통"><div class="dot"></div><span data-ko="배뇨통" data-en="Painful urination" data-ru="Боль при мочеиспускании">배뇨통</span></label>
+            <label class="cl"><input type="checkbox" name="cysSub" value="빈뇨"><div class="dot"></div><span data-ko="빈뇨" data-en="Frequent urination" data-ru="Частое мочеиспускание">빈뇨</span></label>
+            <label class="cl"><input type="checkbox" name="cysSub" value="잔뇨감"><div class="dot"></div><span data-ko="잔뇨감" data-en="Residual sensation" data-ru="Чувство неполного опорожнения">잔뇨감</span></label>
+            <label class="cl"><input type="checkbox" name="cysSub" value="혈뇨"><div class="dot"></div><span data-ko="혈뇨" data-en="Blood in urine" data-ru="Кровь в моче">혈뇨</span></label>
           </div>
         </div>
       </div>
 
       <!-- 생리관련 -->
       <div style="margin-top:5px">
-        <label class="cl sym-full" id="menCheck"><input type="checkbox" name="symptom" value="생리관련"><div class="dot"></div><span data-ko="생리 관련" data-en="Menstrual issues">생리 관련</span></label>
+        <label class="cl sym-full" id="menCheck"><input type="checkbox" name="symptom" value="생리관련"><div class="dot"></div><span data-ko="생리 관련" data-en="Menstrual issues" data-ru="Проблемы с менструацией">생리 관련</span></label>
         <div class="sub" id="sub-men">
           <div class="cg" id="cg-menSub">
-            <label class="cl"><input type="checkbox" name="menSub" value="무월경"><div class="dot"></div><span data-ko="무월경" data-en="Amenorrhea">무월경</span></label>
-            <label class="cl"><input type="checkbox" name="menSub" value="생리통"><div class="dot"></div><span data-ko="생리통" data-en="Cramps">생리통</span></label>
-            <label class="cl"><input type="checkbox" name="menSub" value="주기변화"><div class="dot"></div><span data-ko="주기변화" data-en="Cycle change">주기변화</span></label>
-            <label class="cl"><input type="checkbox" name="menSub" value="양변화"><div class="dot"></div><span data-ko="양변화" data-en="Flow change">양변화</span></label>
+            <label class="cl"><input type="checkbox" name="menSub" value="무월경"><div class="dot"></div><span data-ko="무월경" data-en="Amenorrhea" data-ru="Отсутствие менструации">무월경</span></label>
+            <label class="cl"><input type="checkbox" name="menSub" value="생리통"><div class="dot"></div><span data-ko="생리통" data-en="Cramps" data-ru="Менструальная боль">생리통</span></label>
+            <label class="cl"><input type="checkbox" name="menSub" value="주기변화"><div class="dot"></div><span data-ko="주기변화" data-en="Cycle change" data-ru="Изменение цикла">주기변화</span></label>
+            <label class="cl"><input type="checkbox" name="menSub" value="양변화"><div class="dot"></div><span data-ko="양변화" data-en="Flow change" data-ru="Изменение объёма">양변화</span></label>
           </div>
         </div>
       </div>
 
       <!-- 단순 증상 (2열 그리드) -->
       <div class="sym-grid" id="cg-symptom">
-        <label class="cl"><input type="checkbox" name="symptom" value="질출혈"><div class="dot"></div><span data-ko="질출혈" data-en="Vaginal bleeding">질출혈</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="복통·골반통·요통"><div class="dot"></div><span data-ko="복통·골반통·요통" data-en="Abdominal/Pelvic/Back pain">복통·골반통·요통</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 검사"><div class="dot"></div><span data-ko="자궁경부암 검사" data-en="Pap smear">자궁경부암 검사</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 백신"><div class="dot"></div><span data-ko="자궁경부암 백신" data-en="HPV vaccine">자궁경부암 백신</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="임신 확인"><div class="dot"></div><span data-ko="임신 확인" data-en="Pregnancy test">임신 확인</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="난임 상담"><div class="dot"></div><span data-ko="난임 상담" data-en="Infertility consult">난임 상담</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="응급피임약"><div class="dot"></div><span data-ko="응급피임약" data-en="Emergency contraception">응급피임약</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="피임 상담"><div class="dot"></div><span data-ko="피임 상담" data-en="Contraception consult">피임 상담</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="성병 검사"><div class="dot"></div><span data-ko="성병 검사" data-en="STD test">성병 검사</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="갱년기 상담"><div class="dot"></div><span data-ko="갱년기 상담" data-en="Menopause consult">갱년기 상담</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="질출혈"><div class="dot"></div><span data-ko="질출혈" data-en="Vaginal bleeding" data-ru="Влагалищное кровотечение">질출혈</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="복통·골반통·요통"><div class="dot"></div><span data-ko="복통·골반통·요통" data-en="Abdominal/Pelvic/Back pain" data-ru="Боль в животе/тазу/пояснице">복통·골반통·요통</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 검사"><div class="dot"></div><span data-ko="자궁경부암 검사" data-en="Pap smear" data-ru="ПАП-тест (мазок)">자궁경부암 검사</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 백신"><div class="dot"></div><span data-ko="자궁경부암 백신" data-en="HPV vaccine" data-ru="Вакцина против ВПЧ">자궁경부암 백신</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="임신 확인"><div class="dot"></div><span data-ko="임신 확인" data-en="Pregnancy test" data-ru="Тест на беременность">임신 확인</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="난임 상담"><div class="dot"></div><span data-ko="난임 상담" data-en="Infertility consult" data-ru="Консультация по бесплодию">난임 상담</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="응급피임약"><div class="dot"></div><span data-ko="응급피임약" data-en="Emergency contraception" data-ru="Экстренная контрацепция">응급피임약</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="피임 상담"><div class="dot"></div><span data-ko="피임 상담" data-en="Contraception consult" data-ru="Консультация по контрацепции">피임 상담</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="성병 검사"><div class="dot"></div><span data-ko="성병 검사" data-en="STD test" data-ru="Анализ на ИППП">성병 검사</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="갱년기 상담"><div class="dot"></div><span data-ko="갱년기 상담" data-en="Menopause consult" data-ru="Консультация по климаксу">갱년기 상담</span></label>
       </div>
 
       <!-- 산모 -->
       <div style="margin-top:5px">
-        <label class="cl sym-full" id="motherCheck"><input type="checkbox" name="symptom" value="산모"><div class="dot"></div><span data-ko="산모" data-en="Maternity">산모</span></label>
+        <label class="cl sym-full" id="motherCheck"><input type="checkbox" name="symptom" value="산모"><div class="dot"></div><span data-ko="산모" data-en="Maternity" data-ru="Беременность (ведение)">산모</span></label>
         <div class="sub" id="sub-mother">
           <div class="cg" id="cg-motherSub">
-            <label class="cl"><input type="checkbox" name="motherSub" value="초음파 정기검진"><div class="dot"></div><span data-ko="초음파 정기검진" data-en="Routine ultrasound">초음파 정기검진</span></label>
-            <label class="cl"><input type="checkbox" name="motherSub" value="일반진료"><div class="dot"></div><span data-ko="일반진료" data-en="General care">일반진료</span></label>
+            <label class="cl"><input type="checkbox" name="motherSub" value="초음파 정기검진"><div class="dot"></div><span data-ko="초음파 정기검진" data-en="Routine ultrasound" data-ru="Плановое УЗИ">초음파 정기검진</span></label>
+            <label class="cl"><input type="checkbox" name="motherSub" value="일반진료"><div class="dot"></div><span data-ko="일반진료" data-en="General care" data-ru="Общий приём">일반진료</span></label>
           </div>
         </div>
       </div>
 
       <!-- 종합검진 -->
       <div style="margin-top:5px">
-        <label class="cl sym-full" id="checkupCheck"><input type="checkbox" name="symptom" value="종합검진"><div class="dot"></div><span data-ko="종합검진" data-en="Regular check up">종합검진</span></label>
+        <label class="cl sym-full" id="checkupCheck"><input type="checkbox" name="symptom" value="종합검진"><div class="dot"></div><span data-ko="종합검진" data-en="Regular check up" data-ru="Комплексное обследование">종합검진</span></label>
         <div class="sub" id="sub-checkup">
           <div class="cg" id="cg-checkupSub">
-            <label class="cl"><input type="checkbox" name="checkupSub" value="산전검진"><div class="dot"></div><span data-ko="산전검진" data-en="Prenatal">산전검진</span></label>
-            <label class="cl"><input type="checkbox" name="checkupSub" value="웨딩검진"><div class="dot"></div><span data-ko="웨딩검진" data-en="Premarital">웨딩검진</span></label>
-            <label class="cl"><input type="checkbox" name="checkupSub" value="폐경검진"><div class="dot"></div><span data-ko="폐경검진" data-en="Menopause screen">폐경검진</span></label>
-            <label class="cl"><input type="checkbox" name="checkupSub" value="정기검진"><div class="dot"></div><span data-ko="정기검진" data-en="Routine">정기검진</span></label>
+            <label class="cl"><input type="checkbox" name="checkupSub" value="산전검진"><div class="dot"></div><span data-ko="산전검진" data-en="Prenatal" data-ru="Дородовое обследование">산전검진</span></label>
+            <label class="cl"><input type="checkbox" name="checkupSub" value="웨딩검진"><div class="dot"></div><span data-ko="웨딩검진" data-en="Premarital" data-ru="Добрачное обследование">웨딩검진</span></label>
+            <label class="cl"><input type="checkbox" name="checkupSub" value="폐경검진"><div class="dot"></div><span data-ko="폐경검진" data-en="Menopause screen" data-ru="Обследование при климаксе">폐경검진</span></label>
+            <label class="cl"><input type="checkbox" name="checkupSub" value="정기검진"><div class="dot"></div><span data-ko="정기검진" data-en="Routine" data-ru="Плановое обследование">정기검진</span></label>
           </div>
         </div>
       </div>
@@ -483,66 +496,66 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
   <div class="step-panel" id="panel4">
     <div class="s-head">
       <div class="lbl">Step 4 / 4</div>
-      <h2 data-ko="접수 유형 · 동의" data-en="Registration Type / Consent">접수 유형 · 동의</h2>
+      <h2 data-ko="접수 유형 · 동의" data-en="Registration Type / Consent" data-ru="Тип регистрации / согласие">접수 유형 · 동의</h2>
     </div>
 
     <div class="card">
-      <div class="ft"><span data-ko="접수 유형 선택" data-en="Select registration type">접수 유형 선택</span> <span class="req">*</span></div>
+      <div class="ft"><span data-ko="접수 유형 선택" data-en="Select registration type" data-ru="Выберите тип регистрации">접수 유형 선택</span> <span class="req">*</span></div>
       <label class="ins-card" id="ins1">
         <input type="radio" name="insurance" value="보험" onclick="selIns(0)">
-        <div class="ins-name"><span class="badge h" data-ko="건강보험" data-en="Insured">건강보험</span><span data-ko="보험 접수" data-en="Insurance registration">보험 접수</span></div>
-        <div class="ins-desc" data-ko="건강보험공단에 접수되어 일반 접수보다 진료비가 저렴합니다." data-en="Registered with NHIS; lower cost than self-pay.">건강보험공단에 접수되어 일반 접수보다 진료비가 저렴합니다.</div>
+        <div class="ins-name"><span class="badge h" data-ko="건강보험" data-en="Insured" data-ru="Страховка">건강보험</span><span data-ko="보험 접수" data-en="Insurance registration" data-ru="Регистрация по страховке">보험 접수</span></div>
+        <div class="ins-desc" data-ko="건강보험공단에 접수되어 일반 접수보다 진료비가 저렴합니다." data-en="Registered with NHIS; lower cost than self-pay." data-ru="Регистрация в системе ОМС (NHIS); дешевле, чем без страховки.">건강보험공단에 접수되어 일반 접수보다 진료비가 저렴합니다.</div>
       </label>
       <label class="ins-card" id="ins2">
         <input type="radio" name="insurance" value="일반" onclick="selIns(1)">
-        <div class="ins-name"><span class="badge p" data-ko="비급여" data-en="Self-pay">비급여</span><span data-ko="일반 접수" data-en="Self-pay registration">일반 접수</span></div>
-        <div class="ins-desc" data-ko="건강보험공단에 기록이 남지 않는 접수 방법입니다." data-en="No record is kept with NHIS.">건강보험공단에 기록이 남지 않는 접수 방법입니다.</div>
+        <div class="ins-name"><span class="badge p" data-ko="비급여" data-en="Self-pay" data-ru="Без страховки">비급여</span><span data-ko="일반 접수" data-en="Self-pay registration" data-ru="Регистрация без страховки">일반 접수</span></div>
+        <div class="ins-desc" data-ko="건강보험공단에 기록이 남지 않는 접수 방법입니다." data-en="No record is kept with NHIS." data-ru="Запись не передаётся в систему ОМС (NHIS).">건강보험공단에 기록이 남지 않는 접수 방법입니다.</div>
       </label>
     </div>
 
     <div class="card">
-      <div class="ft"><span data-ko="개인정보 수집·이용 동의" data-en="Consent to Personal Data Use">개인정보 수집·이용 동의</span> <span class="req">*</span></div>
+      <div class="ft"><span data-ko="개인정보 수집·이용 동의" data-en="Consent to Personal Data Use" data-ru="Согласие на обработку персональных данных">개인정보 수집·이용 동의</span> <span class="req">*</span></div>
       <div class="consent-box">
-        <span data-ko="작성하신 내용은 개인정보 보호법에 의거하여 국민건강보험 적용과 진료기록부 작성 외에는 사용되지 않습니다." data-en="Your information is used only for national health insurance claims and medical records, in accordance with the Personal Information Protection Act.">작성하신 내용은 개인정보 보호법에 의거하여 국민건강보험 적용과 진료기록부 작성 외에는 사용되지 않습니다.</span><br><br>
-        <span data-ko="이용 및 보유기간: 작성일로부터 5년" data-en="Retention period: 5 years from the date of completion.">이용 및 보유기간: 작성일로부터 5년</span><br>
-        <span data-ko="수집 항목: 성명, 생년월일, 주민등록번호, 연락처, 주소, 진료 관련 건강 정보" data-en="Items collected: name, date of birth, ID number, contact, address, and medical information.">수집 항목: 성명, 생년월일, 주민등록번호, 연락처, 주소, 진료 관련 건강 정보</span><br>
-        <span data-ko="수집 목적: 진료 및 진료기록부 작성, 건강보험공단 청구" data-en="Purpose: medical care, recordkeeping, and NHIS claims.">수집 목적: 진료 및 진료기록부 작성, 건강보험공단 청구</span><br><br>
-        <span data-ko="* 본원은 범죄예방 및 시설안전의 목적으로 CCTV 촬영 중에 있습니다." data-en="* CCTV is in operation for crime prevention and facility safety.">* 본원은 범죄예방 및 시설안전의 목적으로 CCTV 촬영 중에 있습니다.</span><br>
-        <span data-ko="* 비급여항목은 실비보험 청구가 불가할 수 있습니다." data-en="* Non-covered items may not be claimable under private insurance.">* 비급여항목은 실비보험 청구가 불가할 수 있습니다.</span><br>
-        <span data-ko="* 검사 결과 및 예약 일정 안내를 위한 SMS/알림 서비스를 제공 중입니다." data-en="* SMS/notification services are provided for results and appointment reminders.">* 검사 결과 및 예약 일정 안내를 위한 SMS/알림 서비스를 제공 중입니다.</span>
+        <span data-ko="작성하신 내용은 개인정보 보호법에 의거하여 국민건강보험 적용과 진료기록부 작성 외에는 사용되지 않습니다." data-en="Your information is used only for national health insurance claims and medical records, in accordance with the Personal Information Protection Act." data-ru="Указанные данные используются только для оформления медицинской страховки и ведения медкарты в соответствии с Законом о защите персональных данных.">작성하신 내용은 개인정보 보호법에 의거하여 국민건강보험 적용과 진료기록부 작성 외에는 사용되지 않습니다.</span><br><br>
+        <span data-ko="이용 및 보유기간: 작성일로부터 5년" data-en="Retention period: 5 years from the date of completion." data-ru="Срок хранения: 5 лет с даты заполнения.">이용 및 보유기간: 작성일로부터 5년</span><br>
+        <span data-ko="수집 항목: 성명, 생년월일, 주민등록번호, 연락처, 주소, 진료 관련 건강 정보" data-en="Items collected: name, date of birth, ID number, contact, address, and medical information." data-ru="Собираемые данные: имя, дата рождения, регистрационный номер, контакты, адрес и медицинская информация.">수집 항목: 성명, 생년월일, 주민등록번호, 연락처, 주소, 진료 관련 건강 정보</span><br>
+        <span data-ko="수집 목적: 진료 및 진료기록부 작성, 건강보험공단 청구" data-en="Purpose: medical care, recordkeeping, and NHIS claims." data-ru="Цель: оказание медпомощи, ведение записей и оформление страховых требований (NHIS).">수집 목적: 진료 및 진료기록부 작성, 건강보험공단 청구</span><br><br>
+        <span data-ko="* 본원은 범죄예방 및 시설안전의 목적으로 CCTV 촬영 중에 있습니다." data-en="* CCTV is in operation for crime prevention and facility safety." data-ru="* В клинике ведётся видеонаблюдение (CCTV) в целях безопасности.">* 본원은 범죄예방 및 시설안전의 목적으로 CCTV 촬영 중에 있습니다.</span><br>
+        <span data-ko="* 비급여항목은 실비보험 청구가 불가할 수 있습니다." data-en="* Non-covered items may not be claimable under private insurance." data-ru="* Платные (без страховки) услуги могут не покрываться частной страховкой.">* 비급여항목은 실비보험 청구가 불가할 수 있습니다.</span><br>
+        <span data-ko="* 검사 결과 및 예약 일정 안내를 위한 SMS/알림 서비스를 제공 중입니다." data-en="* SMS/notification services are provided for results and appointment reminders." data-ru="* Предоставляется SMS-уведомление о результатах и записи на приём.">* 검사 결과 및 예약 일정 안내를 위한 SMS/알림 서비스를 제공 중입니다.</span>
       </div>
       <label class="cl" id="consentLabel" style="width:100%">
         <input type="checkbox" id="consent"><div class="dot"></div>
-        <span style="font-size:15px;font-weight:600" data-ko="위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다." data-en="I have read and agree to the collection and use of my personal information.">위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다.</span>
+        <span style="font-size:15px;font-weight:600" data-ko="위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다." data-en="I have read and agree to the collection and use of my personal information." data-ru="Я ознакомлен(а) и согласен(на) на сбор и использование моих персональных данных.">위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다.</span>
       </label>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="서명" data-en="Signature">서명</div>
+      <div class="ft" data-ko="서명" data-en="Signature" data-ru="Подпись">서명</div>
       <div class="sig-wrap">
         <canvas id="sigCanvas" height="120"></canvas>
-        <button class="sig-clear-btn" type="button" onclick="clearSig()" data-ko="지우기" data-en="Clear">지우기</button>
+        <button class="sig-clear-btn" type="button" onclick="clearSig()" data-ko="지우기" data-en="Clear" data-ru="Очистить">지우기</button>
       </div>
-      <div class="hint" data-ko="손가락 또는 펜으로 서명해주세요." data-en="Please sign with your finger or a pen.">손가락 또는 펜으로 서명해주세요.</div>
+      <div class="hint" data-ko="손가락 또는 펜으로 서명해주세요." data-en="Please sign with your finger or a pen." data-ru="Распишитесь пальцем или стилусом.">손가락 또는 펜으로 서명해주세요.</div>
     </div>
   </div>
 
   <!-- Done -->
   <div class="done-screen" id="doneScreen">
     <div class="done-icon">✓</div>
-    <h3 data-ko="모든 작성이 끝났습니다" data-en="All Done!">모든 작성이 끝났습니다</h3>
+    <h3 data-ko="모든 작성이 끝났습니다" data-en="All Done!" data-ru="Готово!">모든 작성이 끝났습니다</h3>
     <div style="margin-top:18px;padding:18px 16px;background:var(--g-light);border-radius:12px;border:1.5px solid var(--g)">
-      <p style="font-size:18px;font-weight:700;color:var(--g-dark);line-height:1.6" data-ko="접수대에 알려주시면 확인 후 접수를 도와드리겠습니다." data-en="Please let the front desk know, and we'll complete your registration.">접수대에 알려주시면 확인 후 접수를 도와드리겠습니다.</p>
+      <p style="font-size:18px;font-weight:700;color:var(--g-dark);line-height:1.6" data-ko="접수대에 알려주시면 확인 후 접수를 도와드리겠습니다." data-en="Please let the front desk know, and we'll complete your registration." data-ru="Сообщите администратору — мы завершим вашу регистрацию.">접수대에 알려주시면 확인 후 접수를 도와드리겠습니다.</p>
     </div>
     <p style="margin-top:14px;font-size:14px;color:var(--muted)">88플러스내과·산부인과 · 02-972-8800</p>
-    <button type="button" onclick="location.reload()" data-ko="처음으로" data-en="Start over" style="margin-top:24px;padding:13px 32px;border:none;border-radius:10px;background:var(--g);color:#fff;font-family:inherit;font-size:17px;font-weight:700;cursor:pointer">처음으로</button>
+    <button type="button" onclick="location.reload()" data-ko="처음으로" data-en="Start over" data-ru="В начало" style="margin-top:24px;padding:13px 32px;border:none;border-radius:10px;background:var(--g);color:#fff;font-family:inherit;font-size:17px;font-weight:700;cursor:pointer">처음으로</button>
   </div>
 
   <!-- Nav -->
   <div class="fnav" id="fnav">
-    <button class="btn-p" id="btnP" disabled type="button" data-ko="이전" data-en="Previous">이전</button>
-    <button class="btn-n" id="btnN" type="button" data-ko="다음" data-en="Next">다음</button>
-    <button class="btn-s" id="btnS" type="button" data-ko="접수 완료" data-en="Submit">접수 완료</button>
+    <button class="btn-p" id="btnP" disabled type="button" data-ko="이전" data-en="Previous" data-ru="Назад">이전</button>
+    <button class="btn-n" id="btnN" type="button" data-ko="다음" data-en="Next" data-ru="Далее">다음</button>
+    <button class="btn-s" id="btnS" type="button" data-ko="접수 완료" data-en="Submit" data-ru="Отправить">접수 완료</button>
   </div>
 
 </div>
@@ -554,17 +567,17 @@ var LANG = 'ko';
 
 // ── 언어 전환 ──
 var ALERTS = {
-  name: {ko:'성함을 입력해주세요.', en:'Please enter your name.'},
-  rrn: {ko:'주민등록번호 앞 6자리를 입력해주세요.', en:'Please enter the first 6 digits of your ID number.'},
-  phone: {ko:'전화번호를 모두 입력해주세요.', en:'Please enter your full phone number.'},
-  marital: {ko:'결혼 여부를 선택해주세요.', en:'Please select your marital status.'},
-  sex: {ko:'성경험 여부를 선택해주세요.', en:'Please select your sexual activity status.'},
-  symptom: {ko:'내원 목적을 하나 이상 선택해주세요.', en:'Please select at least one reason for your visit.'},
-  insurance: {ko:'접수 유형을 선택해주세요.', en:'Please select a registration type.'},
-  consent: {ko:'개인정보 수집·이용에 동의해주세요.', en:'Please agree to the use of personal information.'},
-  fail: {ko:'전송 실패. 인터넷 연결을 확인해주세요.', en:'Submission failed. Please check your connection.'},
-  btnSaving: {ko:'저장 중...', en:'Saving...'},
-  btnSubmit: {ko:'접수 완료', en:'Submit'}
+  name: {ko:'성함을 입력해주세요.', en:'Please enter your name.', ru:'Пожалуйста, введите ваше имя.'},
+  rrn: {ko:'주민등록번호 앞 6자리를 입력해주세요.', en:'Please enter the first 6 digits of your ID number.', ru:'Введите первые 6 цифр регистрационного номера.'},
+  phone: {ko:'전화번호를 모두 입력해주세요.', en:'Please enter your full phone number.', ru:'Введите полный номер телефона.'},
+  marital: {ko:'결혼 여부를 선택해주세요.', en:'Please select your marital status.', ru:'Выберите семейное положение.'},
+  sex: {ko:'성경험 여부를 선택해주세요.', en:'Please select your sexual activity status.', ru:'Укажите, ведёте ли вы половую жизнь.'},
+  symptom: {ko:'내원 목적을 하나 이상 선택해주세요.', en:'Please select at least one reason for your visit.', ru:'Выберите хотя бы одну причину визита.'},
+  insurance: {ko:'접수 유형을 선택해주세요.', en:'Please select a registration type.', ru:'Выберите тип регистрации.'},
+  consent: {ko:'개인정보 수집·이용에 동의해주세요.', en:'Please agree to the use of personal information.', ru:'Подтвердите согласие на обработку персональных данных.'},
+  fail: {ko:'전송 실패. 인터넷 연결을 확인해주세요.', en:'Submission failed. Please check your connection.', ru:'Ошибка отправки. Проверьте подключение к интернету.'},
+  btnSaving: {ko:'저장 중...', en:'Saving...', ru:'Сохранение...'},
+  btnSubmit: {ko:'접수 완료', en:'Submit', ru:'Отправить'}
 };
 function T(k){ return ALERTS[k][LANG]; }
 
@@ -573,6 +586,7 @@ function setLang(lang){
   document.documentElement.lang = lang;
   document.getElementById('btnKo').classList.toggle('on', lang==='ko');
   document.getElementById('btnEn').classList.toggle('on', lang==='en');
+  document.getElementById('btnRu').classList.toggle('on', lang==='ru');
   document.querySelectorAll('[data-ko]').forEach(function(el){
     var t = el.getAttribute('data-'+lang);
     if(t!==null) el.textContent = t;
@@ -642,7 +656,7 @@ document.querySelectorAll('.rl').forEach(function(label){
 // ── 주소 검색 ──
 function searchAddress(){
   if(typeof daum==='undefined' || !daum.Postcode){
-    alert(LANG==='ko' ? '주소 검색 서비스를 불러오지 못했습니다.' : 'Address search service could not be loaded.');
+    alert({ko:'주소 검색 서비스를 불러오지 못했습니다.', en:'Address search service could not be loaded.', ru:'Не удалось загрузить службу поиска адреса.'}[LANG]);
     return;
   }
   new daum.Postcode({oncomplete:function(d){
@@ -713,6 +727,7 @@ function submitForm(){
     address: (v('address')+' '+v('addressDetail')).trim(),
     marital: rval('marital'), lmp: v('lmp'),
     cycle: rval('cycle'), cycle_days: v('cycleDays'),
+    cycle_min_weeks: v('cycleMinWeeks'), cycle_max_months: v('cycleMaxMonths'),
     sex_exp: rval('sex'),
     delivery: rval('delivery'), delivery_count: v('deliveryCnt'), delivery_type: cvals('deliveryType'),
     abortion: rval('abortion'), abortion_count: v('abortionCnt'), abortion_type: cvals('abortionType'),
