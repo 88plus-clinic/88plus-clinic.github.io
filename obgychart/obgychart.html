@@ -460,19 +460,25 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
         <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 백신"><div class="dot"></div><span data-ko="자궁경부암 백신" data-en="HPV vaccine" data-ru="Вакцина против ВПЧ">자궁경부암 백신</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="임신 확인"><div class="dot"></div><span data-ko="임신 확인" data-en="Pregnancy test" data-ru="Тест на беременность">임신 확인</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="난임 상담"><div class="dot"></div><span data-ko="난임 상담" data-en="Infertility consult" data-ru="Консультация по бесплодию">난임 상담</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="임신사전건강관리"><div class="dot"></div><span data-ko="임신 사전 건강관리" data-en="Preconception care" data-ru="Прегравидарная подготовка">임신 사전 건강관리</span></label>
-        <label class="cl"><input type="checkbox" id="ecCheck" name="symptom" value="응급피임약"><div class="dot"></div><span data-ko="응급피임약" data-en="Emergency contraception" data-ru="Экстренная контрацепция">응급피임약</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="피임 상담"><div class="dot"></div><span data-ko="피임 상담" data-en="Contraception consult" data-ru="Консультация по контрацепции">피임 상담</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="성병 검사"><div class="dot"></div><span data-ko="성병 검사" data-en="STD test" data-ru="Анализ на ИППП">성병 검사</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="갱년기 상담"><div class="dot"></div><span data-ko="갱년기 상담" data-en="Menopause consult" data-ru="Консультация по климаксу">갱년기 상담</span></label>
       </div>
 
+      <!-- 임신 사전 건강관리 -->
+      <div style="margin-top:5px">
+        <label class="cl sym-full" id="preconLabel"><input type="checkbox" id="preconCheck" name="symptom" value="임신사전건강관리"><div class="dot"></div><span data-ko="임신 사전 건강관리" data-en="Preconception care" data-ru="Прегравидарная подготовка">임신 사전 건강관리</span></label>
+      </div>
+
       <!-- 응급피임약 → 마지막 관계 시점 -->
-      <div class="sub" id="sub-ec">
-        <div class="ft" data-ko="마지막 관계 시점 (last coitus)" data-en="Last coitus" data-ru="Последний половой акт">마지막 관계 시점 (last coitus)</div>
-        <div class="irow" style="gap:7px;flex-wrap:wrap;align-items:center">
-          <input class="inp" id="ecDays" type="number" min="0" max="30" placeholder="예: 2" data-ko-ph="예: 2" data-en-ph="e.g. 2" data-ru-ph="напр. 2" style="max-width:90px">
-          <span style="font-size:15px;color:var(--sub)" data-ko="일 전" data-en="days ago" data-ru="дней назад">일 전</span>
+      <div style="margin-top:5px">
+        <label class="cl sym-full" id="ecLabel"><input type="checkbox" id="ecCheck" name="symptom" value="응급피임약"><div class="dot"></div><span data-ko="응급피임약" data-en="Emergency contraception" data-ru="Экстренная контрацепция">응급피임약</span></label>
+        <div class="sub" id="sub-ec">
+          <div class="ft" data-ko="마지막 관계 시점 (last coitus)" data-en="Last coitus" data-ru="Последний половой акт">마지막 관계 시점 (last coitus)</div>
+          <div class="irow" style="gap:7px;flex-wrap:wrap;align-items:center">
+            <input class="inp" id="ecDays" type="number" min="0" max="30" placeholder="예: 2" data-ko-ph="예: 2" data-en-ph="e.g. 2" data-ru-ph="напр. 2" style="max-width:90px">
+            <span style="font-size:15px;color:var(--sub)" data-ko="일 전" data-en="days ago" data-ru="дней назад">일 전</span>
+          </div>
         </div>
       </div>
 
@@ -641,10 +647,15 @@ document.querySelectorAll('#cg-symptom .cl').forEach(function(cl){
   var ec = document.getElementById('ecCheck'), sub = document.getElementById('sub-ec');
   if(ec && sub){
     ec.addEventListener('change', function(){
+      var lbl = document.getElementById('ecLabel'); if(lbl) lbl.classList.toggle('sel', ec.checked);
       sub.classList.toggle('on', ec.checked);
       if(!ec.checked) document.getElementById('ecDays').value = '';
     });
   }
+  var pc = document.getElementById('preconCheck');
+  if(pc){ pc.addEventListener('change', function(){
+    var l = document.getElementById('preconLabel'); if(l) l.classList.toggle('sel', pc.checked);
+  }); }
 })();
 document.getElementById('consent').addEventListener('change', function(){
   document.getElementById('consentLabel').classList.toggle('sel', this.checked);
