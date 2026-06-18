@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>국가건강검진 접수 · 88플러스내과·산부인과</title>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style>
+  :root{
+    --primary:#5C7F22; --primary-dark:#3F5A14; --line:#d9ddcf; --line-soft:#eef1e6;
+    --muted:#6b7361; --faint:#a7ad9c; --ink:#2c2f26; --warn:#B26A00; --warnbg:#FFF3E0;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    background:#f4f6ee; color:var(--ink); font-size:15px; line-height:1.5; }
+  .wrap{ max-width:760px; margin:0 auto; padding:0 14px 60px; }
+  header{ background:var(--primary); color:#fff; padding:16px 0; margin-bottom:18px; }
+  header .wrap{ display:flex; align-items:baseline; gap:10px; padding-bottom:0; }
+  header h1{ font-size:19px; margin:0; font-weight:700; }
+  header .sub{ font-size:12.5px; opacity:.9; }
+
+  .card{ background:#fff; border:1px solid var(--line); border-radius:9px; padding:18px 18px;
+    margin-bottom:16px; }
+  .card h2{ font-size:15.5px; color:var(--primary-dark); margin:0 0 4px; }
+  .card .desc{ font-size:12.5px; color:var(--muted); margin:0 0 14px; }
+  .step{ display:inline-block; width:22px; height:22px; line-height:22px; text-align:center;
+    background:var(--primary); color:#fff; border-radius:50%; font-size:12.5px; margin-right:7px; }
+  .who{ font-size:12px; color:var(--muted); font-weight:400; }
+
+  .row{ display:flex; flex-wrap:wrap; gap:12px 16px; }
+  .fld{ flex:1 1 220px; min-width:0; }
+  .fld.full{ flex-basis:100%; }
+  label{ display:block; font-size:12.5px; color:var(--muted); margin-bottom:4px; font-weight:600; }
+  input[type=text], input[type=tel], input[type=password], select{
+    width:100%; height:46px; padding:0 12px; border:1px solid var(--line); border-radius:6px;
+    font-family:inherit; font-size:16px; background:#fff; }
+  input:focus, select:focus{ outline:none; border-color:var(--primary); }
+  input.bad{ border-color:#c0392b; background:#fdf2f0; }
+  .req::after{ content:' *'; color:#c0392b; }
+
+  .rrn-row{ display:flex; align-items:center; gap:7px; }
+  .rrn-row input{ flex:1 1 0; width:auto; min-width:0; }
+  .rrn-row span{ color:var(--faint); flex:none; }
+
+  .addr-btn{ flex:none; padding:0 16px; border:1px solid var(--primary); background:var(--primary);
+    color:#fff; border-radius:6px; font-family:inherit; font-size:14px; cursor:pointer; }
+  .addr-btn:hover{ background:var(--primary-dark); }
+  .addr-warn{ margin:8px 0 0; padding:9px 11px; background:var(--warnbg); border-radius:6px;
+    font-size:12px; line-height:1.55; color:var(--warn); }
+  .addr-warn b{ color:#9A4A00; }
+
+  .derived{ margin-top:12px; padding:11px 14px; border-radius:6px; background:var(--line-soft);
+    font-size:14px; display:flex; gap:18px; flex-wrap:wrap; align-items:center; }
+  .derived.empty{ color:var(--faint); }
+  .derived b{ color:var(--primary-dark); font-size:16px; }
+  .derived .err{ color:#c0392b; font-weight:600; }
+
+  .recv{ display:flex; gap:7px; flex-wrap:wrap; }
+  .recv label{ margin:0; }
+  .chip{ display:inline-flex; align-items:center; gap:5px; padding:9px 14px; border:1px solid var(--line);
+    border-radius:20px; font-size:14px; cursor:pointer; user-select:none; color:var(--muted); }
+  .chip input{ display:none; }
+  .chip.on{ background:var(--primary); color:#fff; border-color:var(--primary); }
+
+  /* 검진 항목 */
+  .grp{ margin-top:14px; }
+  .grp:first-child{ margin-top:0; }
+  .grp-h{ font-size:12px; color:var(--muted); font-weight:700; letter-spacing:.02em;
+    padding:0 2px 6px; border-bottom:1px solid var(--line-soft); margin-bottom:6px; }
+  .item{ display:flex; align-items:flex-start; gap:11px; padding:9px 6px; border-radius:6px;
+    cursor:pointer; }
+  .item:hover{ background:#fafbf5; }
+  .item .box{ width:21px; height:21px; border:2px solid var(--line); border-radius:5px; flex:none;
+    margin-top:1px; display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:#fff; background:#fff; transition:.08s; }
+  .item.on .box{ background:var(--primary); border-color:var(--primary); }
+  .item .body{ flex:1; min-width:0; }
+  .item .nm{ font-size:14.5px; font-weight:600; color:var(--ink); }
+  .item .note{ font-size:12px; color:var(--faint); margin-top:1px; }
+  .item.off{ opacity:.5; }
+  .item.off .nm{ font-weight:500; }
+  .item.on .nm{ color:var(--primary-dark); }
+  .badge{ display:inline-block; font-size:10.5px; padding:1px 6px; border-radius:10px;
+    background:var(--warnbg); color:var(--warn); margin-left:6px; vertical-align:middle; font-weight:700; }
+  .legend{ font-size:11.5px; color:var(--muted); margin-top:12px; padding-top:10px;
+    border-top:1px dashed var(--line-soft); line-height:1.7; }
+  .legend .k{ display:inline-flex; align-items:center; gap:4px; margin-right:14px; }
+  .legend .sq{ width:14px; height:14px; border-radius:3px; display:inline-block; vertical-align:middle; }
+
+  /* 요약(recap) */
+  .recap{ background:var(--line-soft); border-radius:7px; padding:12px 14px; margin-bottom:14px;
+    font-size:14px; }
+  .recap .nm{ font-size:16px; font-weight:700; color:var(--primary-dark); }
+  .recap .sub{ font-size:13px; color:var(--muted); margin-top:3px; line-height:1.6; }
+  /* 접수 확인 — 크게 */
+  .rc-name{ font-size:21px; font-weight:700; color:var(--primary-dark); margin-bottom:9px; }
+  .rc-line{ font-size:15.5px; margin:5px 0; color:var(--ink); display:flex; gap:8px; }
+  .rc-line .rc-k{ width:74px; flex:none; color:var(--muted); font-size:13.5px; padding-top:1px; }
+  .rc-line b{ font-weight:700; font-variant-numeric:tabular-nums; }
+  .rc-recv{ margin-top:12px; font-size:15px; display:flex; align-items:center; gap:8px; }
+  .rc-recv .rc-badge{ padding:7px 18px; background:var(--primary); color:#fff; border-radius:20px;
+    font-size:17px; font-weight:700; }
+
+  /* 제출 안내(handoff) */
+  .handoff{ text-align:center; padding:34px 20px; }
+  .handoff .ico{ font-size:46px; }
+  .handoff h2{ font-size:21px; color:var(--primary-dark); margin:12px 0 6px; }
+  .handoff p{ font-size:15px; color:var(--ink); margin:0 0 4px; line-height:1.7; }
+  .handoff .pill{ display:inline-block; margin-top:14px; padding:8px 16px; background:var(--line-soft);
+    border-radius:20px; font-size:13.5px; color:var(--muted); }
+
+  .miss{ font-size:13px; color:#c0392b; margin:0 0 10px; display:none; }
+  .miss.on{ display:block; }
+  #qmiss.on{ background:#fdecea; border:1px solid #f0b6ae; border-radius:7px;
+    padding:12px 14px; font-size:13.5px; line-height:1.6; }
+  #qmiss b{ color:#c0392b; }
+  @keyframes flashbad{ 0%{ background:#fbd5cd; } 100%{ background:transparent; } }
+  .flashing{ animation:flashbad 1s ease 2; }
+
+  .actions{ margin-top:6px; }
+  .btn{ width:100%; padding:15px; border:none; border-radius:8px; font-family:inherit;
+    font-size:16px; font-weight:700; cursor:pointer; background:var(--primary); color:#fff; }
+  .btn:disabled{ background:#bcc4ad; cursor:default; }
+  .btn.sec{ background:#fff; color:var(--muted); border:1px solid var(--line); margin-top:8px; }
+
+  .screen{ display:block; }
+  .screen.hidden{ display:none; }
+
+  /* 동의서 + 서명 */
+  .consent{ border:1px solid var(--line); border-radius:8px; padding:14px 15px; margin-bottom:16px; }
+  .consent h3{ font-size:15px; color:var(--primary-dark); margin:0 0 8px; }
+  .consent-body{ font-size:12.5px; color:var(--muted); line-height:1.7; max-height:190px; overflow-y:auto;
+    background:var(--line-soft); border-radius:6px; padding:11px 13px; margin-bottom:10px; }
+  .consent-body b{ color:var(--ink); }
+  .consent-all{ font-size:12.5px; color:var(--primary); cursor:pointer; text-decoration:underline; margin-bottom:6px; display:inline-block; }
+  .ci{ display:flex; justify-content:space-between; align-items:center; gap:10px; padding:9px 2px;
+    border-top:1px solid var(--line-soft); flex-wrap:wrap; }
+  .ci-l{ font-size:13.5px; font-weight:600; flex:1; min-width:120px; }
+  .ci .opts{ flex:none; }
+  .ci .opt{ padding:7px 13px; font-size:13px; }
+  .sign-box{ border:2px dashed var(--line); border-radius:8px; background:#fff; position:relative; }
+  .sign-box canvas{ width:100%; height:180px; display:block; touch-action:none; border-radius:8px; }
+  .sign-ph{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:var(--faint);
+    font-size:15px; pointer-events:none; }
+  .sign-clear{ margin-top:7px; font-size:12.5px; color:var(--muted); cursor:pointer; text-decoration:underline; }
+  .done-card{ text-align:center; padding:36px 20px; }
+  .done-card .ico{ font-size:48px; }
+  .done-card h2{ font-size:22px; color:var(--primary-dark); margin:12px 0 6px; }
+  .done-card p{ font-size:15px; line-height:1.7; margin:0 0 4px; }
+
+  /* ── 문진표 ── */
+  .qsec{ margin-top:20px; }
+  .qsec:first-child{ margin-top:4px; }
+  .qsec-h{ font-size:14px; font-weight:700; color:#fff; background:var(--primary);
+    padding:8px 13px; border-radius:6px; }
+  .qblock{ padding:13px 2px; border-bottom:1px solid var(--line-soft); }
+  .qblock:last-child{ border-bottom:none; }
+  .qq{ font-size:14.5px; font-weight:600; margin-bottom:9px; line-height:1.5; }
+  .qq .n{ color:var(--primary); font-weight:700; margin-right:4px; }
+  .qhint{ font-size:12px; color:var(--faint); font-weight:400; margin-top:2px; }
+  .opts{ display:flex; flex-wrap:wrap; gap:7px; }
+  .opt{ padding:9px 15px; border:1px solid var(--line); border-radius:20px; font-size:14px;
+    cursor:pointer; user-select:none; color:var(--muted); background:#fff; }
+  .opt input{ display:none; }
+  .opt.on{ background:var(--primary); color:#fff; border-color:var(--primary); font-weight:600; }
+  .qsub{ margin-top:11px; padding:12px 13px; background:#fafbf5; border-left:3px solid var(--line);
+    border-radius:0 6px 6px 0; display:none; }
+  .qsub.on{ display:block; }
+  .qsub .qq{ font-size:13.5px; }
+  .inl{ display:inline-flex; align-items:center; gap:5px; margin:5px 10px 5px 0; font-size:13.5px;
+    color:var(--muted); }
+  .inl input{ width:64px; height:40px; text-align:center; padding:0 6px; }
+  .inl.wide input{ width:84px; }
+
+  /* 질환력 테이블 */
+  .dtab{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  .dtab th{ font-size:11.5px; color:var(--muted); font-weight:700; padding:5px 3px; text-align:center; }
+  .dtab th:first-child{ text-align:left; }
+  .dtab td{ padding:6px 3px; border-top:1px solid var(--line-soft); text-align:center; vertical-align:middle; }
+  .dtab td.dn{ text-align:left; font-weight:500; color:var(--ink); }
+  .yn{ display:inline-flex; gap:4px; }
+  .yn .opt{ padding:6px 12px; font-size:13px; }
+  .dhelp{ font-size:12.5px; color:var(--primary); cursor:pointer; text-decoration:underline; margin:6px 0 2px; display:inline-block; }
+  .dtab.bad-group, .opts.bad-group{ outline:2px solid #e7b0a8; outline-offset:3px; border-radius:6px; }
+  .qsec.bad-group > .qsec-h{ box-shadow:0 0 0 2px #e7b0a8; }
+  .reqg.bad-group{ outline:2px solid #e7b0a8; outline-offset:4px; border-radius:8px; }
+  .badbox{ outline:2px solid #e7b0a8; outline-offset:3px; border-radius:6px; }
+  tr.tb-row{ display:none; }
+  tr.tb-row.on{ display:table-row; }
+  .qnote{ margin:9px 0 0; padding:10px 12px; background:var(--warnbg); border-radius:6px;
+    font-size:12.5px; line-height:1.6; color:var(--warn); display:none; }
+  .qnote.on{ display:block; }
+  .qnote b{ color:#9A4A00; }
+  /* CAPE-15 이중 척도 */
+  .dual{ display:flex; align-items:center; gap:8px; margin-top:6px; }
+  .dual .dl{ font-size:11.5px; color:var(--muted); width:34px; flex:none; font-weight:700; }
+  .dual .opts{ flex:1; }
+  /* 체크박스 칩 (가족력 암종 등) */
+  .ckrow{ display:flex; flex-wrap:wrap; gap:7px; }
+  .ck{ padding:8px 13px; border:1px solid var(--line); border-radius:18px; font-size:13.5px;
+    cursor:pointer; user-select:none; color:var(--muted); background:#fff; }
+  .ck input{ display:none; }
+  .ck.on{ background:var(--primary); color:#fff; border-color:var(--primary); font-weight:600; }
+  /* 격자 체크박스 (가족력 암종 × 관계) */
+  .gck{ display:inline-flex; width:24px; height:24px; border:2px solid var(--line); border-radius:5px;
+    align-items:center; justify-content:center; cursor:pointer; color:transparent; }
+  .gck::after{ content:'✓'; font-size:14px; font-weight:700; }
+  .gck input{ display:none; }
+  .gck.on{ background:var(--primary); border-color:var(--primary); color:#fff; }
+  .tb-note-box{ margin:2px 0 5px; padding:9px 11px; background:var(--warnbg); border-radius:6px;
+    font-size:12px; line-height:1.55; color:var(--warn); }
+  .tb-note-box b{ color:#9A4A00; }
+  .drink-msg{ font-size:12px; color:#c0392b; margin:6px 0 0; display:none; }
+  .drink-msg.on{ display:block; }
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>국가건강검진 접수</h1><span class="sub">88플러스내과·산부인과</span></div></header>
+
+<div class="wrap">
+
+  <!-- ===== 화면 1 : 인적사항 (수검자) ===== -->
+  <div class="screen" id="sc-patient">
+    <div class="card">
+      <h2><span class="step">1</span>인적사항 <span class="who">(수검자 작성)</span></h2>
+      <p class="desc">아래 항목을 빠짐없이 정확히 입력해 주세요.</p>
+      <div class="row">
+        <div class="fld" style="flex:1 1 200px"><label class="req">성명</label>
+          <input type="text" id="name" autocomplete="off"></div>
+        <div class="fld" style="flex:1.4 1 280px"><label class="req">주민등록번호</label>
+          <div class="rrn-row">
+            <input type="text" id="rrn1" inputmode="numeric" maxlength="6" placeholder="앞 6자리" autocomplete="off">
+            <span>-</span>
+            <input type="password" id="rrn2" inputmode="numeric" maxlength="7" placeholder="뒤 7자리" autocomplete="off">
+          </div></div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div class="fld"><label class="req">연락처</label>
+          <input type="tel" id="phone" inputmode="numeric" placeholder="010-0000-0000" autocomplete="off"></div>
+        <div class="fld"><label id="emailLabel">이메일 <span style="font-weight:400;color:var(--faint)">(이메일 수령 시 필수)</span></label>
+          <input type="text" id="email" inputmode="email" placeholder="example@email.com" autocomplete="off"></div>
+      </div>
+      <div class="fld full" style="margin-top:12px"><label id="addrLabel">결과지 받으실 주소 <span style="font-weight:400;color:var(--faint)">(우편 수령 시 필수)</span></label>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="addr" readonly placeholder="주소 검색 버튼을 눌러주세요"
+            onclick="searchAddress()" style="flex:1;cursor:pointer;background:var(--line-soft)">
+          <button type="button" class="addr-btn" onclick="searchAddress()">주소검색</button>
+        </div>
+        <input type="text" id="addrDetail" placeholder="상세주소 (동/호수 등)" autocomplete="off" style="margin-top:8px">
+        <p class="addr-warn">⚠ 결과지는 입력하신 주소로 우편 발송됩니다. <b>도로명 주소와 상세주소(동·호수)를 정확히</b>
+          입력해 주세요. 주소가 부정확하면 결과지가 <b>잘못 배송되거나 반송</b>될 수 있습니다.</p>
+      </div>
+      <div class="fld full" style="margin-top:12px"><label class="req">결과지 수령 방법</label>
+        <div class="recv" id="recv">
+          <label class="chip"><input type="radio" name="recv" value="내원">내원수령</label>
+          <label class="chip"><input type="radio" name="recv" value="우편">우편</label>
+          <label class="chip"><input type="radio" name="recv" value="이메일">이메일</label>
+          <label class="chip"><input type="radio" name="recv" value="모바일">모바일</label>
+        </div>
+      </div>
+      <div class="derived empty" id="derived">주민등록번호를 입력하면 나이·성별이 표시됩니다.</div>
+    </div>
+    <p class="miss" id="miss"></p>
+    <div class="actions"><button class="btn" id="doneBtn">작성 완료</button></div>
+  </div>
+
+  <!-- ===== 화면 2 : 제출 안내 (handoff) ===== -->
+  <div class="screen hidden" id="sc-handoff">
+    <div class="card handoff">
+      <div class="ico">📋</div>
+      <h2>작성이 완료되었습니다</h2>
+      <p>이 화면을 <b>접수대에 제출</b>해 주세요.</p>
+      <p style="font-size:13.5px;color:var(--muted)">접수 직원이 검진 항목을 확인해 드립니다.</p>
+      <div class="pill" id="handoffWho"></div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="toReceptionBtn">접수대 확인 시작 (직원용)</button>
+      <button class="btn sec" id="backToPatientBtn">← 인적사항 수정</button>
+    </div>
+  </div>
+
+  <!-- ===== 화면 3 : 접수 확인 (접수대 직원) ===== -->
+  <div class="screen hidden" id="sc-reception">
+    <div class="card">
+      <h2><span class="step">2</span>접수 확인 <span class="who">(접수대 직원)</span></h2>
+      <div class="recap" id="recap"></div>
+      <div class="fld full"><label>차트번호</label>
+        <input type="text" id="chart" autocomplete="off" placeholder="차트번호 입력"></div>
+      <p class="desc" style="margin:16px 0 4px"><b>공단 포털에서 검진 대상을 확인</b>하고 아래 항목을 맞춰 주세요.
+        (나이·성별 기준 자동 추정 — 회색 항목도 눌러서 추가/해제할 수 있습니다.)</p>
+      <div id="examList"></div>
+      <div class="legend">
+        <span class="k"><span class="sq" style="background:var(--primary)"></span> 선택됨</span>
+        <span class="k"><span class="sq" style="background:#fff;border:2px solid var(--line)"></span> 미선택(눌러서 추가)</span>
+        <span class="k"><span class="badge">확인</span> 공단 자격·병력 확인 필요</span>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn" id="toQBtn">확정 → 환자에게 문진표 시작</button>
+      <button class="btn sec" id="recBackBtn">← 뒤로</button>
+    </div>
+  </div>
+
+  <!-- ===== 화면 4 : 문진표 (수검자) ===== -->
+  <div class="screen hidden" id="sc-q">
+    <div class="card">
+      <h2><span class="step">3</span>건강검진 문진표 <span class="who">(수검자 작성)</span></h2>
+      <div class="recap" id="qrecap"></div>
+      <p class="desc" style="background:var(--warnbg);color:var(--warn);padding:9px 11px;border-radius:6px;line-height:1.6">
+        ※ 문항을 <b>빠짐없이</b> 작성하셔야 심뇌혈관질환 위험평가 결과를 받으실 수 있습니다. 해당 없는 항목은 자동으로 건너뜁니다.</p>
+
+      <div id="qForm">
+        <div id="qGeneral"><!-- 일반건강검진 문진표 (일반검진 선택 시에만 표시) -->
+        <!-- A. 질환력 -->
+        <div class="qsec">
+          <div class="qsec-h">질환력 (과거력 · 가족력)</div>
+          <div class="qblock">
+            <div class="qq"><span class="n">1.</span>다음 질병으로 <b>진단</b>을 받았거나, 현재 <b>약물 치료</b> 중이십니까?</div>
+            <span class="dhelp" id="dxAllNo">＋ 모두 ‘아니요’로 표시</span>
+            <div id="dxTable"></div>
+          </div>
+          <div class="qblock">
+            <div class="qq"><span class="n">2.</span>부모·형제·자매 중에 다음 질환을 앓았거나 해당 질환으로 사망한 경우가 있으십니까?</div>
+            <span class="dhelp" id="famAllNo">＋ 모두 ‘아니요’로 표시</span>
+            <div id="famTable"></div>
+          </div>
+          <div class="qblock">
+            <div class="qq"><span class="n">3.</span>B형간염 바이러스 보유자입니까?</div>
+            <div class="opts reqg" data-reqgroup="q3">
+              <label class="opt"><input type="radio" name="q3" value="예">예</label>
+              <label class="opt"><input type="radio" name="q3" value="아니요">아니요</label>
+              <label class="opt"><input type="radio" name="q3" value="모름">모름</label>
+            </div>
+            <p class="qnote" id="hepNote">※ 이 문항은 <b>B형간염 바이러스 보유자(보균자)</b> 여부를 묻는 것입니다.
+              예방접종·과거 감염으로 <b>항체만 있는(면역) 경우</b>는 보균자가 아니므로 <b>‘아니요’</b>를 선택하세요.</p>
+          </div>
+        </div>
+
+        <!-- B. 흡연 및 전자담배 -->
+        <div class="qsec">
+          <div class="qsec-h">흡연 및 전자담배</div>
+          <div class="qblock">
+            <div class="qq"><span class="n">4.</span>지금까지 평생 총 <b>5갑(100개비) 이상</b>의 일반담배(궐련)를 피운 적이 있습니까?</div>
+            <div class="opts reqg" data-reqgroup="q4">
+              <label class="opt"><input type="radio" name="q4" value="아니요">아니요</label>
+              <label class="opt"><input type="radio" name="q4" value="예" data-branch="q4sub">예</label>
+            </div>
+            <div class="qsub" id="q4sub">
+              <div class="qq">4-1. 현재 일반담배(궐련)를 피우십니까?</div>
+              <div class="opts reqg" data-reqgroup="q4_1">
+                <label class="opt"><input type="radio" name="q4_1" value="현재피움" data-branch="q4cur">현재 피움</label>
+                <label class="opt"><input type="radio" name="q4_1" value="과거피움" data-branch="q4past">과거에 피웠으나 현재 안 피움</label>
+              </div>
+              <div class="qsub" id="q4cur">
+                <span class="inl">총 <input type="text" inputmode="numeric" data-req>년</span>
+                <span class="inl">하루평균 <input type="text" inputmode="numeric" data-req>개비</span>
+              </div>
+              <div class="qsub" id="q4past">
+                <span class="inl">끊은 지 <input type="text" inputmode="numeric" data-req>년</span>
+                <span class="inl">피웠던 기간 총 <input type="text" inputmode="numeric" data-req>년</span>
+                <span class="inl">하루평균 <input type="text" inputmode="numeric" data-req>개비</span>
+              </div>
+            </div>
+          </div>
+          <div class="qblock">
+            <div class="qq"><span class="n">5.</span>지금까지 <b>궐련형 전자담배</b>(가열담배: 아이코스·글로·릴 등)를 사용한 적 있습니까?</div>
+            <div class="opts reqg" data-reqgroup="q5">
+              <label class="opt"><input type="radio" name="q5" value="아니요">아니요</label>
+              <label class="opt"><input type="radio" name="q5" value="예" data-branch="q5sub">예</label>
+            </div>
+            <div class="qsub" id="q5sub">
+              <div class="qq">5-1. 현재 궐련형 전자담배를 사용하십니까?</div>
+              <div class="opts reqg" data-reqgroup="q5_1">
+                <label class="opt"><input type="radio" name="q5_1" value="현재사용" data-branch="q5cur">현재 사용</label>
+                <label class="opt"><input type="radio" name="q5_1" value="과거사용" data-branch="q5past">과거에 사용했으나 현재 안 함</label>
+              </div>
+              <div class="qsub" id="q5cur">
+                <span class="inl">총 <input type="text" inputmode="numeric" data-req>년</span>
+                <span class="inl">하루평균 <input type="text" inputmode="numeric" data-req>개비</span>
+              </div>
+              <div class="qsub" id="q5past">
+                <span class="inl">끊은 지 <input type="text" inputmode="numeric" data-req>년</span>
+                <span class="inl">사용했던 기간 총 <input type="text" inputmode="numeric" data-req>년</span>
+                <span class="inl">하루평균 <input type="text" inputmode="numeric" data-req>개비</span>
+              </div>
+            </div>
+          </div>
+          <div class="qblock">
+            <div class="qq"><span class="n">6.</span><b>액상형 전자담배</b>를 사용한 경험이 있습니까?</div>
+            <div class="opts reqg" data-reqgroup="q6">
+              <label class="opt"><input type="radio" name="q6" value="아니요">아니요</label>
+              <label class="opt"><input type="radio" name="q6" value="예" data-branch="q6sub">예</label>
+            </div>
+            <div class="qsub" id="q6sub">
+              <div class="qq">6-1. 최근 한 달 동안 액상형 전자담배를 사용한 경험이 있습니까?</div>
+              <div class="opts reqg" data-reqgroup="q6_1">
+                <label class="opt"><input type="radio" name="q6_1" value="아니요">아니요</label>
+                <label class="opt"><input type="radio" name="q6_1" value="월1-2일">월 1-2일</label>
+                <label class="opt"><input type="radio" name="q6_1" value="월3-9일">월 3-9일</label>
+                <label class="opt"><input type="radio" name="q6_1" value="월10-29일">월 10-29일</label>
+                <label class="opt"><input type="radio" name="q6_1" value="매일">매일</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- C. 음주 -->
+        <div class="qsec">
+          <div class="qsec-h">음주 <span style="font-weight:400;font-size:12px;opacity:.85">(지난 1년간)</span></div>
+          <div class="qblock">
+            <div class="qq"><span class="n">7.</span>술을 마시는 횟수는 어느 정도입니까?</div>
+            <div class="opts reqg" data-reqgroup="q7">
+              <label class="opt"><input type="radio" name="q7" value="일주일">일주일에</label>
+              <label class="opt"><input type="radio" name="q7" value="한달">한 달에</label>
+              <label class="opt"><input type="radio" name="q7" value="1년">1년에</label>
+              <label class="opt"><input type="radio" name="q7" value="안마심">술을 마시지 않는다</label>
+            </div>
+            <div class="qsub" id="q7num">
+              <span class="inl wide"><input type="text" inputmode="numeric" data-req>번</span>
+            </div>
+          </div>
+          <div class="qsub" id="q7drink" style="border-left-color:var(--primary)">
+            <div class="qq">7-1. 술을 마시는 날은 보통 어느 정도 마십니까? <div class="qhint">술 종류별로 잔/병/캔/cc 중 한 곳에만, 해당되는 술만 작성</div></div>
+            <div id="drink1"></div>
+            <p class="drink-msg" id="drink1msg">마시는 술 한 가지 이상에 음주량을 입력해 주세요.</p>
+            <div class="qq" style="margin-top:14px">7-2. 하루 동안 가장 많이 마셨던 음주량은 어느 정도입니까?</div>
+            <div id="drink2"></div>
+            <p class="drink-msg" id="drink2msg">마시는 술 한 가지 이상에 음주량을 입력해 주세요.</p>
+          </div>
+        </div>
+
+        <!-- D. 신체활동 -->
+        <div class="qsec">
+          <div class="qsec-h">신체활동 (운동)</div>
+          <div class="qblock">
+            <div class="qq"><span class="n">8-1.</span>평소 1주일간, 숨이 <b>많이</b> 차게 만드는 <b>고강도</b> 신체활동을 며칠 하십니까?
+              <div class="qhint">예: 달리기, 빠른 자전거, 건설현장 노동, 계단으로 물건 나르기 등</div></div>
+            <span class="inl">주당 <input type="text" inputmode="numeric" data-req>일</span>
+          </div>
+          <div class="qblock">
+            <div class="qq"><span class="n">8-2.</span>고강도 신체활동을 하는 날은 하루에 보통 얼마나 하십니까?</div>
+            <span class="inl"><input type="text" inputmode="numeric" data-req>시간</span>
+            <span class="inl"><input type="text" inputmode="numeric" data-req>분</span>
+          </div>
+          <div class="qblock">
+            <div class="qq"><span class="n">9-1.</span>평소 1주일간, 숨이 <b>약간</b> 차게 만드는 <b>중강도</b> 신체활동을 며칠 하십니까?
+              <div class="qhint">8번 활동은 제외. 예: 빠르게 걷기, 복식테니스, 보통속도 자전거, 청소 등</div></div>
+            <span class="inl">주당 <input type="text" inputmode="numeric" data-req>일</span>
+          </div>
+          <div class="qblock">
+            <div class="qq"><span class="n">9-2.</span>중강도 신체활동을 하는 날은 하루에 보통 얼마나 하십니까?</div>
+            <span class="inl"><input type="text" inputmode="numeric" data-req>시간</span>
+            <span class="inl"><input type="text" inputmode="numeric" data-req>분</span>
+          </div>
+          <div class="qblock">
+            <div class="qq"><span class="n">10.</span>최근 1주일 동안 팔굽혀펴기·윗몸일으키기·아령·역기·철봉 등 <b>근력운동</b>을 한 날은 며칠입니까?</div>
+            <span class="inl">주당 <input type="text" inputmode="numeric" data-req>일</span>
+          </div>
+        </div>
+
+        </div><!-- /qGeneral -->
+
+        <!-- E. 기타 (여성) — 일반검진 또는 암검진 받는 여성 -->
+        <div class="qsec" id="qPregSec" style="display:none">
+          <div class="qsec-h">기타</div>
+          <div class="qblock">
+            <div class="qq">임신 가능성이 있거나 현재 임신 중이십니까?</div>
+            <div class="opts reqg" data-reqgroup="qpreg">
+              <label class="opt"><input type="radio" name="qpreg" value="예">예</label>
+              <label class="opt"><input type="radio" name="qpreg" value="아니오">아니오</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 조건부 문진표: 선택된 검진 항목에 따라 표시 -->
+        <div class="qsec" id="qPHQ" style="display:none"></div>
+        <div class="qsec" id="qKDSQ" style="display:none"></div>
+        <div class="qsec" id="qCAPE" style="display:none"></div>
+        <div id="qCancer">
+          <div class="qsec" id="cancCommon" style="display:none"></div>
+          <div class="qsec" id="cancGastric" style="display:none"></div>
+          <div class="qsec" id="cancColon" style="display:none"></div>
+          <div class="qsec" id="cancLiver" style="display:none"></div>
+          <div class="qsec" id="cancWoman" style="display:none"></div>
+        </div>
+      </div>
+    </div>
+    <p class="miss" id="qmiss"></p>
+    <div class="actions">
+      <button class="btn" id="qDoneBtn">문진표 작성 완료 →</button>
+      <button class="btn sec" id="qBackBtn">← 접수 확인으로</button>
+    </div>
+  </div>
+
+  <!-- ===== 화면 5 : 동의서 + 서명 (수검자) ===== -->
+  <div class="screen hidden" id="sc-consent">
+    <div class="card">
+      <h2><span class="step">4</span>개인정보 활용 동의 · 서명 <span class="who">(수검자)</span></h2>
+
+      <div class="consent" id="consent1">
+        <h3>건강검진 사후관리를 위한 결과 활용 동의서</h3>
+        <div class="consent-body">
+          일반건강검진 결과 <b>고혈압·당뇨병·이상지질혈증·인지기능 저하 등</b>이 의심되거나 질환이 있는 분,
+          암검진 결과 <b>이상소견·암 의심·암 판정</b>을 받은 분, 일반건강검진 결과 <b>폐결핵</b>이 의심·판정된 분의
+          사후관리를 위해, 국민건강보험공단이 보건소·국립암센터·질병관리청에 해당 검진자료를 제공하는 것에 대한 동의입니다.<br><br>
+          ① 정보 활용기관: 보건소, 국립암센터, 질병관리청, 공단<br>
+          ② 목적: 건강관리서비스 지원, 암검진 사후관리, 폐결핵 사후관리<br>
+          ③ 제공 항목: 성명·주민등록번호·주소·전화번호·이메일 등 개인식별정보 + <b>건강검진 결과 및 문진자료</b><br>
+          ④ 보유·이용기간: <b>2년</b><br>
+          ⑤ 동의를 거부할 권리가 있으며, 거부 시 사후관리 서비스 대상에서 제외될 수 있습니다.
+        </div>
+        <span class="consent-all" data-all="consent1">＋ 전체 ‘동의함’</span>
+        <div class="ci"><span class="ci-l">1. 개인정보의 제공에 관한 동의</span>
+          <div class="opts" data-cn="cn1_1"><label class="opt"><input type="radio" name="cn1_1" value="동의">동의함</label><label class="opt"><input type="radio" name="cn1_1" value="거부">동의하지 않음</label></div></div>
+        <div class="ci"><span class="ci-l">2. 민감정보(건강검진 정보)의 처리에 관한 동의</span>
+          <div class="opts" data-cn="cn1_2"><label class="opt"><input type="radio" name="cn1_2" value="동의">동의함</label><label class="opt"><input type="radio" name="cn1_2" value="거부">동의하지 않음</label></div></div>
+        <div class="ci"><span class="ci-l">3. 고유식별정보(주민등록번호)의 처리에 관한 동의</span>
+          <div class="opts" data-cn="cn1_3"><label class="opt"><input type="radio" name="cn1_3" value="동의">동의함</label><label class="opt"><input type="radio" name="cn1_3" value="거부">동의하지 않음</label></div></div>
+      </div>
+
+      <div class="consent" id="consent2" style="display:none">
+        <h3>정신건강검진 사후관리를 위한 결과 활용 동의서</h3>
+        <div class="consent-body">
+          일반건강검진 결과 <b>중간 정도 이상 우울증 의심</b>이거나 <b>조기정신증 선별검사(CAPE-15)</b> 결과 심층 상담이 필요한 분께
+          정신건강서비스를 제공하기 위해, 공단이 보건복지부·사회보장정보원·보건소·정신건강복지센터에
+          해당 검사 결과 자료를 제공하는 것에 대한 동의입니다.<br><br>
+          ① 정보 활용기관: 보건복지부, 사회보장정보원, 보건소, 정신건강복지센터<br>
+          ② 목적: 정신건강검사(PHQ-9, CAPE-15) 결과에 따른 사후관리<br>
+          ③ 제공 항목: 성명·주민등록번호·주소·전화·이메일 등 + <b>PHQ-9 및 CAPE-15 결과 및 문진표</b><br>
+          ④ 보유·이용기간: <b>2년</b><br>
+          ⑤ 동의를 거부할 권리가 있으며, 거부 시 사후관리 서비스 대상에서 제외될 수 있습니다.
+        </div>
+        <div class="ci"><span class="ci-l">개인정보의 제3자 제공에 관한 동의</span>
+          <div class="opts" data-cn="cn2"><label class="opt"><input type="radio" name="cn2" value="동의">동의함</label><label class="opt"><input type="radio" name="cn2" value="거부">동의하지 않음</label></div></div>
+      </div>
+
+      <div class="consent">
+        <h3>수검자 본인확인 서명</h3>
+        <p class="desc" style="margin:0 0 10px">위 <b>문진표 내용</b>과 <b>동의 사항</b>을 확인하였으며, 본인이 직접 작성·서명합니다.</p>
+        <div class="sign-box">
+          <canvas id="sigCanvas"></canvas>
+          <span class="sign-ph" id="sigPh">여기에 서명해 주세요</span>
+        </div>
+        <span class="sign-clear" id="sigClear">지우기</span>
+      </div>
+    </div>
+    <p class="miss" id="cmiss"></p>
+    <div class="actions">
+      <button class="btn" id="submitBtn">제출하기</button>
+      <button class="btn sec" id="cBackBtn">← 문진표로</button>
+    </div>
+  </div>
+
+  <!-- ===== 화면 6 : 완료 ===== -->
+  <div class="screen hidden" id="sc-done">
+    <div class="card done-card">
+      <div class="ico">✅</div>
+      <h2>작성·서명이 완료되었습니다</h2>
+      <p>이 화면을 <b>접수대에 제출</b>해 주세요.</p>
+      <p style="font-size:13px;color:var(--muted)">접수 직원이 확인 후 의사 검토·서명으로 이어집니다.</p>
+    </div>
+    <div class="actions"><button class="btn sec" id="doneRestartBtn">처음으로</button></div>
+  </div>
+
+</div>
+
+<!-- 주소 검색 레이어 (embed — 팝업 대신 페이지 내 표시: 로컬·태블릿에서도 확실히 동작) -->
+<div id="postcodeLayer" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.45)">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:94%;max-width:480px;
+    height:62%;max-height:540px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.3)">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #d9ddcf">
+      <b style="font-size:14px;color:#3F5A14">주소 검색</b>
+      <button type="button" onclick="closePostcode()"
+        style="border:none;background:none;font-size:22px;line-height:1;cursor:pointer;color:#6b7361">&times;</button>
+    </div>
+    <div id="postcodeBox" style="width:100%;height:calc(100% - 46px)"></div>
+  </div>
+</div>
+
+<script>
+// 주소 검색 (Daum 우편번호) — embed 방식, 전역 (onclick 참조)
+function searchAddress(){
+  if(typeof daum==='undefined' || !daum.Postcode){
+    alert('주소 검색 서비스를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'); return;
+  }
+  document.getElementById('postcodeLayer').style.display='block';
+  new daum.Postcode({
+    width:'100%', height:'100%',
+    oncomplete:function(d){
+      document.getElementById('addr').value = d.roadAddress || d.jibunAddress;
+      closePostcode();
+      document.getElementById('addrDetail').focus();
+    },
+    onclose:function(){ closePostcode(); }
+  }).embed(document.getElementById('postcodeBox'));
+}
+function closePostcode(){
+  var box=document.getElementById('postcodeBox'); if(box) box.innerHTML='';
+  document.getElementById('postcodeLayer').style.display='none';
+}
+
+(function(){
+  var YR = new Date().getFullYear();
+
+  function parseRRN(rrn){
+    var s=(rrn||'').replace(/[^0-9]/g,'');
+    if(s.length<7) return null;
+    var yy=+s.slice(0,2), mm=+s.slice(2,4), dd=+s.slice(4,6), g=+s[6];
+    var cmap={1:1900,2:1900,3:2000,4:2000,5:1900,6:1900,7:2000,8:2000,9:1800,0:1800};
+    if(!(g in cmap)) return null;
+    if(mm<1||mm>12||dd<1||dd>31) return {bad:true};
+    return { birthYear: cmap[g]+yy, sex:(g%2===1?'남':'여'), mm:mm, dd:dd };
+  }
+  function evenTarget(by){ return (by%2)===(YR%2); }
+
+  var R = {
+    general:function(a,s,by){ if(a<20)return null; var on=evenTarget(by);
+      return {checked:on,confirm:true,note: on?'2년마다 · 올해 대상':'2년주기상 올해 비대상(비사무직은 매년 — 확인)'};},
+    lipid:function(a,s,by){ if((s==='남'&&a>=24)||(s==='여'&&a>=40))
+      return {checked:true,confirm:true,note:'4년마다 — 주기 확인'}; return null;},
+    hbv:function(a){ return a===40?{checked:true,confirm:false,note:'만 40세'}:null;},
+    hcv:function(a){ return a===56?{checked:true,confirm:false,note:'만 56세'}:null;},
+    bmd:function(a,s){ return (s==='여'&&[54,60,66].indexOf(a)>=0)?{checked:true,confirm:false,note:'여성 '+a+'세'}:null;},
+    pft:function(a){ return [56,66].indexOf(a)>=0?{checked:true,confirm:false,note:a+'세'}:null;},
+    cognition:function(a,s,by){ if(a>=66){var on=evenTarget(by);
+      return {checked:on,confirm:true,note: on?'66세↑ 2년마다 · 올해 대상':'66세↑ 2년주기상 올해 비대상 — 확인'};} return null;},
+    depression:function(a,s,by){ if(a>=20&&a<=34){var on=evenTarget(by);
+      return {checked:on,confirm:true,note: on?'20~34세 2년마다':'20~34세 2년주기상 올해 비대상 — 확인'};}
+      if(a>=35&&a<=79) return {checked:true,confirm:true,note:'연령대 1회 — 수검이력 확인'}; return null;},
+    psychosis:function(a,s,by){ if(a>=20&&a<=34){var on=evenTarget(by);
+      return {checked:on,confirm:true,note: on?'20~34세 2년마다':'20~34세 2년주기상 올해 비대상 — 확인'};} return null;},
+    senior:function(a){ return [66,70,80].indexOf(a)>=0?{checked:true,confirm:false,note:a+'세'}:null;},
+    ca_gastric:function(a,s,by){ if(a>=40){var on=evenTarget(by);
+      return {checked:on,confirm:true,note: on?'40세↑ 짝수년생 2년':'40세↑ 2년주기상 올해 비대상(홀짝) — 확인'};} return null;},
+    ca_colon:function(a){ return a>=50?{checked:true,confirm:true,note:'50세↑ 매년 · 분변잠혈→양성 시 대장내시경'}:null;},
+    ca_breast:function(a,s,by){ if(s==='여'&&a>=40){var on=evenTarget(by);
+      return {checked:on,confirm:true,note: on?'40세↑ 여성 짝수년생 2년':'40세↑ 여성 2년주기상 올해 비대상 — 확인'};} return null;},
+    ca_cervix:function(a,s,by){ if(s==='여'&&a>=20){var on=evenTarget(by);
+      return {checked:on,confirm:true,note: on?'20세↑ 여성 짝수년생 2년(자궁적출 시 제외 — 확인)':'20세↑ 여성 2년주기상 올해 비대상 — 확인'};} return null;},
+    ca_liver:function(a){ return a>=40?{checked:false,confirm:true,note:'40세↑ 고위험군(B/C형간염·간경변 등)만 6개월마다 — 병력 확인'}:null;}
+  };
+  var GROUPS = [
+    {name:'일반건강검진', items:[['general','일반건강검진(본검진)']]},
+    {name:'추가 검사', items:[['lipid','이상지질혈증'],['hbv','B형간염'],['hcv','C형간염'],
+      ['bmd','골밀도'],['pft','폐기능'],['cognition','인지기능검사(KDSQ)'],['senior','노인신체기능검사']]},
+    {name:'정신건강검사', items:[['depression','우울증(PHQ-9)'],['psychosis','조기정신증(CAPE-15)']]},
+    {name:'암검진', items:[['ca_gastric','위암검진'],['ca_colon','대장암검진'],
+      ['ca_breast','유방암검진'],['ca_cervix','자궁경부암검진'],['ca_liver','간암검진']]}
+  ];
+
+  var state={ profile:null, sel:{}, notes:{}, eligible:{} };
+
+  function evaluate(by,sex){
+    var age=YR-by; state.sel={}; state.notes={}; state.eligible={};
+    GROUPS.forEach(function(g){ g.items.forEach(function(it){
+      var key=it[0], r=R[key](age,sex,by);
+      if(r){ state.eligible[key]=true; state.sel[key]=r.checked; state.notes[key]={confirm:r.confirm,note:r.note}; }
+      else { state.eligible[key]=false; state.sel[key]=false; state.notes[key]={confirm:false,note:''}; }
+    });});
+  }
+  function renderItems(){
+    var html='';
+    GROUPS.forEach(function(g){
+      html+='<div class="grp"><div class="grp-h">'+g.name+'</div>';
+      g.items.forEach(function(it){
+        var key=it[0], label=it[1], on=state.sel[key], elig=state.eligible[key], meta=state.notes[key]||{};
+        var cls='item'+(on?' on':' off');
+        var badge=meta.confirm?'<span class="badge">확인</span>':'';
+        var note=meta.note?'<div class="note">'+meta.note+'</div>':(elig?'':'<div class="note">해당 연령·성별 비대상</div>');
+        html+='<div class="'+cls+'" data-k="'+key+'"><div class="box">'+(on?'✔':'')+'</div>'
+          +'<div class="body"><div class="nm">'+label+badge+'</div>'+note+'</div></div>';
+      });
+      html+='</div>';
+    });
+    document.getElementById('examList').innerHTML=html;
+    Array.prototype.forEach.call(document.querySelectorAll('#examList .item'),function(el){
+      el.addEventListener('click',function(){ var k=el.getAttribute('data-k'); state.sel[k]=!state.sel[k]; renderItems(); });
+    });
+  }
+
+  // ── 인적사항 입력 ──
+  function getInfo(){
+    var recv=document.querySelector('#recv input:checked');
+    return {
+      name:document.getElementById('name').value.trim(),
+      phone:document.getElementById('phone').value.trim(),
+      email:document.getElementById('email').value.trim(),
+      addr:document.getElementById('addr').value.trim(),
+      addrDetail:document.getElementById('addrDetail').value.trim(),
+      recv: recv?recv.value:'',
+      chart:(document.getElementById('chart')||{}).value || ''
+    };
+  }
+  function showDerived(){
+    var d=document.getElementById('derived'), p=state.profile;
+    if(!p){ d.className='derived empty'; d.textContent='주민등록번호를 입력하면 나이·성별이 표시됩니다.'; return; }
+    if(p.bad){ d.className='derived'; d.innerHTML='<span class="err">주민등록번호를 확인해 주세요.</span>'; return; }
+    var age=YR-p.birthYear;
+    d.className='derived';
+    d.innerHTML='<span>생년 <b>'+p.birthYear+'</b></span><span>성별 <b>'+p.sex+'</b></span>'
+      +'<span>검진 나이 <b>'+age+'세</b></span><span style="font-size:11.5px;color:var(--faint)">('+YR+'년 검진 기준)</span>';
+  }
+  function onRRN(){
+    var r1=document.getElementById('rrn1').value.replace(/[^0-9]/g,'');
+    var r2=document.getElementById('rrn2').value.replace(/[^0-9]/g,'');
+    state.profile=parseRRN(r1+r2); showDerived();
+  }
+
+  function validate(){
+    var miss=[]; var info=getInfo();
+    function mark(id,bad){ var el=document.getElementById(id); if(el) el.classList.toggle('bad',bad); }
+    mark('name', !info.name); if(!info.name) miss.push('성명');
+    var rrnBad = !state.profile || state.profile.bad;
+    mark('rrn1', rrnBad); mark('rrn2', rrnBad); if(rrnBad) miss.push('주민등록번호');
+    mark('phone', !info.phone); if(!info.phone) miss.push('연락처');
+    if(!info.recv) miss.push('결과지 수령 방법');
+    var addrReq = (info.recv==='우편');          // 주소는 우편 수령 시에만 필수
+    mark('addr', addrReq && !info.addr); if(addrReq && !info.addr) miss.push('주소(우편 수령)');
+    var emailReq = (info.recv==='이메일');        // 이메일은 이메일 수령 시에만 필수
+    var emailBad = emailReq && (!info.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(info.email));
+    mark('email', emailBad); if(emailBad) miss.push(info.email?'이메일(형식 확인)':'이메일');
+    var m=document.getElementById('miss');
+    if(miss.length){ m.className='miss on'; m.textContent='다음 항목을 입력해 주세요: '+miss.join(', '); }
+    else m.className='miss';
+    return miss.length===0;
+  }
+
+  // ── 화면 전환 ──
+  function show(id){
+    ['sc-patient','sc-handoff','sc-reception','sc-q','sc-consent','sc-done'].forEach(function(s){
+      document.getElementById(s).classList.toggle('hidden', s!==id);
+    });
+    window.scrollTo(0,0);
+  }
+  function whoLine(){
+    var p=state.profile, info=getInfo();
+    return (info.name||'')+' · '+p.birthYear+'년생 '+p.sex+' · '+(YR-p.birthYear)+'세';
+  }
+
+  // 이벤트
+  var rrn1=document.getElementById('rrn1'), rrn2=document.getElementById('rrn2');
+  rrn1.addEventListener('input',function(){ if(rrn1.value.replace(/[^0-9]/g,'').length>=6) rrn2.focus(); onRRN(); });
+  rrn2.addEventListener('input', onRRN);
+  Array.prototype.forEach.call(document.querySelectorAll('#recv input'),function(inp){
+    inp.addEventListener('change',function(){
+      Array.prototype.forEach.call(document.querySelectorAll('#recv .chip'),function(c){
+        c.classList.toggle('on', c.querySelector('input').checked); });
+    });
+  });
+
+  document.getElementById('doneBtn').addEventListener('click',function(){
+    if(!validate()) return;
+    document.getElementById('handoffWho').textContent=whoLine();
+    show('sc-handoff');
+  });
+  document.getElementById('backToPatientBtn').addEventListener('click',function(){ show('sc-patient'); });
+
+  function fmtPhone(p){
+    p=(p||'').replace(/[^0-9]/g,'');
+    if(p.length===11) return p.slice(0,3)+'-'+p.slice(3,7)+'-'+p.slice(7);
+    if(p.length===10) return p.slice(0,3)+'-'+p.slice(3,6)+'-'+p.slice(6);
+    return p||'-';
+  }
+  document.getElementById('toReceptionBtn').addEventListener('click',function(){
+    var p=state.profile, info=getInfo();
+    var rrn=(document.getElementById('rrn1').value||'')+'-'+(document.getElementById('rrn2').value||'');
+    var addrFull=info.addr+(info.addrDetail?(' '+info.addrDetail):'');
+    document.getElementById('recap').innerHTML=
+      '<div class="rc-name">'+info.name+'</div>'
+      +'<div class="rc-line"><span class="rc-k">주민번호</span><b>'+rrn+'</b></div>'
+      +'<div class="rc-line"><span class="rc-k">생년·성별</span><span>'+p.birthYear+'년생 · '+p.sex+' · 검진나이 '+(YR-p.birthYear)+'세</span></div>'
+      +'<div class="rc-line"><span class="rc-k">연락처</span><b>'+fmtPhone(info.phone)+'</b></div>'
+      +(info.email?'<div class="rc-line"><span class="rc-k">이메일</span><span>'+info.email+'</span></div>':'')
+      +(addrFull?'<div class="rc-line"><span class="rc-k">주소</span><span>'+addrFull+'</span></div>':'')
+      +'<div class="rc-recv">결과지 수령방식 <span class="rc-badge">'+(info.recv||'-')+'</span></div>';
+    evaluate(p.birthYear, p.sex); renderItems();
+    show('sc-reception');
+  });
+  document.getElementById('recBackBtn').addEventListener('click',function(){ show('sc-handoff'); });
+
+  // ── 문진표 생성·분기·검증 ──
+  var DISEASES=['뇌졸중(중풍)','심근경색/협심증','고혈압','당뇨병','이상지질혈증','폐결핵','우울증','조기정신증','C형간염','만성폐쇄성폐질환','기타(암 포함)'];
+  var TB_MED='dx'+DISEASES.indexOf('폐결핵')+'_med';   // 폐결핵 약물치료 그룹
+  var FAMILY=['뇌졸중(중풍)','심근경색/협심증','고혈압','당뇨병','기타(암 포함)'];
+  var DRINKS=['소주','맥주','양주','막걸리','와인'];
+
+  function ynCell(name){
+    return '<div class="yn reqg" data-reqgroup="'+name+'">'
+      +'<label class="opt"><input type="radio" name="'+name+'" value="예">예</label>'
+      +'<label class="opt"><input type="radio" name="'+name+'" value="아니요">아니요</label></div>';
+  }
+  function buildDiseaseTables(){
+    var h='<table class="dtab"><thead><tr><th>질환</th><th>진단</th><th>약물치료</th></tr></thead><tbody>';
+    DISEASES.forEach(function(d,i){
+      h+='<tr><td class="dn">'+d+'</td><td>'+ynCell('dx'+i+'_diag')+'</td><td>'+ynCell('dx'+i+'_med')+'</td></tr>';
+      if(d==='폐결핵'){
+        h+='<tr id="tbNoteRow" class="tb-row"><td colspan="3"><div class="tb-note-box">'
+          +'⚠ <b>폐결핵</b> — 과거에 진단받았으나 <b>완치</b>되셨다면 <b>진단 ‘예’ + 약물치료 ‘아니요’</b>로 표시해 주세요.<br>'
+          +'약물치료 ‘예’는 <b>현재 결핵약을 복용 중</b>인 경우에만 선택합니다.</div></td></tr>';
+      }
+    });
+    document.getElementById('dxTable').innerHTML=h+'</tbody></table>';
+    var f='<table class="dtab"><thead><tr><th>질환</th><th>해당</th></tr></thead><tbody>';
+    FAMILY.forEach(function(d,i){ f+='<tr><td class="dn">'+d+'</td><td>'+ynCell('fam'+i)+'</td></tr>'; });
+    document.getElementById('famTable').innerHTML=f+'</tbody></table>';
+  }
+  function buildDrinkTables(){
+    function tbl(prefix){
+      var h='<table class="dtab"><thead><tr><th>술 종류</th><th>잔</th><th>병</th><th>캔</th><th>cc</th></tr></thead><tbody>';
+      DRINKS.forEach(function(d,i){
+        h+='<tr><td class="dn">'+d+'</td>'+['잔','병','캔','cc'].map(function(u){
+          return '<td><input type="text" inputmode="numeric" name="'+prefix+'_'+i+'_'+u+'" style="width:52px;height:38px;text-align:center;padding:0 4px"></td>';
+        }).join('')+'</tr>';
+      });
+      return h+'</tbody></table>';
+    }
+    document.getElementById('drink1').innerHTML=tbl('d1');
+    document.getElementById('drink2').innerHTML=tbl('d2');
+  }
+  // 한 행(술 종류)에서 잔·병·캔·cc 중 한 곳만 — 다른 단위 입력 시 나머지 자동 비움
+  function wireDrinkExclusive(){
+    Array.prototype.forEach.call(document.querySelectorAll('#drink1 input, #drink2 input'),function(inp){
+      inp.addEventListener('input',function(){
+        if(!inp.value.trim()) return;
+        var p=inp.name.split('_'); var rowKey=p[0]+'_'+p[1]+'_';   // 같은 표·같은 술
+        Array.prototype.forEach.call(document.querySelectorAll('#drink1 input, #drink2 input'),function(o){
+          if(o!==inp && o.name.indexOf(rowKey)===0) o.value='';
+        });
+      });
+    });
+  }
+  function setGroupOn(name){
+    Array.prototype.forEach.call(document.querySelectorAll('#qForm input[name="'+name+'"]'),function(rr){
+      var l=rr.closest('.opt'); if(l) l.classList.toggle('on', rr.checked);
+      if(rr.dataset.branch){ var t=document.getElementById(rr.dataset.branch); if(t) t.classList.toggle('on', rr.checked); }
+    });
+  }
+  function updateTbNote(){
+    var c=document.querySelector('#qForm input[name="'+TB_MED+'"]:checked');
+    var row=document.getElementById('tbNoteRow');
+    if(row) row.classList.toggle('on', !!(c && c.value==='예'));
+  }
+  function updateHepNote(){
+    var c=document.querySelector('#qForm input[name="q3"]:checked');
+    var n=document.getElementById('hepNote');
+    if(n) n.classList.toggle('on', !!(c && c.value==='예'));
+  }
+  function wireQRadios(){
+    Array.prototype.forEach.call(document.querySelectorAll('#qForm input[type=radio]'),function(r){
+      if(r.closest('#cq4table')) return;   // Q4 검사력은 buildCq4가 자체 와이어
+      r.addEventListener('change',function(){
+        setGroupOn(r.name);
+        if(r.name==='q7') updateDrink();
+        if(r.name===TB_MED) updateTbNote();
+        if(r.name==='q3') updateHepNote();
+        // CAPE-15: 빈도가 있으면(≥1) 고통 표시, '거의 없음'이면 숨김+초기화
+        var g=r.closest('.opts');
+        if(g && g.getAttribute('data-distwrap')){
+          var w=document.getElementById(g.getAttribute('data-distwrap'));
+          if(w){ var show=(r.value!=='0'); w.style.display=show?'flex':'none';
+            if(!show) Array.prototype.forEach.call(w.querySelectorAll('input'),function(ii){ ii.checked=false; var l=ii.closest('.opt'); if(l) l.classList.remove('on'); });
+          }
+        }
+      });
+    });
+  }
+  function updateDrink(){
+    var c=document.querySelector('#qForm input[name="q7"]:checked');
+    var freq=!!(c && c.value!=='안마심');
+    document.getElementById('q7num').classList.toggle('on', freq);
+    document.getElementById('q7drink').classList.toggle('on', freq);
+  }
+  function allNo(containerId){
+    Array.prototype.forEach.call(document.querySelectorAll('#'+containerId+' input[value="아니요"]'),function(r){
+      r.checked=true; setGroupOn(r.name);
+    });
+    updateTbNote();
+  }
+  // 점수형 문진표(문항 × 척도) 렌더러 — PHQ-9·KDSQ 등 공용
+  function scaleSection(cfg){
+    var h='<div class="qsec-h">'+cfg.title+'</div>';
+    if(cfg.intro) h+='<p class="desc" style="margin:9px 2px 2px">'+cfg.intro+'</p>';
+    cfg.items.forEach(function(t,i){
+      var nm=cfg.key+(i+1);
+      h+='<div class="qblock"><div class="qq"><span class="n">'+(i+1)+'.</span>'+t+'</div>'
+        +'<div class="opts reqg" data-reqgroup="'+nm+'">'
+        +cfg.scale.map(function(s){ return '<label class="opt"><input type="radio" name="'+nm+'" value="'+s[0]+'">'+s[1]+'</label>'; }).join('')
+        +'</div></div>';
+    });
+    return h;
+  }
+  // 이중 척도(빈도·고통) 렌더러 — CAPE-15
+  function dualScaleSection(cfg){
+    var h='<div class="qsec-h">'+cfg.title+'</div>';
+    if(cfg.intro) h+='<p class="desc" style="margin:9px 2px 2px">'+cfg.intro+'</p>';
+    cfg.items.forEach(function(t,i){
+      var f=cfg.key+'_f'+(i+1), d=cfg.key+'_d'+(i+1), dw=d+'_w';
+      h+='<div class="qblock"><div class="qq"><span class="n">'+(i+1)+'.</span>'+t+'</div>'
+        +'<div class="dual"><span class="dl">빈도</span><div class="opts reqg" data-reqgroup="'+f+'" data-distwrap="'+dw+'">'
+        +cfg.freq.map(function(s){ return '<label class="opt"><input type="radio" name="'+f+'" value="'+s[0]+'">'+s[1]+'</label>'; }).join('')+'</div></div>'
+        +'<div class="dual" id="'+dw+'" style="display:none"><span class="dl">고통</span><div class="opts reqg" data-reqgroup="'+d+'">'
+        +cfg.dist.map(function(s){ return '<label class="opt"><input type="radio" name="'+d+'" value="'+s[0]+'">'+s[1]+'</label>'; }).join('')+'</div></div>'
+        +'</div>';
+    });
+    return h;
+  }
+  // 단순 라디오 질문 블록
+  function qBlock(num, text, name, opts){
+    return '<div class="qblock"><div class="qq"><span class="n">'+num+'</span>'+text+'</div>'
+      +'<div class="opts reqg" data-reqgroup="'+name+'">'
+      +opts.map(function(o){ return '<label class="opt"><input type="radio" name="'+name+'" value="'+o[0]+'"'
+        +(o[2]?' data-branch="'+o[2]+'"':'')+'>'+o[1]+'</label>'; }).join('')+'</div></div>';
+  }
+  function diseaseYN(title, prefix, list){
+    var h='<div class="qsec-h">'+title+'</div><div class="qblock">'
+      +'<div class="qq">현재 또는 과거에 진단받은 <b>'+title+'</b>이 있으십니까?</div>'
+      +'<span class="dhelp" data-allno="'+prefix+'tab">＋ 모두 ‘아니요’로 표시</span>'
+      +'<div id="'+prefix+'tab"><table class="dtab"><thead><tr><th>질환</th><th>해당</th></tr></thead><tbody>';
+    list.forEach(function(d,i){ h+='<tr><td class="dn">'+d+'</td><td>'+ynCell(prefix+i)+'</td></tr>'; });
+    return h+'</tbody></table></div></div>';
+  }
+
+  var PHQ={ key:'phq', title:'우울증 선별검사 (PHQ-9)',
+    intro:'지난 <b>2주</b> 동안, 아래 증상에 얼마나 자주 시달리셨습니까?',
+    scale:[['0','전혀 아니다'],['1','여러 날'],['2','1주 이상'],['3','거의 매일']],
+    items:['일을 하는 것에 대한 흥미나 재미가 거의 없음','가라앉은 느낌, 우울감, 혹은 절망감',
+      '잠들기 어렵거나 자꾸 깨어남, 혹은 너무 많이 잠','피곤함, 기력이 저하됨','식욕 저하 혹은 과식',
+      '내 자신이 나쁜 사람이라는 느낌, 실패자라고 느끼거나 나 때문에 나·가족이 불행하게 되었다는 느낌',
+      '신문을 읽거나 TV를 볼 때 집중하기 어려움',
+      '남들이 알아챌 정도로 거동·말이 느림, 또는 반대로 너무 초조하고 안절부절 못해 평소보다 많이 돌아다니고 서성거림',
+      '차라리 죽는 것이 낫겠다는 생각, 혹은 어떤 식으로든 자해하는 생각'] };
+  var KDSQ={ key:'kdsq', title:'인지기능검사 (KDSQ-C)',
+    intro:'<b>1년 전과 비교하여</b> 현재 상태에 해당하는 곳에 표시해 주세요. (동행한 가족이 있으면 가족이 작성)',
+    scale:[['0','아니다'],['1','가끔 그렇다'],['2','자주 그렇다']],
+    items:['오늘이 몇 월이고, 무슨 요일인지를 잘 모른다','자기가 놔둔 물건을 찾지 못 한다','같은 질문을 반복해서 한다',
+      '약속을 하고서 잊어버린다','물건을 가지러 갔다가 잊어버리고 그냥 온다','물건이나 사람의 이름을 대기가 힘들어 머뭇거린다',
+      '대화 중 내용이 이해되지 않아 반복해서 물어 본다','길을 잃거나 헤맨 적이 있다',
+      '예전에 비해서 계산능력이 떨어졌다 (예: 물건값이나 거스름돈 계산을 못한다)','예전에 비해 성격이 변했다',
+      '이전에 잘 다루던 기구의 사용이 서툴러졌다 (세탁기·전기밥솥 등)','예전에 비해 방이나 집안의 정리정돈을 하지 못 한다',
+      '상황에 맞게 스스로 옷을 선택하여 입지 못 한다','혼자 대중교통 수단을 이용하여 목적지에 가기 힘들다 (관절염 등 신체적 문제 제외)',
+      '내복이나 옷이 더러워져도 갈아입지 않으려고 한다'] };
+  var CAPE={ key:'cape', title:'조기정신증 선별검사 (CAPE-15)',
+    intro:'정신증 관련 경험을 스스로 알아보기 위한 설문입니다. 각 항목을 얼마나 <b>자주</b> 경험하는지, 그런 경험이 있다면 얼마나 <b>힘드셨는지</b> 표시해 주세요.',
+    freq:[['0','거의 없음'],['1','가끔'],['2','자주'],['3','항상']],
+    dist:[['0','없음'],['1','조금'],['2','상당히'],['3','매우']],
+    items:['사람들이 당신에 대해 넌지시 말하거나, 숨겨진 의미로 어떤 말을 하는 것 같은 느낌이 든 적이 있습니까?',
+      '어떤 사람들이 겉으로 보이는 것과 다른 것 같다는 느낌이 든 적이 있습니까?',
+      '어떤 식으로든 당신이 괴롭힘 당하고 있는 것 같다는 느낌이 든 적이 있습니까?',
+      '당신을 둘러싼 음모가 있는 것 같은 느낌이 든 적이 있습니까?',
+      '당신의 외모 때문에 사람들이 당신을 이상하게 쳐다보는 것 같은 느낌이 든 적이 있습니까?',
+      '컴퓨터와 같은 전자 기기들이 당신이 생각하는 방식에 영향을 끼치는 것처럼 느껴질 때가 있습니까?',
+      '당신의 머릿속 생각들을 누군가 빼앗아 가고 있는 것처럼 느껴질 때가 있습니까?',
+      '당신의 머릿속 생각들이 자신의 것이 아닌 것처럼 느껴질 때가 있습니까?',
+      '당신의 생각들이 너무나 생생해서 다른 사람들이 당신의 생각을 들을까 봐 걱정된 적이 있습니까?',
+      '당신의 생각을 메아리처럼 들어본 적이 있습니까?','어떤 기운이나 힘이 당신을 통제하는 것처럼 느껴질 때가 있습니까?',
+      '가족이나 친구, 지인들과 똑같이 생긴 분신이 나타난 것처럼 느껴질 때가 있습니까?',
+      '혼자 있을 때 어떤 음성을 들은 적이 있습니까?','혼자 있을 때 어떤 사람들이 서로 말하는 것을 들은 적이 있습니까?',
+      '다른 사람 눈에는 보이지 않는 어떤 사물이나, 사람, 혹은 동물을 본 적이 있습니까?'] };
+
+  // 암검진 — 공통
+  function cancCommonHTML(){
+    var cancers=['위암','대장암','간암','유방암','자궁경부암','폐암','기타'];
+    var rels=['본인','부모','형제','자매','자녀'];
+    var grid='<table class="dtab"><thead><tr><th>암 종류</th>'+rels.map(function(r){return '<th>'+r+'</th>';}).join('')+'</tr></thead><tbody>';
+    cancers.forEach(function(c,ci){
+      grid+='<tr><td class="dn">'+c+'</td>'+rels.map(function(r,ri){
+        return '<td><label class="gck"><input type="checkbox" name="cq3_'+ci+'_'+ri+'"></label></td>';
+      }).join('')+'</tr>';
+    });
+    grid+='</tbody></table>';
+    return '<div class="qsec-h">암검진 문진 — 공통</div>'
+      +qBlock('1.','현재 신체 어느 부위에든 불편한 증상이 있습니까?','cq1',[['아니오','아니오'],['예','예',  'cq1sub']])
+      +'<div class="qsub" id="cq1sub"><span class="inl wide">증상 <input type="text" data-req style="width:220px"></span></div>'
+      +qBlock('2.','지난 6개월간 특별한 이유 없이 5kg 이상 체중이 감소했습니까?','cq2',[['아니오','아니오'],['감소','예(감소)','cq2sub']])
+      +'<div class="qsub" id="cq2sub"><span class="inl">감소 <input type="text" inputmode="numeric" data-req>kg</span></div>'
+      +qBlock('3.','본인·부모·형제·자매·자녀 중 현재 암에 걸렸거나 과거에 걸렸던 분이 있습니까?','cq3',[['없다','없다'],['있다','있다','cq3sub'],['모름','모르겠다']])
+      +'<div class="qsub" id="cq3sub"><div class="qq">가족(본인 포함)이 걸린 암 — 해당 칸에 모두 체크 (복수 가능)</div><div id="cq3cancers">'+grid+'</div></div>'
+      +'<div class="qblock"><div class="qq"><span class="n">4.</span>다음 검사를 받은 적이 있습니까? (가장 최근 시기)</div><div id="cq4table"></div></div>';
+  }
+  function cancWomanHTML(){
+    return '<div class="qsec-h">유방암·자궁경부암 문진 (여성)</div>'
+      +qBlock('9.','월경을 언제 시작하셨습니까?','cw9',[['시작','월경을 시작함','cw9sub'],['초경없음','초경이 없었음']])
+      +'<div class="qsub" id="cw9sub"><span class="inl">만 <input type="text" inputmode="numeric" data-req>세</span></div>'
+      +qBlock('10.','현재 월경의 상태는 어떠십니까?','cw10',[['있음','아직 월경이 있음'],['자궁적출','자궁적출술을 하였음'],['폐경','폐경됨','cw10sub']])
+      +'<div class="qsub" id="cw10sub"><span class="inl">폐경 연령 만 <input type="text" inputmode="numeric" data-req>세</span></div>'
+      +qBlock('11.','폐경 후 호르몬제를 복용 중이거나 과거에 복용한 적이 있습니까?','cw11',[['없음','복용한 적 없음'],['2년미만','2년 미만'],['2-5년','2년~5년 미만'],['5년이상','5년 이상'],['모름','모르겠음']])
+      +qBlock('12.','자녀를 몇 명 출산하셨습니까?','cw12',[['1명','1명'],['2명이상','2명 이상'],['없음','출산한 적 없음']])
+      +qBlock('13.','모유 수유 여부 및 총 수유기간은?','cw13',[['6개월미만','6개월 미만'],['6개월-1년','6개월~1년 미만'],['1년이상','1년 이상'],['없음','수유한 적 없음']])
+      +qBlock('14.','과거에 유방에 양성 종양(암이 아닌 물혹·덩어리 등)으로 진단받은 적이 있습니까?','cw14',[['예','예'],['아니오','아니오'],['모름','모르겠음']])
+      +qBlock('15.','피임약을 복용 중이거나 과거에 복용한 적이 있습니까?','cw15',[['없음','복용한 적 없음'],['1년미만','1년 미만'],['1년이상','1년 이상'],['모름','모르겠음']])
+      +qBlock('16.','결혼 여부','cw16',[['유','유'],['무','무']]);
+  }
+  // Q4 검사력 — 선택된 암종에 해당하는 검사만 (매번 생성)
+  var EXAMHX={
+    ca_gastric:[['위장조영검사(위장 X선)','위장조영검사'],['위내시경','위내시경']],
+    ca_breast:[['유방촬영','유방촬영']],
+    ca_colon:[['분변잠혈검사(대변검사)','분변잠혈검사'],['대장내시경','대장내시경']],
+    ca_cervix:[['자궁경부세포검사','자궁경부세포검사']]
+  };
+  var T_STD=[['1년미만','1년 미만'],['1-2년','1~2년 미만'],['2-10년','2~10년 미만'],['10년이상','10년 이상/한 적 없음']];
+  var T_LIVER=[['없음','한 적 없음'],['6개월이내','6개월 이내'],['6개월-1년','6개월~1년'],['1년전','1년보다 오래전']];
+  function buildCq4(sel){
+    var box=document.getElementById('cq4table'); if(!box) return;
+    var rows=[], n=0;
+    ['ca_gastric','ca_breast','ca_colon','ca_cervix'].forEach(function(k){
+      if(sel[k]) EXAMHX[k].forEach(function(e){ rows.push([e[1], 'cq4_'+(n++), T_STD]); });
+    });
+    if(sel.ca_liver) rows.push(['간초음파','cq4_'+(n++), T_LIVER]);
+    if(!rows.length){ box.innerHTML=''; return; }
+    var h='';
+    rows.forEach(function(r){
+      h+='<div class="q4row" style="padding:8px 2px;border-bottom:1px solid var(--line-soft)"><div class="qq" style="font-size:13.5px">'+r[0]+'</div>'
+        +'<div class="opts reqg" data-reqgroup="'+r[1]+'">'
+        +r[2].map(function(o){ return '<label class="opt"><input type="radio" name="'+r[1]+'" value="'+o[0]+'">'+o[1]+'</label>'; }).join('')+'</div></div>';
+    });
+    box.innerHTML=h;
+    Array.prototype.forEach.call(box.querySelectorAll('input[type=radio]'),function(rd){
+      rd.addEventListener('change',function(){ setGroupOn(rd.name); });
+    });
+  }
+  function wireCk(){
+    Array.prototype.forEach.call(document.querySelectorAll('#qForm .ck input, #qForm .gck input'),function(c){
+      c.addEventListener('change',function(){ var box=c.closest('.ck')||c.closest('.gck'); if(box) box.classList.toggle('on', c.checked); });
+    });
+  }
+
+  var qBuilt=false;
+  function buildQuestionnaire(){
+    var sel=state.sel||{}, female=state.profile&&state.profile.sex==='여';
+    var anyC=sel.ca_gastric||sel.ca_colon||sel.ca_breast||sel.ca_cervix||sel.ca_liver;
+    document.getElementById('qGeneral').style.display=sel.general?'block':'none';   // 일반검진 선택 시에만
+    document.getElementById('qPregSec').style.display=((sel.general||anyC)&&female)?'block':'none';  // 일반/암 여성
+    document.getElementById('qPHQ').style.display=sel.depression?'block':'none';
+    document.getElementById('qKDSQ').style.display=sel.cognition?'block':'none';
+    document.getElementById('qCAPE').style.display=sel.psychosis?'block':'none';
+    document.getElementById('cancCommon').style.display=anyC?'block':'none';
+    document.getElementById('cancGastric').style.display=sel.ca_gastric?'block':'none';
+    document.getElementById('cancColon').style.display=sel.ca_colon?'block':'none';
+    document.getElementById('cancLiver').style.display=sel.ca_liver?'block':'none';
+    document.getElementById('cancWoman').style.display=((sel.ca_breast||sel.ca_cervix)&&female)?'block':'none';
+    if(qBuilt){ buildCq4(sel); return; }
+    // 최초 1회 생성
+    buildDiseaseTables(); buildDrinkTables(); wireDrinkExclusive();
+    document.getElementById('qPHQ').innerHTML=scaleSection(PHQ);
+    document.getElementById('qKDSQ').innerHTML=scaleSection(KDSQ);
+    document.getElementById('qCAPE').innerHTML=dualScaleSection(CAPE);
+    document.getElementById('cancCommon').innerHTML=cancCommonHTML();
+    document.getElementById('cancGastric').innerHTML=diseaseYN('위장질환','cgd',['위궤양','위축성 위염','장상피화생','위용종','기타']);
+    document.getElementById('cancColon').innerHTML=diseaseYN('대장·항문질환','ccd',['대장용종(폴립)','궤양성 대장염','크론병','치질(치핵·치열)','기타']);
+    document.getElementById('cancLiver').innerHTML=diseaseYN('간질환','cld',['B형간염 바이러스 보유자','만성 B형간염','만성 C형간염','간경변','기타']);
+    document.getElementById('cancWoman').innerHTML=cancWomanHTML();
+    buildCq4(sel);
+    wireQRadios(); wireCk();
+    document.getElementById('dxAllNo').addEventListener('click',function(){ allNo('dxTable'); });
+    document.getElementById('famAllNo').addEventListener('click',function(){ allNo('famTable'); });
+    document.getElementById('qForm').addEventListener('click',function(e){
+      var t=e.target; if(t.classList&&t.classList.contains('dhelp')&&t.getAttribute('data-allno')) allNo(t.getAttribute('data-allno'));
+    });
+    qBuilt=true;
+  }
+  function clip(s){ return (s||'').replace(/\s+/g,' ').trim().slice(0,30); }
+  function qLabelOf(el){
+    var blk=el.closest('.qblock') || el.closest('.qsub');
+    if(blk){ var q=blk.querySelector('.qq'); if(q) return clip(q.textContent); }
+    var sec=el.closest('.qsec'); if(sec){ var hh=sec.querySelector('.qsec-h'); if(hh) return hh.textContent.trim(); }
+    return '';
+  }
+  function flash(el){ el.classList.remove('flashing'); void el.offsetWidth; el.classList.add('flashing'); }
+  function validateQ(){
+    var badEls=[];
+    Array.prototype.forEach.call(document.querySelectorAll('#qForm .reqg'),function(g){
+      if(g.offsetParent===null){ g.classList.remove('bad-group'); return; }
+      var inp=g.querySelector('input'); if(!inp) return;
+      var any=document.querySelector('#qForm input[name="'+inp.name+'"]:checked');
+      g.classList.toggle('bad-group', !any); if(!any) badEls.push(g);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('#qForm [data-req]'),function(inp){
+      if(inp.offsetParent===null){ inp.classList.remove('bad'); return; }
+      var b=!inp.value.trim(); inp.classList.toggle('bad', b); if(b) badEls.push(inp);
+    });
+    // 음주량(7-1·7-2) — 마시는 경우 각 표에 최소 한 칸 입력
+    var dwrap=document.getElementById('q7drink');
+    ['drink1','drink2'].forEach(function(id){
+      var box=document.getElementById(id);
+      var drinking=(dwrap && dwrap.offsetParent!==null);
+      var any=Array.prototype.some.call(box.querySelectorAll('input'),function(i){ return i.value.trim()!==''; });
+      var b=drinking && !any;
+      box.classList.toggle('badbox', b);
+      var msg=document.getElementById(id+'msg'); if(msg) msg.classList.toggle('on', b);
+      if(b) badEls.push(box);
+    });
+    // 암 가족력 — '있다' 선택 시 암 종류 1개 이상 체크
+    var cq3=document.querySelector('#qForm input[name="cq3"]:checked');
+    var cq3box=document.getElementById('cq3cancers'), cq3sub=document.getElementById('cq3sub');
+    if(cq3box){
+      var need=cq3 && cq3.value==='있다' && cq3sub && cq3sub.offsetParent!==null;
+      var anyck=document.querySelector('#cq3cancers input:checked');
+      var b3=need && !anyck;
+      cq3box.classList.toggle('badbox', b3);
+      if(b3) badEls.push(cq3box);
+    }
+
+    var m=document.getElementById('qmiss');
+    if(!badEls.length){ m.className='miss'; m.textContent=''; return true; }
+
+    // 미작성 문항 라벨(중복 제거) 안내 + 첫 빈 곳으로 이동
+    var labels=[];
+    badEls.forEach(function(e){ var l=qLabelOf(e); if(l && labels.indexOf(l)<0) labels.push(l); });
+    m.className='miss on';
+    m.innerHTML='작성하지 않은 곳이 <b>'+badEls.length+'곳</b> 있습니다. 첫 번째 항목으로 이동합니다.<br>'
+      +'<span style="color:#8a4039">▸ '+labels.slice(0,6).join('<br>▸ ')+(labels.length>6?'<br>… 외 '+(labels.length-6)+'개':'')+'</span>';
+    var top=badEls.slice().sort(function(a,b){ return a.getBoundingClientRect().top-b.getBoundingClientRect().top; })[0];
+    if(top){ top.scrollIntoView({behavior:'smooth', block:'center'}); flash(top); }
+    return false;
+  }
+
+  document.getElementById('toQBtn').addEventListener('click',function(){
+    var info=getInfo();
+    document.getElementById('qrecap').innerHTML='<div class="nm">'+info.name+'</div>'
+      +'<div class="sub">차트번호 '+(info.chart||'-')+' · '+whoLine()+'</div>';
+    buildQuestionnaire();
+    show('sc-q');
+  });
+  document.getElementById('qDoneBtn').addEventListener('click',function(){
+    if(!validateQ()) return;   // validateQ가 첫 빈 곳으로 스크롤 + 안내
+    var sel=state.sel||{};
+    document.getElementById('consent2').style.display=(sel.depression||sel.psychosis)?'block':'none';
+    show('sc-consent'); initSignature();
+  });
+  document.getElementById('qBackBtn').addEventListener('click',function(){ show('sc-reception'); });
+
+  // ── 동의서 + 서명 ──
+  var sigCtx=null, sigHas=false, sigInit=false;
+  function initSignature(){
+    var c=document.getElementById('sigCanvas');
+    if(!sigInit){ c.width=c.clientWidth; c.height=c.clientHeight; sigInit=true; }
+    sigCtx=c.getContext('2d');
+    sigCtx.lineWidth=2.5; sigCtx.lineCap='round'; sigCtx.lineJoin='round'; sigCtx.strokeStyle='#1a1a1a';
+  }
+  (function setupSign(){
+    var c=document.getElementById('sigCanvas'), drawing=false;
+    function pos(e){ var r=c.getBoundingClientRect(); var t=(e.touches&&e.touches[0])?e.touches[0]:e; return {x:t.clientX-r.left, y:t.clientY-r.top}; }
+    function down(e){ if(!sigCtx)return; drawing=true; var p=pos(e); sigCtx.beginPath(); sigCtx.moveTo(p.x,p.y); document.getElementById('sigPh').style.display='none'; e.preventDefault(); }
+    function mv(e){ if(!drawing||!sigCtx)return; var p=pos(e); sigCtx.lineTo(p.x,p.y); sigCtx.stroke(); sigHas=true; e.preventDefault(); }
+    function up(){ drawing=false; }
+    c.addEventListener('mousedown',down); c.addEventListener('mousemove',mv); window.addEventListener('mouseup',up);
+    c.addEventListener('touchstart',down,{passive:false}); c.addEventListener('touchmove',mv,{passive:false}); c.addEventListener('touchend',up);
+  })();
+  document.getElementById('sigClear').addEventListener('click',function(){
+    var c=document.getElementById('sigCanvas'); if(sigCtx) sigCtx.clearRect(0,0,c.width,c.height);
+    sigHas=false; document.getElementById('sigPh').style.display='block';
+  });
+  // 동의 라디오 .on + 전체동의
+  Array.prototype.forEach.call(document.querySelectorAll('#sc-consent .ci input[type=radio]'),function(r){
+    r.addEventListener('change',function(){
+      Array.prototype.forEach.call(document.querySelectorAll('#sc-consent input[name="'+r.name+'"]'),function(rr){
+        var l=rr.closest('.opt'); if(l) l.classList.toggle('on', rr.checked);
+      });
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#sc-consent .consent-all'),function(b){
+    b.addEventListener('click',function(){
+      var box=document.getElementById(b.getAttribute('data-all'));
+      Array.prototype.forEach.call(box.querySelectorAll('input[value="동의"]'),function(r){ r.checked=true; r.dispatchEvent(new Event('change')); });
+    });
+  });
+  function validateConsent(){
+    var groups=['cn1_1','cn1_2','cn1_3'];
+    if(document.getElementById('consent2').style.display!=='none') groups.push('cn2');
+    var bad=[];
+    groups.forEach(function(nm){
+      var any=document.querySelector('#sc-consent input[name="'+nm+'"]:checked');
+      var box=document.querySelector('#sc-consent [data-cn="'+nm+'"]');
+      if(box) box.classList.toggle('bad-group', !any);
+      if(!any && box) bad.push(box);
+    });
+    var sigMiss=!sigHas;
+    document.querySelector('#sc-consent .sign-box').classList.toggle('badbox', sigMiss);
+    var m=document.getElementById('cmiss');
+    if(bad.length||sigMiss){
+      m.className='miss on';
+      m.textContent=(bad.length?'모든 항목의 동의 여부를 선택해 주세요. ':'')+(sigMiss?'서명을 입력해 주세요.':'');
+      var top=bad[0]||document.querySelector('#sc-consent .sign-box');
+      if(top) top.scrollIntoView({behavior:'smooth',block:'center'});
+      return false;
+    }
+    m.className='miss'; return true;
+  }
+  // ── 제출 데이터 수집 ──
+  function _t(el){ return el?el.textContent.replace(/\s+/g,' ').trim():''; }
+  function _radioLabel(g){ if(!g)return''; var c=g.querySelector('input:checked'); return c?(c.closest('.opt')?_t(c.closest('.opt')):c.value):''; }
+  function extractAnswer(blk){
+    // 1) 질환 예/아니요 표 · 가족력 격자 (보이는 표만)
+    var tbl=blk.querySelector('table.dtab');
+    if(tbl && tbl.offsetParent!==null){
+      var ths=tbl.querySelectorAll('thead th'), isGrid=!!tbl.querySelector('.gck'), parts=[];
+      Array.prototype.forEach.call(tbl.querySelectorAll('tbody tr'),function(tr){
+        var dn=tr.querySelector('td.dn'); if(!dn) return;
+        var label=_t(dn);
+        if(isGrid){
+          var rels=[];
+          Array.prototype.forEach.call(tr.querySelectorAll('.gck'),function(cell,ci){
+            if(cell.querySelector('input').checked) rels.push(_t(ths[ci+1]));
+          });
+          if(rels.length) parts.push(label+': '+rels.join('·'));
+        } else {
+          var cells=tr.querySelectorAll('.yn'), vals=[];
+          Array.prototype.forEach.call(cells,function(cell,ci){
+            var c=cell.querySelector('input:checked');
+            if(c) vals.push((cells.length>1?_t(ths[ci+1])+' ':'')+c.value);
+          });
+          if(vals.length) parts.push(label+': '+vals.join(' / '));
+        }
+      });
+      return parts.join('  |  ');
+    }
+    // 2) CAPE 이중척도(빈도/고통)
+    var duals=blk.querySelectorAll('.dual');
+    if(duals.length){
+      var dp=[];
+      Array.prototype.forEach.call(duals,function(d){
+        if(d.offsetParent===null) return;
+        var lab=_radioLabel(d.querySelector('.opts'));
+        if(lab) dp.push(_t(d.querySelector('.dl'))+' '+lab);
+      });
+      return dp.join(', ');
+    }
+    // 3) 일반 라디오 + 텍스트입력
+    var parts=[];
+    Array.prototype.forEach.call(blk.querySelectorAll('.opts'),function(g){
+      if(g.offsetParent===null) return; var lab=_radioLabel(g); if(lab) parts.push(lab);
+    });
+    Array.prototype.forEach.call(blk.querySelectorAll('input[type=text]'),function(i){
+      if(i.offsetParent===null || !i.value.trim()) return;
+      var pre=(i.previousSibling&&i.previousSibling.nodeValue)?i.previousSibling.nodeValue.trim():'';
+      var unit=(i.nextSibling&&i.nextSibling.nodeValue)?i.nextSibling.nodeValue.trim():'';
+      parts.push((pre?pre+' ':'')+i.value.trim()+unit);
+    });
+    return parts.join(' · ');
+  }
+  function collectAnswers(){
+    var out=[];
+    Array.prototype.forEach.call(document.querySelectorAll('#qForm .qsec'),function(sec){
+      if(sec.offsetParent===null) return;
+      var secName=_t(sec.querySelector('.qsec-h'));
+      Array.prototype.forEach.call(sec.querySelectorAll('.qblock'),function(blk){
+        if(blk.offsetParent===null) return;
+        if(blk.querySelector('#cq4table')){     // Q4 검사력 (행별)
+          Array.prototype.forEach.call(blk.querySelectorAll('.q4row'),function(row){
+            if(row.offsetParent===null) return;
+            var lab=_radioLabel(row.querySelector('.opts'));
+            if(lab) out.push({section:secName, q:'검사력 · '+_t(row.querySelector('.qq')), a:lab});
+          });
+          return;
+        }
+        var a=extractAnswer(blk);
+        if(a) out.push({section:secName, q:_t(blk.querySelector('.qq')), a:a});
+      });
+      var dwrap=sec.querySelector('#q7drink');
+      if(dwrap && dwrap.offsetParent!==null){
+        [['drink1','7-1. 보통 음주량'],['drink2','7-2. 최대 음주량']].forEach(function(d){
+          var box=document.getElementById(d[0]), rows=[];
+          Array.prototype.forEach.call(box.querySelectorAll('tbody tr'),function(tr){
+            var label=_t(tr.querySelector('td.dn')), v='';
+            Array.prototype.forEach.call(tr.querySelectorAll('input'),function(inp){ if(inp.value.trim()) v=inp.value.trim()+inp.name.split('_').pop(); });
+            if(v) rows.push(label+' '+v);
+          });
+          if(rows.length) out.push({section:secName, q:d[1], a:rows.join(', ')});
+        });
+      }
+    });
+    return out;
+  }
+  function collectData(){
+    var info=getInfo(), p=state.profile;
+    var exams=[]; GROUPS.forEach(function(g){ g.items.forEach(function(it){ if(state.sel[it[0]]) exams.push(it[1]); }); });
+    var cmap={cn1_1:'개인정보 제공', cn1_2:'민감정보 처리', cn1_3:'고유식별정보(주민번호)', cn2:'정신건강 결과 제3자 제공'};
+    var consent={};
+    Object.keys(cmap).forEach(function(n){
+      var c=document.querySelector('#sc-consent input[name="'+n+'"]:checked');
+      if(c) consent[cmap[n]]=c.value;
+    });
+    return {
+      k: 'nhc-88plus-3f7a9c',   // 봇 차단 키 (접수서버와 동일)
+      submitted_at: new Date().toISOString(),
+      name: info.name, rrn_front: document.getElementById('rrn1').value, rrn_back: document.getElementById('rrn2').value,
+      phone: info.phone, email: info.email,
+      address: (info.addr+' '+info.addrDetail).trim(), recv: info.recv, chart: info.chart,
+      birth_year: p?p.birthYear:'', sex: p?p.sex:'', age: p?(YR-p.birthYear):'',
+      exams: exams, answers: collectAnswers(), consent: consent,
+      signature: sigHas ? document.getElementById('sigCanvas').toDataURL('image/png') : ''
+    };
+  }
+  // 접수 서버 주소: 로컬은 5055 직결, 외부는 Tailscale Funnel 주소로 교체
+  var API_URL = (location.hostname==='localhost'||location.hostname==='127.0.0.1')
+    ? 'http://127.0.0.1:5055/submit'
+    : 'https://doctor1.tail375e60.ts.net/submit';   // Tailscale Funnel (허브 접수서버)
+
+  document.getElementById('submitBtn').addEventListener('click',function(){
+    if(!validateConsent()) return;
+    var btn=this; btn.disabled=true; btn.textContent='제출 중…';
+    var data;
+    try { data=collectData(); } catch(e){ alert('데이터 수집 오류: '+e); btn.disabled=false; btn.textContent='제출하기'; return; }
+    fetch(API_URL, {method:'POST', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(data), mode:'no-cors'})
+      .then(function(){ show('sc-done'); })
+      .catch(function(e){ alert('제출 실패: '+e+'\n잠시 후 다시 시도해 주세요.'); btn.disabled=false; btn.textContent='제출하기'; });
+  });
+  document.getElementById('cBackBtn').addEventListener('click',function(){ show('sc-q'); });
+  document.getElementById('doneRestartBtn').addEventListener('click',function(){ location.reload(); });
+
+  // ── 테스트 전용 빠른 이동 바 (localhost/file 에서만 표시) ──
+  (function devbar(){
+    var local = location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:';
+    if(!local) return;
+    var DEVP=[['40세 남','8601011000000'],['66세 여','6001012000000'],['30세 여','9601012000000'],
+              ['56세 남','7001011000000'],['50세 여','7601012000000']];
+    function devFill(rrn){
+      var d=rrn.replace(/[^0-9]/g,'');
+      document.getElementById('rrn1').value=d.slice(0,6);
+      document.getElementById('rrn2').value=d.slice(6,13)||'1000000';
+      document.getElementById('name').value='테스트환자';
+      document.getElementById('phone').value='01012345678';
+      document.getElementById('email').value='test@test.com';
+      document.getElementById('addr').value='서울특별시 노원구 동일로192길 74';
+      document.getElementById('addrDetail').value='201호';
+      var rb=document.querySelector('#recv input[value="우편"]'); if(rb){ rb.checked=true; rb.dispatchEvent(new Event('change')); }
+      onRRN();
+    }
+    function devGo(rrn, target){
+      devFill(rrn);
+      if(!state.profile||state.profile.bad){ alert('주민번호 오류'); return; }
+      document.getElementById('toReceptionBtn').click();
+      if(target==='q'||target==='consent') document.getElementById('toQBtn').click();
+      if(target==='consent'){
+        var sel=state.sel||{};
+        document.getElementById('consent2').style.display=(sel.depression||sel.psychosis)?'block':'none';
+        show('sc-consent'); initSignature();
+      }
+    }
+    var bar=document.createElement('div');
+    bar.style.cssText='position:fixed;top:0;left:0;right:0;z-index:3000;background:#2c2f26;color:#fff;'
+      +'padding:6px 10px;font-size:12px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;';
+    var bs='padding:5px 10px;background:#5C7F22;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;';
+    var html='<b style="color:#cfe08a">🧪 테스트</b>';
+    DEVP.forEach(function(p,i){ html+='<button data-i="'+i+'" style="'+bs+'">'+p[0]+' → 문진표</button>'; });
+    html+='<button data-consent="1" style="'+bs+'background:#B26A00">30여 → 동의서</button>';
+    html+='<button data-rec="1" style="'+bs+'background:#6b7361">현재값 → 접수확인</button>';
+    bar.innerHTML=html;
+    document.body.appendChild(bar);
+    document.body.style.paddingTop='40px';
+    bar.addEventListener('click',function(e){
+      var b=e.target; if(b.tagName!=='BUTTON') return;
+      if(b.getAttribute('data-i')!=null){ devGo(DEVP[+b.getAttribute('data-i')][1], 'q'); }
+      else if(b.getAttribute('data-consent')){ devGo('9601012000000','consent'); }
+      else if(b.getAttribute('data-rec')){
+        if(state.profile&&!state.profile.bad) document.getElementById('toReceptionBtn').click();
+        else alert('인적사항(주민번호)을 먼저 입력하세요.');
+      }
+    });
+  })();
+})();
+</script>
+</body>
+</html>
