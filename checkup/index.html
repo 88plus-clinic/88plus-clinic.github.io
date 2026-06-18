@@ -649,6 +649,7 @@ function closePostcode(){
   ];
 
   var state={ profile:null, sel:{}, notes:{}, eligible:{} };
+  var capturedAnswers=[];   // 문진표 응답 스냅샷(작성완료 시점 — 문진표 화면 보일 때 수집)
 
   function evaluate(by,sex){
     var age=YR-by; state.sel={}; state.notes={}; state.eligible={};
@@ -1123,6 +1124,7 @@ function closePostcode(){
   });
   document.getElementById('qDoneBtn').addEventListener('click',function(){
     if(!validateQ()) return;   // validateQ가 첫 빈 곳으로 스크롤 + 안내
+    capturedAnswers = collectAnswers();   // 문진표 보이는 지금 응답 수집(제출 때는 숨겨져서 못 함)
     var sel=state.sel||{};
     document.getElementById('consent2').style.display=(sel.depression||sel.psychosis)?'block':'none';
     show('sc-consent'); initSignature();
@@ -1287,7 +1289,7 @@ function closePostcode(){
       phone: info.phone, email: info.email,
       address: (info.addr+' '+info.addrDetail).trim(), recv: info.recv, chart: info.chart,
       birth_year: p?p.birthYear:'', sex: p?p.sex:'', age: p?(YR-p.birthYear):'',
-      exams: exams, answers: collectAnswers(), consent: consent,
+      exams: exams, answers: capturedAnswers, consent: consent,
       signature: sigHas ? document.getElementById('sigCanvas').toDataURL('image/png') : ''
     };
   }
