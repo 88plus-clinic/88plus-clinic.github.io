@@ -1316,10 +1316,14 @@ function closePostcode(){
     return out;
   }
   function collectRaw(){
-    // 보이는 모든 입력 name→value (라디오=선택값, 체크박스=true, 텍스트=값). 숨김(분기·미선택섹션) 제외.
+    // 입력 name→value (라디오=선택값, 체크박스=true, 텍스트=값).
+    // ⚠ 라디오는 .opt input{display:none} 으로 숨겨져 input.offsetParent 가 항상 null →
+    //   입력 자체가 아니라 '소속 블록'의 가시성으로 분기숨김 여부를 판단해야 한다.
     var raw={};
     Array.prototype.forEach.call(document.querySelectorAll('#qForm input'),function(i){
-      if(!i.name || i.offsetParent===null) return;
+      if(!i.name) return;
+      var host=i.closest('.qblock')||i.closest('.qsub')||i.closest('.qsec')||i;
+      if(host.offsetParent===null) return;   // 분기로 숨겨진 섹션만 제외
       if(i.type==='radio'){ if(i.checked) raw[i.name]=i.value; }
       else if(i.type==='checkbox'){ if(i.checked) raw[i.name]=true; }
       else if(i.value.trim()!==''){ raw[i.name]=i.value.trim(); }
@@ -1402,14 +1406,59 @@ function closePostcode(){
       if(w){ var show=!!(r && r.value!=='0'); w.style.display=show?'flex':'none'; }
     });
   }
+  function _stampHTML(by, sig){
+    return '<span class="stamp-item" style="display:inline-flex;flex-direction:column;align-items:center;margin:0 16px 6px 0">'
+      + (sig ? '<img src="'+sig+'" style="height:48px">' : '<span style="color:#999;font-size:12px">(도장없음)</span>')
+      + '<span style="font-size:11px;color:#555;margin-top:2px">'+by+'</span></span>';
+  }
+  function buildSignPanel(E, saveBtn){
+    var wrap=document.createElement('div');
+    wrap.style.cssText='margin:18px 0 6px;padding:15px 17px;border:1px solid #cdd5bf;border-radius:10px;background:#f6f8f0';
+    var stamps=(E.reviewers||[]).map(function(r){ return _stampHTML(r.by, r.sig); }).join('');
+    wrap.innerHTML=
+      '<div style="font-weight:700;color:#2e3f10;margin-bottom:9px">문진의사 검토·서명'
+        + ' <span style="font-weight:400;font-size:12px;color:#777">— 수정을 먼저 저장한 뒤 도장을 찍으세요</span></div>'
+      + '<div id="signStamps" data-empty="'+(stamps?'0':'1')+'" style="min-height:54px;display:flex;align-items:center;flex-wrap:wrap">'
+        + (stamps || '<span class="ph" style="color:#999;font-size:13px">아직 서명한 의사가 없습니다.</span>') + '</div>'
+      + (E.myStamp ? '' : '<div style="color:#b23a2e;font-size:12px;margin:6px 0">⚠ 내 도장이 등록돼 있지 않습니다 (stamp 폴더 확인).</div>')
+      + '<button type="button" id="signBtn" style="margin-top:10px;padding:9px 18px;border:'
+        + (E.meReviewed?'1px solid #5C7F22':'none')+';border-radius:6px;cursor:pointer;font-family:inherit;'
+        + 'font-size:14px;font-weight:700;background:'+(E.meReviewed?'#fff':'#5C7F22')+';color:'+(E.meReviewed?'#5C7F22':'#fff')+'">'
+        + (E.meReviewed ? '✓ 내 서명 취소' : '🖋 검토·서명 (내 도장) — '+E.myName) + '</button>'
+      + '<span id="signMsg" style="font-size:12.5px;color:#5C7F22;margin-left:10px"></span>';
+    saveBtn.parentNode.insertBefore(wrap, saveBtn.nextSibling);
+    var signed=E.meReviewed;
+    document.getElementById('signBtn').addEventListener('click',function(){
+      var b=this; b.disabled=true;
+      fetch(E.reviewUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:E.id})})
+        .then(function(r){return r.json();}).then(function(d){
+          b.disabled=false;
+          if(!d.ok){ alert(d.error||'서명 실패'); return; }
+          var box=document.getElementById('signStamps');
+          if(d.action==='added'){
+            if(box.getAttribute('data-empty')==='1'){ box.innerHTML=''; box.setAttribute('data-empty','0'); }
+            var t=document.createElement('div'); t.innerHTML=_stampHTML(E.myName, E.myStamp);
+            t.firstChild.setAttribute('data-mine','1'); box.appendChild(t.firstChild);
+            signed=true; b.textContent='✓ 내 서명 취소'; b.style.background='#fff'; b.style.color='#5C7F22'; b.style.border='1px solid #5C7F22';
+            document.getElementById('signMsg').textContent='도장이 찍혔습니다 — 보관용 문진표·기록지에 반영됩니다.';
+          } else {
+            var mine=box.querySelector('[data-mine]'); if(mine) mine.remove();
+            if(!box.children.length){ box.innerHTML='<span class="ph" style="color:#999;font-size:13px">아직 서명한 의사가 없습니다.</span>'; box.setAttribute('data-empty','1'); }
+            signed=false; b.textContent='🖋 검토·서명 (내 도장) — '+E.myName; b.style.background='#5C7F22'; b.style.color='#fff'; b.style.border='none';
+            document.getElementById('signMsg').textContent='서명을 취소했습니다.';
+          }
+        }).catch(function(e){ b.disabled=false; alert('서명 실패: '+e); });
+    });
+  }
   function enterEditMode(E){
     state.profile={birthYear:+E.profile.birthYear, sex:E.profile.sex, bad:false};
     state.sel={}; (E.exams||[]).forEach(function(k){ state.sel[k]=true; });
     buildQuestionnaire();
     fillFromRaw(E.raw);
     var rec=document.getElementById('qrecap');
-    if(rec) rec.innerHTML='<div class="nm">'+(E.name||'')+' <span style="font-size:13px;color:#8a8f7e">— 의사 수정</span></div>'
-      +'<div class="sub">차트 '+(E.chart||'-')+' · 환자가 작성한 답을 그대로 보며 수정합니다</div>';
+    if(rec) rec.innerHTML='<div class="nm">'+(E.name||'')+' <span style="font-size:13px;color:#8a8f7e">— 의사 검토·수정</span></div>'
+      +'<div class="sub">차트 '+(E.chart||'-')+' · 환자가 작성한 답을 그대로 보며 수정 후 아래에서 서명하세요'
+      + (E.partialPrefill?' <b style="color:#b26a00">(옛 접수 — 일부만 자동표시됨)</b>':'') + '</div>';
     var done=document.getElementById('qDoneBtn');
     var clone=done.cloneNode(true); clone.textContent='💾 수정 저장'; done.parentNode.replaceChild(clone,done);
     clone.addEventListener('click',function(){
@@ -1418,12 +1467,16 @@ function closePostcode(){
       clone.disabled=true; clone.textContent='저장 중…';
       fetch(E.saveUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
         .then(function(r){return r.json();})
-        .then(function(d){ if(d.ok){ clone.textContent='✓ 저장됨'; setTimeout(function(){ location.href=E.backUrl; },600); }
-          else { clone.disabled=false; clone.textContent='💾 수정 저장'; alert(d.error||'저장 실패'); } })
+        .then(function(d){ clone.disabled=false; clone.textContent='💾 수정 저장';
+          if(d.ok){ var m=document.getElementById('saveDoneMsg'); if(m){ m.textContent='✓ 저장됨 ('+(d.changed||0)+'건 변경) — 보관용 문진표에 반영'; } }
+          else alert(d.error||'저장 실패'); })
         .catch(function(e){ clone.disabled=false; clone.textContent='💾 수정 저장'; alert('저장 실패: '+e); });
     });
+    var sm=document.createElement('span'); sm.id='saveDoneMsg'; sm.style.cssText='font-size:12.5px;color:#5C7F22;margin-left:10px';
+    clone.parentNode.insertBefore(sm, clone.nextSibling);
+    buildSignPanel(E, clone.parentNode);
     var back=document.getElementById('qBackBtn');
-    if(back){ var bc=back.cloneNode(true); bc.textContent='← 취소'; back.parentNode.replaceChild(bc,back);
+    if(back){ var bc=back.cloneNode(true); bc.textContent='← 목록/상세로'; back.parentNode.replaceChild(bc,back);
       bc.addEventListener('click',function(){ location.href=E.backUrl; }); }
     show('sc-q');
   }
