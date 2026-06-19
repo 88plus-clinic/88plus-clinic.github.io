@@ -352,13 +352,13 @@
                 <label class="opt"><input type="radio" name="q4_1" value="과거피움" data-branch="q4past">과거에 피웠으나 현재 안 피움</label>
               </div>
               <div class="qsub" id="q4cur">
-                <span class="inl">총 <input type="text" inputmode="numeric" data-req>년</span>
-                <span class="inl">하루평균 <input type="text" inputmode="numeric" data-req>개비</span>
+                <span class="inl">총 <input type="text" inputmode="numeric" name="q4cur_yr" data-req>년</span>
+                <span class="inl">하루평균 <input type="text" inputmode="numeric" name="q4cur_cig" data-req>개비</span>
               </div>
               <div class="qsub" id="q4past">
-                <span class="inl">끊은 지 <input type="text" inputmode="numeric" data-req>년</span>
-                <span class="inl">피웠던 기간 총 <input type="text" inputmode="numeric" data-req>년</span>
-                <span class="inl">하루평균 <input type="text" inputmode="numeric" data-req>개비</span>
+                <span class="inl">끊은 지 <input type="text" inputmode="numeric" name="q4past_quit" data-req>년</span>
+                <span class="inl">피웠던 기간 총 <input type="text" inputmode="numeric" name="q4past_yr" data-req>년</span>
+                <span class="inl">하루평균 <input type="text" inputmode="numeric" name="q4past_cig" data-req>개비</span>
               </div>
             </div>
           </div>
@@ -375,13 +375,13 @@
                 <label class="opt"><input type="radio" name="q5_1" value="과거사용" data-branch="q5past">과거에 사용했으나 현재 안 함</label>
               </div>
               <div class="qsub" id="q5cur">
-                <span class="inl">총 <input type="text" inputmode="numeric" data-req>년</span>
-                <span class="inl">하루평균 <input type="text" inputmode="numeric" data-req>개비</span>
+                <span class="inl">총 <input type="text" inputmode="numeric" name="q5cur_yr" data-req>년</span>
+                <span class="inl">하루평균 <input type="text" inputmode="numeric" name="q5cur_cig" data-req>개비</span>
               </div>
               <div class="qsub" id="q5past">
-                <span class="inl">끊은 지 <input type="text" inputmode="numeric" data-req>년</span>
-                <span class="inl">사용했던 기간 총 <input type="text" inputmode="numeric" data-req>년</span>
-                <span class="inl">하루평균 <input type="text" inputmode="numeric" data-req>개비</span>
+                <span class="inl">끊은 지 <input type="text" inputmode="numeric" name="q5past_quit" data-req>년</span>
+                <span class="inl">사용했던 기간 총 <input type="text" inputmode="numeric" name="q5past_yr" data-req>년</span>
+                <span class="inl">하루평균 <input type="text" inputmode="numeric" name="q5past_cig" data-req>개비</span>
               </div>
             </div>
           </div>
@@ -416,7 +416,7 @@
               <label class="opt"><input type="radio" name="q7" value="안마심">술을 마시지 않는다</label>
             </div>
             <div class="qsub" id="q7num">
-              <span class="inl wide"><input type="text" inputmode="numeric" data-req>번</span>
+              <span class="inl wide"><input type="text" inputmode="numeric" name="q7_count" data-req>번</span>
             </div>
           </div>
           <div class="qsub" id="q7drink" style="border-left-color:var(--primary)">
@@ -435,26 +435,26 @@
           <div class="qblock">
             <div class="qq"><span class="n">8-1.</span>평소 1주일간, 숨이 <b>많이</b> 차게 만드는 <b>고강도</b> 신체활동을 며칠 하십니까?
               <div class="qhint">예: 달리기, 빠른 자전거, 건설현장 노동, 계단으로 물건 나르기 등</div></div>
-            <span class="inl">주당 <input type="text" inputmode="numeric" data-req>일</span>
+            <span class="inl">주당 <input type="text" inputmode="numeric" name="pa81" data-req>일</span>
           </div>
           <div class="qblock">
             <div class="qq"><span class="n">8-2.</span>고강도 신체활동을 하는 날은 하루에 보통 얼마나 하십니까?</div>
-            <span class="inl"><input type="text" inputmode="numeric" data-req>시간</span>
-            <span class="inl"><input type="text" inputmode="numeric" data-req>분</span>
+            <span class="inl"><input type="text" inputmode="numeric" name="pa82_h" data-req>시간</span>
+            <span class="inl"><input type="text" inputmode="numeric" name="pa82_m" data-req>분</span>
           </div>
           <div class="qblock">
             <div class="qq"><span class="n">9-1.</span>평소 1주일간, 숨이 <b>약간</b> 차게 만드는 <b>중강도</b> 신체활동을 며칠 하십니까?
               <div class="qhint">8번 활동은 제외. 예: 빠르게 걷기, 복식테니스, 보통속도 자전거, 청소 등</div></div>
-            <span class="inl">주당 <input type="text" inputmode="numeric" data-req>일</span>
+            <span class="inl">주당 <input type="text" inputmode="numeric" name="pa91" data-req>일</span>
           </div>
           <div class="qblock">
             <div class="qq"><span class="n">9-2.</span>중강도 신체활동을 하는 날은 하루에 보통 얼마나 하십니까?</div>
-            <span class="inl"><input type="text" inputmode="numeric" data-req>시간</span>
-            <span class="inl"><input type="text" inputmode="numeric" data-req>분</span>
+            <span class="inl"><input type="text" inputmode="numeric" name="pa92_h" data-req>시간</span>
+            <span class="inl"><input type="text" inputmode="numeric" name="pa92_m" data-req>분</span>
           </div>
           <div class="qblock">
             <div class="qq"><span class="n">10.</span>최근 1주일 동안 팔굽혀펴기·윗몸일으키기·아령·역기·철봉 등 <b>근력운동</b>을 한 날은 며칠입니까?</div>
-            <span class="inl">주당 <input type="text" inputmode="numeric" data-req>일</span>
+            <span class="inl">주당 <input type="text" inputmode="numeric" name="pa10" data-req>일</span>
           </div>
         </div>
 
@@ -476,6 +476,7 @@
         <div class="qsec" id="qPHQ" style="display:none"></div>
         <div class="qsec" id="qKDSQ" style="display:none"></div>
         <div class="qsec" id="qCAPE" style="display:none"></div>
+        <div class="qsec" id="qSenior" style="display:none"></div>
         <div id="qCancer">
           <div class="qsec" id="cancCommon" style="display:none"></div>
           <div class="qsec" id="cancGastric" style="display:none"></div>
@@ -650,6 +651,7 @@ function closePostcode(){
 
   var state={ profile:null, sel:{}, notes:{}, eligible:{} };
   var capturedAnswers=[];   // 문진표 응답 스냅샷(작성완료 시점 — 문진표 화면 보일 때 수집)
+  var capturedRaw={};       // 항목별 값(name→value) 스냅샷 (EMR 입력용/양식 화면 렌더용)
 
   function evaluate(by,sex){
     var age=YR-by; state.sel={}; state.notes={}; state.eligible={};
@@ -958,6 +960,25 @@ function closePostcode(){
       '혼자 있을 때 어떤 음성을 들은 적이 있습니까?','혼자 있을 때 어떤 사람들이 서로 말하는 것을 들은 적이 있습니까?',
       '다른 사람 눈에는 보이지 않는 어떤 사물이나, 사람, 혹은 동물을 본 적이 있습니까?'] };
 
+  // 노인 신체기능 평가 (66·70·80세) — 예/아니오 10문항
+  var SENIOR=[
+    ['1.','인플루엔자(독감) 예방접종을 매년 하십니까?'],
+    ['2.','폐렴 예방접종을 받으셨습니까?'],
+    ['3-1.','음식을 차려주면 남의 도움 없이 혼자서 식사하십니까?'],
+    ['3-2.','옷을 챙겨 입을 때 남의 도움 없이 혼자서 하십니까?'],
+    ['3-3.','대소변을 보기 위해 화장실 출입할 때 남의 도움 없이 혼자서 하십니까?'],
+    ['3-4.','목욕하실 때 남의 도움 없이 혼자서 하십니까?'],
+    ['3-5.','식사 준비를 다른 사람의 도움 없이 혼자서 하십니까?'],
+    ['3-6.','상점·이웃·병원·관공서 등 걸어서 갔다 올 수 있는 곳의 외출을 혼자서 하십니까?'],
+    ['4.','지난 6개월 간 넘어진 적이 있습니까?'],
+    ['5.','소변을 보는데 장애가 있거나 지릴 경우가 있습니까?']
+  ];
+  function seniorHTML(){
+    var h='<div class="qsec-h">노인 신체기능 평가 (66·70·80세)</div>';
+    SENIOR.forEach(function(it,i){ h+=qBlock(it[0], it[1], 'sen'+i, [['예','예'],['아니오','아니오']]); });
+    return h;
+  }
+
   // 암검진 — 공통
   function cancCommonHTML(){
     var cancers=['위암','대장암','간암','유방암','자궁경부암','폐암','기타'];
@@ -971,9 +992,9 @@ function closePostcode(){
     grid+='</tbody></table>';
     return '<div class="qsec-h">암검진 문진 — 공통</div>'
       +qBlock('1.','현재 신체 어느 부위에든 불편한 증상이 있습니까?','cq1',[['아니오','아니오'],['예','예',  'cq1sub']])
-      +'<div class="qsub" id="cq1sub"><span class="inl wide">증상 <input type="text" data-req style="width:220px"></span></div>'
+      +'<div class="qsub" id="cq1sub"><span class="inl wide">증상 <input type="text" name="cq1_sym" data-req style="width:220px"></span></div>'
       +qBlock('2.','지난 6개월간 특별한 이유 없이 5kg 이상 체중이 감소했습니까?','cq2',[['아니오','아니오'],['감소','예(감소)','cq2sub']])
-      +'<div class="qsub" id="cq2sub"><span class="inl">감소 <input type="text" inputmode="numeric" data-req>kg</span></div>'
+      +'<div class="qsub" id="cq2sub"><span class="inl">감소 <input type="text" inputmode="numeric" name="cq2_kg" data-req>kg</span></div>'
       +qBlock('3.','본인·부모·형제·자매·자녀 중 현재 암에 걸렸거나 과거에 걸렸던 분이 있습니까?','cq3',[['없다','없다'],['있다','있다','cq3sub'],['모름','모르겠다']])
       +'<div class="qsub" id="cq3sub"><div class="qq">가족(본인 포함)이 걸린 암 — 해당 칸에 모두 체크 (복수 가능)</div><div id="cq3cancers">'+grid+'</div></div>'
       +'<div class="qblock"><div class="qq"><span class="n">4.</span>다음 검사를 받은 적이 있습니까? (가장 최근 시기)</div><div id="cq4table"></div></div>';
@@ -981,9 +1002,9 @@ function closePostcode(){
   function cancWomanHTML(){
     return '<div class="qsec-h">유방암·자궁경부암 문진 (여성)</div>'
       +qBlock('9.','월경을 언제 시작하셨습니까?','cw9',[['시작','월경을 시작함','cw9sub'],['초경없음','초경이 없었음']])
-      +'<div class="qsub" id="cw9sub"><span class="inl">만 <input type="text" inputmode="numeric" data-req>세</span></div>'
+      +'<div class="qsub" id="cw9sub"><span class="inl">만 <input type="text" inputmode="numeric" name="cw9_age" data-req>세</span></div>'
       +qBlock('10.','현재 월경의 상태는 어떠십니까?','cw10',[['있음','아직 월경이 있음'],['자궁적출','자궁적출술을 하였음'],['폐경','폐경됨','cw10sub']])
-      +'<div class="qsub" id="cw10sub"><span class="inl">폐경 연령 만 <input type="text" inputmode="numeric" data-req>세</span></div>'
+      +'<div class="qsub" id="cw10sub"><span class="inl">폐경 연령 만 <input type="text" inputmode="numeric" name="cw10_age" data-req>세</span></div>'
       +qBlock('11.','폐경 후 호르몬제를 복용 중이거나 과거에 복용한 적이 있습니까?','cw11',[['없음','복용한 적 없음'],['2년미만','2년 미만'],['2-5년','2년~5년 미만'],['5년이상','5년 이상'],['모름','모르겠음']])
       +qBlock('12.','자녀를 몇 명 출산하셨습니까?','cw12',[['1명','1명'],['2명이상','2명 이상'],['없음','출산한 적 없음']])
       +qBlock('13.','모유 수유 여부 및 총 수유기간은?','cw13',[['6개월미만','6개월 미만'],['6개월-1년','6개월~1년 미만'],['1년이상','1년 이상'],['없음','수유한 적 없음']])
@@ -1034,6 +1055,7 @@ function closePostcode(){
     document.getElementById('qPHQ').style.display=sel.depression?'block':'none';
     document.getElementById('qKDSQ').style.display=sel.cognition?'block':'none';
     document.getElementById('qCAPE').style.display=sel.psychosis?'block':'none';
+    document.getElementById('qSenior').style.display=sel.senior?'block':'none';
     document.getElementById('cancCommon').style.display=anyC?'block':'none';
     document.getElementById('cancGastric').style.display=sel.ca_gastric?'block':'none';
     document.getElementById('cancColon').style.display=sel.ca_colon?'block':'none';
@@ -1045,6 +1067,7 @@ function closePostcode(){
     document.getElementById('qPHQ').innerHTML=scaleSection(PHQ);
     document.getElementById('qKDSQ').innerHTML=scaleSection(KDSQ);
     document.getElementById('qCAPE').innerHTML=dualScaleSection(CAPE);
+    document.getElementById('qSenior').innerHTML=seniorHTML();
     document.getElementById('cancCommon').innerHTML=cancCommonHTML();
     document.getElementById('cancGastric').innerHTML=diseaseYN('위장질환','cgd',['위궤양','위축성 위염','장상피화생','위용종','기타']);
     document.getElementById('cancColon').innerHTML=diseaseYN('대장·항문질환','ccd',['대장용종(폴립)','궤양성 대장염','크론병','치질(치핵·치열)','기타']);
@@ -1125,6 +1148,7 @@ function closePostcode(){
   document.getElementById('qDoneBtn').addEventListener('click',function(){
     if(!validateQ()) return;   // validateQ가 첫 빈 곳으로 스크롤 + 안내
     capturedAnswers = collectAnswers();   // 문진표 보이는 지금 응답 수집(제출 때는 숨겨져서 못 함)
+    capturedRaw = collectRaw();           // 항목별 값도 같이 스냅샷
     var sel=state.sel||{};
     document.getElementById('consent2').style.display=(sel.depression||sel.psychosis)?'block':'none';
     show('sc-consent'); initSignature();
@@ -1273,6 +1297,17 @@ function closePostcode(){
     });
     return out;
   }
+  function collectRaw(){
+    // 보이는 모든 입력 name→value (라디오=선택값, 체크박스=true, 텍스트=값). 숨김(분기·미선택섹션) 제외.
+    var raw={};
+    Array.prototype.forEach.call(document.querySelectorAll('#qForm input'),function(i){
+      if(!i.name || i.offsetParent===null) return;
+      if(i.type==='radio'){ if(i.checked) raw[i.name]=i.value; }
+      else if(i.type==='checkbox'){ if(i.checked) raw[i.name]=true; }
+      else if(i.value.trim()!==''){ raw[i.name]=i.value.trim(); }
+    });
+    return raw;
+  }
   function collectData(){
     var info=getInfo(), p=state.profile;
     var exams=[]; GROUPS.forEach(function(g){ g.items.forEach(function(it){ if(state.sel[it[0]]) exams.push(it[1]); }); });
@@ -1289,7 +1324,7 @@ function closePostcode(){
       phone: info.phone, email: info.email,
       address: (info.addr+' '+info.addrDetail).trim(), recv: info.recv, chart: info.chart,
       birth_year: p?p.birthYear:'', sex: p?p.sex:'', age: p?(YR-p.birthYear):'',
-      exams: exams, answers: capturedAnswers, consent: consent,
+      exams: exams, answers: capturedAnswers, raw: capturedRaw, consent: consent,
       signature: sigHas ? document.getElementById('sigCanvas').toDataURL('image/png') : ''
     };
   }
