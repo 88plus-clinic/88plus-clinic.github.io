@@ -1363,10 +1363,60 @@ function closePostcode(){
   document.getElementById('cBackBtn').addEventListener('click',function(){ show('sc-q'); });
   document.getElementById('doneRestartBtn').addEventListener('click',function(){ location.reload(); });
 
+  // ── 편집 모드: 허브에서 의사가 환자 답을 '환자 화면 그대로' 보며 수정 ──
+  function fillFromRaw(raw){
+    if(!raw) return;
+    Object.keys(raw).forEach(function(name){
+      var els=document.getElementsByName(name);
+      var val=raw[name];
+      Array.prototype.forEach.call(els,function(el){
+        if(!el.closest||!el.closest('#qForm')) return;
+        if(el.type==='radio'){ el.checked=(el.value===String(val)); }
+        else if(el.type==='checkbox'){ el.checked=(val===true||val==='true'||val==='1'||val===1); }
+        else { el.value=val; }
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('#qForm input[type=radio]:checked'),function(r){ setGroupOn(r.name); });
+    Array.prototype.forEach.call(document.querySelectorAll('#qForm input[type=checkbox]:checked'),function(ck){ var l=ck.closest('.opt'); if(l) l.classList.add('on'); });
+    if(typeof updateDrink==='function') updateDrink();
+    if(typeof updateTbNote==='function') updateTbNote();
+    if(typeof updateHepNote==='function') updateHepNote();
+    Array.prototype.forEach.call(document.querySelectorAll('#qForm .opts[data-distwrap]'),function(g){
+      var r=g.querySelector('input:checked'); var w=document.getElementById(g.getAttribute('data-distwrap'));
+      if(w){ var show=!!(r && r.value!=='0'); w.style.display=show?'flex':'none'; }
+    });
+  }
+  function enterEditMode(E){
+    state.profile={birthYear:+E.profile.birthYear, sex:E.profile.sex, bad:false};
+    state.sel={}; (E.exams||[]).forEach(function(k){ state.sel[k]=true; });
+    buildQuestionnaire();
+    fillFromRaw(E.raw);
+    var rec=document.getElementById('qrecap');
+    if(rec) rec.innerHTML='<div class="nm">'+(E.name||'')+' <span style="font-size:13px;color:#8a8f7e">— 의사 수정</span></div>'
+      +'<div class="sub">차트 '+(E.chart||'-')+' · 환자가 작성한 답을 그대로 보며 수정합니다</div>';
+    var done=document.getElementById('qDoneBtn');
+    var clone=done.cloneNode(true); clone.textContent='💾 수정 저장'; done.parentNode.replaceChild(clone,done);
+    clone.addEventListener('click',function(){
+      if(!validateQ()) return;
+      var payload={id:E.id, answers:collectAnswers(), raw:collectRaw()};
+      clone.disabled=true; clone.textContent='저장 중…';
+      fetch(E.saveUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+        .then(function(r){return r.json();})
+        .then(function(d){ if(d.ok){ clone.textContent='✓ 저장됨'; setTimeout(function(){ location.href=E.backUrl; },600); }
+          else { clone.disabled=false; clone.textContent='💾 수정 저장'; alert(d.error||'저장 실패'); } })
+        .catch(function(e){ clone.disabled=false; clone.textContent='💾 수정 저장'; alert('저장 실패: '+e); });
+    });
+    var back=document.getElementById('qBackBtn');
+    if(back){ var bc=back.cloneNode(true); bc.textContent='← 취소'; back.parentNode.replaceChild(bc,back);
+      bc.addEventListener('click',function(){ location.href=E.backUrl; }); }
+    show('sc-q');
+  }
+  if(window.__EDIT__){ try{ enterEditMode(window.__EDIT__); }catch(e){ console.error('edit mode',e); alert('편집 모드 오류: '+e); } }
+
   // ── 테스트 전용 빠른 이동 바 (localhost/file 에서만 표시) ──
   (function devbar(){
     var local = location.hostname==='localhost'||location.hostname==='127.0.0.1'||location.protocol==='file:';
-    if(!local) return;
+    if(!local || window.__EDIT__) return;
     var DEVP=[['40세 남','8601011000000'],['66세 여','6001012000000'],['30세 여','9601012000000'],
               ['56세 남','7001011000000'],['50세 여','7601012000000']];
     function devFill(rrn){
