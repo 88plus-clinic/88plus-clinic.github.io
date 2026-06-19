@@ -587,6 +587,7 @@ var ALERTS = {
   rrn: {ko:'주민등록번호 앞 6자리를 입력해주세요.', en:'Please enter the first 6 digits of your ID number.', ru:'Введите первые 6 цифр регистрационного номера.'},
   phone: {ko:'전화번호를 모두 입력해주세요.', en:'Please enter your full phone number.', ru:'Введите полный номер телефона.'},
   marital: {ko:'결혼 여부를 선택해주세요.', en:'Please select your marital status.', ru:'Выберите семейное положение.'},
+  address: {ko:'주소를 입력해주세요. (주소 검색 버튼)', en:'Please enter your address (use the search button).', ru:'Укажите адрес (кнопка поиска).'},
   sex: {ko:'성경험 여부를 선택해주세요.', en:'Please select your sexual activity status.', ru:'Укажите, ведёте ли вы половую жизнь.'},
   symptom: {ko:'내원 목적을 하나 이상 선택해주세요.', en:'Please select at least one reason for your visit.', ru:'Выберите хотя бы одну причину визита.'},
   insurance: {ko:'접수 유형을 선택해주세요.', en:'Please select a registration type.', ru:'Выберите тип регистрации.'},
@@ -728,6 +729,7 @@ function validate(n){
     if(!document.getElementById('name').value.trim()){ alert(T('name')); return false; }
     if(document.getElementById('rrn1').value.length!==6){ alert(T('rrn')); return false; }
     if(!document.getElementById('phone1').value.trim()||!document.getElementById('phone2').value.trim()||!document.getElementById('phone3').value.trim()){ alert(T('phone')); return false; }
+    if(!document.getElementById('address').value.trim()){ alert(T('address')); return false; }
     if(!document.querySelector('input[name="marital"]:checked')){ alert(T('marital')); return false; }
   }
   if(n===2){ if(!document.querySelector('input[name="sex"]:checked')){ alert(T('sex')); return false; } }
