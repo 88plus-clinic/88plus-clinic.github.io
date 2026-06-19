@@ -642,7 +642,7 @@ function closePostcode(){
       return {checked:on,confirm:true,note: on?'66세↑ 2년마다 · 올해 대상':'66세↑ 2년주기상 올해 비대상 — 확인'};} return null;},
     depression:function(a,s,by){ if(a>=20&&a<=34){var on=evenTarget(by);
       return {checked:on,confirm:true,note: on?'20~34세 2년마다':'20~34세 2년주기상 올해 비대상 — 확인'};}
-      if(a>=35&&a<=79) return {checked:true,confirm:true,note:'연령대 1회 — 수검이력 확인'}; return null;},
+      if(a>=35&&a<=79) return {checked:false,confirm:true,note:'연령대(35~39/40~49/50~59/60~69/70~79) 1회 — 수검이력 확인 후 체크'}; return null;},
     psychosis:function(a,s,by){ if(a>=20&&a<=34){var on=evenTarget(by);
       return {checked:on,confirm:true,note: on?'20~34세 2년마다':'20~34세 2년주기상 올해 비대상 — 확인'};} return null;},
     senior:function(a){ return [66,70,80].indexOf(a)>=0?{checked:true,confirm:false,note:a+'세'}:null;},
