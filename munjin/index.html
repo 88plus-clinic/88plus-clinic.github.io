@@ -1337,6 +1337,7 @@ function closePostcode(){
     });
     return {
       k: 'nhc-88plus-3f7a9c',   // 봇 차단 키 (접수서버와 동일)
+      client_id: (Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8)),  // 중복방지 고유키
       submitted_at: new Date().toISOString(),
       name: info.name, rrn_front: document.getElementById('rrn1').value, rrn_back: document.getElementById('rrn2').value,
       phone: info.phone, email: info.email,
@@ -1346,19 +1347,34 @@ function closePostcode(){
       signature: sigHas ? document.getElementById('sigCanvas').toDataURL('image/png') : ''
     };
   }
-  // 접수 서버 주소: 로컬은 5055 직결, 외부는 Tailscale Funnel 주소로 교체
-  var API_URL = (location.hostname==='localhost'||location.hostname==='127.0.0.1')
+  // ── 전송 경로 ──
+  // ① 구글 버퍼(유실 방지·필수): 허브가 꺼져 있어도 구글이 받아두고, 켜지면 당겨감.
+  //    ↓ Apps Script 배포 후 나오는 /exec URL 을 붙여넣으세요. (이게 비어있으면 유실 방지 안 됨)
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbxEnBdSK6VsHxhRbQoyRczfSwNK5ECOywDdX0G_LHWYhE_oTd7IrbOiSw-fFA7-y-c_/exec';
+  // ② Tailscale 즉시반영(있으면 빠름): 허브가 켜져 있을 때 바로 화면에 뜨게. 중복은 client_id로 차단.
+  var FUNNEL_URL = (location.hostname==='localhost'||location.hostname==='127.0.0.1')
     ? 'http://127.0.0.1:5055/submit'
-    : 'https://doctor1.tail375e60.ts.net/submit';   // Tailscale Funnel (허브 접수서버)
+    : 'https://doctor1.tail375e60.ts.net/submit';
 
   document.getElementById('submitBtn').addEventListener('click',function(){
     if(!validateConsent()) return;
     var btn=this; btn.disabled=true; btn.textContent='제출 중…';
     var data;
     try { data=collectData(); } catch(e){ alert('데이터 수집 오류: '+e); btn.disabled=false; btn.textContent='제출하기'; return; }
-    fetch(API_URL, {method:'POST', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(data), mode:'no-cors'})
+    var body=JSON.stringify(data);
+    function post(u){ return u && u.indexOf('PASTE_')<0
+      ? fetch(u, {method:'POST', headers:{'Content-Type':'text/plain'}, body:body, mode:'no-cors'})
+      : Promise.reject('no-url'); }
+    // 구글 버퍼가 1순위(유실 방지). Tailscale은 동시에 시도(즉시 반영용).
+    post(FUNNEL_URL).catch(function(){});
+    post(GAS_URL)
       .then(function(){ show('sc-done'); })
-      .catch(function(e){ alert('제출 실패: '+e+'\n잠시 후 다시 시도해 주세요.'); btn.disabled=false; btn.textContent='제출하기'; });
+      .catch(function(){
+        // 구글 URL 미설정 시엔 Tailscale 결과로 대체(개발/임시).
+        if(GAS_URL.indexOf('PASTE_')>=0){ show('sc-done'); return; }
+        alert('제출 실패: 인터넷 연결을 확인하고 잠시 후 다시 시도해 주세요.');
+        btn.disabled=false; btn.textContent='제출하기';
+      });
   });
   document.getElementById('cBackBtn').addEventListener('click',function(){ show('sc-q'); });
   document.getElementById('doneRestartBtn').addEventListener('click',function(){ location.reload(); });
