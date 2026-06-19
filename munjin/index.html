@@ -41,6 +41,11 @@
   .rrn-row{ display:flex; align-items:center; gap:7px; }
   .rrn-row input{ flex:1 1 0; width:auto; min-width:0; }
   .rrn-row span{ color:var(--faint); flex:none; }
+  .phone-row{ display:flex; align-items:center; gap:6px; }
+  .phone-row input{ width:auto; min-width:0; text-align:center; }
+  .phone-row #phone1{ flex:0 0 70px; }
+  .phone-row #phone2, .phone-row #phone3{ flex:1; }
+  .phone-row span{ color:var(--faint); flex:none; }
 
   .addr-btn{ flex:none; padding:0 16px; border:1px solid var(--primary); background:var(--primary);
     color:#fff; border-radius:6px; font-family:inherit; font-size:14px; cursor:pointer; }
@@ -236,7 +241,13 @@
       </div>
       <div class="row" style="margin-top:12px">
         <div class="fld"><label class="req">연락처</label>
-          <input type="tel" id="phone" inputmode="numeric" placeholder="010-0000-0000" autocomplete="off"></div>
+          <div class="phone-row">
+            <input type="tel" id="phone1" inputmode="numeric" maxlength="3" value="010" oninput="phoneAutoNext(this,'phone2',3)">
+            <span>-</span>
+            <input type="tel" id="phone2" inputmode="numeric" maxlength="4" placeholder="0000" oninput="phoneAutoNext(this,'phone3',4)">
+            <span>-</span>
+            <input type="tel" id="phone3" inputmode="numeric" maxlength="4" placeholder="0000">
+          </div></div>
         <div class="fld"><label id="emailLabel">이메일 <span style="font-weight:400;color:var(--faint)">(이메일 수령 시 필수)</span></label>
           <input type="text" id="email" inputmode="email" placeholder="example@email.com" autocomplete="off"></div>
       </div>
@@ -580,6 +591,10 @@
 
 <script>
 // 주소 검색 (Daum 우편번호) — embed 방식, 전역 (onclick 참조)
+// 전화번호 칸 자동 다음이동 — 전역(oninput 참조)
+function phoneAutoNext(el, nextId, maxLen){
+  if(el.value.length >= maxLen){ var n=document.getElementById(nextId); if(n) n.focus(); }
+}
 function searchAddress(){
   if(typeof daum==='undefined' || !daum.Postcode){
     alert('주소 검색 서비스를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.'); return;
@@ -686,7 +701,9 @@ function closePostcode(){
     var recv=document.querySelector('#recv input:checked');
     return {
       name:document.getElementById('name').value.trim(),
-      phone:document.getElementById('phone').value.trim(),
+      phone:(document.getElementById('phone1').value.trim()
+            +document.getElementById('phone2').value.trim()
+            +document.getElementById('phone3').value.trim()),
       email:document.getElementById('email').value.trim(),
       addr:document.getElementById('addr').value.trim(),
       addrDetail:document.getElementById('addrDetail').value.trim(),
@@ -715,7 +732,8 @@ function closePostcode(){
     mark('name', !info.name); if(!info.name) miss.push('성명');
     var rrnBad = !state.profile || state.profile.bad;
     mark('rrn1', rrnBad); mark('rrn2', rrnBad); if(rrnBad) miss.push('주민등록번호');
-    mark('phone', !info.phone); if(!info.phone) miss.push('연락처');
+    var phoneOk = info.phone.replace(/[^0-9]/g,'').length >= 10;
+    mark('phone2', !phoneOk); mark('phone3', !phoneOk); if(!phoneOk) miss.push('연락처');
     if(!info.recv) miss.push('결과지 수령 방법');
     var addrReq = (info.recv==='우편');          // 주소는 우편 수령 시에만 필수
     mark('addr', addrReq && !info.addr); if(addrReq && !info.addr) miss.push('주소(우편 수령)');
@@ -1356,7 +1374,7 @@ function closePostcode(){
       document.getElementById('rrn1').value=d.slice(0,6);
       document.getElementById('rrn2').value=d.slice(6,13)||'1000000';
       document.getElementById('name').value='테스트환자';
-      document.getElementById('phone').value='01012345678';
+      document.getElementById('phone2').value='1234'; document.getElementById('phone3').value='5678';
       document.getElementById('email').value='test@test.com';
       document.getElementById('addr').value='서울특별시 노원구 동일로192길 74';
       document.getElementById('addrDetail').value='201호';
