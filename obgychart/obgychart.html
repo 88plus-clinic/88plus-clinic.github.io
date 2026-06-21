@@ -795,9 +795,9 @@ function submitForm(){
 
   var localBody = JSON.stringify(data);
   var gasData = JSON.parse(localBody);
-  gasData.rrn_back = '';            // 구글엔 주민번호 뒤7 미전송
-  delete gasData.signature;        // 서명 이미지도 구글엔 미전송(로컬에만 보관)
-  delete gasData.k;
+  // 구글엔 주민번호 뒷자리 첫1자리(성별)까지만 — 나머지 6자리는 마스킹 (예: 870216-1******)
+  gasData.rrn_back = data.rrn_back ? (data.rrn_back.charAt(0) + '******') : '';
+  delete gasData.k;               // 서명은 구글 동의서 PDF에 포함되도록 그대로 전송
   var gasBody = JSON.stringify(gasData);
 
   function post(u, b){ return fetch(u, {method:'POST', headers:{'Content-Type':'text/plain'}, body:b, mode:'no-cors'}); }
