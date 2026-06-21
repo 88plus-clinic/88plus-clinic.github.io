@@ -752,7 +752,8 @@ function submitForm(){
   var cvals=function(n){ return [].map.call(document.querySelectorAll('input[name="'+n+'"]:checked'),function(x){return x.value;}).join(', '); };
 
   var data = {
-    submitted_at: new Date().toISOString(),
+    k: 'nhc-88plus-3f7a9c',                 // 접수서버(5055) 봇 차단 키
+    submitted_at: new Date().toISOString(),  // 중복방지 키(로컬·버퍼 공통)
     lang: LANG,
     name: v('name'), rrn_front: v('rrn1'), rrn_back: v('rrn2'),
     phone: v('phone1')+v('phone2')+v('phone3'),
@@ -780,20 +781,40 @@ function submitForm(){
     signature: sigDrawn ? document.getElementById('sigCanvas').toDataURL('image/png') : ''
   };
 
-  var API = 'https://script.google.com/macros/s/AKfycbxUVBCaJN5HtyO0ru8algX_fqRRtIBpgx8H_WNXhh4PS4Cq42dUsE_4vdJe5wQ6JGM/exec';
+  // ── 전송 경로 (로컬-우선 + 구글 버퍼) ──
+  // ① 로컬 접수서버(주 저장소): 병원 PC가 켜져 있으면 즉시 하드에 저장 + 동의서/초진 PDF 생성.
+  var FUNNEL_URL = (location.hostname==='localhost'||location.hostname==='127.0.0.1')
+    ? 'http://127.0.0.1:5055/obgychart/submit'
+    : 'https://doctor1.tail375e60.ts.net/obgychart/submit';
+  // ② 구글 버퍼(유실방지): PC가 꺼져 있어도 받아두고 켜지면 폴러가 회수.
+  //    ★ 주민등록번호 뒤7자리는 구글에 보내지 않는다(누출 위험 차단). 앞6(생년월일)만.
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbxUVBCaJN5HtyO0ru8algX_fqRRtIBpgx8H_WNXhh4PS4Cq42dUsE_4vdJe5wQ6JGM/exec';
+
   var btn = document.getElementById('btnS');
   btn.disabled = true; btn.textContent = T('btnSaving');
 
-  fetch(API, {method:'POST', headers:{'Content-Type':'text/plain'}, body:JSON.stringify(data), mode:'no-cors'})
-    .then(function(){
-      document.querySelector('.prog-wrap').style.display='none';
-      document.querySelectorAll('.step-panel').forEach(function(p){ p.style.display='none'; });
-      document.getElementById('fnav').style.display='none';
-      document.getElementById('doneScreen').style.display='block';
-      window.scrollTo({top:0,behavior:'smooth'});
-    })
+  var localBody = JSON.stringify(data);
+  var gasData = JSON.parse(localBody);
+  gasData.rrn_back = '';            // 구글엔 주민번호 뒤7 미전송
+  delete gasData.signature;        // 서명 이미지도 구글엔 미전송(로컬에만 보관)
+  delete gasData.k;
+  var gasBody = JSON.stringify(gasData);
+
+  function post(u, b){ return fetch(u, {method:'POST', headers:{'Content-Type':'text/plain'}, body:b, mode:'no-cors'}); }
+  function done(){
+    document.querySelector('.prog-wrap').style.display='none';
+    document.querySelectorAll('.step-panel').forEach(function(p){ p.style.display='none'; });
+    document.getElementById('fnav').style.display='none';
+    document.getElementById('doneScreen').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // 로컬은 즉시 시도(반영 빠름). 완료 판정은 구글 버퍼 성공 기준(유실방지 1순위).
+  post(FUNNEL_URL, localBody).catch(function(){});
+  post(GAS_URL, gasBody)
+    .then(done)
     .catch(function(err){
-      alert(T('fail')+'\n'+err.message);
+      alert(T('fail')+'\n'+(err&&err.message?err.message:''));
       btn.disabled=false; btn.textContent=T('btnSubmit');
     });
 }
