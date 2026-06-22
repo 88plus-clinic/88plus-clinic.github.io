@@ -217,26 +217,26 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     <div class="s-head">
       <div class="lbl">Step 2 / 4</div>
       <h2 data-ko="기본 예진" data-en="Medical History" data-ru="Медицинский анамнез">기본 예진</h2>
-      <p data-ko="모르시는 항목은 비워두셔도 됩니다." data-en="You may leave unknown items blank." data-ru="Неизвестные пункты можно оставить пустыми.">모르시는 항목은 비워두셔도 됩니다.</p>
+      <p data-ko="아래 항목을 모두 입력해주세요." data-en="Please complete all items below." data-ru="Пожалуйста, заполните все пункты ниже.">아래 항목을 모두 입력해주세요.</p>
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="마지막 생리 시작일 (LMP)" data-en="Last Menstrual Period (LMP)" data-ru="Первый день последней менструации (LMP)">마지막 생리 시작일 (LMP)</div>
+      <div class="ft"><span data-ko="마지막 생리 시작일 (LMP)" data-en="Last Menstrual Period (LMP)" data-ru="Первый день последней менструации (LMP)">마지막 생리 시작일 (LMP)</span> <span class="req">*</span></div>
       <input class="inp" id="lmp" type="date" style="max-width:200px">
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="생리 주기" data-en="Menstrual Cycle" data-ru="Менструальный цикл">생리 주기</div>
+      <div class="ft"><span data-ko="생리 주기" data-en="Menstrual Cycle" data-ru="Менструальный цикл">생리 주기</span> <span class="req">*</span></div>
       <div class="rg" id="rg-cycle">
         <label class="rl"><input type="radio" name="cycle" value="규칙적" data-sub="sub-cycle" data-hide="sub-cycle-irr"><div class="dot"></div><span data-ko="규칙적" data-en="Regular" data-ru="Регулярный">규칙적</span></label>
         <label class="rl"><input type="radio" name="cycle" value="불규칙적" data-sub="sub-cycle-irr" data-hide="sub-cycle"><div class="dot"></div><span data-ko="불규칙적" data-en="Irregular" data-ru="Нерегулярный">불규칙적</span></label>
       </div>
       <div class="sub" id="sub-cycle">
-        <div class="ft" data-ko="주기 (일)" data-en="Cycle length (days)" data-ru="Длина цикла (дней)">주기 (일)</div>
+        <div class="ft"><span data-ko="주기 (일)" data-en="Cycle length (days)" data-ru="Длина цикла (дней)">주기 (일)</span> <span class="req">*</span></div>
         <input class="inp" id="cycleDays" type="number" min="14" max="60" placeholder="예: 28" data-ko-ph="예: 28" data-en-ph="e.g. 28" data-ru-ph="напр. 28" style="max-width:110px">
       </div>
       <div class="sub" id="sub-cycle-irr">
-        <div class="ft" data-ko="주기 범위 (대략)" data-en="Cycle range (approx.)" data-ru="Диапазон цикла (примерно)">주기 범위 (대략)</div>
+        <div class="ft"><span data-ko="주기 범위 (대략)" data-en="Cycle range (approx.)" data-ru="Диапазон цикла (примерно)">주기 범위 (대략)</span> <span class="req">*</span></div>
         <div class="irow" style="gap:7px;flex-wrap:wrap">
           <span style="font-size:15px;color:var(--sub)" data-ko="최소" data-en="Min" data-ru="Мин.">최소</span>
           <input class="inp" id="cycleMinWeeks" type="number" min="1" max="52" placeholder="예: 2" data-ko-ph="예: 2" data-en-ph="e.g. 2" data-ru-ph="напр. 2" style="max-width:80px">
@@ -261,15 +261,15 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="출산 여부" data-en="Childbirth History" data-ru="Роды в анамнезе">출산 여부</div>
+      <div class="ft"><span data-ko="출산 여부" data-en="Childbirth History" data-ru="Роды в анамнезе">출산 여부</span> <span class="req">*</span></div>
       <div class="rg" id="rg-delivery">
         <label class="rl"><input type="radio" name="delivery" value="무" data-hide="sub-delivery"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
         <label class="rl"><input type="radio" name="delivery" value="유" data-sub="sub-delivery"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
       </div>
       <div class="sub" id="sub-delivery">
-        <div class="ft" data-ko="출산 횟수" data-en="Number of births" data-ru="Количество родов">출산 횟수</div>
+        <div class="ft"><span data-ko="출산 횟수" data-en="Number of births" data-ru="Количество родов">출산 횟수</span> <span class="req">*</span></div>
         <input class="inp" id="deliveryCnt" type="number" min="1" placeholder="명" data-ko-ph="명" data-en-ph="count" data-ru-ph="кол-во" style="max-width:100px;margin-bottom:10px">
-        <div class="ft" data-ko="분만 방법" data-en="Delivery method" data-ru="Способ родоразрешения">분만 방법</div>
+        <div class="ft"><span data-ko="분만 방법" data-en="Delivery method" data-ru="Способ родоразрешения">분만 방법</span> <span class="req">*</span></div>
         <div class="cg" id="cg-deliveryType">
           <label class="cl"><input type="checkbox" name="deliveryType" value="자연분만"><div class="dot"></div><span data-ko="자연분만" data-en="Vaginal" data-ru="Естественные роды">자연분만</span></label>
           <label class="cl"><input type="checkbox" name="deliveryType" value="제왕절개"><div class="dot"></div><span data-ko="제왕절개" data-en="Cesarean" data-ru="Кесарево сечение">제왕절개</span></label>
@@ -278,15 +278,15 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="유산 여부" data-en="Miscarriage / Abortion" data-ru="Выкидыш / аборт">유산 여부</div>
+      <div class="ft"><span data-ko="유산 여부" data-en="Miscarriage / Abortion" data-ru="Выкидыш / аборт">유산 여부</span> <span class="req">*</span></div>
       <div class="rg" id="rg-abortion">
         <label class="rl"><input type="radio" name="abortion" value="무" data-hide="sub-abortion"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
         <label class="rl"><input type="radio" name="abortion" value="유" data-sub="sub-abortion"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
       </div>
       <div class="sub" id="sub-abortion">
-        <div class="ft" data-ko="횟수" data-en="Count" data-ru="Количество">횟수</div>
+        <div class="ft"><span data-ko="횟수" data-en="Count" data-ru="Количество">횟수</span> <span class="req">*</span></div>
         <input class="inp" id="abortionCnt" type="number" min="1" placeholder="회" data-ko-ph="회" data-en-ph="times" data-ru-ph="раз" style="max-width:100px;margin-bottom:10px">
-        <div class="ft" data-ko="종류" data-en="Type" data-ru="Тип">종류</div>
+        <div class="ft"><span data-ko="종류" data-en="Type" data-ru="Тип">종류</span> <span class="req">*</span></div>
         <div class="cg" id="cg-abortionType">
           <label class="cl"><input type="checkbox" name="abortionType" value="자연유산"><div class="dot"></div><span data-ko="자연유산" data-en="Miscarriage" data-ru="Самопроизвольный (выкидыш)">자연유산</span></label>
           <label class="cl"><input type="checkbox" name="abortionType" value="인공유산"><div class="dot"></div><span data-ko="인공유산" data-en="Induced" data-ru="Искусственный (аборт)">인공유산</span></label>
@@ -304,20 +304,20 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="자궁경부암(HPV) 백신" data-en="Cervical Cancer (HPV) Vaccine" data-ru="Вакцина от рака шейки матки (ВПЧ)">자궁경부암(HPV) 백신</div>
+      <div class="ft"><span data-ko="자궁경부암(HPV) 백신" data-en="Cervical Cancer (HPV) Vaccine" data-ru="Вакцина от рака шейки матки (ВПЧ)">자궁경부암(HPV) 백신</span> <span class="req">*</span></div>
       <div class="rg" id="rg-hpv">
         <label class="rl"><input type="radio" name="hpv" value="무" data-hide="sub-hpv"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
         <label class="rl"><input type="radio" name="hpv" value="유" data-sub="sub-hpv"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
       </div>
       <div class="sub" id="sub-hpv">
-        <div class="ft" data-ko="백신 종류" data-en="Vaccine type" data-ru="Тип вакцины">백신 종류</div>
+        <div class="ft"><span data-ko="백신 종류" data-en="Vaccine type" data-ru="Тип вакцины">백신 종류</span> <span class="req">*</span></div>
         <div class="rg" id="rg-hpvType" style="margin-bottom:9px">
           <label class="rl"><input type="radio" name="hpvType" value="가다실4"><div class="dot"></div><span data-ko="가다실4" data-en="Gardasil 4" data-ru="Гардасил 4">가다실4</span></label>
           <label class="rl"><input type="radio" name="hpvType" value="가다실9"><div class="dot"></div><span data-ko="가다실9" data-en="Gardasil 9" data-ru="Гардасил 9">가다실9</span></label>
           <label class="rl"><input type="radio" name="hpvType" value="서바릭스"><div class="dot"></div><span data-ko="서바릭스" data-en="Cervarix" data-ru="Церварикс">서바릭스</span></label>
           <label class="rl"><input type="radio" name="hpvType" value="모름"><div class="dot"></div><span data-ko="모름" data-en="Unknown" data-ru="Не знаю">모름</span></label>
         </div>
-        <div class="ft" data-ko="접종 차수" data-en="Doses received" data-ru="Количество доз">접종 차수</div>
+        <div class="ft"><span data-ko="접종 차수" data-en="Doses received" data-ru="Количество доз">접종 차수</span> <span class="req">*</span></div>
         <div class="rg" id="rg-hpvDose">
           <label class="rl"><input type="radio" name="hpvDose" value="1차"><div class="dot"></div><span data-ko="1차" data-en="1st" data-ru="1 доза">1차</span></label>
           <label class="rl"><input type="radio" name="hpvDose" value="2차"><div class="dot"></div><span data-ko="2차" data-en="2nd" data-ru="2 дозы">2차</span></label>
@@ -327,7 +327,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="마지막 자궁경부암 검사" data-en="Last Pap Smear" data-ru="Последний ПАП-тест (мазок)">마지막 자궁경부암 검사</div>
+      <div class="ft"><span data-ko="마지막 자궁경부암 검사" data-en="Last Pap Smear" data-ru="Последний ПАП-тест (мазок)">마지막 자궁경부암 검사</span> <span class="req">*</span></div>
       <div class="rg" id="rg-pap">
         <label class="rl"><input type="radio" name="pap" value="무" data-hide="sub-pap"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
         <label class="rl"><input type="radio" name="pap" value="유" data-sub="sub-pap"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
@@ -342,7 +342,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="약물 알러지" data-en="Drug Allergy" data-ru="Лекарственная аллергия">약물 알러지</div>
+      <div class="ft"><span data-ko="약물 알러지" data-en="Drug Allergy" data-ru="Лекарственная аллергия">약물 알러지</span> <span class="req">*</span></div>
       <div class="rg" id="rg-allergy">
         <label class="rl"><input type="radio" name="allergy" value="무" data-hide="sub-allergy"><div class="dot"></div><span data-ko="무" data-en="No" data-ru="Нет">무</span></label>
         <label class="rl"><input type="radio" name="allergy" value="유" data-sub="sub-allergy"><div class="dot"></div><span data-ko="유" data-en="Yes" data-ru="Да">유</span></label>
@@ -350,11 +350,11 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
       <div class="sub" id="sub-allergy">
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <div style="flex:1;min-width:130px">
-            <div class="ft" data-ko="약물 종류" data-en="Drug name" data-ru="Название препарата">약물 종류</div>
+            <div class="ft"><span data-ko="약물 종류" data-en="Drug name" data-ru="Название препарата">약물 종류</span> <span class="req">*</span></div>
             <input class="inp" id="allergyDrug" type="text" placeholder="예: 페니실린" data-ko-ph="예: 페니실린" data-en-ph="e.g. Penicillin" data-ru-ph="напр. пенициллин">
           </div>
           <div style="flex:1;min-width:130px">
-            <div class="ft" data-ko="증상" data-en="Reaction" data-ru="Реакция">증상</div>
+            <div class="ft"><span data-ko="증상" data-en="Reaction" data-ru="Реакция">증상</span> <span class="req">*</span></div>
             <input class="inp" id="allergySymptom" type="text" placeholder="예: 두드러기" data-ko-ph="예: 두드러기" data-en-ph="e.g. Hives" data-ru-ph="напр. крапивница">
           </div>
         </div>
@@ -362,7 +362,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="현재 복용 약물" data-en="Current Medications" data-ru="Текущие лекарства">현재 복용 약물</div>
+      <div class="ft"><span data-ko="현재 복용 약물" data-en="Current Medications" data-ru="Текущие лекарства">현재 복용 약물</span> <span class="req">*</span></div>
       <div class="rg" id="rg-meds">
         <label class="rl"><input type="radio" name="meds" value="없음" data-hide="sub-meds"><div class="dot"></div><span data-ko="없음" data-en="None" data-ru="Нет">없음</span></label>
         <label class="rl"><input type="radio" name="meds" value="있음" data-sub="sub-meds"><div class="dot"></div><span data-ko="있음" data-en="Yes" data-ru="Есть">있음</span></label>
@@ -373,7 +373,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="과거 및 현 병력" data-en="Past / Current Medical History" data-ru="Перенесённые и текущие заболевания">과거 및 현 병력</div>
+      <div class="ft"><span data-ko="과거 및 현 병력" data-en="Past / Current Medical History" data-ru="Перенесённые и текущие заболевания">과거 및 현 병력</span> <span class="req">*</span></div>
       <div class="rg" id="rg-pmhx">
         <label class="rl"><input type="radio" name="pmhx" value="없음" data-hide="sub-pmhx"><div class="dot"></div><span data-ko="없음" data-en="None" data-ru="Нет">없음</span></label>
         <label class="rl"><input type="radio" name="pmhx" value="있음" data-sub="sub-pmhx"><div class="dot"></div><span data-ko="있음" data-en="Yes" data-ru="Есть">있음</span></label>
@@ -392,7 +392,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="수술력" data-en="Surgical History" data-ru="Перенесённые операции">수술력</div>
+      <div class="ft"><span data-ko="수술력" data-en="Surgical History" data-ru="Перенесённые операции">수술력</span> <span class="req">*</span></div>
       <div class="rg" id="rg-surg">
         <label class="rl"><input type="radio" name="surg" value="없음" data-hide="sub-surg"><div class="dot"></div><span data-ko="없음" data-en="None" data-ru="Нет">없음</span></label>
         <label class="rl"><input type="radio" name="surg" value="있음" data-sub="sub-surg"><div class="dot"></div><span data-ko="있음" data-en="Yes" data-ru="Есть">있음</span></label>
@@ -589,6 +589,30 @@ var ALERTS = {
   marital: {ko:'결혼 여부를 선택해주세요.', en:'Please select your marital status.', ru:'Выберите семейное положение.'},
   address: {ko:'주소를 입력해주세요. (주소 검색 버튼)', en:'Please enter your address (use the search button).', ru:'Укажите адрес (кнопка поиска).'},
   sex: {ko:'성경험 여부를 선택해주세요.', en:'Please select your sexual activity status.', ru:'Укажите, ведёте ли вы половую жизнь.'},
+  lmp: {ko:'마지막 생리 시작일(LMP)을 입력해주세요.', en:'Please enter your last menstrual period (LMP).', ru:'Укажите дату последней менструации (LMP).'},
+  cycle: {ko:'생리 주기를 선택해주세요.', en:'Please select your menstrual cycle.', ru:'Выберите тип менструального цикла.'},
+  cycleDays: {ko:'생리 주기(일)를 입력해주세요.', en:'Please enter your cycle length in days.', ru:'Укажите длину цикла в днях.'},
+  cycleRange: {ko:'생리 주기 범위(최소·최대)를 입력해주세요.', en:'Please enter your cycle range (min and max).', ru:'Укажите диапазон цикла (мин. и макс.).'},
+  delivery: {ko:'출산 여부를 선택해주세요.', en:'Please select your childbirth history.', ru:'Укажите наличие родов в анамнезе.'},
+  deliveryCnt: {ko:'출산 횟수를 입력해주세요.', en:'Please enter the number of births.', ru:'Укажите количество родов.'},
+  deliveryType: {ko:'분만 방법을 선택해주세요.', en:'Please select the delivery method.', ru:'Выберите способ родоразрешения.'},
+  abortion: {ko:'유산 여부를 선택해주세요.', en:'Please select your miscarriage/abortion history.', ru:'Укажите наличие выкидыша/аборта.'},
+  abortionCnt: {ko:'유산 횟수를 입력해주세요.', en:'Please enter the number of times.', ru:'Укажите количество.'},
+  abortionType: {ko:'유산 종류를 선택해주세요.', en:'Please select the type.', ru:'Выберите тип.'},
+  hpv: {ko:'자궁경부암(HPV) 백신 접종 여부를 선택해주세요.', en:'Please select your HPV vaccination status.', ru:'Укажите статус вакцинации от ВПЧ.'},
+  hpvType: {ko:'백신 종류를 선택해주세요.', en:'Please select the vaccine type.', ru:'Выберите тип вакцины.'},
+  hpvDose: {ko:'접종 차수를 선택해주세요.', en:'Please select the doses received.', ru:'Выберите количество доз.'},
+  pap: {ko:'마지막 자궁경부암 검사 여부를 선택해주세요.', en:'Please select your last Pap smear status.', ru:'Укажите данные о последнем ПАП-тесте.'},
+  papMonths: {ko:'마지막 검사 시점(개월 전)을 입력해주세요.', en:'Please enter how many months ago.', ru:'Укажите, сколько месяцев назад.'},
+  allergy: {ko:'약물 알러지 여부를 선택해주세요.', en:'Please select your drug allergy status.', ru:'Укажите наличие лекарственной аллергии.'},
+  allergyDrug: {ko:'알러지 약물 종류를 입력해주세요.', en:'Please enter the drug name.', ru:'Укажите название препарата.'},
+  allergySymptom: {ko:'알러지 증상을 입력해주세요.', en:'Please enter the reaction.', ru:'Укажите реакцию.'},
+  meds: {ko:'현재 복용 약물 여부를 선택해주세요.', en:'Please select your current medication status.', ru:'Укажите, принимаете ли вы лекарства.'},
+  medsText: {ko:'복용 중인 약물명을 입력해주세요.', en:'Please enter your medication names.', ru:'Укажите названия лекарств.'},
+  pmhx: {ko:'과거 및 현 병력을 선택해주세요.', en:'Please select your medical history.', ru:'Укажите медицинский анамнез.'},
+  pmhxDetail: {ko:'병력 종류를 선택하거나 직접 입력해주세요.', en:'Please select or enter your medical history.', ru:'Выберите или укажите заболевание.'},
+  surg: {ko:'수술력을 선택해주세요.', en:'Please select your surgical history.', ru:'Укажите перенесённые операции.'},
+  surgText: {ko:'수술 종류를 입력해주세요.', en:'Please enter the type of surgery.', ru:'Укажите вид операции.'},
   symptom: {ko:'내원 목적을 하나 이상 선택해주세요.', en:'Please select at least one reason for your visit.', ru:'Выберите хотя бы одну причину визита.'},
   insurance: {ko:'접수 유형을 선택해주세요.', en:'Please select a registration type.', ru:'Выберите тип регистрации.'},
   consent: {ko:'개인정보 수집·이용에 동의해주세요.', en:'Please agree to the use of personal information.', ru:'Подтвердите согласие на обработку персональных данных.'},
@@ -732,7 +756,62 @@ function validate(n){
     if(!document.getElementById('address').value.trim()){ alert(T('address')); return false; }
     if(!document.querySelector('input[name="marital"]:checked')){ alert(T('marital')); return false; }
   }
-  if(n===2){ if(!document.querySelector('input[name="sex"]:checked')){ alert(T('sex')); return false; } }
+  if(n===2){
+    // 마지막 생리 시작일(LMP)
+    if(!document.getElementById('lmp').value){ alert(T('lmp')); return false; }
+    // 생리 주기 (+ 세부)
+    var cy = document.querySelector('input[name="cycle"]:checked');
+    if(!cy){ alert(T('cycle')); return false; }
+    if(cy.value==='규칙적' && !document.getElementById('cycleDays').value.trim()){ alert(T('cycleDays')); return false; }
+    if(cy.value==='불규칙적' && (!document.getElementById('cycleMinWeeks').value.trim() || !document.getElementById('cycleMaxMonths').value.trim())){ alert(T('cycleRange')); return false; }
+    // 성경험 여부
+    if(!document.querySelector('input[name="sex"]:checked')){ alert(T('sex')); return false; }
+    // 출산 여부 (+ 세부)
+    var dl = document.querySelector('input[name="delivery"]:checked');
+    if(!dl){ alert(T('delivery')); return false; }
+    if(dl.value==='유'){
+      if(!document.getElementById('deliveryCnt').value.trim()){ alert(T('deliveryCnt')); return false; }
+      if(!document.querySelector('input[name="deliveryType"]:checked')){ alert(T('deliveryType')); return false; }
+    }
+    // 유산 여부 (+ 세부)
+    var ab = document.querySelector('input[name="abortion"]:checked');
+    if(!ab){ alert(T('abortion')); return false; }
+    if(ab.value==='유'){
+      if(!document.getElementById('abortionCnt').value.trim()){ alert(T('abortionCnt')); return false; }
+      if(!document.querySelector('input[name="abortionType"]:checked')){ alert(T('abortionType')); return false; }
+    }
+    // 분만 예정일(해당자만) — 필수 아님
+    // 자궁경부암(HPV) 백신 (+ 세부)
+    var hv = document.querySelector('input[name="hpv"]:checked');
+    if(!hv){ alert(T('hpv')); return false; }
+    if(hv.value==='유'){
+      if(!document.querySelector('input[name="hpvType"]:checked')){ alert(T('hpvType')); return false; }
+      if(!document.querySelector('input[name="hpvDose"]:checked')){ alert(T('hpvDose')); return false; }
+    }
+    // 마지막 자궁경부암 검사 (+ 세부)
+    var pp = document.querySelector('input[name="pap"]:checked');
+    if(!pp){ alert(T('pap')); return false; }
+    if(pp.value==='유' && !document.getElementById('papMonths').value.trim()){ alert(T('papMonths')); return false; }
+    // 약물 알러지 (+ 세부)
+    var al = document.querySelector('input[name="allergy"]:checked');
+    if(!al){ alert(T('allergy')); return false; }
+    if(al.value==='유'){
+      if(!document.getElementById('allergyDrug').value.trim()){ alert(T('allergyDrug')); return false; }
+      if(!document.getElementById('allergySymptom').value.trim()){ alert(T('allergySymptom')); return false; }
+    }
+    // 현재 복용 약물 (+ 세부)
+    var md = document.querySelector('input[name="meds"]:checked');
+    if(!md){ alert(T('meds')); return false; }
+    if(md.value==='있음' && !document.getElementById('medsText').value.trim()){ alert(T('medsText')); return false; }
+    // 과거 및 현 병력 (+ 세부: 체크박스 또는 기타 직접입력)
+    var pm = document.querySelector('input[name="pmhx"]:checked');
+    if(!pm){ alert(T('pmhx')); return false; }
+    if(pm.value==='있음' && !document.querySelector('input[name="pmhxType"]:checked') && !document.getElementById('pmhxOther').value.trim()){ alert(T('pmhxDetail')); return false; }
+    // 수술력 (+ 세부)
+    var sg = document.querySelector('input[name="surg"]:checked');
+    if(!sg){ alert(T('surg')); return false; }
+    if(sg.value==='있음' && !document.getElementById('surgText').value.trim()){ alert(T('surgText')); return false; }
+  }
   if(n===3){ if(!document.querySelector('input[name="symptom"]:checked')){ alert(T('symptom')); return false; } }
   if(n===4){
     if(!document.querySelector('input[name="insurance"]:checked')){ alert(T('insurance')); return false; }
