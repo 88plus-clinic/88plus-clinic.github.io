@@ -223,6 +223,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     <div class="card">
       <div class="ft"><span data-ko="마지막 생리 시작일 (LMP)" data-en="Last Menstrual Period (LMP)" data-ru="Первый день последней менструации (LMP)">마지막 생리 시작일 (LMP)</span> <span class="req">*</span></div>
       <input class="inp" id="lmp" type="date" style="max-width:200px">
+      <label class="cl" style="margin-top:10px"><input type="checkbox" id="lmpNA" value="완경"><div class="dot"></div><span data-ko="해당없음 (완경)" data-en="N/A (Menopause)" data-ru="Не применимо (менопауза)">해당없음 (완경)</span></label>
     </div>
 
     <div class="card">
@@ -757,8 +758,8 @@ function validate(n){
     if(!document.querySelector('input[name="marital"]:checked')){ alert(T('marital')); return false; }
   }
   if(n===2){
-    // 마지막 생리 시작일(LMP)
-    if(!document.getElementById('lmp').value){ alert(T('lmp')); return false; }
+    // 마지막 생리 시작일(LMP) — '해당없음(완경)' 체크 시 날짜 면제
+    if(!document.getElementById('lmpNA').checked && !document.getElementById('lmp').value){ alert(T('lmp')); return false; }
     // 생리 주기 (+ 세부)
     var cy = document.querySelector('input[name="cycle"]:checked');
     if(!cy){ alert(T('cycle')); return false; }
@@ -824,6 +825,15 @@ document.getElementById('btnN').addEventListener('click', function(){ if(!valida
 document.getElementById('btnP').addEventListener('click', function(){ if(cur>1){ cur--; showStep(cur); } });
 document.getElementById('btnS').addEventListener('click', function(){ if(!validate(cur)) return; submitForm(); });
 
+// LMP '해당없음(완경)' — 체크 시 날짜 입력 비활성·초기화, 해제 시 복원.
+// 단독 .cl 라 initSelectable 관리 밖 → 체크 시각표시(.sel)도 직접 토글.
+document.getElementById('lmpNA').addEventListener('change', function(){
+  var d=document.getElementById('lmp');
+  this.closest('.cl').classList.toggle('sel', this.checked);
+  if(this.checked){ d.value=''; d.disabled=true; d.style.opacity='.45'; }
+  else { d.disabled=false; d.style.opacity='1'; }
+});
+
 // ── 전송 ──
 function submitForm(){
   var v=function(k){ var e=document.getElementById(k); return e?e.value:''; };
@@ -837,7 +847,7 @@ function submitForm(){
     name: v('name'), rrn_front: v('rrn1'), rrn_back: v('rrn2'),
     phone: v('phone1')+v('phone2')+v('phone3'),
     address: (v('address')+' '+v('addressDetail')).trim(),
-    marital: rval('marital'), lmp: v('lmp'),
+    marital: rval('marital'), lmp: (document.getElementById('lmpNA').checked ? '완경' : v('lmp')),
     cycle: rval('cycle'), cycle_days: v('cycleDays'),
     cycle_min_weeks: v('cycleMinWeeks'), cycle_max_months: v('cycleMaxMonths'),
     sex_exp: rval('sex'),
