@@ -142,8 +142,8 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 
 <!-- Header -->
 <div class="pg-header">
-  <div class="pg-clinic" data-ko="88플러스내과·산부인과" data-en="88 Plus Internal Medicine &amp; OB/GYN" data-ru="Клиника «88 Plus»: терапия и гинекология" data-vi="88 Plus Nội khoa · Sản phụ khoa" data-mn="88 Plus Дотрын эмнэлэг · Эх барих эмэгтэйчүүд">88플러스내과·산부인과</div>
-  <div class="pg-title" data-ko="산부인과 초진 접수" data-en="OB/GYN New Patient Registration" data-ru="Регистрация нового пациента (гинекология)" data-vi="Đăng ký khám lần đầu (Sản phụ khoa)" data-mn="Анхны үзлэгийн бүртгэл (Эмэгтэйчүүд)">산부인과 초진 접수</div>
+  <div class="pg-clinic" data-ko="88플러스내과·산부인과" data-en="88 Plus Internal Medicine &amp; OB/GYN" data-ru="Клиника «88 Plus»: терапия и гинекология" data-vi="88 Plus Nội khoa · Sản phụ khoa" data-mn="88 Plus Дотрын, эх барих эмэгтэйчүүдийн эмнэлэг">88플러스내과·산부인과</div>
+  <div class="pg-title" data-ko="산부인과 초진 접수" data-en="OB/GYN New Patient Registration" data-ru="Регистрация нового пациента (гинекология)" data-vi="Đăng ký khám lần đầu (Sản phụ khoa)" data-mn="Анхны үзлэгийн бүртгэл (Эх барих, эмэгтэйчүүд)">산부인과 초진 접수</div>
 </div>
 
 <!-- Progress -->
@@ -200,7 +200,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
         <input class="inp" id="address" type="text" placeholder="주소 검색 버튼을 눌러주세요" data-ko-ph="주소 검색 버튼을 눌러주세요" data-en-ph="Tap the search button" data-ru-ph="Нажмите кнопку поиска" data-vi-ph="Nhấn nút tìm kiếm" data-mn-ph="Хайх товчийг дарна уу" readonly style="flex:1;background:var(--bg2);cursor:pointer" onclick="searchAddress()">
         <button type="button" class="addr-btn" onclick="searchAddress()" data-ko="검색" data-en="Search" data-ru="Поиск" data-vi="Tìm" data-mn="Хайх">검색</button>
       </div>
-      <input class="inp" id="addressDetail" type="text" placeholder="상세주소 (동/호수 등)" data-ko-ph="상세주소 (동/호수 등)" data-en-ph="Detailed address (unit/floor)" data-ru-ph="Уточнение адреса (квартира/этаж)" data-vi-ph="Địa chỉ chi tiết (căn/tầng)" data-mn-ph="Дэлгэрэнгүй хаяг (тоот/давхар)">
+      <input class="inp" id="addressDetail" type="text" placeholder="상세주소 (동/호수 등)" data-ko-ph="상세주소 (동/호수 등)" data-en-ph="Detailed address (unit/floor)" data-ru-ph="Уточнение адреса (квартира/этаж)" data-vi-ph="Địa chỉ chi tiết (tòa nhà/số căn hộ)" data-mn-ph="Дэлгэрэнгүй хаяг (тоот/давхар)">
     </div>
 
     <div class="card">
@@ -298,7 +298,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <div class="ft" data-ko="분만 예정일 (해당자만)" data-en="Expected Due Date (if applicable)" data-ru="Предполагаемая дата родов (если применимо)" data-vi="Ngày dự sinh (nếu có)" data-mn="Төрөх урьдчилсан хугацаа (хамааралтай бол)">분만 예정일 (해당자만)</div>
+      <div class="ft" data-ko="분만 예정일 (해당자만)" data-en="Expected Due Date (if applicable)" data-ru="Предполагаемая дата родов (если применимо)" data-vi="Ngày dự sinh (nếu có)" data-mn="Төрөхөөр тооцоолсон огноо (хамааралтай бол)">분만 예정일 (해당자만)</div>
       <input class="inp" id="edd" type="date" style="max-width:200px;margin-bottom:9px">
       <div class="rg" id="rg-fetus">
         <label class="rl"><input type="radio" name="fetus" value="단태아"><div class="dot"></div><span data-ko="단태아" data-en="Singleton" data-ru="Один плод" data-vi="Đơn thai" data-mn="Ганц ураг">단태아</span></label>
@@ -324,7 +324,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
         <div class="rg" id="rg-hpvDose">
           <label class="rl"><input type="radio" name="hpvDose" value="1차"><div class="dot"></div><span data-ko="1차" data-en="1st" data-ru="1 доза" data-vi="Mũi 1" data-mn="1-р тун">1차</span></label>
           <label class="rl"><input type="radio" name="hpvDose" value="2차"><div class="dot"></div><span data-ko="2차" data-en="2nd" data-ru="2 дозы" data-vi="Mũi 2" data-mn="2-р тун">2차</span></label>
-          <label class="rl"><input type="radio" name="hpvDose" value="3차 완료"><div class="dot"></div><span data-ko="3차 완료" data-en="3rd (complete)" data-ru="3 дозы (полный курс)" data-vi="Đủ 3 mũi" data-mn="3 тун бүрэн">3차 완료</span></label>
+          <label class="rl"><input type="radio" name="hpvDose" value="3차 완료"><div class="dot"></div><span data-ko="3차 완료" data-en="3rd (complete)" data-ru="3 дозы (полный курс)" data-vi="Đủ 3 mũi" data-mn="3-р тун (гүйцээсэн)">3차 완료</span></label>
         </div>
       </div>
     </div>
@@ -358,7 +358,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
           </div>
           <div style="flex:1;min-width:130px">
             <div class="ft"><span data-ko="증상" data-en="Reaction" data-ru="Реакция" data-vi="Triệu chứng" data-mn="Шинж тэмдэг">증상</span> <span class="req">*</span></div>
-            <input class="inp" id="allergySymptom" type="text" placeholder="예: 두드러기" data-ko-ph="예: 두드러기" data-en-ph="e.g. Hives" data-ru-ph="напр. крапивница" data-vi-ph="vd: Nổi mề đay" data-mn-ph="жишээ: загатнаат тууралт">
+            <input class="inp" id="allergySymptom" type="text" placeholder="예: 두드러기" data-ko-ph="예: 두드러기" data-en-ph="e.g. Hives" data-ru-ph="напр. крапивница" data-vi-ph="vd: Nổi mề đay" data-mn-ph="жишээ: чонон хорхой">
           </div>
         </div>
       </div>
@@ -447,10 +447,10 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
         <label class="cl sym-full" id="menCheck"><input type="checkbox" name="symptom" value="생리관련"><div class="dot"></div><span data-ko="생리 관련" data-en="Menstrual issues" data-ru="Проблемы с менструацией" data-vi="Vấn đề kinh nguyệt" data-mn="Сарын тэмдгийн асуудал">생리 관련</span></label>
         <div class="sub" id="sub-men">
           <div class="cg" id="cg-menSub">
-            <label class="cl"><input type="checkbox" name="menSub" value="무월경"><div class="dot"></div><span data-ko="무월경" data-en="Amenorrhea" data-ru="Отсутствие менструации" data-vi="Vô kinh" data-mn="Сарын тэмдэг үгүй">무월경</span></label>
+            <label class="cl"><input type="checkbox" name="menSub" value="무월경"><div class="dot"></div><span data-ko="무월경" data-en="Amenorrhea" data-ru="Отсутствие менструации" data-vi="Vô kinh" data-mn="Сарын тэмдэг ирэхгүй">무월경</span></label>
             <label class="cl"><input type="checkbox" name="menSub" value="생리통"><div class="dot"></div><span data-ko="생리통" data-en="Cramps" data-ru="Менструальная боль" data-vi="Đau bụng kinh" data-mn="Сарын тэмдгийн өвдөлт">생리통</span></label>
             <label class="cl"><input type="checkbox" name="menSub" value="주기변화"><div class="dot"></div><span data-ko="주기변화" data-en="Cycle change" data-ru="Изменение цикла" data-vi="Thay đổi chu kỳ" data-mn="Мөчлөгийн өөрчлөлт">주기변화</span></label>
-            <label class="cl"><input type="checkbox" name="menSub" value="양변화"><div class="dot"></div><span data-ko="양변화" data-en="Flow change" data-ru="Изменение объёма" data-vi="Thay đổi lượng" data-mn="Хэмжээний өөрчлөлт">양변화</span></label>
+            <label class="cl"><input type="checkbox" name="menSub" value="양변화"><div class="dot"></div><span data-ko="양변화" data-en="Flow change" data-ru="Изменение объёма" data-vi="Thay đổi lượng kinh" data-mn="Хэмжээний өөрчлөлт">양변화</span></label>
           </div>
         </div>
       </div>
@@ -458,19 +458,19 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
       <!-- 단순 증상 (2열 그리드) -->
       <div class="sym-grid" id="cg-symptom">
         <label class="cl"><input type="checkbox" name="symptom" value="질출혈"><div class="dot"></div><span data-ko="질출혈" data-en="Vaginal bleeding" data-ru="Влагалищное кровотечение" data-vi="Chảy máu âm đạo" data-mn="Үтрээний цус алдалт">질출혈</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="복통·골반통·요통"><div class="dot"></div><span data-ko="복통·골반통·요통" data-en="Abdominal/Pelvic/Back pain" data-ru="Боль в животе/тазу/пояснице" data-vi="Đau bụng/chậu/lưng" data-mn="Хэвлий·аарцаг·нурууны өвдөлт">복통·골반통·요통</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="복통·골반통·요통"><div class="dot"></div><span data-ko="복통·골반통·요통" data-en="Abdominal/Pelvic/Back pain" data-ru="Боль в животе/тазу/пояснице" data-vi="Đau bụng / vùng chậu / lưng" data-mn="Хэвлий·аарцаг·нурууны өвдөлт">복통·골반통·요통</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 검사"><div class="dot"></div><span data-ko="자궁경부암 검사" data-en="Pap smear" data-ru="ПАП-тест (мазок)" data-vi="Xét nghiệm Pap" data-mn="Умайн хүзүүний шинжилгээ (Pap)">자궁경부암 검사</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 백신"><div class="dot"></div><span data-ko="자궁경부암 백신" data-en="HPV vaccine" data-ru="Вакцина против ВПЧ" data-vi="Vắc-xin HPV" data-mn="HPV вакцин">자궁경부암 백신</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="임신 확인"><div class="dot"></div><span data-ko="임신 확인" data-en="Pregnancy test" data-ru="Тест на беременность" data-vi="Thử thai" data-mn="Жирэмслэлт шалгах">임신 확인</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="임신 확인"><div class="dot"></div><span data-ko="임신 확인" data-en="Pregnancy test" data-ru="Тест на беременность" data-vi="Thử thai" data-mn="Жирэмсэн эсэхийг шалгах">임신 확인</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="난임 상담"><div class="dot"></div><span data-ko="난임 상담" data-en="Infertility consult" data-ru="Консультация по бесплодию" data-vi="Tư vấn hiếm muộn" data-mn="Үргүйдлийн зөвлөгөө">난임 상담</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="피임 상담"><div class="dot"></div><span data-ko="피임 상담" data-en="Contraception consult" data-ru="Консультация по контрацепции" data-vi="Tư vấn tránh thai" data-mn="Жирэмслэлтээс хамгаалах зөвлөгөө">피임 상담</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="성병 검사"><div class="dot"></div><span data-ko="성병 검사" data-en="STD test" data-ru="Анализ на ИППП" data-vi="Xét nghiệm bệnh lây truyền qua đường tình dục" data-mn="БЗДХ-ын шинжилгээ">성병 검사</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="성병 검사"><div class="dot"></div><span data-ko="성병 검사" data-en="STD test" data-ru="Анализ на ИППП" data-vi="Xét nghiệm bệnh lây qua đường tình dục" data-mn="БЗДХ-ын шинжилгээ">성병 검사</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="갱년기 상담"><div class="dot"></div><span data-ko="갱년기 상담" data-en="Menopause consult" data-ru="Консультация по климаксу" data-vi="Tư vấn mãn kinh" data-mn="Цэвэршилтийн зөвлөгөө">갱년기 상담</span></label>
       </div>
 
       <!-- 임신 사전 건강관리 -->
       <div style="margin-top:5px">
-        <label class="cl sym-full" id="preconLabel"><input type="checkbox" id="preconCheck" name="symptom" value="임신사전건강관리"><div class="dot"></div><span data-ko="임신 사전 건강관리" data-en="Preconception care" data-ru="Прегравидарная подготовка" data-vi="Chăm sóc tiền thụ thai" data-mn="Жирэмслэхийн өмнөх бэлтгэл">임신 사전 건강관리</span></label>
+        <label class="cl sym-full" id="preconLabel"><input type="checkbox" id="preconCheck" name="symptom" value="임신사전건강관리"><div class="dot"></div><span data-ko="임신 사전 건강관리" data-en="Preconception care" data-ru="Прегравидарная подготовка" data-vi="Chăm sóc sức khỏe trước mang thai" data-mn="Жирэмслэхийн өмнөх бэлтгэл">임신 사전 건강관리</span></label>
       </div>
 
       <!-- 응급피임약 → 마지막 관계 시점 -->
@@ -523,7 +523,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
       <label class="ins-card" id="ins1">
         <input type="radio" name="insurance" value="보험" onclick="selIns(0)">
         <div class="ins-name"><span class="badge h" data-ko="건강보험" data-en="Insured" data-ru="Страховка" data-vi="Có bảo hiểm" data-mn="Даатгалтай">건강보험</span><span data-ko="보험 접수" data-en="Insurance registration" data-ru="Регистрация по страховке" data-vi="Đăng ký bảo hiểm" data-mn="Даатгалаар бүртгүүлэх">보험 접수</span></div>
-        <div class="ins-desc" data-ko="건강보험공단에 접수되어 일반 접수보다 진료비가 저렴합니다." data-en="Registered with NHIS; lower cost than self-pay." data-ru="Регистрация в системе ОМС (NHIS); дешевле, чем без страховки." data-vi="Đăng ký với BHYT quốc gia (NHIS); chi phí thấp hơn tự trả." data-mn="Улсын эрүүл мэндийн даатгалд (NHIS) бүртгэгдэж, төлбөр хямд.">건강보험공단에 접수되어 일반 접수보다 진료비가 저렴합니다.</div>
+        <div class="ins-desc" data-ko="건강보험공단에 접수되어 일반 접수보다 진료비가 저렴합니다." data-en="Registered with NHIS; lower cost than self-pay." data-ru="Регистрация в системе ОМС (NHIS); дешевле, чем без страховки." data-vi="Đăng ký với BHYT quốc gia (NHIS); chi phí thấp hơn tự trả." data-mn="Улсын эрүүл мэндийн даатгалд (NHIS) бүртгэгдсэнээр энгийн (даатгалгүй) бүртгэлээс төлбөр хямд.">건강보험공단에 접수되어 일반 접수보다 진료비가 저렴합니다.</div>
       </label>
       <label class="ins-card" id="ins2">
         <input type="radio" name="insurance" value="일반" onclick="selIns(1)">
@@ -592,7 +592,7 @@ var ALERTS = {
   marital: {ko:'결혼 여부를 선택해주세요.', en:'Please select your marital status.', ru:'Выберите семейное положение.', vi:'Vui lòng chọn tình trạng hôn nhân.', mn:'Гэрлэлтийн байдлаа сонгоно уу.'},
   address: {ko:'주소를 입력해주세요. (주소 검색 버튼)', en:'Please enter your address (use the search button).', ru:'Укажите адрес (кнопка поиска).', vi:'Vui lòng nhập địa chỉ (dùng nút tìm kiếm).', mn:'Хаягаа оруулна уу (хайх товч).'},
   sex: {ko:'성경험 여부를 선택해주세요.', en:'Please select your sexual activity status.', ru:'Укажите, ведёте ли вы половую жизнь.', vi:'Vui lòng chọn tình trạng quan hệ tình dục.', mn:'Бэлгийн харьцаанд орсон эсэхээ сонгоно уу.'},
-  lmp: {ko:'마지막 생리 시작일(LMP)을 입력해주세요.', en:'Please enter your last menstrual period (LMP).', ru:'Укажите дату последней менструации (LMP).', vi:'Vui lòng nhập ngày kinh cuối (LMP).', mn:'Сүүлийн сарын тэмдгийн өдрийг (LMP) оруулна уу.'},
+  lmp: {ko:'마지막 생리 시작일(LMP)을 입력해주세요.', en:'Please enter your last menstrual period (LMP).', ru:'Укажите дату последней менструации (LMP).', vi:'Vui lòng nhập ngày kinh cuối (LMP).', mn:'Сүүлийн сарын тэмдэг эхэлсэн өдрийг (LMP) оруулна уу.'},
   cycle: {ko:'생리 주기를 선택해주세요.', en:'Please select your menstrual cycle.', ru:'Выберите тип менструального цикла.', vi:'Vui lòng chọn chu kỳ kinh nguyệt.', mn:'Сарын тэмдгийн мөчлөгөө сонгоно уу.'},
   cycleDays: {ko:'생리 주기(일)를 입력해주세요.', en:'Please enter your cycle length in days.', ru:'Укажите длину цикла в днях.', vi:'Vui lòng nhập độ dài chu kỳ (ngày).', mn:'Мөчлөгийн уртыг (өдөр) оруулна уу.'},
   cycleRange: {ko:'생리 주기 범위(최소·최대)를 입력해주세요.', en:'Please enter your cycle range (min and max).', ru:'Укажите диапазон цикла (мин. и макс.).', vi:'Vui lòng nhập khoảng chu kỳ (tối thiểu và tối đa).', mn:'Мөчлөгийн хязгаарыг (бага ба их) оруулна уу.'},
