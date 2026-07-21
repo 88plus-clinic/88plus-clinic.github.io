@@ -627,6 +627,11 @@ ol,ul{ margin:0; padding:0; list-style:none; }
   background-position:center 47%;
 }
 .sub-hero-bg[data-img="obgy"]{   background-image:url(../img/obgy.jpg);   background-position:45% 30%; }
+/* 접수 로비 — 비급여 안내·오시는길. 왼쪽 벽면이 비어 있어 글자와 겹치지 않고,
+   오른쪽 로고 사인이 살아 있는 지점으로 잡는다(띠라서 세로는 일부만 보인다). */
+.sub-hero-bg[data-img="reception"]{
+  background-image:url(../img/reception.jpg); background-position:center 58%;
+}
 
 /* ── 진료항목 아코디언 (클릭 시 설명 펼침) ────────── */
 .item{ padding:0; }                      /* 내부 버튼이 패딩을 가짐 */
@@ -1240,3 +1245,108 @@ ol,ul{ margin:0; padding:0; list-style:none; }
   border:1px solid var(--line,#e6e3da); border-radius:10px; cursor:pointer;
 }
 .soon-close:hover{ background:rgba(28,28,26,.04); }
+
+/* ── 검사 안내 허브(카드 목록) — checkup/exam-guide.html ─────
+   검사별 페이지로 나누면서(2026-07-22) 한 장짜리 목차가 카드로 바뀌었다. */
+.egc-wrap{ padding:clamp(40px,5vw,64px) 40px clamp(70px,8vw,110px); }
+.egc-in{ max-width:1040px; margin:0 auto; }
+.egc-guide{ display:block; margin-bottom:clamp(30px,3.6vw,46px); }
+.egc-gl{
+  margin:clamp(30px,3.4vw,44px) 0 16px; font-size:12px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+}
+.egc-gl:first-of-type{ margin-top:0; }
+.egc-grid{
+  display:grid; gap:10px;
+  grid-template-columns:repeat(auto-fill, minmax(228px, 1fr));
+}
+.egc{
+  position:relative; display:flex; flex-direction:column; gap:3px;
+  padding:16px 40px 16px 20px; background:#fff;
+  border:1px solid var(--line); border-radius:12px;
+  transition:border-color .2s var(--ease), background .2s var(--ease),
+             box-shadow .2s var(--ease);
+}
+.egc::after{
+  content:'→'; position:absolute; right:18px; top:50%; transform:translateY(-50%);
+  font-size:15px; color:var(--muted); transition:color .2s, transform .2s var(--ease);
+}
+.egc:hover{ border-color:var(--olive); box-shadow:0 6px 18px rgba(28,28,26,.06); }
+.egc:hover::after{ color:var(--olive-dk); transform:translateY(-50%) translateX(3px); }
+.egc-en{
+  font-size:10px; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted);
+}
+.egc:hover .egc-en{ color:var(--olive); }
+.egc-h{ font-size:16.5px; font-weight:700; color:var(--ink); letter-spacing:-.01em; }
+
+/* 대장내시경 준비 일정 요약 */
+.eg-prep{
+  margin:0 0 clamp(24px,3vw,34px); padding:16px 18px;
+  background:var(--cream-dp); border-left:3px solid var(--olive);
+  border-radius:0 10px 10px 0; font-size:14.5px; line-height:1.75; color:var(--body);
+}
+.eg-prep b{ color:var(--ink); margin-right:6px; }
+
+/* 비교표 3열 이상 — 첫 열 36% 고정이 남은 열을 짓눌러 글자가 잘게 접혔다.
+   (장정결제 3종 비교표에서 확인, 2026-07-22)
+   열 수는 :has() 로 판별한다. 좁은 화면에서는 .table-wrap 이 가로 스크롤을 준다. */
+.eg table.exam-table:has(thead th:nth-child(3)){ table-layout:fixed; min-width:640px; }
+.eg table.exam-table:has(thead th:nth-child(3)) td.col-name{ width:22%; }
+.eg table.exam-table:has(thead th:nth-child(4)){ min-width:760px; }
+.eg table.exam-table:has(thead th:nth-child(4)) td.col-name{ width:17%; }
+.eg table.exam-table:has(thead th:nth-child(3)) th,
+.eg table.exam-table:has(thead th:nth-child(3)) td{
+  padding:11px 12px; font-size:14.5px;
+}
+
+/* ── 맨 위로 버튼 — 퀵바 맨 아래(내 예약 밑) ─────────────────
+   main.js 가 .quick 안에 넣는다. 스크롤을 내렸을 때만 보인다. */
+.quick-top{
+  opacity:0; visibility:hidden; pointer-events:none;
+  transform:translateY(-6px);
+  transition:opacity .25s var(--ease), transform .25s var(--ease), visibility .25s;
+}
+.quick-top.on{ opacity:1; visibility:visible; pointer-events:auto; transform:none; }
+.quick-top .qi{ font-size:19px; line-height:1; margin-bottom:4px; }
+.quick-top{ cursor:pointer; }
+
+@media (max-width:768px){
+  /* 모바일 하단바는 예약 2칸이 같은 너비여야 한다(원장 지시) —
+     '맨 위로'를 그 줄에 넣으면 3칸이 되므로, 바 위에 뜨는 동그란 버튼으로 뺀다. */
+  .quick-top{
+    position:fixed; right:14px; bottom:calc(100% + 0px); bottom:76px;
+    width:46px; height:46px; padding:0; flex:none;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    border-radius:50%; background:rgba(250,249,245,.97);
+    border:1px solid var(--line); box-shadow:0 4px 14px rgba(28,28,26,.14);
+    font-size:0;                     /* 글자는 숨기고 화살표만 */
+  }
+  .quick-top .qi{ font-size:20px; margin:0; }
+}
+
+/* ── 검사 페이지 머리말 — 전폭 히어로 대신 본문 칼럼 안으로 (2026-07-22)
+   히어로가 첫 화면을 다 차지해 목차·본문이 아래로 밀렸다.
+   왼쪽 = 검사 목록, 오른쪽 = 제목부터 설명까지. */
+.eg-head{
+  padding-bottom:clamp(22px,2.6vw,30px); margin-bottom:clamp(26px,3vw,38px);
+  border-bottom:1px solid var(--line);
+}
+.eg-en{
+  font-size:11.5px; font-weight:700; color:var(--olive);
+  letter-spacing:.2em; text-transform:uppercase; margin-bottom:11px;
+}
+.eg-head h1{
+  font-size:clamp(26px,3.2vw,38px); font-weight:700; color:var(--ink);
+  letter-spacing:-.02em; line-height:1.25;
+}
+.eg-lead{
+  margin-top:14px; font-size:16px; line-height:1.8; color:var(--body);
+  word-break:keep-all; max-width:62ch;
+}
+/* 히어로가 없어졌으므로 고정 헤더에 가리지 않게 위 여백을 준다 */
+.eg-wrap{ padding-top:calc(var(--hd-h) + clamp(28px,3.4vw,48px)); }
+@media (max-width:960px){
+  /* 모바일은 헤더가 낮고 목차가 알약 줄로 바뀐다 — 위 여백을 다시 줄인다 */
+  .eg-wrap{ padding-top:calc(var(--hd-h) + 16px); }
+}

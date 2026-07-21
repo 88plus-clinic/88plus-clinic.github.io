@@ -171,3 +171,36 @@
     overlay(false);
   }
 })();
+
+
+/* ── 맨 위로 버튼 (원장 지시 2026-07-22) ──────────────────────
+   페이지마다 HTML 을 고치지 않고 퀵바(.quick) 에 끼워 넣는다 —
+   퀵바는 전 페이지에 이미 있으므로 이 파일 하나로 모든 페이지에 적용된다.
+   내려간 뒤에만 보인다(맨 위에서 '맨 위로'는 쓸모가 없다). */
+(function () {
+  'use strict';
+
+  var bar = document.querySelector('.quick');
+  if (!bar) return;
+
+  var a = document.createElement('a');
+  a.className = 'quick-top';
+  a.href = '#';
+  a.setAttribute('aria-label', '맨 위로');
+  a.innerHTML = '<span class="qi" aria-hidden="true">↑</span>맨 위로';
+  bar.appendChild(a);
+
+  a.addEventListener('click', function (e) {
+    e.preventDefault();
+    // 사용자가 '동작 줄이기'를 켜 두었으면 애니메이션 없이 이동한다
+    var reduce = window.matchMedia &&
+                 window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+  });
+
+  function toggle() {
+    a.classList.toggle('on', window.scrollY > 420);
+  }
+  window.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
