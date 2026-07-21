@@ -94,6 +94,8 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 .sym-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:5px}
 @media(max-width:380px){.sym-grid{grid-template-columns:1fr}}
 .sym-full{width:100%;margin-top:5px}
+.ft.grp{margin-top:18px;font-size:13px;font-weight:700;color:var(--g);letter-spacing:.02em;border-top:1px solid var(--border);padding-top:14px}
+.card > .ft.grp:first-of-type{margin-top:0;border-top:none;padding-top:0}
 
 /* ── Insurance ── */
 .ins-card{padding:14px 16px;border:1.5px solid var(--bi);border-radius:10px;cursor:pointer;transition:all .18s;margin-bottom:9px;display:block}
@@ -415,7 +417,9 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
     </div>
 
     <div class="card">
-      <!-- 질염 -->
+      <!-- 내원 목적 분류(원장 지시 2026-07-21) — 예약 폼 booking.js OBGY_REASONS 와
+           **같은 항목·같은 분류**를 쓴다. 한쪽만 고치면 예약과 차트가 갈라진다. -->
+      <div class="ft grp" data-ko="일반 진료" data-en="General care" data-ru="Общий приём" data-vi="Khám thông thường" data-mn="Ерөнхий үзлэг">일반 진료</div>
       <div>
         <label class="cl sym-full" id="vagCheck" style="margin-top:0"><input type="checkbox" name="symptom" value="질염"><div class="dot"></div><span data-ko="질염" data-en="Vaginitis" data-ru="Вагинит" data-vi="Viêm âm đạo" data-mn="Үтрээний үрэвсэл">질염</span></label>
         <div class="sub" id="sub-vag">
@@ -428,9 +432,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
           </div>
         </div>
       </div>
-
-      <!-- 방광염 -->
-      <div style="margin-top:5px">
+      <div>
         <label class="cl sym-full" id="cysCheck"><input type="checkbox" name="symptom" value="방광염"><div class="dot"></div><span data-ko="방광염" data-en="Cystitis" data-ru="Цистит" data-vi="Viêm bàng quang" data-mn="Давсагны үрэвсэл">방광염</span></label>
         <div class="sub" id="sub-cys">
           <div class="cg" id="cg-cysSub">
@@ -441,10 +443,8 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
           </div>
         </div>
       </div>
-
-      <!-- 생리관련 -->
-      <div style="margin-top:5px">
-        <label class="cl sym-full" id="menCheck"><input type="checkbox" name="symptom" value="생리관련"><div class="dot"></div><span data-ko="생리 관련" data-en="Menstrual issues" data-ru="Проблемы с менструацией" data-vi="Vấn đề kinh nguyệt" data-mn="Сарын тэмдгийн асуудал">생리 관련</span></label>
+      <div>
+        <label class="cl sym-full" id="menCheck"><input type="checkbox" name="symptom" value="생리관련"><div class="dot"></div><span data-ko="생리관련" data-en="Menstrual issues" data-ru="Проблемы с менструацией" data-vi="Vấn đề kinh nguyệt" data-mn="Сарын тэмдгийн асуудал">생리관련</span></label>
         <div class="sub" id="sub-men">
           <div class="cg" id="cg-menSub">
             <label class="cl"><input type="checkbox" name="menSub" value="무월경"><div class="dot"></div><span data-ko="무월경" data-en="Amenorrhea" data-ru="Отсутствие менструации" data-vi="Vô kinh" data-mn="Сарын тэмдэг ирэхгүй">무월경</span></label>
@@ -454,27 +454,21 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
           </div>
         </div>
       </div>
-
-      <!-- 단순 증상 (2열 그리드) -->
       <div class="sym-grid" id="cg-symptom">
         <label class="cl"><input type="checkbox" name="symptom" value="질출혈"><div class="dot"></div><span data-ko="질출혈" data-en="Vaginal bleeding" data-ru="Влагалищное кровотечение" data-vi="Chảy máu âm đạo" data-mn="Үтрээний цус алдалт">질출혈</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="복통·골반통·요통"><div class="dot"></div><span data-ko="복통·골반통·요통" data-en="Abdominal/Pelvic/Back pain" data-ru="Боль в животе/тазу/пояснице" data-vi="Đau bụng / vùng chậu / lưng" data-mn="Хэвлий·аарцаг·нурууны өвдөлт">복통·골반통·요통</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 검사"><div class="dot"></div><span data-ko="자궁경부암 검사" data-en="Pap smear" data-ru="ПАП-тест (мазок)" data-vi="Xét nghiệm Pap" data-mn="Умайн хүзүүний шинжилгээ (Pap)">자궁경부암 검사</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암 백신"><div class="dot"></div><span data-ko="자궁경부암 백신" data-en="HPV vaccine" data-ru="Вакцина против ВПЧ" data-vi="Vắc-xin HPV" data-mn="HPV вакцин">자궁경부암 백신</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="임신 확인"><div class="dot"></div><span data-ko="임신 확인" data-en="Pregnancy test" data-ru="Тест на беременность" data-vi="Thử thai" data-mn="Жирэмсэн эсэхийг шалгах">임신 확인</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="난임 상담"><div class="dot"></div><span data-ko="난임 상담" data-en="Infertility consult" data-ru="Консультация по бесплодию" data-vi="Tư vấn hiếm muộn" data-mn="Үргүйдлийн зөвлөгөө">난임 상담</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="피임 상담"><div class="dot"></div><span data-ko="피임 상담" data-en="Contraception consult" data-ru="Консультация по контрацепции" data-vi="Tư vấn tránh thai" data-mn="Жирэмслэлтээс хамгаалах зөвлөгөө">피임 상담</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="성병 검사"><div class="dot"></div><span data-ko="성병 검사" data-en="STD test" data-ru="Анализ на ИППП" data-vi="Xét nghiệm bệnh lây qua đường tình dục" data-mn="БЗДХ-ын шинжилгээ">성병 검사</span></label>
-        <label class="cl"><input type="checkbox" name="symptom" value="갱년기 상담"><div class="dot"></div><span data-ko="갱년기 상담" data-en="Menopause consult" data-ru="Консультация по климаксу" data-vi="Tư vấn mãn kinh" data-mn="Цэвэршилтийн зөвлөгөө">갱년기 상담</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="하복부통증"><div class="dot"></div><span data-ko="하복부통증" data-en="Lower abdominal pain" data-ru="Боль внизу живота" data-vi="Đau bụng dưới" data-mn="Доод хэвлийн өвдөлт">하복부통증</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="뾰루지"><div class="dot"></div><span data-ko="뾰루지" data-en="Skin bump / pimple" data-ru="Высыпание (прыщ)" data-vi="Mụn / nốt sần" data-mn="Батга, товруу">뾰루지</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="성병검사"><div class="dot"></div><span data-ko="성병검사" data-en="STD test" data-ru="Анализ на ИППП" data-vi="Xét nghiệm bệnh lây qua đường tình dục" data-mn="БЗДХ-ын шинжилгээ">성병검사</span></label>
       </div>
-
-      <!-- 임신 사전 건강관리 -->
-      <div style="margin-top:5px">
-        <label class="cl sym-full" id="preconLabel"><input type="checkbox" id="preconCheck" name="symptom" value="임신사전건강관리"><div class="dot"></div><span data-ko="임신 사전 건강관리" data-en="Preconception care" data-ru="Прегравидарная подготовка" data-vi="Chăm sóc sức khỏe trước mang thai" data-mn="Жирэмслэхийн өмнөх бэлтгэл">임신 사전 건강관리</span></label>
+      <div class="ft grp" data-ko="임신 관련" data-en="Pregnancy" data-ru="Беременность" data-vi="Thai kỳ" data-mn="Жирэмслэлт">임신 관련</div>
+      <div class="sym-grid" id="cg-symptom-preg">
+        <label class="cl"><input type="checkbox" name="symptom" value="임신확인"><div class="dot"></div><span data-ko="임신확인" data-en="Pregnancy test" data-ru="Тест на беременность" data-vi="Thử thai" data-mn="Жирэмсэн эсэхийг шалгах">임신확인</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="임신난임상담"><div class="dot"></div><span data-ko="임신난임상담" data-en="Pregnancy / infertility consult" data-ru="Консультация: беременность, бесплодие" data-vi="Tư vấn mang thai / hiếm muộn" data-mn="Жирэмслэлт·үргүйдлийн зөвлөгөө">임신난임상담</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="피임상담"><div class="dot"></div><span data-ko="피임상담" data-en="Contraception consult" data-ru="Консультация по контрацепции" data-vi="Tư vấn tránh thai" data-mn="Жирэмслэлтээс хамгаалах зөвлөгөө">피임상담</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="산모초음파"><div class="dot"></div><span data-ko="산모초음파" data-en="Prenatal ultrasound" data-ru="УЗИ при беременности" data-vi="Siêu âm thai" data-mn="Жирэмсний хэт авиан">산모초음파</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="산모 일반진료"><div class="dot"></div><span data-ko="산모 일반진료" data-en="Prenatal general care" data-ru="Общий приём беременных" data-vi="Khám thai thông thường" data-mn="Жирэмсний ерөнхий үзлэг">산모 일반진료</span></label>
       </div>
-
-      <!-- 응급피임약 → 마지막 관계 시점 -->
-      <div style="margin-top:5px">
+      <div>
         <label class="cl sym-full" id="ecLabel"><input type="checkbox" id="ecCheck" name="symptom" value="응급피임약"><div class="dot"></div><span data-ko="응급피임약" data-en="Emergency contraception" data-ru="Экстренная контрацепция" data-vi="Thuốc tránh thai khẩn cấp" data-mn="Яаралтай жирэмслэлтээс хамгаалах эм">응급피임약</span></label>
         <div class="sub" id="sub-ec">
           <div class="ft" data-ko="마지막 관계 시점 (last coitus)" data-en="Last coitus" data-ru="Последний половой акт" data-vi="Lần quan hệ gần nhất" data-mn="Сүүлчийн бэлгийн харьцаа">마지막 관계 시점 (last coitus)</div>
@@ -484,29 +478,23 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
           </div>
         </div>
       </div>
-
-      <!-- 산모 -->
-      <div style="margin-top:5px">
-        <label class="cl sym-full" id="motherCheck"><input type="checkbox" name="symptom" value="산모"><div class="dot"></div><span data-ko="산모" data-en="Maternity" data-ru="Беременность (ведение)" data-vi="Thai sản" data-mn="Жирэмсэн (хяналт)">산모</span></label>
-        <div class="sub" id="sub-mother">
-          <div class="cg" id="cg-motherSub">
-            <label class="cl"><input type="checkbox" name="motherSub" value="초음파 정기검진"><div class="dot"></div><span data-ko="초음파 정기검진" data-en="Routine ultrasound" data-ru="Плановое УЗИ" data-vi="Siêu âm định kỳ" data-mn="Тогтмол хэт авиан үзлэг">초음파 정기검진</span></label>
-            <label class="cl"><input type="checkbox" name="motherSub" value="일반진료"><div class="dot"></div><span data-ko="일반진료" data-en="General care" data-ru="Общий приём" data-vi="Khám bệnh thông thường" data-mn="Ерөнхий үзлэг">일반진료</span></label>
-          </div>
-        </div>
+      <div class="ft grp" data-ko="정기검진 및 종합검진" data-en="Regular / comprehensive check-up" data-ru="Плановое и комплексное обследование" data-vi="Khám định kỳ / tổng quát" data-mn="Тогтмол ба иж бүрэн үзлэг">정기검진 및 종합검진</div>
+      <div class="sym-grid" id="cg-symptom-chk">
+        <label class="cl"><input type="checkbox" name="symptom" value="정기초음파검진"><div class="dot"></div><span data-ko="정기초음파검진" data-en="Routine ultrasound check" data-ru="Плановое УЗИ" data-vi="Siêu âm định kỳ" data-mn="Тогтмол хэт авиан үзлэг">정기초음파검진</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="웨딩검진"><div class="dot"></div><span data-ko="웨딩검진" data-en="Premarital check-up" data-ru="Добрачное обследование" data-vi="Khám tiền hôn nhân" data-mn="Гэрлэлтийн өмнөх үзлэг">웨딩검진</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="갱년기검진"><div class="dot"></div><span data-ko="갱년기검진" data-en="Menopause check-up" data-ru="Обследование при климаксе" data-vi="Khám mãn kinh" data-mn="Цэвэршилтийн үзлэг">갱년기검진</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암검사"><div class="dot"></div><span data-ko="자궁경부암검사" data-en="Pap smear" data-ru="ПАП-тест (мазок)" data-vi="Xét nghiệm Pap" data-mn="Умайн хүзүүний шинжилгээ (Pap)">자궁경부암검사</span></label>
       </div>
-
-      <!-- 종합검진 -->
-      <div style="margin-top:5px">
-        <label class="cl sym-full" id="checkupCheck"><input type="checkbox" name="symptom" value="종합검진"><div class="dot"></div><span data-ko="종합검진" data-en="Regular check up" data-ru="Комплексное обследование" data-vi="Khám sức khỏe tổng quát" data-mn="Иж бүрэн үзлэг">종합검진</span></label>
-        <div class="sub" id="sub-checkup">
-          <div class="cg" id="cg-checkupSub">
-            <label class="cl"><input type="checkbox" name="checkupSub" value="산전검진"><div class="dot"></div><span data-ko="산전검진" data-en="Prenatal" data-ru="Дородовое обследование" data-vi="Khám tiền sản" data-mn="Төрөхийн өмнөх үзлэг">산전검진</span></label>
-            <label class="cl"><input type="checkbox" name="checkupSub" value="웨딩검진"><div class="dot"></div><span data-ko="웨딩검진" data-en="Premarital" data-ru="Добрачное обследование" data-vi="Khám tiền hôn nhân" data-mn="Гэрлэлтийн өмнөх үзлэг">웨딩검진</span></label>
-            <label class="cl"><input type="checkbox" name="checkupSub" value="폐경검진"><div class="dot"></div><span data-ko="폐경검진" data-en="Menopause screen" data-ru="Обследование при климаксе" data-vi="Khám mãn kinh" data-mn="Цэвэршилтийн үзлэг">폐경검진</span></label>
-            <label class="cl"><input type="checkbox" name="checkupSub" value="정기검진"><div class="dot"></div><span data-ko="정기검진" data-en="Routine" data-ru="Плановое обследование" data-vi="Khám định kỳ" data-mn="Тогтмол үзлэг">정기검진</span></label>
-          </div>
-        </div>
+      <div class="ft grp" data-ko="예방접종" data-en="Vaccination" data-ru="Вакцинация" data-vi="Tiêm chủng" data-mn="Вакцинжуулалт">예방접종</div>
+      <div class="sym-grid" id="cg-symptom-vac">
+        <label class="cl"><input type="checkbox" name="symptom" value="가다실9가"><div class="dot"></div><span data-ko="가다실9가" data-en="Gardasil 9" data-ru="Гардасил 9" data-vi="Gardasil 9" data-mn="Гардасил 9">가다실9가</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="가다실4가(국가예방접종)"><div class="dot"></div><span data-ko="가다실4가(국가예방접종)" data-en="Gardasil 4 (national program)" data-ru="Гардасил 4 (гос. программа)" data-vi="Gardasil 4 (chương trình quốc gia)" data-mn="Гардасил 4 (улсын хөтөлбөр)">가다실4가(국가예방접종)</span></label>
+      </div>
+      <div class="ft grp" data-ko="Y존케어" data-en="Y-zone care" data-ru="Уход за интимной зоной" data-vi="Chăm sóc vùng kín" data-mn="Y бүсийн арчилгаа">Y존케어</div>
+      <div class="sym-grid" id="cg-symptom-y">
+        <label class="cl"><input type="checkbox" name="symptom" value="브라질리언레이저제모"><div class="dot"></div><span data-ko="브라질리언레이저제모" data-en="Brazilian laser hair removal" data-ru="Бразильская лазерная эпиляция" data-vi="Triệt lông laser Brazilian" data-mn="Бразилиан лазер үс арилгалт">브라질리언레이저제모</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="비키니라인레이저제모"><div class="dot"></div><span data-ko="비키니라인레이저제모" data-en="Bikini line laser hair removal" data-ru="Лазерная эпиляция линии бикини" data-vi="Triệt lông laser đường bikini" data-mn="Бикини шугамын лазер үс арилгалт">비키니라인레이저제모</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="회음부 토닝"><div class="dot"></div><span data-ko="회음부 토닝" data-en="Perineal toning" data-ru="Тонинг промежности" data-vi="Toning vùng đáy chậu" data-mn="Умдагны тонинг">회음부 토닝</span></label>
       </div>
     </div>
   </div>
@@ -660,16 +648,16 @@ function initSelectable(container, type){
 }
 document.querySelectorAll('.rg').forEach(function(rg){ initSelectable(rg,'radio'); });
 document.querySelectorAll('.cg').forEach(function(cg){ initSelectable(cg,'check'); });
-['vagCheck','cysCheck','menCheck','motherCheck','checkupCheck'].forEach(function(id){
+['vagCheck','cysCheck','menCheck'].forEach(function(id){
   var el = document.getElementById(id); if(!el) return;
   var inp = el.querySelector('input'); if(!inp) return;
-  var subMap = {vagCheck:'sub-vag',cysCheck:'sub-cys',menCheck:'sub-men',motherCheck:'sub-mother',checkupCheck:'sub-checkup'};
+  var subMap = {vagCheck:'sub-vag',cysCheck:'sub-cys',menCheck:'sub-men'};
   inp.addEventListener('change', function(){
     el.classList.toggle('sel', inp.checked);
     if(subMap[id]) document.getElementById(subMap[id]).classList.toggle('on', inp.checked);
   });
 });
-document.querySelectorAll('#cg-symptom .cl').forEach(function(cl){
+document.querySelectorAll('.sym-grid .cl').forEach(function(cl){
   var inp = cl.querySelector('input');
   if(inp) inp.addEventListener('change', function(){ cl.classList.toggle('sel', inp.checked); });
 });
@@ -682,10 +670,6 @@ document.querySelectorAll('#cg-symptom .cl').forEach(function(cl){
       if(!ec.checked) document.getElementById('ecDays').value = '';
     });
   }
-  var pc = document.getElementById('preconCheck');
-  if(pc){ pc.addEventListener('change', function(){
-    var l = document.getElementById('preconLabel'); if(l) l.classList.toggle('sel', pc.checked);
-  }); }
 })();
 document.getElementById('consent').addEventListener('change', function(){
   document.getElementById('consentLabel').classList.toggle('sel', this.checked);
