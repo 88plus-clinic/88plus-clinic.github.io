@@ -2,355 +2,326 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>88플러스내과·산부인과 | 정직한 진료, 따뜻한 동행</title>
-<meta name="description" content="서울 노원 88플러스내과·산부인과 │ 내과·산부인과 전문의 3인 협진, 건강검진, 내시경, 초음파 검사">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Single+Day&family=Noto+Serif+KR:wght@400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<meta name="description" content="서울 노원 88플러스내과·산부인과 │ 내과·산부인과 전문의 3인 협진. 건강검진 · 위대장내시경 · 초음파 · 여성검진. 7호선 공릉역 2번 출구 400m">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="assets/css/style.css?v=07221830">
 </head>
 <body>
 
-<!-- ===== Top Bar ===== -->
-<div class="top-bar">
-  <div class="container">
-    <span>88플러스내과·산부인과 │ 내과·산부인과 전문의 3인 협진</span>
-    <a class="tel" href="tel:0229728800">진료문의 <strong>02-972-8800</strong></a>
-  </div>
-</div>
-
-<!-- ===== Header / Nav ===== -->
-<header class="site-header">
-  <div class="container">
-    <a href="index.html" class="site-logo">
-      <img src="logo.png" alt="88플러스내과산부인과" class="logo-img">
+<!-- ── 헤더 ─────────────────────────────────────── -->
+<header class="hd" id="hd">
+  <div class="hd-in">
+    <a class="brand" href="index.html">
+      <img class="brand-logo" src="assets/img/logo.png" alt="88플러스내과·산부인과">
     </a>
-    <nav class="main-nav">
-      <a href="index.html" class="active">홈</a>
-      <a href="about.html">병원 소개</a>
-      <a href="services.html">진료과목</a>
+    <nav class="hd-nav">
       <a href="checkup.html">건강검진</a>
+      <a href="internal.html">내과</a>
+      <a href="obgy.html">산부인과</a>
       <a href="pricing.html">비급여 안내</a>
-      <a href="location.html">예약 안내</a>
+      <a href="location.html">오시는길</a>
     </nav>
-    <button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-  </div>
-  <div class="mobile-nav" id="mobileNav">
-    <a href="index.html" class="active">홈</a>
-    <a href="about.html">병원 소개</a>
-    <a href="services.html">진료과목</a>
-    <a href="checkup.html">건강검진</a>
-    <a href="pricing.html">비급여 안내</a>
-    <a href="location.html">예약 안내</a>
+    <div class="hd-act">
+      <!-- 예약 탭 — 헤더에서 가장 크게. 신청과 취소를 같은 자리에 둔다
+           (원장 지시 2026-07-21) -->
+      <div class="hd-tabs" role="group" aria-label="예약">
+        <a class="hd-tab tb-book on" href="reservation.html"><svg class="hd-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>온라인 예약</a>
+        <a class="hd-tab tb-cancel" href="reservation-lookup.html"><svg class="hd-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.7-3.7"/></svg>내 예약</a>
+      </div>
+      <a class="tel" href="tel:0229728800">02-972-8800</a>
+    </div>
+    <button class="hd-menu" id="hdMenu" aria-label="메뉴"><span></span><span></span></button>
   </div>
 </header>
+<div class="hd-drawer" id="hdDrawer">
+  <a href="checkup.html">건강검진</a>
+  <a href="internal.html">내과</a>
+  <a href="obgy.html">산부인과</a>
+  <a href="pricing.html">비급여 안내</a>
+  <a href="reservation.html">온라인 예약</a>
+  <a href="reservation-lookup.html">내 예약</a>
+  <a href="location.html">오시는길</a>
+  <a class="d-tel" href="tel:0229728800">02-972-8800</a>
+</div>
 
-<!-- ===== About Preview ===== -->
-<section class="section section-alt about-preview" style="position:relative; overflow:hidden;">
-  <div aria-hidden="true" style="position:absolute; inset:0; background-image:url('background1.jpg?v=3'); background-size:cover; background-position:center; opacity:0.60; z-index:0; pointer-events:none;"></div>
-  <div aria-hidden="true" style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.30) 100%); z-index:0; pointer-events:none;"></div>
-  <div class="container-narrow" style="position:relative; z-index:1;">
-    <div class="section-head">
-      <img src="slogan.png?v=4" alt="숙련된 노하우와 전문지식으로 당신의 88한 삶을 지키겠습니다" style="max-width:560px; width:100%; height:auto; display:block; margin:0 auto;">
+<main>
+<!-- ── ① 슬로건 (첫 화면) ───────────────────────── -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-in">
+    <img class="hero-slogan" src="assets/img/slogan.png"
+         alt="숙련된 노하우와 전문지식으로 당신의 88한 삶을 지키겠습니다">
+    <p class="hero-sub">내과 · 산부인과 전문의 3인 협진</p>
+    <!-- 첫 화면 예약 CTA — 전환이 가장 크게 일어나는 자리(원장 지시 2026-07-21) -->
+    <a class="hero-cta" href="reservation.html">
+      <svg class="hc-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>온라인 예약하기</a>
+    <p class="hero-cta-note">24시간 신청 · 병원 확인 후 알림톡으로 확정 안내</p>
+  </div>
+  <a class="hero-scroll" href="#tiles" aria-label="아래로">
+    <span class="hs-line" aria-hidden="true"></span>
+  </a>
+</section>
+
+<!-- ── ② 3분할 타일 ─────────────────────────────── -->
+<section class="tiles" id="tiles" aria-label="진료 안내">
+  <a class="tile" href="checkup.html">
+    <div class="tile-bg" data-img="checkup"></div>
+    <div class="tile-in">
+      <span class="tile-no">Ⅰ</span>
+      <h2 class="tile-ko">건강검진</h2>
+      <p class="tile-en">Health Checkup</p>
+      <p class="tile-desc">국가건강검진 · 종합검진<br>채용검진 · 여성검진</p>
+      <span class="tile-go">자세히 보기</span>
     </div>
-    <div style="text-align:center;">
-      <a href="about.html" class="btn btn-outline">병원 소개 자세히 보기</a>
+  </a>
+  <a class="tile" href="internal.html">
+    <div class="tile-bg" data-img="internal"></div>
+    <div class="tile-in">
+      <span class="tile-no">Ⅱ</span>
+      <h2 class="tile-ko">내과</h2>
+      <p class="tile-en">Internal Medicine</p>
+      <p class="tile-desc">위·대장내시경 · 초음파<br>만성질환 관리 · 예방접종</p>
+      <span class="tile-go">자세히 보기</span>
+    </div>
+  </a>
+  <a class="tile" href="obgy.html">
+    <div class="tile-bg" data-img="obgy"></div>
+    <div class="tile-in">
+      <span class="tile-no">Ⅲ</span>
+      <h2 class="tile-ko">산부인과</h2>
+      <p class="tile-en">Obstetrics &amp; Gynecology</p>
+      <p class="tile-desc">여성 정기검진 · 부인과 초음파<br>임신·난임 상담 · Y존 케어</p>
+      <span class="tile-go">자세히 보기</span>
+    </div>
+  </a>
+</section>
+
+<!-- ── ③ 인사말 ─────────────────────────────────── -->
+<section class="greet">
+  <div class="greet-bg" aria-hidden="true"></div>
+  <div class="greet-in">
+    <div class="greet-txt reveal">
+      <p class="sec-label">Greeting</p>
+      <h2 class="sec-h">정직한 진료,<br>따뜻한 동행</h2>
+      <p class="sec-p">
+        저희는 환자 한 분 한 분의 이야기에 충분히 귀 기울이는 것을 가장 중요하게 생각합니다.
+        과잉 진료 없이 꼭 필요한 검사와 정직한 처방을 원칙으로 합니다.
+      </p>
+      <p class="sec-p" style="margin-top:18px">
+        내과와 산부인과 전문의 3인이 <b>같은 공간에서 협진</b>하기에 통합적이고 간편한 진료를 받으실 수 있습니다.
+        대학병원에서 쌓아온 임상 경험을 바탕으로, 가까이에서 신뢰할 수 있는 든든한 주치의가 되겠습니다.
+      </p>
+      <div class="greet-sign">
+        <span>88플러스내과·산부인과 의료진 일동</span>
+        <img class="sign-img" src="assets/img/signature.png" alt="88플러스 서명">
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Departments Preview ===== -->
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <div class="label">Departments</div>
-      <h2>진료과목</h2>
-    </div>
-
-    <div class="dept-block">
-      <div class="dept-head">
-        <h3>내과</h3>
-        <span class="label">Internal Medicine</span>
-      </div>
-      <div class="dept-grid">
-        <div class="dept-item"><div class="num">01</div><div class="name">건강검진</div><div class="info">국가검진·종합검진·채용검진</div></div>
-        <div class="dept-item"><div class="num">02</div><div class="name">내시경 검사</div><div class="info">위·대장내시경, 당일 용종절제술</div></div>
-        <div class="dept-item"><div class="num">03</div><div class="name">초음파 검사</div><div class="info">상·하복부·갑상선·경동맥·심장초음파</div></div>
-        <div class="dept-item"><div class="num">04</div><div class="name">만성질환 관리</div><div class="info">고혈압·당뇨·이상지질혈증·갑상선질환</div></div>
-        <div class="dept-item"><div class="num">05</div><div class="name">예방접종</div><div class="info">독감·폐렴·대상포진·간염</div></div>
-        <div class="dept-item"><div class="num">06</div><div class="name">수액치료</div><div class="info">영양·면역·피로 회복</div></div>
-      </div>
-    </div>
-
-    <div class="dept-block">
-      <div class="dept-head">
-        <h3>산부인과</h3>
-        <span class="label">Obstetrics & Gynecology</span>
-      </div>
-      <div class="dept-grid">
-        <div class="dept-item"><div class="num">01</div><div class="name">여성 정기검진</div><div class="info">자궁경부암(무료 국가검진·유료 정밀세포검사)·HPV·자궁난소 초음파</div></div>
-        <div class="dept-item"><div class="num">02</div><div class="name">생리 관련</div><div class="info">무월경·월경통·질출혈·양 변화·주기 변화</div></div>
-        <div class="dept-item"><div class="num">03</div><div class="name">임신 관련</div><div class="info">난임 상담(난소나이·배란 초음파·유도 배란)·산전 검사·웨딩 검진·중절 상담</div></div>
-        <div class="dept-item"><div class="num">04</div><div class="name">부인과 질환</div><div class="info">질염·방광염·난소 혹·자궁 근종·용종</div></div>
-        <div class="dept-item"><div class="num">05</div><div class="name">예방접종</div><div class="info">자궁경부암(HPV) 백신</div></div>
-        <div class="dept-item"><div class="num">06</div><div class="name">Y존 케어</div><div class="info">브라질리언 레이저 영구 제모·외음부 토닝</div></div>
-      </div>
+<!-- ── 인증·강점 (객관적 사실) ────────────────────── -->
+<section class="creds">
+  <div class="creds-in">
+    <p class="sec-label reveal">Credentials</p>
+    <h2 class="sec-h reveal">믿고 맡기실 수 있도록</h2>
+    <div class="creds-grid">
+      <div class="cred reveal"><span class="cr-v">국가건강검진<br>지정기관</span><span class="cr-l">국민건강보험공단 지정</span></div>
+      <div class="cred reveal"><span class="cr-v">검진기관평가<br>우수등급</span><span class="cr-l">건강검진기관 평가 결과</span></div>
+      <div class="cred reveal"><span class="cr-v">전문의 3인</span><span class="cr-l">내과 2인 · 산부인과 1인 협진<br>소화기내시경 세부전문의 2인</span></div>
+      <div class="cred reveal"><span class="cr-v">200평 규모</span><span class="cr-l">넓고 쾌적한 검진 공간</span></div>
     </div>
   </div>
 </section>
 
-<!-- ===== Hours / Map ===== -->
-<section class="section" id="location">
-  <div class="container">
-    <div class="section-head">
-      <div class="label">Hours & Location</div>
-      <h2>진료시간 · 오시는 길</h2>
-    </div>
-    <div class="info-row">
-      <div class="hours-card">
-        <h3>진료시간</h3>
-        <ul class="hours-list">
-          <li><span class="day">평일 (월~금)</span><span class="time">오전 8:00 — 오후 6:00</span></li>
-          <li><span class="day">토요일</span><span class="time">오전 8:00 — 오후 1:00</span></li>
-          <li class="closed"><span class="day">일요일·공휴일</span><span class="time">휴진</span></li>
-          <li><span class="day">점심시간</span><span class="time">오후 1:00 — 오후 2:00</span></li>
-        </ul>
-        <div class="note">접수 마감은 진료 종료 <strong>10분 전</strong>입니다.<br>* <strong>목요일은 산부인과 휴진</strong>입니다.</div>
-      </div>
-      <div class="map-card">
-        <h3>오시는 길</h3>
-        <div class="map-embed">
-          <div id="naverMap" style="width:100%; height:100%;"></div>
-        </div>
-        <div class="map-info">
-          <div class="row"><span class="label">주소</span><span><strong>서울시 노원구 동일로192길 74, 우은빌딩 2층 (경춘선&nbsp;숲길 옆 올리브영 건물)</strong></span></div>
-          <div class="row"><span class="label">전화</span><span>02-972-8800</span></div>
-          <div class="row"><span class="label">교통</span><span>7호선 공릉역 2번 출구 400m · 올리브영 건물 2층</span></div>
-          <div class="row"><span class="label">주차</span><span>건물 뒷편 · <a href="https://map.naver.com/p/search/%EC%9A%B0%EC%9D%80%EB%B9%8C%EB%94%A9%20%EC%9C%A0%EB%A3%8C%20%EC%A3%BC%EC%B0%A8%EC%9E%A5" target="_blank" rel="noopener" style="color:var(--color-primary-text); border-bottom:1px solid var(--color-line);">네이버 지도에서 "우은빌딩 유료 주차장" 검색</a></span></div>
-        </div>
-      </div>
-    </div>
+<!-- ── ⑤ 의료진 ─────────────────────────────────── -->
+<section class="docs">
+  <div class="docs-head reveal">
+    <p class="sec-label">Our Doctors</p>
+    <h2 class="sec-h">각 분야 전문의 3인이<br>함께 진료합니다</h2>
+  </div>
+  <div class="docs-list">
 
-    <div class="schedule-section">
-      <h3 class="schedule-section-title">의료진별 진료 일정</h3>
-      <div class="schedule-wrap">
-        <table class="schedule-table">
-          <thead>
-            <tr>
-              <th>의료진</th>
-              <th>구분</th>
-              <th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
-            </tr>
-          </thead>
+    <article class="doc reveal">
+      <div class="doc-photo"><img src="assets/img/doctor1.jpg?v=07201038" alt="하영우 원장" loading="lazy"></div>
+      <div class="doc-body">
+        <div class="doc-top">
+          <h3 class="doc-name">하영우 <span>원장</span> <i>내과 전문의</i></h3>
+          <button type="button" class="doc-more" aria-expanded="false" aria-controls="cv1">약력 자세히 보기</button>
+        </div>
+        <div class="doc-cvbox" id="cv1">
+          <ul class="doc-cv">
+            <li>보건복지부 인증 내과 전문의</li>
+            <li>대한소화기내시경학회 내시경 세부전문의</li>
+            <li>고려대학교 안암병원 외래교수</li>
+            <li>서울대학교 졸업</li>
+            <li>고려대학교 의학대학원 석사 졸업</li>
+            <li>고려대학교병원 내과 레지던트 수료</li>
+            <li>고려대학교병원 소화기내과 임상강사</li>
+            <li>고려대학교병원 소화기내과 임상교수 역임</li>
+            <li>마음속내과의원 원장 역임</li>
+            <li>KASID 2020 우수 연제상 수상</li>
+            <li>IDEN 2020 Excellent Poster 수상</li>
+            <li>KDDW 2020 Poster 3편</li>
+            <li>2017 <i>Medicine</i> journal (SCI) 외 다수</li>
+          </ul>
+        </div>
+        <table class="doc-sch">
+          <thead><tr><th></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
           <tbody>
-            <tr>
-              <th class="doc" rowspan="2">
-                <img src="doctor_ha.png" alt="하영우 원장" class="doc-photo">
-                <div class="doc-name">하영우 <span>원장</span></div>
-                <div class="doc-dept">내과</div>
-              </th>
-              <th class="time-row">오전</th>
-              <td class="open">●</td><td class="open">●</td><td class="open">●</td>
-              <td></td><td class="open">●</td><td class="open">●</td>
-            </tr>
-            <tr>
-              <th class="time-row">오후</th>
-              <td class="open">●</td><td class="open">●</td><td class="open">●</td>
-              <td></td><td class="open">●</td><td></td>
-            </tr>
-            <tr>
-              <th class="doc" rowspan="2">
-                <span class="doc-photo doc-photo-zoom"><img src="doctor_kimkj.png?v=2" alt="김기진 원장"></span>
-                <div class="doc-name">김기진 <span>원장</span></div>
-                <div class="doc-dept">내과</div>
-              </th>
-              <th class="time-row">오전</th>
-              <td class="open">●</td><td></td><td class="open">●</td>
-              <td class="open">●</td><td class="open">●</td><td class="open">●</td>
-            </tr>
-            <tr>
-              <th class="time-row">오후</th>
-              <td class="open">●</td><td></td><td></td>
-              <td class="open">●</td><td></td><td></td>
-            </tr>
-            <tr>
-              <th class="doc" rowspan="2">
-                <img src="doctor_kimsy.png" alt="김소연 원장" class="doc-photo">
-                <div class="doc-name">김소연 <span>원장</span></div>
-                <div class="doc-dept">산부인과</div>
-              </th>
-              <th class="time-row">오전</th>
-              <td class="open">●</td><td class="open">●</td><td class="open">●</td>
-              <td></td><td class="open">●</td><td class="open">●</td>
-            </tr>
-            <tr>
-              <th class="time-row">오후</th>
-              <td class="open">●</td><td class="open">●</td><td class="open">●</td>
-              <td></td><td class="open">●</td><td></td>
-            </tr>
+            <tr><th>오전</th><td class="on">진료</td><td class="on">진료</td><td class="on">진료</td><td class="off"></td><td class="on">진료</td><td class="on">진료</td></tr>
+            <tr><th>오후</th><td class="on">진료</td><td class="on">진료</td><td class="on">진료</td><td class="off"></td><td class="on">진료</td><td class="off"></td></tr>
           </tbody>
         </table>
       </div>
-      <p class="schedule-note-bottom">* 빈칸은 휴진, 일요일·공휴일은 전체 휴진</p>
-    </div>
-  </div>
-</section>
+    </article>
 
-<!-- ===== CTA Banner ===== -->
-<section class="cta-banner">
-  <div class="container">
-    <h3>건강한 일상의 시작, 정기검진</h3>
-    <p>국가건강검진과 종합검진까지<br>88플러스내과·산부인과에서 한 번에 받아보세요.</p>
-    <a href="checkup.html" class="btn btn-white">건강검진 안내 보기</a>
-  </div>
-</section>
-
-<!-- ===== Footer ===== -->
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <h4>88플러스내과·산부인과</h4>
-        <p class="info-line">
-          <span class="footer-addr"><strong>주소</strong> 서울시 노원구 동일로192길 74, 우은빌딩 2층 (경춘선 숲길 옆 올리브영 건물)</span><br>
-          <strong>전화</strong> 02-972-8800<br>
-          사업자등록번호: 324-97-01375 · 대표자: 하영우
-        </p>
+    <article class="doc reveal">
+      <div class="doc-photo"><img src="assets/img/doctor2.jpg?v=07201038" alt="김기진 원장" loading="lazy"></div>
+      <div class="doc-body">
+        <div class="doc-top">
+          <h3 class="doc-name">김기진 <span>원장</span> <i>내과 전문의</i></h3>
+          <button type="button" class="doc-more" aria-expanded="false" aria-controls="cv2">약력 자세히 보기</button>
+        </div>
+        <div class="doc-cvbox" id="cv2">
+          <ul class="doc-cv">
+            <li>보건복지부 인증 내과 전문의</li>
+            <li>대한소화기내시경학회 내시경 세부전문의</li>
+            <li>울산대학교 졸업</li>
+            <li>울산대학교 의학대학원 석사 졸업</li>
+            <li>서울아산병원 인턴 수료</li>
+            <li>서울아산병원 내과 레지던트 수료</li>
+            <li>서울아산병원 소화기내과 임상강사</li>
+            <li>서울아산병원 소화기내과 진료교수 역임</li>
+            <li>한국건강관리협회 건강증진의원 내시경센터 과장 역임</li>
+            <li>서울원내과 원장 역임</li>
+            <li><i>Characteristics and outcomes of portal vein thrombosis in patients
+              with inflammatory bowel disease in Korea</i> 외
+              논문 및 학회 발표 다수</li>
+          </ul>
+        </div>
+        <table class="doc-sch">
+          <thead><tr><th></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
+          <tbody>
+            <tr><th>오전</th><td class="on">진료</td><td class="off"></td><td class="on">진료</td><td class="on">진료</td><td class="on">진료</td><td class="on">진료</td></tr>
+            <tr><th>오후</th><td class="on">진료</td><td class="off"></td><td class="off"></td><td class="on">진료</td><td class="off"></td><td class="off"></td></tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-    <div class="copyright">© 2026 88플러스내과·산부인과. All rights reserved.</div>
+    </article>
+
+    <article class="doc reveal">
+      <div class="doc-photo"><img src="assets/img/doctor3.jpg?v=07201038" alt="김소연 원장" loading="lazy"></div>
+      <div class="doc-body">
+        <div class="doc-top">
+          <h3 class="doc-name">김소연 <span>원장</span> <i>산부인과 전문의</i></h3>
+          <button type="button" class="doc-more" aria-expanded="false" aria-controls="cv3">약력 자세히 보기</button>
+        </div>
+        <div class="doc-cvbox" id="cv3">
+          <ul class="doc-cv">
+            <li>보건복지부 인증 산부인과 전문의</li>
+            <li>대한산부인과학회 내분비파트 세부전문의</li>
+            <li>고려대학교 졸업</li>
+            <li>고려대학교 의학대학원 석사 졸업</li>
+            <li>고려대학교병원 인턴 수료</li>
+            <li>고려대학교병원 산부인과 레지던트 수료</li>
+            <li>고려대학교병원 산부인과 임상강사</li>
+            <li>고려대학교병원 산부인과 임상교수 역임</li>
+            <li>2018 KSOG Poster</li>
+            <li>2021 <i>Life</i> Journal</li>
+            <li>2021 <i>International Journal of Environmental Research
+              and Public Health</i> 외 다수</li>
+          </ul>
+        </div>
+        <table class="doc-sch">
+          <thead><tr><th></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr></thead>
+          <tbody>
+            <tr><th>오전</th><td class="on">진료</td><td class="on">진료</td><td class="on">진료</td><td class="off"></td><td class="on">진료</td><td class="on">진료</td></tr>
+            <tr><th>오후</th><td class="on">진료</td><td class="on">진료</td><td class="on">진료</td><td class="off"></td><td class="on">진료</td><td class="off"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
   </div>
+</section>
+
+<!-- ── ⑤ 진료 흐름 ──────────────────────────────── -->
+<section class="flow">
+  <div class="flow-head reveal">
+    <p class="sec-label">Process</p>
+    <h2 class="sec-h">검사에서 결과까지,<br>기다림을 줄였습니다</h2>
+  </div>
+  <ol class="flow-list">
+    <li class="reveal"><span class="fl-no">01</span><h3>예약·접수</h3><p>온라인 예약 또는 방문 접수</p></li>
+    <li class="reveal"><span class="fl-no">02</span><h3>문진</h3><p>모바일 문진으로 대기 시간 단축</p></li>
+    <li class="reveal"><span class="fl-no">03</span><h3>검사</h3><p>내시경 · 초음파 · 혈액검사</p></li>
+    <li class="reveal"><span class="fl-no">04</span><h3>결과 안내</h3><p>결과가 나오면 알림톡으로 안내</p></li>
+  </ol>
+</section>
+
+<!-- ── ⑥ 진료시간 · 오시는길 ────────────────────── -->
+<section class="visit" id="visit">
+  <div class="visit-in">
+    <div class="visit-col reveal">
+      <p class="sec-label">진료시간</p>
+      <table class="hours">
+        <tr><th>평일 (월~금)</th><td>08:00 — 18:00</td></tr>
+        <tr><th>토요일</th><td>08:00 — 13:00</td></tr>
+        <tr><th>점심시간</th><td>13:00 — 14:00</td></tr>
+        <tr class="off"><th>일요일·공휴일</th><td>휴진</td></tr>
+      </table>
+      <ul class="hours-note">
+        <li>접수 마감은 진료 종료 <b>10분 전</b>입니다.</li>
+        <li><b>목요일은 산부인과 휴진</b>입니다.</li>
+      </ul>
+      <a class="btn-tel" href="tel:0229728800">02-972-8800</a>
+      <p class="hours-book"><a href="reservation.html">온라인 예약하기 →</a></p>
+    </div>
+    <div class="visit-col reveal">
+      <p class="sec-label">오시는 길</p>
+      <p class="addr">서울시 노원구 동일로192길 74<br>우은빌딩 2층 <span>(경춘선 숲길 옆 올리브영 건물)</span></p>
+      <dl class="way">
+        <dt>지하철</dt><dd>7호선 공릉역 2번 출구 400m · 올리브영 건물 2층</dd>
+        <dt>주차</dt><dd>건물 뒤편 · 네이버 지도에서 “우은빌딩 유료 주차장” 검색</dd>
+      </dl>
+      <a class="btn-outline" href="location.html">오시는길 자세히 →</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ── 푸터 ─────────────────────────────────────── -->
+<footer class="ft">
+  <div class="ft-in">
+    <div class="ft-brand">
+      <img class="ft-logo" src="assets/img/logo.png" alt="88플러스내과·산부인과">
+      <p class="ft-tag">내과·산부인과 전문의 3인 협진</p>
+    </div>
+    <div class="ft-info">
+      <p>서울시 노원구 동일로192길 74, 우은빌딩 2층</p>
+      <p>대표전화 <a href="tel:0229728800">02-972-8800</a></p>
+      <p>사업자등록번호 324-97-01375 · 대표자 하영우</p>
+    </div>
+    <div class="ft-links">
+      <a href="pricing.html">비급여 진료비용 고지</a>
+      <a href="reservation.html">온라인 예약</a>
+  <a href="reservation-lookup.html">내 예약</a>
+      <a href="location.html">오시는길</a>
+    </div>
+  </div>
+  <p class="ft-copy">© 2026 88플러스내과·산부인과. All rights reserved.</p>
 </footer>
 
-<!-- 공지 팝업 (POP1 + POP3, 각각 독립된 창) -->
-<div class="float-popup" id="floatPopup1" data-popup="1">
-  <button class="float-popup-close" data-close="1" aria-label="닫기">×</button>
-  <img src="pop1.jpg" alt="진료 안내 1" class="float-popup-image">
-  <div class="float-popup-actions">
-    <label class="float-popup-checkbox">
-      <input type="checkbox" class="popup-hide-cb" data-cb="1">
-      <span>오늘 하루 보지 않기</span>
-    </label>
-    <button class="float-popup-closebtn" data-closebtn="1">닫기</button>
-  </div>
-</div>
-<div class="float-popup" id="floatPopup2" data-popup="2">
-  <button class="float-popup-close" data-close="2" aria-label="닫기">×</button>
-  <img src="pop3.jpg" alt="진료 안내 2" class="float-popup-image">
-  <div class="float-popup-actions">
-    <label class="float-popup-checkbox">
-      <input type="checkbox" class="popup-hide-cb" data-cb="2">
-      <span>오늘 하루 보지 않기</span>
-    </label>
-    <button class="float-popup-closebtn" data-closebtn="2">닫기</button>
-  </div>
-</div>
-<div class="float-popup" id="floatPopup3" data-popup="3">
-  <button class="float-popup-close" data-close="3" aria-label="닫기">×</button>
-  <img src="pop2.png" alt="진료 안내 3" class="float-popup-image">
-  <div class="float-popup-actions">
-    <label class="float-popup-checkbox">
-      <input type="checkbox" class="popup-hide-cb" data-cb="3">
-      <span>오늘 하루 보지 않기</span>
-    </label>
-    <button class="float-popup-closebtn" data-closebtn="3">닫기</button>
-  </div>
-</div>
 
-<button class="to-top-btn" id="toTopBtn" aria-label="페이지 위로">
-  <svg viewBox="0 0 24 24"><path d="M12 19V5 M5 12 L12 5 L19 12"/></svg>
-</button>
+<!-- 우측 고정 퀵바 -->
+<nav class="quick" aria-label="빠른 메뉴">
+  <a class="pri" href="reservation.html"><span class="qi">📅</span>온라인<br>예약</a>
+  <a href="reservation-lookup.html"><span class="qi">🔍</span>내<br>예약</a>
+</nav>
 
-<!-- 카카오 지도 API -->
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3b63531bf080293fca9380281705fcc9"></script>
-<script>
-// 모바일 메뉴 토글
-const toggle = document.getElementById('menuToggle');
-const mobileNav = document.getElementById('mobileNav');
-if (toggle) toggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
-
-// 독립 팝업 2개 — 각자 닫기, 각자 "오늘 하루 보지 않기" 가능
-(function() {
-  const popups = document.querySelectorAll('.float-popup');
-  if (!popups.length) return;
-
-  popups.forEach(p => {
-    const id = p.dataset.popup;
-    const STORAGE_KEY = 'popupHidden_float_' + id;
-    const hideUntil = localStorage.getItem(STORAGE_KEY);
-    if (hideUntil && Date.now() < parseInt(hideUntil, 10)) return;
-    p.classList.add('visible');
-
-    function close(hideForToday) {
-      p.classList.remove('visible');
-      if (hideForToday) {
-        const tomorrow = new Date();
-        tomorrow.setHours(0, 0, 0, 0);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        localStorage.setItem(STORAGE_KEY, tomorrow.getTime().toString());
-      }
-    }
-
-    p.querySelector('.float-popup-close').addEventListener('click', () => close(false));
-    p.querySelector('.float-popup-closebtn').addEventListener('click', () => {
-      const cb = p.querySelector('.popup-hide-cb');
-      close(cb && cb.checked);
-    });
-  });
-})();
-
-// 위로가기 버튼
-(function() {
-  const btn = document.getElementById('toTopBtn');
-  if (!btn) return;
-  function check() {
-    if (window.pageYOffset > 240) btn.classList.add('visible');
-    else btn.classList.remove('visible');
-  }
-  window.addEventListener('scroll', check, { passive: true });
-  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  check();
-})();
-
-// 카카오 지도 초기화
-(function() {
-  const mapEl = document.getElementById('naverMap');
-  if (!mapEl) return;
-  if (!window.kakao || !window.kakao.maps) {
-    mapEl.innerHTML = '<div style="padding:24px;color:#8a8a8a;font-size:13px;text-align:center;line-height:1.6;">지도를 불러오지 못했습니다.<br>카카오 개발자 콘솔에서 사이트 도메인 등록 여부를 확인해주세요.</div>';
-    return;
-  }
-  kakao.maps.load(function() {
-    const clinicLocation = new kakao.maps.LatLng(37.627063, 127.077052);
-    const map = new kakao.maps.Map(mapEl, {
-      center: clinicLocation,
-      level: 3
-    });
-    map.addControl(new kakao.maps.ZoomControl(), kakao.maps.ControlPosition.RIGHT);
-
-    const marker = new kakao.maps.Marker({
-      position: clinicLocation,
-      map: map
-    });
-
-    const infowindow = new kakao.maps.InfoWindow({
-      content: '<div style="padding:12px 16px; font-size:13px; line-height:1.7; width:230px; word-break:keep-all; box-sizing:border-box;">' +
-               '<strong style="color:#5C7F22; font-size:14px;">88플러스내과·산부인과</strong><br>' +
-               '서울시 노원구 동일로192길 74, 우은빌딩 2층<br>' +
-               '<span style="color:#5a5a5a;">☎ 02-972-8800</span></div>',
-      removable: true
-    });
-    infowindow.open(map, marker);
-
-    kakao.maps.event.addListener(marker, 'click', function() {
-      infowindow.open(map, marker);
-    });
-  });
-})();
-</script>
-
+<script src="assets/js/main.js?v=07221830"></script>
 </body>
 </html>

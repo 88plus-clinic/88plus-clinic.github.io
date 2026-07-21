@@ -1,0 +1,443 @@
+/* 온라인 예약 — 한 화면 3단 구성. style.css 의 토큰(--cream/--olive 등) 사용 */
+
+.bk{ padding:clamp(40px,5vw,68px) 40px clamp(70px,8vw,110px); }
+.bk-in{ max-width:1200px; margin:0 auto; }
+
+/* 예약 전 안내 */
+.bk-intro{
+  margin-bottom:26px; padding:20px 24px;
+  background:var(--cream-dp); border-left:3px solid var(--olive);
+  font-size:14.5px; line-height:1.85; color:var(--body); word-break:keep-all;
+}
+.bk-intro p{ margin:0 0 6px; }
+.bk-intro b{ color:var(--olive-dk); font-weight:700; }
+.bi-lead{ font-size:15.5px; }
+.bi-list{ margin:12px 0 0; padding:0; list-style:none; }
+.bi-list li{ position:relative; padding-left:16px; margin-top:5px; color:var(--muted); }
+.bi-list li::before{ content:'※'; position:absolute; left:0; font-size:12px; top:1px; }
+.bi-list b{ color:#8A5A22; }
+.bi-list a{ color:var(--olive-dk); border-bottom:1px solid var(--line); }
+
+/* ── 3단 패널 ─────────────────────────────────── */
+/* ⚠ hidden 속성이 항상 이기게 한다.
+   `.bk-panel{display:flex}` 처럼 display 를 지정한 요소는 hidden 만으로 안 숨겨져서
+   시간 변경 모드에서 **항목을 바꿀 수 있는 사고**가 났다(2026-07-21). */
+[hidden]{ display:none !important; }
+
+.bk-panels{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
+.bk-panel{
+  background:#fff; border:1px solid var(--line); border-radius:14px;
+  padding:26px 24px 24px; display:flex; flex-direction:column;
+}
+.bp-h{ font-size:20px; font-weight:700; color:var(--ink); margin:0 0 8px; }
+.bp-sub{ font-size:14px; color:var(--muted); margin:0 0 18px; }
+
+/* 항목 탭 */
+.bk-tabs{
+  display:flex; gap:2px; padding:5px; margin-bottom:16px;
+  background:var(--cream-dp); border-radius:100px;
+}
+.bk-tab{
+  flex:1; font:inherit; font-size:14.5px; font-weight:600; color:var(--muted);
+  background:none; border:none; border-radius:100px; padding:9px 0; cursor:pointer;
+  transition:background .2s, color .2s;
+}
+.bk-tab:hover{ color:var(--olive-dk); }
+.bk-tab.on{ background:var(--olive); color:#fff; }
+
+/* 그룹 안내 (내과 일반진료 등) */
+.bx-gnote{
+  margin:0 0 12px; padding:12px 14px; background:#FBF3EC;
+  border-left:2px solid #C08A4A; border-radius:0 6px 6px 0;
+  font-size:13.5px; line-height:1.7; color:var(--body); word-break:keep-all;
+}
+.bx-gnote b{ color:#8A5A22; font-weight:700; }
+
+/* 2차 탭 (내시경 / 초음파) */
+.bk-subtabs{ display:flex; gap:6px; margin-bottom:12px; }
+.bk-subtab{
+  font:inherit; font-size:14px; font-weight:600; color:var(--muted);
+  background:none; border:1.5px solid var(--line); border-radius:100px;
+  padding:7px 16px; cursor:pointer; transition:.15s;
+}
+.bk-subtab:hover{ border-color:var(--olive); color:var(--olive-dk); }
+.bk-subtab.on{ border-color:var(--olive); background:var(--cream-dp); color:var(--olive-dk); }
+
+/* 항목 칩 */
+.bk-chips{
+  flex:1; align-content:start;
+  display:grid; grid-template-columns:1fr; gap:8px;
+  padding:14px; background:var(--cream); border-radius:10px;
+}
+.bk-chip{
+  display:block; text-align:left; font:inherit; color:var(--body);
+  background:#fff; border:1.5px solid var(--line); border-radius:8px;
+  padding:13px 16px; cursor:pointer; word-break:keep-all; transition:.15s;
+}
+.bk-chip b{ display:block; font-size:15px; font-weight:600; color:var(--ink); line-height:1.4; }
+.bk-chip i{ display:block; font-style:normal; font-size:13px; color:var(--muted); margin-top:3px; }
+.bk-chip:hover{ border-color:var(--olive); }
+.bk-chip:hover b{ color:var(--olive-dk); }
+.bk-chip.on{ background:var(--olive); border-color:var(--olive); }
+.bk-chip.on b, .bk-chip.on i{ color:#fff; }
+.bk-chip.on b{ font-weight:700; }
+.bk-chip.on i{ opacity:.82; }
+
+/* 달력 */
+.bk-cal{ flex:1; border:1px solid var(--line); border-radius:10px; padding:18px 16px; }
+.bk-cal-top{ display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:12px; }
+.bk-cal-top span{ font-size:16.5px; font-weight:700; color:var(--ink); font-feature-settings:'tnum'; }
+.bk-cal-top button{
+  width:28px; height:28px; border:none; background:none; border-radius:6px;
+  font-size:18px; color:var(--body); cursor:pointer; line-height:1;
+}
+.bk-cal-top button:hover{ background:var(--cream-dp); color:var(--olive-dk); }
+.bk-dow{ display:grid; grid-template-columns:repeat(7,1fr); }
+.bk-dow i{ text-align:center; font-size:12.5px; font-style:normal; color:var(--muted); padding:6px 0; }
+.bk-dow i:first-child{ color:#C08A8A; }
+.bk-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+.bk-days .pad{ height:0; }
+.bk-day{
+  aspect-ratio:1; border:1px solid transparent; border-radius:50%; background:none;
+  font:inherit; font-size:14.5px; color:var(--ink); cursor:pointer;
+  font-feature-settings:'tnum'; transition:.15s;
+}
+.bk-day:hover:not(.off){ background:var(--cream-dp); }
+.bk-day.off{ color:#D2D2CA; cursor:default; }
+.bk-day.sel{ background:var(--olive); color:#fff; font-weight:700; }
+.bk-day.sel:hover{ background:var(--olive); }
+
+/* 시간 */
+.bk-timebox{ flex:1; border:1px solid var(--line); border-radius:10px; padding:18px 16px; }
+.bk-tb-date{
+  font-size:16.5px; font-weight:700; color:var(--ink); margin-bottom:14px;
+  font-feature-settings:'tnum';
+}
+.bk-times{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.bk-time{
+  padding:22px 0; border:1px solid var(--line); border-radius:8px; background:#fff;
+  font:inherit; font-size:15px; font-weight:600; color:var(--body); cursor:pointer;
+  font-feature-settings:'tnum'; transition:.15s;
+}
+.bk-time:hover{ border-color:var(--olive); color:var(--olive-dk); }
+.bk-time.on{ background:var(--olive); border-color:var(--olive); color:#fff; }
+.bk-empty{ grid-column:1/-1; font-size:14px; color:var(--muted); padding:8px 0; }
+
+/* 항목별 사전 안내 (대장내시경 등) */
+.bk-typewarn{
+  margin:16px 0 0; padding:16px 20px; background:#FBF3EC;
+  border-left:3px solid #C08A4A; border-radius:0 8px 8px 0;
+  font-size:14.5px; line-height:1.8; color:var(--body); word-break:keep-all;
+}
+.bk-typewarn b{ color:#8A5A22; font-weight:700; }
+.bk-typewarn span{ display:block; }
+.bk-typewarn span + span{ margin-top:10px; padding-top:10px; border-top:1px solid #EBDCC8; }
+.bk-done-warn{ max-width:440px; margin:0 auto 22px; text-align:left; }
+
+/* ── 예약자 정보 ──────────────────────────────── */
+.bk-formwrap{
+  margin-top:18px; background:#fff; border:1px solid var(--line);
+  border-radius:14px; padding:28px 26px 26px;
+}
+.bp-h2{ margin-bottom:16px; }
+.bk-picked{
+  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
+  background:var(--cream-dp); border-left:3px solid var(--olive);
+  padding:15px 20px; margin-bottom:24px; font-size:16px;
+}
+.bk-picked b{ color:var(--ink); font-weight:700; }
+.bk-picked i{ font-style:normal; color:var(--body); font-feature-settings:'tnum'; }
+.bk-picked.wait{
+  border-left-color:var(--line); background:var(--cream);
+  color:var(--muted); font-size:14.5px;
+}
+
+/* 검진 상세 (위내시경 포함 여부 · 추가검진 항목) */
+.bk-extra{
+  margin-bottom:26px; padding:22px 24px;
+  background:var(--cream); border:1px solid var(--line); border-radius:12px;
+}
+.bx-h{ font-size:16.5px; font-weight:700; color:var(--ink); margin:0 0 14px; }
+.bx-sub{ font-size:14px; color:var(--muted); margin:18px 0 12px; }
+.bx-endo{ align-items:flex-start; margin-bottom:4px; }
+.bx-endo span{ font-size:15px; color:var(--ink); }
+.bx-endo b{ color:var(--olive-dk); }
+.bx-endo i{
+  display:block; font-style:normal; font-size:13px; color:var(--muted);
+  line-height:1.7; margin-top:4px;
+}
+/* 검진과 함께 받을 내시경 (항목 패널 안) */
+.bk-opt{
+  margin-top:12px; padding:14px 16px;
+  background:var(--cream); border:1px solid var(--line); border-radius:10px;
+}
+.bo-h{ font-size:14px; font-weight:700; color:var(--ink); margin:0 0 9px; }
+.bo-h span{ font-size:12.5px; font-weight:500; color:var(--muted); }
+.bo-item{ display:flex; align-items:center; gap:8px; padding:5px 0; cursor:pointer; }
+.bo-item input{ width:16px; height:16px; accent-color:var(--olive); flex:none; }
+.bo-item span{ font-size:14.5px; color:var(--body); word-break:keep-all; }
+.bo-item:hover span{ color:var(--olive-dk); }
+.bo-item input:checked + span{ color:var(--ink); font-weight:600; }
+
+/* 위암검진 대상자 확인 방법 */
+.bk-opt .bx-help{ margin:10px 0 0; }
+.bx-help{ margin:2px 0 0 27px; }
+.bx-help summary{
+  font-size:13.5px; font-weight:600; color:var(--olive-dk); cursor:pointer;
+  padding:4px 0;
+}
+.bx-help > div{
+  margin-top:8px; padding:16px 18px; background:#fff;
+  border:1px solid var(--line); border-radius:8px;
+}
+.bx-help ol, .bx-help ul{ margin:0; padding-left:20px; }
+.bx-help li{
+  font-size:14px; line-height:1.7; color:var(--body); margin-bottom:9px; word-break:keep-all;
+}
+.bx-help li b{ color:var(--ink); }
+.bx-help li i{ font-style:normal; color:var(--olive-dk); font-weight:600; }
+.bx-help li em{
+  display:block; font-style:normal; font-size:12.5px; color:var(--muted); margin-top:2px;
+}
+.bx-help a{ color:var(--olive-dk); font-weight:600; border-bottom:1px solid var(--line); }
+.bx-help a:hover{ border-bottom-color:var(--olive); }
+.bx-help p{
+  margin:12px 0 0; padding-top:12px; border-top:1px solid var(--line);
+  font-size:13.5px; line-height:1.7; color:var(--muted); word-break:keep-all;
+}
+
+.bx-groups{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.bx-g4{ align-items:start; }
+.bx-g{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+.bx-gn{ font-size:13px; font-weight:700; color:var(--muted); margin:0 0 9px; letter-spacing:.02em; }
+.bx-item{ display:flex; align-items:flex-start; gap:8px; padding:5px 0; cursor:pointer; }
+.bx-item input{ margin-top:3px; width:16px; height:16px; accent-color:var(--olive); flex:none; }
+.bx-item span{ font-size:14px; color:var(--body); line-height:1.45; word-break:keep-all; }
+.bx-item em{ font-style:normal; font-size:11.5px; color:var(--muted); }
+.bx-item:hover span{ color:var(--olive-dk); }
+.bx-etc{ margin:14px 0 0; }
+.bx-fast{
+  margin:14px 0 0; padding:12px 16px; background:#FBF3EC; border-left:2px solid #C08A4A;
+  font-size:13.5px; line-height:1.7; color:var(--body); word-break:keep-all;
+}
+.bx-fast b{ color:#8A5A22; }
+.bx-note{
+  margin:14px 0 0; font-size:13.5px; color:var(--muted); line-height:1.7; word-break:keep-all;
+}
+.bx-note b{ color:var(--ink); }
+
+.bk-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px 18px; }
+.bk-field label, .bk-label{
+  display:block; font-size:14px; font-weight:600; color:var(--ink); margin-bottom:7px;
+}
+.bk-field b{ color:#B23A2E; }
+.bk-field input[type=text],.bk-field input[type=tel],.bk-field input[type=password]{
+  width:100%; box-sizing:border-box; padding:12px 14px; font:inherit; font-size:15.5px;
+  border:1.5px solid var(--line); border-radius:8px; background:#fff; color:var(--ink);
+}
+.bk-field input:focus{ outline:none; border-color:var(--olive); }
+.bk-help{ display:block; margin-top:5px; font-size:12.5px; color:var(--muted); }
+/* 주민번호 앞자리 — 뒷자리는 첫 칸만 받고 나머지는 ● 로 막아 둔다(입력란이 아니다) */
+.bk-rrn{ display:flex; align-items:center; gap:7px; }
+.bk-rrn input#fRrn1{ flex:1 1 auto; min-width:0; letter-spacing:1px; }
+.bk-rrn input#fRrn2{ width:46px; flex:0 0 46px; text-align:center; }
+.bk-dash{ color:var(--muted); font-weight:700; }
+/* 휴대전화 3칸 — 초진차트와 같은 형태(010 은 채워 둔다) */
+.bk-phone{ display:flex; align-items:center; gap:7px; }
+.bk-phone input{ text-align:center; letter-spacing:1px; min-width:0; }
+.bk-phone input#fPh1{ flex:0 0 68px; }
+.bk-phone input#fPh2, .bk-phone input#fPh3{ flex:1 1 auto; }
+.bk-mask{ color:var(--line); font-size:12px; letter-spacing:1px; user-select:none;
+  white-space:nowrap; flex:none; }
+@media (max-width:520px){ .bk-mask{ display:none; } }
+.bk-radio{ display:flex; gap:8px; }
+.bk-radio label{
+  flex:1; display:flex; align-items:center; justify-content:center; gap:6px;
+  padding:12px 0; border:1.5px solid var(--line); border-radius:8px; background:#fff;
+  cursor:pointer; margin:0; font-weight:500;
+}
+.bk-radio input{ accent-color:var(--olive); }
+.bk-radio label:has(input:checked){ border-color:var(--olive); background:var(--cream-dp); font-weight:700; }
+
+/* 동의 */
+.bk-agree{ margin:26px 0 20px; padding-top:22px; border-top:1px solid var(--line); }
+.bk-chk{ display:flex; align-items:flex-start; gap:10px; margin-bottom:6px; cursor:pointer; }
+.bk-chk input{ margin-top:4px; width:17px; height:17px; accent-color:var(--olive); flex:none; }
+.bk-chk span{ font-size:14.5px; color:var(--body); word-break:keep-all; }
+.bk-chk b{ color:var(--olive-dk); }
+.bk-terms{ margin:0 0 14px 27px; }
+.bk-terms summary{ font-size:13px; color:var(--muted); cursor:pointer; }
+.bk-terms > div{
+  margin-top:9px; padding:15px 17px; background:var(--cream-dp);
+  border-radius:8px; font-size:13px; line-height:1.8; color:var(--body);
+}
+.bk-terms p{ margin-bottom:7px; word-break:keep-all; }
+.bk-terms b{ color:var(--ink); }
+.bk-hl{ color:var(--olive-dk) !important; }
+
+.bk-warn{
+  padding:15px 18px; background:#FBF3EC; border-left:2px solid #C08A4A;
+  font-size:14px; line-height:1.8; color:var(--body); word-break:keep-all;
+}
+.bk-warn b{ color:#8A5A22; }
+
+.bk-nav{ margin-top:22px; text-align:center; }
+.bk-submit{
+  min-width:280px; font:inherit; font-size:17px; font-weight:700; color:#fff;
+  background:var(--olive); border:none; border-radius:100px; padding:16px 40px;
+  cursor:pointer; transition:background .2s, transform .2s var(--ease);
+}
+.bk-submit:hover:not(:disabled){ background:var(--olive-dk); transform:translateY(-1px); }
+.bk-submit:disabled{ opacity:.55; cursor:default; }
+
+/* 완료 */
+.bk-done{ text-align:center; padding:40px 0 20px; }
+.bk-h{ font-size:clamp(21px,2.4vw,27px); margin-bottom:20px; word-break:keep-all; }
+.bk-note{ font-size:14.5px; color:var(--muted); line-height:1.8; }
+.bk-note b{ color:var(--ink); }
+.bk-done-ico{
+  width:64px; height:64px; margin:0 auto 22px; border-radius:50%;
+  background:var(--olive); color:#fff; font-size:30px;
+  display:flex; align-items:center; justify-content:center;
+}
+.bk-done-box{
+  max-width:440px; margin:0 auto 24px; text-align:left;
+  background:var(--cream-dp); border-radius:10px; padding:20px 24px;
+}
+.bk-done-box div{ display:flex; gap:14px; font-size:15.5px; padding:4px 0; }
+.bk-done-box span{ color:var(--muted); min-width:72px; flex:none; }
+.bk-done-box b{ color:var(--ink); }
+.bk-home{
+  display:inline-block; margin-top:26px; font-size:15px; font-weight:600;
+  color:var(--olive-dk); border-bottom:1.5px solid var(--line); padding-bottom:3px;
+}
+.bk-home:hover{ border-bottom-color:var(--olive); }
+/* 완료 화면 — 조회 버튼과 '홈으로'를 세로로 쌓는다(a 태그에도 버튼 모양 적용) */
+.bk-done-act{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+.bk-done-act a.bk-submit{ display:inline-block; text-decoration:none; text-align:center; }
+.bk-done-act a.bk-submit:hover{ background:var(--olive-dk); transform:translateY(-1px); }
+
+/* ── 다른 예약 방법 ───────────────────────────── */
+.bk-alt{ margin-top:44px; }
+.bk-alt .bp-h{ margin-bottom:16px; }
+.bk-alt-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+.bk-alt-grid.one{ grid-template-columns:1fr; }
+.ba-card{
+  background:#fff; border:1px solid var(--line); border-radius:14px; padding:26px 24px;
+}
+.ba-card h3{ font-size:17px; font-weight:700; color:var(--ink); margin:0 0 8px; }
+.ba-card p{ font-size:14.5px; color:var(--body); line-height:1.75; margin:0 0 14px; word-break:keep-all; }
+.ba-tel{
+  display:inline-block; font-size:24px; font-weight:700; color:var(--olive-dk);
+  font-feature-settings:'tnum'; letter-spacing:-.01em;
+}
+.ba-hours{ list-style:none; padding:0; margin:14px 0 0; font-size:14px; color:var(--body); }
+.ba-hours li{ padding:3px 0; font-feature-settings:'tnum'; }
+.ba-hours span{ display:inline-block; min-width:70px; color:var(--muted); }
+.ba-btn{
+  display:inline-block; font-size:15px; font-weight:600; color:#fff; background:var(--olive);
+  border-radius:100px; padding:12px 26px; transition:background .2s;
+}
+.ba-btn:hover{ background:var(--olive-dk); }
+.ba-note{ margin:14px 0 0 !important; font-size:13.5px; color:var(--muted); }
+
+/* ── 반응형 ───────────────────────────────────── */
+@media (max-width:1080px){
+  .bk-panels{ grid-template-columns:1fr 1fr; }
+  .bk-panel:first-child{ grid-column:1/-1; }
+  .bk-chips{ grid-template-columns:repeat(3,1fr); }
+  .bk-grid{ grid-template-columns:repeat(2,1fr); }
+  .bx-groups{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:768px){
+  .bk{ padding:32px 20px 70px; }
+  .bk-panels{ grid-template-columns:1fr; }
+  .bk-panel{ padding:22px 18px; }
+  .bk-chips{ grid-template-columns:1fr; }
+  .bk-grid{ grid-template-columns:1fr; }
+  .bx-groups{ grid-template-columns:1fr; }
+  .bk-extra{ padding:18px 16px; }
+  .bk-alt-grid{ grid-template-columns:1fr; }
+  .bk-time{ padding:16px 0; }
+  .bk-submit{ width:100%; min-width:0; }
+}
+
+/* ── 예약 조회·취소 (reservation-lookup.html) ────────────────── */
+.lk-in{ max-width:860px; }
+.lk-form{ padding:clamp(26px,3vw,38px) clamp(22px,3vw,38px); }
+.lk-grid{ grid-template-columns:repeat(3,1fr); }
+.lk-prefill{
+  margin:0 0 18px; padding:12px 16px; background:var(--cream-dp);
+  border-radius:8px; font-size:14.5px; color:var(--body);
+}
+.lk-prefill b{ color:var(--olive-dk); letter-spacing:.02em; }
+
+.lk-result{ margin-top:30px; }
+.lk-h{ font-size:19px; font-weight:700; color:var(--ink); margin:0 0 14px; }
+
+.lk-card{
+  background:#fff; border:1.5px solid var(--line); border-radius:12px;
+  padding:22px 24px; margin-bottom:14px;
+}
+.lk-card.ok{ border-color:#C3D4A5; }
+.lk-card.off{ background:var(--cream-dp); border-color:var(--line); opacity:.8; }
+.lk-card-top{ display:flex; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
+.lk-badge{
+  display:inline-block; padding:4px 13px; border-radius:100px;
+  font-size:12.5px; font-weight:700;
+}
+.lk-badge.wait{ background:#FBF3EC; color:#8A5A22; }
+.lk-badge.ok{ background:#EDF3E2; color:var(--olive-dk); }
+.lk-badge.off{ background:#EFEDE6; color:var(--muted); }
+.lk-no{ font-size:13px; color:var(--muted); letter-spacing:.02em; }
+.lk-type{ margin:0 0 4px; font-size:18px; font-weight:700; color:var(--ink); word-break:keep-all; }
+.lk-when{ margin:0; font-size:16px; color:var(--body); }
+.lk-msg{
+  margin:14px 0 0; padding:11px 14px; background:var(--cream-dp); border-radius:8px;
+  font-size:14px; line-height:1.7; color:var(--body); word-break:keep-all;
+}
+.lk-hint{ margin:10px 0 0; font-size:13.5px; line-height:1.7; color:var(--muted); word-break:keep-all; }
+.lk-hint a{ color:var(--olive-dk); border-bottom:1px solid var(--line); }
+.lk-act{ margin-top:16px; display:flex; gap:9px; flex-wrap:wrap; }
+/* 시간 변경 — 취소보다 먼저 보이게(취소 대신 변경으로 유도) */
+.lk-chg{
+  font:inherit; font-size:14.5px; font-weight:700; color:#fff;
+  background:var(--olive); border:1.5px solid var(--olive); border-radius:100px;
+  padding:10px 26px; cursor:pointer; transition:background .2s;
+}
+.lk-chg:hover{ background:var(--olive-dk); border-color:var(--olive-dk); }
+.lk-cancel{
+  font:inherit; font-size:14.5px; font-weight:600; color:var(--body);
+  background:#fff; border:1.5px solid var(--line); border-radius:100px;
+  padding:10px 26px; cursor:pointer; transition:border-color .2s, color .2s;
+}
+.lk-cancel:hover:not(:disabled){ border-color:#C08A4A; color:#8A5A22; }
+.lk-cancel:disabled{ opacity:.55; cursor:default; }
+
+.lk-empty{
+  padding:38px 24px; text-align:center; background:#fff;
+  border:1.5px dashed var(--line); border-radius:12px;
+  font-size:14.5px; line-height:1.9; color:var(--muted); word-break:keep-all;
+}
+.lk-empty-h{ margin:0 0 8px; font-size:17px; font-weight:700; color:var(--ink); }
+.lk-empty-tel{ margin:14px 0 0; }
+.lk-empty-tel a{ color:var(--olive-dk); font-weight:700; border-bottom:1px solid var(--line); }
+
+.lk-note{ margin-top:34px; }
+
+@media (max-width:760px){
+  .lk-grid{ grid-template-columns:1fr; }
+  .lk-card{ padding:18px 18px; }
+  .lk-type{ font-size:16.5px; }
+}
+
+/* 수면/비수면 안내 — 항목 패널 안 */
+.bo-note{
+  margin:10px 0 0; padding:10px 13px; background:var(--cream-dp); border-radius:8px;
+  font-size:12.5px; line-height:1.75; color:var(--body); word-break:keep-all;
+}
+.bo-note b{ color:var(--olive-dk); }
+
+/* 항혈전제 — 임의 중단 경고는 눈에 띄어야 한다 */
+.bx-help p.bo-warn{ color:var(--body); }
+.bx-help p.bo-warn b{ color:#a33; }

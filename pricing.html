@@ -2,296 +2,254 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>비급여 가격 안내 | 88플러스내과·산부인과</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<meta name="description" content="88플러스내과·산부인과 비급여 진료비용 고지">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="assets/css/style.css?v=07221830">
 </head>
 <body>
 
-<div class="top-bar">
-  <div class="container">
-    <span>88플러스내과·산부인과 │ 내과·산부인과 전문의 3인 협진</span>
-    <a class="tel" href="tel:0229728800">진료문의 <strong>02-972-8800</strong></a>
-  </div>
-</div>
-
-<header class="site-header">
-  <div class="container">
-    <a href="index.html" class="site-logo">
-      <img src="logo.png" alt="88플러스내과산부인과" class="logo-img">
-    </a>
-    <nav class="main-nav">
-      <a href="index.html">홈</a>
-      <a href="about.html">병원 소개</a>
-      <a href="services.html">진료과목</a>
+<header class="hd" id="hd">
+  <div class="hd-in">
+    <a class="brand" href="index.html"><img class="brand-logo" src="assets/img/logo.png" alt="88플러스내과·산부인과"></a>
+    <nav class="hd-nav">
       <a href="checkup.html">건강검진</a>
+      <a href="internal.html">내과</a>
+      <a href="obgy.html">산부인과</a>
       <a href="pricing.html" class="active">비급여 안내</a>
-      <a href="location.html">예약 안내</a>
+      <a href="location.html">오시는길</a>
     </nav>
-    <button class="menu-toggle" id="menuToggle" aria-label="메뉴"><svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke-width="2" stroke-linecap="round"/></svg></button>
-  </div>
-  <div class="mobile-nav" id="mobileNav">
-    <a href="index.html">홈</a>
-    <a href="about.html">병원 소개</a>
-    <a href="services.html">진료과목</a>
-    <a href="checkup.html">건강검진</a>
-    <a href="pricing.html" class="active">비급여 안내</a>
-    <a href="location.html">예약 안내</a>
+    <div class="hd-act">
+      <!-- 예약 탭 — 헤더에서 가장 크게. 신청과 취소를 같은 자리에 둔다
+           (원장 지시 2026-07-21) -->
+      <div class="hd-tabs" role="group" aria-label="예약">
+        <a class="hd-tab tb-book on" href="reservation.html"><svg class="hd-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>온라인 예약</a>
+        <a class="hd-tab tb-cancel" href="reservation-lookup.html"><svg class="hd-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.7-3.7"/></svg>내 예약</a>
+      </div>
+      <a class="tel" href="tel:0229728800">02-972-8800</a>
+    </div>
+    <button class="hd-menu" id="hdMenu" aria-label="메뉴"><span></span><span></span></button>
   </div>
 </header>
+<div class="hd-drawer" id="hdDrawer">
+  <a href="checkup.html">건강검진</a>
+  <a href="internal.html">내과</a>
+  <a href="obgy.html">산부인과</a>
+  <a href="pricing.html" class="active">비급여 안내</a>
+  <a href="reservation.html">온라인 예약</a>
+  <a href="reservation-lookup.html">내 예약</a>
+  <a href="location.html">오시는길</a>
+  <a class="d-tel" href="tel:0229728800">02-972-8800</a>
+</div>
 
-<section class="page-banner">
-  <div class="container">
-    <div class="label">Non-Covered Services</div>
+<main>
+<section class="sub-hero">
+  <div class="sub-hero-in">
+    <p class="sh-en">Non-Covered Services</p>
     <h1>비급여 가격 안내</h1>
-    <p>본원에서 시행하는 비급여 항목과 가격입니다.</p>
+    <p class="sh-lead">본원에서 시행하는 비급여 항목과 가격입니다.</p>
+    <!-- 첫 화면 예약 CTA (원장 지시 2026-07-21) -->
+    <a class="sh-cta" href="reservation.html"><svg class="hc-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>온라인 예약하기</a>
+    <p class="sh-cta-note">24시간 신청 · 병원 확인 후 알림톡으로 확정 안내</p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container-narrow">
-    <div class="info-box" style="margin-bottom:24px;">
-      <span class="info-label">비급여 안내</span>
-      법정 비급여란 외래 진료 중 현행 건강보험 요양급여 기준상 보험으로 인정되지 않는 진료행위(수술, 시술, 검사)나 약제, 각종 치료 재료를 치료 목적으로 사용하는 경우로 <strong>국민건강보험이나 실손의료보험과 관계 없이 100% 전액 본인부담</strong>입니다.<br>
-      <span style="font-size:12.5px; color:var(--color-text-light);">※ 실손의료보험 적용 여부는 개인별·보험회사별로 다르므로 직접 문의하시기 바랍니다.</span>
+<section class="items">
+  <div class="items-in">
+    <div class="note-box reveal" style="margin-bottom:clamp(34px,4vw,50px)">
+      <p><b>법정 비급여란</b> 외래 진료 중 현행 건강보험 요양급여 기준상 보험으로 인정되지 않는
+      진료행위(수술, 시술, 검사)나 약제, 각종 치료 재료를 치료 목적으로 사용하는 경우로,
+      국민건강보험이나 실손의료보험과 관계 없이 <b>100% 전액 본인부담</b>입니다.<br>
+      ※ 실손의료보험 적용 여부는 개인별·보험회사별로 다르므로 직접 문의하시기 바랍니다.</p>
     </div>
 
-    <div class="pricing-tabs">
-      <button class="pricing-tab-btn active" data-target="pane-internal">내과</button>
-      <button class="pricing-tab-btn" data-target="pane-obgyn">산부인과</button>
-      <button class="pricing-tab-btn" data-target="pane-vaccines">예방접종</button>
-      <button class="pricing-tab-btn" data-target="pane-certificates">제증명</button>
+    <div class="price-tabs">
+      <button class="price-tab on" data-pane="pane0">내과</button>
+      <button class="price-tab" data-pane="pane1">산부인과</button>
+      <button class="price-tab" data-pane="pane2">예방접종</button>
+      <button class="price-tab" data-pane="pane3">제증명</button>
     </div>
 
-    <div class="pricing-pane active" id="pane-internal">
-
-    <div class="price-section">
-      <h2 class="price-section-title">내시경 수면료</h2>
-      <div class="price-table-wrap">
-        <table class="price-table">
-          <tbody>
-            <tr><td class="item">위내시경 수면료</td><td class="price">50,000원</td></tr>
-            <tr><td class="item">대장내시경 수면료</td><td class="price">70,000원</td></tr>
-            <tr><td class="item">위 + 대장 동시 수면관리료</td><td class="price">100,000원</td></tr>
-          </tbody>
-        </table>
+    <div class="price-pane on" id="pane0">
+      <div class="price-group">
+        <h2>내시경 수면료</h2>
+        <table class="ptable"><tbody>
+          <tr><td>위내시경 수면료</td><td>50,000원</td></tr>
+          <tr><td>대장내시경 수면료</td><td>70,000원</td></tr>
+          <tr><td>위 + 대장 동시 수면관리료</td><td>100,000원</td></tr>
+        </tbody></table>
       </div>
-    </div>
-
-    <div class="price-section">
-      <h2 class="price-section-title">초음파</h2>
-      <div class="price-table-wrap">
-        <table class="price-table">
-          <tbody>
-            <tr><td class="item">상복부 초음파</td><td class="price">80,000원</td></tr>
-            <tr><td class="item">하복부 초음파</td><td class="price">60,000원</td></tr>
-            <tr><td class="item">상복부+하복부초음파 동시 시행</td><td class="price">100,000원</td></tr>
-            <tr><td class="item">갑상선 초음파</td><td class="price">50,000원</td></tr>
-            <tr><td class="item">경동맥 초음파</td><td class="price">50,000원</td></tr>
-            <tr><td class="item">갑상선+경동맥초음파 동시 시행</td><td class="price">80,000원</td></tr>
-          </tbody>
-        </table>
+      <div class="price-group">
+        <h2>초음파</h2>
+        <table class="ptable"><tbody>
+          <tr><td>상복부 초음파</td><td>80,000원</td></tr>
+          <tr><td>하복부 초음파</td><td>60,000원</td></tr>
+          <tr><td>상복부+하복부초음파 동시 시행</td><td>100,000원</td></tr>
+          <tr><td>갑상선 초음파</td><td>50,000원</td></tr>
+          <tr><td>경동맥 초음파</td><td>50,000원</td></tr>
+          <tr><td>갑상선+경동맥초음파 동시 시행</td><td>80,000원</td></tr>
+        </tbody></table>
       </div>
-    </div>
-
-    <div class="price-section">
-      <h2 class="price-section-title">검진</h2>
-      <div class="price-table-wrap">
-        <table class="price-table">
-          <tbody>
-            <tr><td class="item">골밀도 <span class="sub">(1부위)</span></td><td class="price">40,000원</td></tr>
-            <tr><td class="item">유방촬영</td><td class="price">40,000원</td></tr>
-            <tr><td class="item">암표지자 남성 5종 <span class="sub">(간·대장·췌장·폐·전립선)</span></td><td class="price">60,000원</td></tr>
-            <tr><td class="item">암표지자 여성 5종 <span class="sub">(간·대장·췌장·유방·난소)</span></td><td class="price">60,000원</td></tr>
-            <tr><td class="item">혈액종합검사 <span class="sub">(혈액+소변 50여종)</span></td><td class="price">80,000원</td></tr>
-            <tr><td class="item">독감 신속항원검사 <span class="sub">(RAT)</span></td><td class="price">25,000원</td></tr>
-            <tr><td class="item">비타민 D 검사</td><td class="price">15,000원</td></tr>
-            <tr><td class="item">혈액형 검사</td><td class="price">10,000원</td></tr>
-          </tbody>
-        </table>
+      <div class="price-group">
+        <h2>검진</h2>
+        <table class="ptable"><tbody>
+          <tr><td>골밀도 (1부위)</td><td>40,000원</td></tr>
+          <tr><td>유방촬영</td><td>40,000원</td></tr>
+          <tr><td>암표지자 남성 5종 (간·대장·췌장·폐·전립선)</td><td>60,000원</td></tr>
+          <tr><td>암표지자 여성 5종 (간·대장·췌장·유방·난소)</td><td>60,000원</td></tr>
+          <tr><td>혈액종합검사 (혈액+소변 50여종)</td><td>80,000원</td></tr>
+          <tr><td>독감 신속항원검사 (RAT)</td><td>25,000원</td></tr>
+          <tr><td>비타민 D 검사</td><td>15,000원</td></tr>
+          <tr><td>혈액형 검사</td><td>10,000원</td></tr>
+        </tbody></table>
       </div>
-    </div>
-
-    <div class="price-section">
-      <h2 class="price-section-title">건강진단서</h2>
-      <div class="price-table-wrap">
-        <table class="price-table">
-          <tbody>
-            <tr><td class="item">일반채용검진</td><td class="price">30,000원</td></tr>
-            <tr><td class="item">공무원채용검진</td><td class="price">40,000원</td></tr>
-            <tr><td class="item">기숙사검진 <span class="sub">(흉부 X선)</span></td><td class="price">20,000원</td></tr>
-            <tr><td class="item">소변 마약 검사 <span class="sub">(대마 포함 4종)</span></td><td class="price">30,000원</td></tr>
-            <tr><td class="item">방사선 종사자 건강진단서</td><td class="price">25,000원</td></tr>
-            <tr><td class="item">보건의료인 건강진단서 <span class="sub">(흉부 X선 + 소변 마약 검사)</span></td><td class="price">40,000원</td></tr>
-            <tr><td class="item">보건증 <span class="sub">(식품위생분야 종사자 건강진단서)</span></td><td class="price">30,000원</td></tr>
-            <tr><td class="item">잠복결핵 검사 <span class="sub">(IGRA)</span></td><td class="price">60,000원</td></tr>
-          </tbody>
-        </table>
+      <div class="price-group">
+        <h2>건강진단서</h2>
+        <table class="ptable"><tbody>
+          <tr><td>일반채용검진</td><td>30,000원</td></tr>
+          <tr><td>공무원채용검진</td><td>40,000원</td></tr>
+          <tr><td>기숙사검진 (흉부 X선)</td><td>20,000원</td></tr>
+          <tr><td>소변 마약 검사 (대마 포함 4종)</td><td>30,000원</td></tr>
+          <tr><td>소변 마약 검사 (대마 포함 6종)</td><td>40,000원</td></tr>
+          <tr><td>방사선 종사자 건강진단서</td><td>25,000원</td></tr>
+          <tr><td>보건의료인 건강진단서 (흉부 X선 + 소변 마약 검사 4종)</td><td>40,000원</td></tr>
+          <tr><td>보건증 (식품위생분야 종사자 건강진단서)</td><td>30,000원</td></tr>
+          <tr><td>잠복결핵 검사 (IGRA)</td><td>60,000원</td></tr>
+        </tbody></table>
+      </div>
+      <div class="price-group">
+        <h2>주사</h2>
+        <table class="ptable"><tbody>
+          <tr><td>비타민 D 주사 (1회 / 4회)</td><td>30,000원 / 100,000원</td></tr>
+        </tbody></table>
       </div>
     </div>
 
-    <div class="price-section">
-      <h2 class="price-section-title">주사</h2>
-      <div class="price-table-wrap">
-        <table class="price-table">
-          <tbody>
-            <tr><td class="item">비타민 D 주사 <span class="sub">(1회 / 4회)</span></td><td class="price">30,000원 / 100,000원</td></tr>
-          </tbody>
-        </table>
+    <div class="price-pane" id="pane1">
+      <div class="price-group">
+        <h2>검사</h2>
+        <table class="ptable"><tbody>
+          <tr><td>유도초음파 (각 시술별 상이)</td><td>60,000원 / 80,000원 / 100,000원</td></tr>
+          <tr><td>자궁경부암 액상세포 검사</td><td>50,000원</td></tr>
+          <tr><td>자궁경부 확대경 검사 (써비레이)</td><td>30,000원</td></tr>
+          <tr><td>인유두종바이러스 (HPV) 검사</td><td>60,000원</td></tr>
+          <tr><td>난소나이 (AMH) 검사</td><td>60,000원</td></tr>
+          <tr><td>난소암 표지자 (CA125)</td><td>30,000원</td></tr>
+          <tr><td>난소암 정밀검사 (ROMA)</td><td>80,000원</td></tr>
+          <tr><td>풍진 항체 검사 (일반 / 정밀)</td><td>25,000원 / 50,000원</td></tr>
+          <tr><td>원내 당일 임신 수치 검사</td><td>25,000원</td></tr>
+          <tr><td>소변 임신 반응 검사</td><td>10,000원</td></tr>
+        </tbody></table>
+      </div>
+      <div class="price-group">
+        <h2>시술 · 약물 / 재료</h2>
+        <table class="ptable"><tbody>
+          <tr><td>미레나 (자궁내 호르몬 장치)</td><td>350,000원</td></tr>
+          <tr><td>카일리나 (자궁내 호르몬 장치)</td><td>380,000원</td></tr>
+          <tr><td>임플라논 (피하 이식형 호르몬 장치)</td><td>360,000원</td></tr>
+          <tr><td>유착방지제</td><td>130,000원</td></tr>
+          <tr><td>자궁내막생검 카테터</td><td>25,000원</td></tr>
+          <tr><td>생리유도주사 (타이유 3cc)</td><td>30,000원</td></tr>
+          <tr><td>지혈주사 (E2)</td><td>20,000원</td></tr>
+          <tr><td>산모수액 (입덧 / 영양)</td><td>30,000원 / 40,000원</td></tr>
+          <tr><td>켈로이드 주사</td><td>100,000원</td></tr>
+        </tbody></table>
+      </div>
+      <div class="price-group">
+        <h2>진정 (수면) 관리료</h2>
+        <table class="ptable"><tbody>
+          <tr><td>산부인과 시술 수면비</td><td>100,000원</td></tr>
+        </tbody></table>
       </div>
     </div>
 
-    </div><!-- /pane-internal -->
-
-    <div class="pricing-pane" id="pane-obgyn">
-
-      <div class="price-section">
-        <h2 class="price-section-title">검사</h2>
-        <div class="price-table-wrap">
-          <table class="price-table">
-            <tbody>
-              <tr><td class="item">부인과 초음파</td><td class="price">55,000원</td></tr>
-              <tr><td class="item">유도초음파 <span class="sub">(각 시술별 상이)</span></td><td class="price">60,000원 / 80,000원 / 100,000원</td></tr>
-              <tr><td class="item">자궁경부암 액상세포 검사</td><td class="price">50,000원</td></tr>
-              <tr><td class="item">자궁경부 확대경 검사 <span class="sub">(써비레이)</span></td><td class="price">30,000원</td></tr>
-              <tr><td class="item">인유두종바이러스 (HPV) 검사</td><td class="price">60,000원</td></tr>
-              <tr><td class="item">난소나이 (AMH) 검사</td><td class="price">60,000원</td></tr>
-              <tr><td class="item">난소암 표지자 (CA125)</td><td class="price">30,000원</td></tr>
-              <tr><td class="item">난소암 정밀검사 (ROMA)</td><td class="price">80,000원</td></tr>
-              <tr><td class="item">풍진 항체 검사 <span class="sub">(일반 / 정밀)</span></td><td class="price">25,000원 / 50,000원</td></tr>
-              <tr><td class="item">원내 당일 임신 수치 검사</td><td class="price">25,000원</td></tr>
-              <tr><td class="item">소변 임신 반응 검사</td><td class="price">10,000원</td></tr>
-            </tbody>
-          </table>
-        </div>
+    <div class="price-pane" id="pane2">
+      <div class="price-group">
+        <h2>예방접종</h2>
+        <table class="ptable"><tbody>
+          <tr><td>대상포진 (싱그릭스, 1회차)</td><td>250,000원</td></tr>
+          <tr><td>대상포진 (싱그릭스, 2회차)</td><td>200,000원</td></tr>
+          <tr><td>자궁경부암 (가다실 9가)</td><td>200,000원</td></tr>
+          <tr><td>폐렴구균 20가 (프리베나 20)</td><td>150,000원</td></tr>
+          <tr><td>A형 간염</td><td>60,000원</td></tr>
+          <tr><td>B형 간염</td><td>30,000원</td></tr>
+          <tr><td>MMR (홍역·볼거리·풍진)</td><td>50,000원</td></tr>
+          <tr><td>Td (파상풍·디프테리아)</td><td>35,000원</td></tr>
+          <tr><td>Tdap (파상풍·디프테리아·백일해)</td><td>50,000원</td></tr>
+        </tbody></table>
       </div>
-
-      <div class="price-section">
-        <h2 class="price-section-title">시술 · 약물 / 재료</h2>
-        <div class="price-table-wrap">
-          <table class="price-table">
-            <tbody>
-              <tr><td class="item">미레나 <span class="sub">(자궁내 호르몬 장치)</span></td><td class="price">350,000원</td></tr>
-              <tr><td class="item">카일리나 <span class="sub">(자궁내 호르몬 장치)</span></td><td class="price">380,000원</td></tr>
-              <tr><td class="item">임플라논 <span class="sub">(피하 이식형 호르몬 장치)</span></td><td class="price">360,000원</td></tr>
-              <tr><td class="item">유착방지제</td><td class="price">130,000원</td></tr>
-              <tr><td class="item">자궁내막생검 카테터</td><td class="price">25,000원</td></tr>
-              <tr><td class="item">생리유도주사 <span class="sub">(타이유 3cc)</span></td><td class="price">30,000원</td></tr>
-              <tr><td class="item">지혈주사 <span class="sub">(E2)</span></td><td class="price">20,000원</td></tr>
-              <tr><td class="item">산모수액 <span class="sub">(입덧 / 영양)</span></td><td class="price">30,000원 / 40,000원</td></tr>
-              <tr><td class="item">켈로이드 주사</td><td class="price">100,000원</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="price-section">
-        <h2 class="price-section-title">진정 (수면) 관리료</h2>
-        <div class="price-table-wrap">
-          <table class="price-table">
-            <tbody>
-              <tr><td class="item">산부인과 시술 수면비</td><td class="price">100,000원</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div><!-- /pane-obgyn -->
-
-    <div class="pricing-pane" id="pane-vaccines">
-
-      <div class="price-section">
-        <h2 class="price-section-title">예방접종</h2>
-        <div class="price-table-wrap">
-          <table class="price-table">
-            <tbody>
-              <tr><td class="item">대상포진 <span class="sub">(싱그릭스, 1회차)</span></td><td class="price">250,000원</td></tr>
-              <tr><td class="item">대상포진 <span class="sub">(싱그릭스, 2회차)</span></td><td class="price">200,000원</td></tr>
-              <tr><td class="item">자궁경부암 <span class="sub">(가다실 9가)</span></td><td class="price">200,000원</td></tr>
-              <tr><td class="item">폐렴구균 20가 <span class="sub">(프리베나 20)</span></td><td class="price">150,000원</td></tr>
-              <tr><td class="item">A형 간염</td><td class="price">60,000원</td></tr>
-              <tr><td class="item">B형 간염</td><td class="price">30,000원</td></tr>
-              <tr><td class="item">MMR <span class="sub">(홍역·볼거리·풍진)</span></td><td class="price">50,000원</td></tr>
-              <tr><td class="item">Td <span class="sub">(파상풍·디프테리아)</span></td><td class="price">35,000원</td></tr>
-              <tr><td class="item">Tdap <span class="sub">(파상풍·디프테리아·백일해)</span></td><td class="price">50,000원</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div><!-- /pane-vaccines -->
-
-    <div class="pricing-pane" id="pane-certificates">
-
-      <div class="price-section">
-        <h2 class="price-section-title">제증명</h2>
-        <div class="price-table-wrap">
-          <table class="price-table">
-            <tbody>
-              <tr><td class="item">일반진단서</td><td class="price">20,000원</td></tr>
-              <tr><td class="item">영문진단서</td><td class="price">30,000원</td></tr>
-              <tr><td class="item">시술확인서</td><td class="price">10,000원</td></tr>
-              <tr><td class="item">진료소견서</td><td class="price">10,000원</td></tr>
-              <tr><td class="item">진료(통원)확인서 <span class="sub">(병명코드)</span></td><td class="price">3,000원</td></tr>
-              <tr><td class="item">임신확인서</td><td class="price">3,000원</td></tr>
-              <tr><td class="item">진료기록 사본 <span class="sub">(1~5장)</span></td><td class="price">장당 1,000원</td></tr>
-              <tr><td class="item">진료기록 사본 <span class="sub">(6장 이상)</span></td><td class="price">장당 100원</td></tr>
-              <tr><td class="item">진단서 추가 발급 <span class="sub">(장당)</span></td><td class="price">1,000원</td></tr>
-              <tr><td class="item">영상자료 사본 <span class="sub">(CD)</span></td><td class="price">5,000원</td></tr>
-              <tr><td class="item">비급여 상담 / 처방료</td><td class="price">10,000 ~ 20,000원</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div><!-- /pane-certificates -->
-
-    <div class="info-box" style="margin-top:32px;">
-      <span class="info-label">참고</span>
-      위 가격은 변동될 수 있으며, 검사·시술의 종류 및 환자 상태에 따라 추가 비용이 발생할 수 있습니다. 자세한 사항은 진료를 통해 안내드립니다.
     </div>
+
+    <div class="price-pane" id="pane3">
+      <div class="price-group">
+        <h2>제증명</h2>
+        <table class="ptable"><tbody>
+          <tr><td>일반진단서</td><td>20,000원</td></tr>
+          <tr><td>영문진단서</td><td>30,000원</td></tr>
+          <tr><td>시술확인서</td><td>10,000원</td></tr>
+          <tr><td>진료소견서</td><td>10,000원</td></tr>
+          <tr><td>진료(통원)확인서 (병명코드)</td><td>3,000원</td></tr>
+          <tr><td>임신확인서</td><td>3,000원</td></tr>
+          <tr><td>진료기록 사본 (1~5장)</td><td>장당 1,000원</td></tr>
+          <tr><td>진료기록 사본 (6장 이상)</td><td>장당 100원</td></tr>
+          <tr><td>진단서 추가 발급 (장당)</td><td>1,000원</td></tr>
+          <tr><td>영상자료 사본 (CD)</td><td>5,000원</td></tr>
+          <tr><td>비급여 상담 / 처방료</td><td>10,000 ~ 20,000원</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div><h4>88플러스내과·산부인과</h4><p class="info-line"><span class="footer-addr"><strong>주소</strong> 서울시 노원구 동일로192길 74, 우은빌딩 2층 (경춘선 숲길 옆 올리브영 건물)</span><br><strong>전화</strong> 02-972-8800<br>사업자등록번호: 324-97-01375 · 대표자: 하영우</p></div>
+<section class="cta">
+  <h2 class="reveal">문의</h2>
+  <p class="reveal">검사 <b>예약</b>은 <a href="reservation.html">온라인 예약</a>에서 하실 수 있습니다.<br>
+    가격·준비사항이 궁금하시면 아래로 문의해 주세요.</p>
+  <div class="cta-btns reveal"><a class="cta-tel" href="tel:0229728800">02-972-8800</a></div>
+</section>
+</main>
+
+<footer class="ft">
+  <div class="ft-in">
+    <div class="ft-brand">
+      <img class="ft-logo" src="assets/img/logo.png" alt="88플러스내과·산부인과">
+      <p class="ft-tag">내과·산부인과 전문의 3인 협진</p>
     </div>
-    <div class="copyright">© 2026 88플러스내과·산부인과. All rights reserved.</div>
+    <div class="ft-info">
+      <p>서울시 노원구 동일로192길 74, 우은빌딩 2층</p>
+      <p>대표전화 <a href="tel:0229728800">02-972-8800</a></p>
+      <p>사업자등록번호 324-97-01375 · 대표자 하영우</p>
+    </div>
+    <div class="ft-links">
+      <a href="pricing.html">비급여 진료비용 고지</a>
+      <a href="reservation.html">온라인 예약</a>
+  <a href="reservation-lookup.html">내 예약</a>
+      <a href="location.html">오시는길</a>
+    </div>
   </div>
+  <p class="ft-copy">© 2026 88플러스내과·산부인과. All rights reserved.</p>
 </footer>
 
-<button class="to-top-btn" id="toTopBtn" aria-label="페이지 위로"><svg viewBox="0 0 24 24"><path d="M12 19V5 M5 12 L12 5 L19 12"/></svg></button>
 
+<!-- 우측 고정 퀵바 -->
+<nav class="quick" aria-label="빠른 메뉴">
+  <a class="pri" href="reservation.html"><span class="qi">📅</span>온라인<br>예약</a>
+  <a href="reservation-lookup.html"><span class="qi">🔍</span>내<br>예약</a>
+</nav>
+
+<script src="assets/js/main.js?v=07221830"></script>
 <script>
-const toggle = document.getElementById('menuToggle');
-const mobileNav = document.getElementById('mobileNav');
-if (toggle) toggle.addEventListener('click', () => mobileNav.classList.toggle('open'));
-
-// 비급여 안내 내과/산부인과 탭 토글
-document.querySelectorAll('.pricing-tab-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    const target = btn.dataset.target;
-    document.querySelectorAll('.pricing-tab-btn').forEach(b => b.classList.toggle('active', b === btn));
-    document.querySelectorAll('.pricing-pane').forEach(p => p.classList.toggle('active', p.id === target));
+document.querySelectorAll('.price-tab').forEach(function(b){
+  b.addEventListener('click', function(){
+    document.querySelectorAll('.price-tab').forEach(function(x){ x.classList.remove('on'); });
+    document.querySelectorAll('.price-pane').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    document.getElementById(b.dataset.pane).classList.add('on');
   });
 });
-(function() {
-  const btn = document.getElementById('toTopBtn');
-  if (!btn) return;
-  function check() {
-    if (window.pageYOffset > 240) btn.classList.add('visible');
-    else btn.classList.remove('visible');
-  }
-  window.addEventListener('scroll', check, { passive: true });
-  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  check();
-})();
 </script>
-
 </body>
 </html>
