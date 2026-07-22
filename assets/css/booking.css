@@ -195,6 +195,9 @@
   margin-top:4px; line-height:1.55; word-break:keep-all; }
 .bo-tog-t i b{ display:inline; color:var(--olive-dk); font-weight:700; }
 .bo-tog.on .bo-tog-t b{ color:var(--olive-dk); }
+/* 진료받으실 분 — 생년월일 판독 표시 */
+.bk-who-read{ margin-top:11px; font-size:13px; font-weight:700; color:var(--olive-dk);
+  background:var(--cream); border:1px solid var(--line); border-radius:9px; padding:9px 12px; }
 
 /* 위암검진 대상자 확인 방법 */
 .bk-opt .bx-help{ margin:10px 0 0; }

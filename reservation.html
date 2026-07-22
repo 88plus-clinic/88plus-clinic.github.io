@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <link rel="stylesheet" href="assets/css/style.css?v=07222340">
-<link rel="stylesheet" href="assets/css/booking.css?v=07230100">
+<link rel="stylesheet" href="assets/css/booking.css?v=07230200">
 </head>
 <body>
 
@@ -79,7 +79,42 @@
       </ul>
     </div>
 
-    <!-- ── 3단 선택 ─────────────────────────────── -->
+    <!-- 0) 진료받으실 분 (맨 위 — 생년월일로 대상 검진을 맞춤 안내) -->
+    <div class="bk-panel bk-who">
+      <h2 class="bp-h">진료받으실 분</h2>
+      <p class="bp-sub">먼저 알려주시면, 함께 받으실 수 있는 검진을 맞춤으로 안내해 드려요.</p>
+      <div class="bk-grid">
+        <div class="bk-field">
+          <label for="fName">이름 <b>*</b></label>
+          <input type="text" id="fName" autocomplete="name" required maxlength="20">
+          <span class="bk-help">대신 예약하시는 경우에도 <b>진료받으실 분</b>의 이름·주민등록번호를 적어주세요</span>
+        </div>
+        <!-- 주민등록번호는 뒷자리 1칸(성별)까지만 받는다 — 생년월일·성별을 위한 최소 수집. -->
+        <div class="bk-field">
+          <label for="fRrn1">주민등록번호 <b>*</b></label>
+          <div class="bk-rrn">
+            <input type="text" id="fRrn1" inputmode="numeric" placeholder="예) 850312" required maxlength="6">
+            <span class="bk-dash">-</span>
+            <input type="text" id="fRrn2" inputmode="numeric" placeholder="1" required maxlength="1">
+            <span class="bk-mask">●●●●●●</span>
+          </div>
+          <span class="bk-help">뒷자리는 <b>첫 한 자리만</b> 입력해 주세요 (성별 확인용)</span>
+        </div>
+        <div class="bk-field">
+          <label for="fPh2">휴대전화 <b>*</b></label>
+          <div class="bk-phone">
+            <input type="tel" id="fPh1" inputmode="numeric" maxlength="3" value="010">
+            <span class="bk-dash">-</span>
+            <input type="tel" id="fPh2" inputmode="numeric" maxlength="4" placeholder="0000">
+            <span class="bk-dash">-</span>
+            <input type="tel" id="fPh3" inputmode="numeric" maxlength="4" placeholder="0000">
+          </div>
+        </div>
+      </div>
+      <div class="bk-who-read" id="bkWho" hidden></div>
+    </div>
+
+    <!-- ── 항목·날짜·시간 ─────────────────────────── -->
     <div class="bk-panels">
 
       <!-- 1) 항목 -->
@@ -129,43 +164,13 @@
             예약하는 경우가 있어(원장 2026-07-21), 제목부터 '진료받으실 분'으로 못 박는다.
             이름·생년월일이 어긋나면 환자DB 매칭과 검진 대상 추정이 통째로 틀어진다. -->
     <div class="bk-formwrap" id="bkFormWrap">
-      <h2 class="bp-h bp-h2">진료받으실 분 정보</h2>
+      <h2 class="bp-h bp-h2">확인 및 신청</h2>
       <div class="bk-picked" id="bkSummary"></div>
 
       <form id="bkForm" novalidate>
         <div class="bk-extra" id="bkExtra" hidden></div>
 
         <div class="bk-grid">
-          <div class="bk-field">
-            <label for="fName">이름 <b>*</b></label>
-            <input type="text" id="fName" autocomplete="name" required maxlength="20">
-            <span class="bk-help">대신 예약하시는 경우에도 <b>진료받으실 분</b>의
-              이름·주민등록번호를 적어주세요</span>
-          </div>
-          <!-- 주민등록번호는 **뒷자리 1칸(성별)까지만** 받는다. 나머지 6자리는 받지도,
-               저장하지도 않는다 — 생년월일과 성별을 알기 위한 최소 수집이다. -->
-          <div class="bk-field">
-            <label for="fRrn1">주민등록번호 <b>*</b></label>
-            <div class="bk-rrn">
-              <input type="text" id="fRrn1" inputmode="numeric" placeholder="예) 850312"
-                     required maxlength="6">
-              <span class="bk-dash">-</span>
-              <input type="text" id="fRrn2" inputmode="numeric" placeholder="1"
-                     required maxlength="1">
-              <span class="bk-mask">●●●●●●</span>
-            </div>
-            <span class="bk-help">뒷자리는 <b>첫 한 자리만</b> 입력해 주세요 (성별 확인용)</span>
-          </div>
-          <div class="bk-field">
-            <label for="fPh2">휴대전화 <b>*</b></label>
-            <div class="bk-phone">
-              <input type="tel" id="fPh1" inputmode="numeric" maxlength="3" value="010">
-              <span class="bk-dash">-</span>
-              <input type="tel" id="fPh2" inputmode="numeric" maxlength="4" placeholder="0000">
-              <span class="bk-dash">-</span>
-              <input type="tel" id="fPh3" inputmode="numeric" maxlength="4" placeholder="0000">
-            </div>
-          </div>
           <div class="bk-field">
             <label for="fMemo">남기실 말씀 (선택)</label>
             <input type="text" id="fMemo" maxlength="200">
@@ -268,7 +273,7 @@
 </nav>
 
 <script src="assets/js/main.js?v=07221700"></script>
-<script src="assets/js/booking.js?v=07230100"></script>
+<script src="assets/js/booking.js?v=07230200"></script>
 <script src="assets/js/chat.js?v=07231500"></script>
 </body>
 </html>

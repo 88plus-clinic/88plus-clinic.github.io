@@ -490,20 +490,51 @@
     antiNote(); syncSummary();
   }
 
-  /* 국가건강검진 동반 희망 — **내시경 예약에만**. 나이 판정·자동배정 없이 '희망'만 받고,
-     대상 확정은 데스크가 공단 조회로 처리한다(원장 확정 2026-07-23). */
+  /* 진료받으실 분 프로필 — 주민 앞자리로 성별·나이 추정(대상 안내용). */
+  function profile() {
+    var f1 = $('#fRrn1'), f2 = $('#fRrn2');
+    var six = (f1 && f1.value || '').replace(/\D/g, '');
+    var code = (f2 && f2.value || '').replace(/\D/g, '').slice(0, 1);
+    if (six.length < 6 || !code) return null;
+    var r = parseRrn(six, code);
+    if (!r) return null;
+    var year = +r.birth.slice(0, 4);
+    return { gender: r.gender, age: (new Date()).getFullYear() - year, year: year };
+  }
+
+  // 주민 앞자리 입력 시 — 성별·나이 표시 + 나이 맞춤 안내 갱신
+  function onProfileInput() {
+    var p = profile(), w = $('#bkWho');
+    if (w) {
+      if (p) { w.textContent = (p.gender === 'F' ? '여성' : '남성') + ' · 만 ' + p.age + '세 (' + p.year + '년생)'; w.hidden = false; }
+      else { w.hidden = true; w.textContent = ''; }
+    }
+    renderTogether();
+  }
+
+  /* 국가건강검진 동반 희망 — **내시경 예약에만**. 생년월일에 맞춰 문구만 바뀌고(대상 가능성 안내),
+     자동배정은 없다. 대상 확정은 데스크가 공단 조회로 처리(원장 확정 2026-07-23). */
   function renderTogether() {
     var box = $('#bkTog');
     if (!box) return;
     if (!state.type || state.type.res !== 'ENDO') {   // 내시경(위/대장) 예약에만 노출
       box.hidden = true; box.innerHTML = ''; state.together = false; return;
     }
+    var p = profile();
+    var title = '국가건강검진도 함께 받길 원해요';
+    var hint = '유방촬영·자궁경부암 검사 등. ';
+    if (p && p.gender === 'F' && p.age >= 40) {
+      title = '유방암·자궁경부암 검진도 함께 받으시겠어요?';
+      hint = '만 ' + p.age + '세시면 올해 대상일 수 있어요(유방촬영·자궁경부암). ';
+    } else if (p && p.gender === 'F' && p.age >= 20) {
+      title = '자궁경부암 검진도 함께 받으시겠어요?';
+      hint = '만 ' + p.age + '세시면 올해 자궁경부암 대상일 수 있어요. ';
+    }
     box.innerHTML =
       '<label class="bo-tog' + (state.together ? ' on' : '') + '">' +
       '<input type="checkbox" id="xTog"' + (state.together ? ' checked' : '') + '>' +
-      '<span class="bo-tog-t"><b>국가건강검진도 함께 받길 원해요</b>' +
-      '<i>유방촬영·자궁경부암 검사 등. 대상 여부는 병원에서 <b>공단 조회 후 확인</b>해 안내드립니다. ' +
-      '원치 않으시면 비워두세요.</i></span></label>';
+      '<span class="bo-tog-t"><b>' + title + '</b>' +
+      '<i>' + hint + '대상 여부는 병원에서 <b>공단 조회 후 확인</b>해 안내드립니다. 원치 않으시면 비워두세요.</i></span></label>';
     box.hidden = false;
   }
 
@@ -760,9 +791,11 @@
     $('#fRrn1').addEventListener('input', function (e) {
       e.target.value = e.target.value.replace(/[^\d]/g, '');
       if (e.target.value.length === 6) $('#fRrn2').focus();   // 6자리 채우면 자동 이동
+      onProfileInput();
     });
     $('#fRrn2').addEventListener('input', function (e) {
       e.target.value = e.target.value.replace(/[^\d]/g, '').slice(0, 1);
+      onProfileInput();
     });
     $('#bkExtra').addEventListener('change', onExtraChange);
     $('#bkForm').addEventListener('submit', submit);
