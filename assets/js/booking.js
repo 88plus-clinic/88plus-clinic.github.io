@@ -177,10 +177,11 @@
      위암·대장암은 내시경이라 종류 코드(state.endo)로 연결돼 내시경실 자리를 잡고,
      유방암·자궁경부암은 여성만·방사선/산부인과로 배정된다(원장 확정 2026-07-23). */
   var CHECKUP_SCREEN = [
-    { k:'위암',     endo:'gastro', label:'위암검진 (위내시경)',      sub:'만 40세 이상 · 2년마다',      min:40 },
-    { k:'대장암',   endo:'colon',  label:'대장암검진 (대장내시경)',  sub:'만 50세 이상 · 사전 진료 필요', min:50 },
-    { k:'유방암',   label:'유방암검진 (유방촬영)',    sub:'만 40세 이상 여성 · 2년마다', min:40, sex:'F' },
-    { k:'자궁경부암', label:'자궁경부암검진',          sub:'만 20세 이상 여성 · 2년마다', min:20, sex:'F' }
+    { k:'위암',     endo:'gastro', label:'위암검진 (위내시경)',   sub:'만 40세 이상 · 2년마다', min:40 },
+    // 국가 대장암검진은 **분변검사(FOBT)** — 대장내시경이 아니라 내시경실 자리·항혈전제와 무관하다.
+    { k:'대장암',   label:'대장암검진 (분변검사)',  sub:'만 50세 이상 · 분변검사',  min:50 },
+    { k:'유방암',   label:'유방암검진 (유방촬영)',  sub:'만 40세 이상 여성 · 2년마다', min:40, sex:'F' },
+    { k:'자궁경부암', label:'자궁경부암검진',        sub:'만 20세 이상 여성 · 2년마다', min:20, sex:'F' }
   ];
 
   // 자원별 운영 구간 [요일들, 시작, 끝]  (0=일 … 6=토)  ※ JS는 0=일
@@ -196,7 +197,7 @@
 
   var closedDays = [];         // 공휴일·일요일 (assets/closed-days.json)
   var state = { group:GROUPS[0], sub:null, type:null, endo:'', sedation:'sleep',
-               anti:'', together:false, screens:{}, date:null, time:null };
+               anti:'', together:'', screens:{}, date:null, time:null };
   var viewMonth;
 
   // ── 유틸 ────────────────────────────────────────
@@ -427,8 +428,8 @@
   // 암검진 체크 토글 — 위암/대장암은 내시경 종류(state.endo)로 연결(리드타임·자원 갱신)
   function toggleScreen(k) {
     state.screens[k] = !state.screens[k];
-    var g = !!state.screens['위암'], c = !!state.screens['대장암'];
-    var ne = (g && c) ? 'both' : g ? 'gastro' : c ? 'colon' : '';
+    // 위암만 위내시경으로 연결(내시경실). 대장암은 분변검사라 내시경 아님.
+    var ne = state.screens['위암'] ? 'gastro' : '';
     if (ne !== state.endo) {                       // 내시경 구성이 바뀌면 리드타임·달력 갱신
       state.endo = ne; state.date = null; state.time = null;
       renderMonth(viewMonth || new Date()); renderTimes(); showWarn(); renderSed(); renderAnti();
@@ -551,10 +552,10 @@
     var box = $('#bkTog');
     if (!box) return;
     if (!state.type || state.type.res !== 'ENDO') {   // 내시경(위/대장) 예약에만 노출
-      box.hidden = true; box.innerHTML = ''; state.together = false; return;
+      box.hidden = true; box.innerHTML = ''; state.together = ''; return;
     }
     var p = profile();
-    var title = '국가건강검진도 함께 받길 원해요';
+    var title = '국가건강검진도 함께 받으시겠어요?';
     var hint = '유방촬영·자궁경부암 검사 등. ';
     if (p && p.gender === 'F' && p.age >= 40) {
       title = '유방암·자궁경부암 검진도 함께 받으시겠어요?';
@@ -564,10 +565,10 @@
       hint = '만 ' + p.age + '세시면 올해 자궁경부암 대상일 수 있어요. ';
     }
     box.innerHTML =
-      '<label class="bo-tog' + (state.together ? ' on' : '') + '">' +
-      '<input type="checkbox" id="xTog"' + (state.together ? ' checked' : '') + '>' +
-      '<span class="bo-tog-t"><b>' + title + '</b>' +
-      '<i>' + hint + '대상 여부는 병원에서 <b>공단 조회 후 확인</b>해 안내드립니다. 원치 않으시면 비워두세요.</i></span></label>';
+      '<p class="bo-h">' + title + ' <span>(필수)</span></p>' +
+      '<label class="bo-item"><input type="radio" name="xTog" value="yes"' + (state.together === 'yes' ? ' checked' : '') + '><span>예, 함께 받고 싶어요</span></label>' +
+      '<label class="bo-item"><input type="radio" name="xTog" value="no"' + (state.together === 'no' ? ' checked' : '') + '><span>아니요, 내시경만 받을게요</span></label>' +
+      '<p class="bo-note">' + hint + '대상 여부는 병원에서 <b>공단 조회 후 확인</b>해 안내드립니다.</p>';
     box.hidden = false;
   }
 
@@ -595,7 +596,7 @@
   function pickType(code) {
     state.type = TYPES.filter(function (t) { return t.code === code; })[0];
     state.endo = ''; state.date = null; state.time = null; state.anti = '';
-    state.together = false; state.screens = {};
+    state.together = ''; state.screens = {};
     renderChips(); renderOpt(); renderSed(); renderAnti(); renderTogether();
     renderMonth(viewMonth || new Date());
     renderTimes();
@@ -781,9 +782,8 @@
       if (e.target.name === 'xAnti') pickAnti(e.target.value);
     });
     $('#bkTog').addEventListener('change', function (e) {
-      if (e.target.id !== 'xTog') return;
-      state.together = e.target.checked;
-      var l = $('#bkTog .bo-tog'); if (l) l.classList.toggle('on', state.together);
+      if (e.target.name !== 'xTog') return;
+      state.together = e.target.value;               // 'yes' | 'no'
       syncSummary();
     });
     $('#bkOpt').addEventListener('change', function (e) {
@@ -843,6 +843,11 @@
     if (!state.type) return alert('예약 항목을 선택해 주세요.');
     if (!state.date) return alert('예약 날짜를 선택해 주세요.');
     if (!state.time) return alert('예약 시간을 선택해 주세요.');
+    // 내시경 예약 — 국가검진 함께 여부를 반드시 고르게 한다(예/아니오)
+    if (state.type.res === 'ENDO' && !state.together) {
+      $('#bkTog').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return alert('국가건강검진을 함께 받으실지 선택해 주세요. (예 / 아니오)');
+    }
     // 대장내시경은 항혈전제 확인이 안전과 직결 — 빈칸으로 넘어가지 못하게 막는다
     if (hasColon() && !state.anti) {
       $('#bkAnti').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -911,8 +916,8 @@
       // — 데스크가 공단 조회로 확정한다. 위암/대장암은 예약 종류(내시경 포함)로 이미 반영됨.
       memo: (function () {
         var f = [];
-        if (state.together) f.push('국가검진 함께 희망');
-        var scr = ['유방암', '자궁경부암'].filter(function (k) { return state.screens[k]; });
+        if (state.together === 'yes') f.push('국가검진 함께 희망');
+        var scr = ['대장암', '유방암', '자궁경부암'].filter(function (k) { return state.screens[k]; });
         if (scr.length) f.push('함께 검진: ' + scr.join(', '));
         return (f.length ? '[' + f.join(' / ') + '] ' : '') + $('#fMemo').value.trim();
       })()
