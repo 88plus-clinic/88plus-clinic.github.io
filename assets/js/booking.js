@@ -943,7 +943,10 @@
       }
       $('#bkDoneWarn').innerHTML = $('#bkTypeWarn').innerHTML;
       $('#bkDoneWarn').hidden = $('#bkTypeWarn').hidden;
-      document.querySelector('.bk-panels').hidden = true;
+      // 완료 화면이 맨 위로 오도록 상단 안내·입력부를 모두 숨긴다
+      ['.bk-openinfo', '.bk-intro', '.bk-who', '.bk-panels', '.bk-typewarn'].forEach(function (s) {
+        var el = document.querySelector(s); if (el) el.hidden = true;
+      });
       $('#bkFormWrap').hidden = true;
       $('#bkDoneView').hidden = false;
       window.scrollTo({ top: 0, behavior: 'smooth' });
