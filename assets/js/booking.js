@@ -211,6 +211,9 @@
     return String(Math.floor(m/60)).padStart(2,'0') + ':' + String(m%60).padStart(2,'0');
   };
   var dateOf = function (s) { var p = s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); };
+  // 자궁경부암 검진은 산부인과에서만 → 목요일(산부인과 휴진)엔 불가. 유방암(방사선)은 목요일도 가능.
+  function papClosed(s) { return !!s && OBGY_CLOSED_DOW.indexOf(dateOf(s).getDay()) >= 0; }
+  var PAP_THU_MSG = '목요일은 산부인과가 휴진이라 자궁경부암 검진은 어렵습니다.\n자궁경부암도 함께 받으시려면 다른 요일을 선택해 주세요.';
 
   /* 주민등록번호 앞 6자리 + 뒷자리 첫 한 자리 → 생년월일 8자리 + 성별.
      **뒷자리는 이 한 자리 외에는 받지 않는다** — 주민등록번호를 수집하지 않기 위해서다.
@@ -427,6 +430,12 @@
 
   // 암검진 체크 토글 — 위암/대장암은 내시경 종류(state.endo)로 연결(리드타임·자원 갱신)
   function toggleScreen(k) {
+    // 자궁경부암은 산부인과 진료일에만 — 목요일이 선택돼 있으면 체크하지 않고 안내(목요일은 유지)
+    if (k === '자궁경부암' && !state.screens[k] && papClosed(state.date)) {
+      alert(PAP_THU_MSG);
+      renderOpt();                 // 자궁경부암은 체크되지 않은 상태(제외)로 되돌린다
+      return;
+    }
     state.screens[k] = !state.screens[k];
     // 위암만 위내시경으로 연결(내시경실). 대장암은 분변검사라 내시경 아님.
     var ne = state.screens['위암'] ? 'gastro' : '';
@@ -823,7 +832,14 @@
     $('#bkDays').addEventListener('click', function (e) {
       var b = e.target.closest('.bk-day'); if (!b || b.disabled) return;
       if (b.classList.contains('phone')) { phoneNotice(); return; }   // 당일·익일 → 전화 안내
-      state.date = b.dataset.d; state.time = null;
+      var pd = b.dataset.d;
+      // 자궁경부암을 고른 채 목요일(산부인과 휴진)을 선택하면 자궁경부암만 빼고 목요일은 유지한다
+      if (state.screens['자궁경부암'] && papClosed(pd)) {
+        alert(PAP_THU_MSG);
+        state.screens['자궁경부암'] = false;
+        renderOpt();
+      }
+      state.date = pd; state.time = null;
       renderMonth(viewMonth); loadAvail(); syncSummary();
     });
     $('#bkTimes').addEventListener('click', function (e) {
