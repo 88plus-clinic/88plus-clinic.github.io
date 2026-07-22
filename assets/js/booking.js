@@ -10,6 +10,7 @@
   // ⚠ 도메인이 바뀌면 서버의 ALLOW_ORIGINS(/opt/booking/.env)도 같이 고쳐야 CORS 가 통과한다.
   var API_URL = 'https://api.88plus.co.kr/api/bookings';
   var API_CHANGE = 'https://api.88plus.co.kr/api/bookings/change';
+  var API_AVAIL = 'https://api.88plus.co.kr/api/availability';   // 마감(정원 초과) 시간 조회
 
   /* 시간 변경 모드 — 조회 화면(lookup.js)에서 넘어온다.
      같은 달력·시간 규칙을 두 번 만들지 않으려고 이 화면을 재사용한다.
@@ -573,6 +574,25 @@
   }
 
   // ── 3) 시간 ─────────────────────────────────────
+  // 그 날짜의 마감(정원 초과) 시간 — 허브 실제 점유(EGHIS 포함)를 VPS에서 받아 온다.
+  var fullTimes = [];
+  var availSeq = 0;
+  function loadAvail() {
+    fullTimes = [];
+    if (!state.type || !state.date) { renderTimes(); return; }
+    var seq = ++availSeq;
+    renderTimes();               // 우선 그려두고(로딩), 응답 오면 마감표시 갱신
+    fetch(API_AVAIL + '?type=' + encodeURIComponent(state.type.code) +
+          '&date=' + encodeURIComponent(state.date))
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (seq !== availSeq) return;          // 그 사이 날짜/항목이 바뀌면 무시
+        fullTimes = (j && j.full) || [];
+        renderTimes();
+      })
+      .catch(function () { /* 조회 실패 시 그냥 전체 노출(서버 hold가 최종 방어) */ });
+  }
+
   function renderTimes() {
     var lbl = $('#bkPickedDate'), box = $('#bkTimes');
     if (!state.type) {
@@ -586,8 +606,12 @@
     lbl.textContent = fmtDate(state.date);
     var ts = timesFor(state.type, dateOf(state.date));
     box.innerHTML = ts.map(function (t) {
-      return '<button type="button" class="bk-time' + (state.time === t ? ' on' : '') +
-             '" data-t="' + t + '">' + t + '</button>';
+      var full = fullTimes.indexOf(t) >= 0;    // 정원 마감
+      return '<button type="button" class="bk-time' +
+             (state.time === t ? ' on' : '') + (full ? ' full' : '') + '"' +
+             (full ? ' disabled aria-disabled="true"' : '') +
+             ' data-t="' + t + '">' + t +
+             (full ? '<span class="bk-full">마감</span>' : '') + '</button>';
     }).join('') || '<p class="bk-empty">선택 가능한 시간이 없습니다.</p>';
   }
 
@@ -643,10 +667,10 @@
     $('#bkDays').addEventListener('click', function (e) {
       var b = e.target.closest('.bk-day'); if (!b || b.disabled) return;
       state.date = b.dataset.d; state.time = null;
-      renderMonth(viewMonth); renderTimes(); syncSummary();
+      renderMonth(viewMonth); loadAvail(); syncSummary();
     });
     $('#bkTimes').addEventListener('click', function (e) {
-      var b = e.target.closest('.bk-time'); if (!b) return;
+      var b = e.target.closest('.bk-time'); if (!b || b.disabled) return;  // 마감 시간은 선택 불가
       state.time = b.dataset.t;
       renderTimes(); syncSummary();
     });
