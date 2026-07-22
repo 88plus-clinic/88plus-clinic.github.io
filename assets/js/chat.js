@@ -73,7 +73,8 @@
   + '.chat-send:hover{background:#3F5A14;}.chat-send:disabled{background:#C7C7BC;cursor:default;}'
   + '.chat-send svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}'
   + '.chat-warn{font-size:10.5px;color:#8A8A80;text-align:center;padding:0 14px 9px;line-height:1.45;}'
-  + '@media (max-width:420px){.chat{right:8px;bottom:8px;width:calc(100vw - 16px);height:calc(100vh - 16px);}'
+  + '@media (max-width:420px){'
+  +   '.chat{top:8px;right:8px;bottom:8px;left:8px;width:auto;height:auto;}'   /* 100vh 대신 상하 여백 기준 — 주소창에 헤더가 가리지 않게 */
   +   '.dori-fab{right:14px;}}'
   + '@media (prefers-reduced-motion:reduce){.dori-egg{animation:none;}.chat.open{animation:none;}.dori-bubble{animation:none;}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
