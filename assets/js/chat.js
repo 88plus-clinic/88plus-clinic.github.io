@@ -46,8 +46,8 @@
   + '.chat-hd .hd-egg{width:42px;height:42px;border-radius:50%;overflow:hidden;background:#fff;flex:0 0 auto;}'
   + '.chat-hd .hd-egg img{width:100%;height:100%;object-fit:cover;display:block;}'
   + '.chat-hd-tx{flex:1;min-width:0;line-height:1.3;}'
-  + '.chat-hd-t{font-size:15px;font-weight:800;}'
-  + '.chat-hd-s{font-size:11.5px;color:rgba(255,255,255,.82);font-weight:500;}'
+  + '.chat-hd-t{display:block;font-size:15px;font-weight:800;line-height:1.25;}'
+  + '.chat-hd-s{display:block;font-size:11.5px;color:rgba(255,255,255,.82);font-weight:500;margin-top:1px;}'
   + '.chat-x{flex:0 0 auto;width:30px;height:30px;border:none;cursor:pointer;background:rgba(255,255,255,.14);'
   +   'color:#fff;border-radius:9px;font-size:18px;display:grid;place-items:center;transition:background .2s;}'
   + '.chat-x:hover{background:rgba(255,255,255,.26);}'
@@ -95,8 +95,8 @@
   panel.setAttribute('aria-label','88챗봇 대화'); panel.setAttribute('role','dialog');
   panel.innerHTML =
       '<header class="chat-hd">' + eggImg('hd-egg')
-    +   '<span class="chat-hd-tx"><span class="chat-hd-t">88챗봇 · 88돌이</span>'
-    +   '<span class="chat-hd-s">검사 · 예약 · 진료 안내를 도와드려요</span></span>'
+    +   '<span class="chat-hd-tx"><span class="chat-hd-t">88돌이 챗봇</span>'
+    +   '<span class="chat-hd-s">검사, 예약, 진료 안내를 도와드려요</span></span>'
     +   '<button class="chat-x" id="chatX" aria-label="닫기">×</button></header>'
     + '<div class="chat-body" id="chatBody" aria-live="polite"></div>'
     + '<div class="chat-chips" id="chatChips">'
@@ -108,7 +108,7 @@
     +   '<input id="chatText" type="text" placeholder="궁금한 점을 입력하세요" autocomplete="off" maxlength="200" aria-label="질문 입력">'
     +   '<button class="chat-send" id="chatSend" type="submit" aria-label="보내기">'
     +   '<svg viewBox="0 0 24 24"><path d="m4 12 16-8-6 16-3-6-7-2z"/></svg></button></form>'
-    + '<p class="chat-warn">안내용 자동응답입니다 · 개인정보(이름·주민번호·연락처)는 입력하지 마세요 · 정확한 상담은 <b>02-972-8800</b></p>';
+    + '<p class="chat-warn"><b>AI 자동응답</b>이라 내용이 정확하지 않을 수 있어요 · 개인정보(이름·주민번호·연락처)는 입력하지 마세요 · 정확한 안내는 <b>02-972-8800</b></p>';
   document.body.appendChild(panel);
 
   // 모바일 하단 고정 바(.quick)가 있는 페이지면 FAB 를 그 위로 올린다
@@ -138,7 +138,19 @@
 
   function el(cls, txt){ var d=document.createElement('div'); d.className='msg '+cls;
     if(txt!=null) d.textContent=txt; body.appendChild(d); body.scrollTop=body.scrollHeight; return d; }
-  function bot(t){ return el('bot', t); }
+  // 봇 답변만 최소 렌더: HTML 이스케이프 → **굵게** → URL 링크(새 탭)
+  function esc(s){ return (s||'').replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function renderMd(t){
+    var s = esc(t);
+    s = s.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+    s = s.replace(/(https?:\/\/[^\s<]+)/g, function(u){
+      var clean = u.replace(/[.,]+$/, '');
+      return '<a href="'+clean+'" target="_blank" rel="noopener">'+clean+'</a>' + u.slice(clean.length);
+    });
+    return s;
+  }
+  function bot(t){ var d=el('bot'); d.innerHTML=renderMd(t); body.scrollTop=body.scrollHeight; return d; }
   function me2(t){ return el('me', t); }
 
   var PII = [/\d{6}\s*[-–]\s*[1-4]\d{6}/, /01[016-9][\s-]?\d{3,4}[\s-]?\d{4}/];
