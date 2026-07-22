@@ -198,6 +198,10 @@
 /* 진료받으실 분 — 생년월일 판독 표시 */
 .bk-who-read{ margin-top:11px; font-size:13px; font-weight:700; color:var(--olive-dk);
   background:var(--cream); border:1px solid var(--line); border-radius:9px; padding:9px 12px; }
+/* 진료받으실 분(맨 위) — 항목·날짜·시간 3열과 리듬이 끊기지 않게 여백·폭을 정돈 */
+.bk-who{ margin-bottom:18px; padding-bottom:20px; }
+.bk-who .bk-grid{ grid-template-columns:1.2fr 1.2fr 1.4fr; }
+@media (max-width:760px){ .bk-who .bk-grid{ grid-template-columns:1fr; } }
 
 /* 위암검진 대상자 확인 방법 */
 .bk-opt .bx-help{ margin:10px 0 0; }
