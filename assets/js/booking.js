@@ -444,6 +444,14 @@
     return !!(state.type.endoOpt && state.endo);
   }
 
+  /* 항혈전제(피 묽게 하는 약)는 **대장내시경일 때만** 묻는다 — 위내시경은 약을 끊지 않고
+     그대로 시행하기 때문(원장 지시 2026-07-23). 조직검사·용종절제 출혈 위험은 대장에서 크다. */
+  function hasColon() {
+    if (!state.type) return false;
+    if (state.type.code === 'endo_colon' || state.type.code === 'endo_both') return true;
+    return !!(state.type.endoOpt && (state.endo === 'colon' || state.endo === 'both'));
+  }
+
   function renderSed() {
     var box = $('#bkSed');
     if (!box) return;
@@ -477,7 +485,7 @@
   function renderAnti() {
     var box = $('#bkAnti');
     if (!box) return;
-    if (!hasEndo()) { box.hidden = true; box.innerHTML = ''; state.anti = ''; return; }
+    if (!hasColon()) { box.hidden = true; box.innerHTML = ''; state.anti = ''; return; }
     box.innerHTML =
       '<p class="bo-h">피가 묽어지는 약(항혈전제)을 드시고 계신가요? <span>(필수)</span></p>' +
       ANTI_OPTS.map(function (o) {
@@ -835,8 +843,8 @@
     if (!state.type) return alert('예약 항목을 선택해 주세요.');
     if (!state.date) return alert('예약 날짜를 선택해 주세요.');
     if (!state.time) return alert('예약 시간을 선택해 주세요.');
-    // 내시경은 항혈전제 확인이 안전과 직결 — 빈칸으로 넘어가지 못하게 막는다
-    if (hasEndo() && !state.anti) {
+    // 대장내시경은 항혈전제 확인이 안전과 직결 — 빈칸으로 넘어가지 못하게 막는다
+    if (hasColon() && !state.anti) {
       $('#bkAnti').scrollIntoView({ behavior: 'smooth', block: 'center' });
       return alert('피가 묽어지는 약(항혈전제) 복용 여부를 선택해 주세요.\n' +
                    '잘 모르시면 "잘 모르겠습니다"를 선택하시면 됩니다.');
@@ -895,7 +903,7 @@
       name: name, birth: birth, phone: phone, gender: g.value,
       endo_included: endoOpt ? endoOpt.name : '',
       sedation: hasEndo() ? state.sedation : '',
-      antithrombotic: hasEndo() ? state.anti : '',
+      antithrombotic: hasColon() ? state.anti : '',
       addons: addons.map(function (c) { return ADDON_MAP[c].n; }),
       reasons: reasons,
       addon_etc: addonEtc,
