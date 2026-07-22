@@ -71,7 +71,7 @@
   // 예약 종류 — code: 서버 BOOKING_TYPES 와 동일
   var TYPES = [
     { code:'checkup_nhis',      name:'국가공단검진',        group:'검진', res:'CHECKUP', step:60, need:1,
-      note:'만 20세 이상 대상자 · 검진비 무료', endoOpt:true },
+      note:'만 20세 이상 대상자 · 검진비 무료 또는 본인부담 10%', endoOpt:true },
     { code:'checkup_nhis_plus', name:'공단검진 + 추가검진', group:'검진', res:'CHECKUP', step:60, need:1,
       note:'공단검진에 원하시는 항목을 추가', endoOpt:true, addons:true },
     { code:'checkup_employ',    name:'채용검진',            group:'검진', res:'CHECKUP', step:60, need:1,
