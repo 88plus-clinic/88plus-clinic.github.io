@@ -104,6 +104,10 @@
 }
 .bk-day:hover:not(.off){ background:var(--cream-dp); }
 .bk-day.off{ color:#D2D2CA; cursor:default; }
+/* 당일·익일 등 — 비활성처럼 죽이지 않고, 눌러보면 전화 안내가 뜨도록 (점선 밑줄로 힌트) */
+.bk-day.phone{ color:#A8A594; cursor:pointer; text-decoration:underline dotted #C7B27A;
+  text-underline-offset:3px; }
+.bk-day.phone:hover{ background:var(--cream-dp); color:var(--olive); }
 .bk-day.sel{ background:var(--olive); color:#fff; font-weight:700; }
 .bk-day.sel:hover{ background:var(--olive); }
 

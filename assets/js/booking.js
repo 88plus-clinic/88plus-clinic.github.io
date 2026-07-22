@@ -25,6 +25,10 @@
   } catch (e) { CHG = null; }
   var MIN_LEAD_DAYS = 2;     // 검진·내시경 — 당일·익일 예약 불가
   var HORIZON_DAYS = 90;
+  /* 익일 컷오프(원장 확정 2026-07-22) — 검진·내시경은 오후 4시 전이면 익일까지 가능,
+     4시 이후엔 익일도 막고 모레부터. 이유: 16시 이후 들어온 익일 예약은 직원 퇴근 후라
+     확정을 못 해준다(환자는 됐다고 알고 오면 서로 난감). 산부인과는 자동확정이라 예외. */
+  var CUTOFF_HOUR = 16;
   /* 진료(내과·산부인과)는 당일 예약 허용(lead:0).
      다만 지금 바로는 안 되고 **현재 시각 + 2시간** 뒤부터 (원장 확정 2026-07-20). */
   var SAME_DAY_CUTOFF_H = 2;
@@ -246,16 +250,30 @@
     if (type.endoOpt && (state.endo === 'colon' || state.endo === 'both')) {
       l = Math.max(l, COLON_LEAD_DAYS);
     }
+    // 검진·내시경(기본 lead 2)만 시간대 컷오프: 16시 전 → 익일 가능(1), 이후 → 모레부터(2)
+    if (l === MIN_LEAD_DAYS) {
+      l = (new Date().getHours() < CUTOFF_HOUR) ? 1 : MIN_LEAD_DAYS;
+    }
     return l;
   }
 
-  function bookableDate(type, d) {
-    if (!type) return false;
-    var min = new Date(); min.setHours(0,0,0,0);
-    min.setDate(min.getDate() + leadOf(type));
-    var max = new Date(); max.setDate(max.getDate() + HORIZON_DAYS);
-    if (d < min || d > max) return false;
-    return timesFor(type, d).length > 0;
+  /* 날짜 상태: 'ok'(예약가능) · 'phone'(당일·익일 등 리드타임에 걸림 → 전화) · 'off'(과거·휴진·범위밖) */
+  function dayState(type, d) {
+    if (!type) return 'off';
+    var today = new Date(); today.setHours(0,0,0,0);
+    var max = new Date(); max.setHours(0,0,0,0); max.setDate(max.getDate() + HORIZON_DAYS);
+    if (d < today || d > max) return 'off';
+    if (timesFor(type, d).length === 0) return 'off';      // 휴진
+    var min = new Date(today); min.setDate(min.getDate() + leadOf(type));
+    return (d < min) ? 'phone' : 'ok';
+  }
+
+  function bookableDate(type, d) { return dayState(type, d) === 'ok'; }
+
+  function phoneNotice() {
+    alert('가까운 날짜(당일·내일)는 전화로 예약을 도와드리고 있어요.\n\n' +
+          '☎ 02-972-8800\n\n' +
+          '번거로우시겠지만 전화 주시면 바로 잡아드리겠습니다. 감사합니다.');
   }
 
   /* 예약 종류 코드(예: checkup_nhis_endo) → 기본 항목 + 내시경 옵션.
@@ -565,10 +583,13 @@
     for (var i = 0; i < first; i++) html += '<i class="pad"></i>';
     for (var day = 1; day <= last; day++) {
       var d = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), day);
-      var ok = bookableDate(state.type, d);
-      html += '<button type="button" class="bk-day' + (ok ? '' : ' off') +
-              (state.date === iso(d) ? ' sel' : '') + '"' +
-              (ok ? '' : ' disabled') + ' data-d="' + iso(d) + '">' + day + '</button>';
+      var st = dayState(state.type, d);
+      // 'phone' 날은 **비활성이 아니라 클릭 가능** — 누르면 전화 예약 안내가 뜬다
+      var cls = 'bk-day' + (st === 'ok' ? '' : (st === 'phone' ? ' phone' : ' off')) +
+                (state.date === iso(d) ? ' sel' : '');
+      var dis = (st === 'ok' || st === 'phone') ? '' : ' disabled';
+      html += '<button type="button" class="' + cls + '"' + dis +
+              ' data-d="' + iso(d) + '">' + day + '</button>';
     }
     $('#bkDays').innerHTML = html;
   }
@@ -666,6 +687,7 @@
     });
     $('#bkDays').addEventListener('click', function (e) {
       var b = e.target.closest('.bk-day'); if (!b || b.disabled) return;
+      if (b.classList.contains('phone')) { phoneNotice(); return; }   // 당일·익일 → 전화 안내
       state.date = b.dataset.d; state.time = null;
       renderMonth(viewMonth); loadAvail(); syncSummary();
     });
