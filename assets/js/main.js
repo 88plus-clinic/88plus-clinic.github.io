@@ -119,7 +119,11 @@
   'use strict';
 
   var BOOKING_OPEN = false;          // ← 오픈하는 날 true
-  if (BOOKING_OPEN) return;
+  // 로컬 미리보기(127.0.0.1·localhost)에서는 잠그지 않는다 — 예약 화면을 계속
+  // 다듬어야 하기 때문. 배포된 88plus.co.kr 은 위 스위치만 따르므로 영향이 없다.
+  var PREVIEW = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) ||
+                location.protocol === 'file:';
+  if (BOOKING_OPEN || PREVIEW) return;
 
   var LINK_RE = /reservation(-lookup)?\.html/;
   var TEL = '02-972-8800';
@@ -136,7 +140,7 @@
         '<p class="soon-p">그때까지 예약은 전화로 도와드리겠습니다.</p>' +
         '<a class="soon-tel" href="tel:0229728800">' + TEL + '</a>' +
         (closable ? '<button type="button" class="soon-close">닫기</button>'
-                  : '<a class="soon-close" href="index.html">홈으로 돌아가기</a>') +
+                  : '<a class="soon-close" href="home.html">홈으로 돌아가기</a>') +
       '</div>';
     document.body.appendChild(wrap);
     document.body.style.overflow = 'hidden';
