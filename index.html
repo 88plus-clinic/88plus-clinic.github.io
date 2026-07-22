@@ -80,6 +80,19 @@
   .foot-addr{ margin-top:12px; font-size:12.5px; color:var(--muted); line-height:1.6; }
   .foot-hours{ margin-top:8px; font-size:12px; color:var(--muted); }
   .foot-hours b{ color:var(--body); font-weight:600; }
+
+  /* ── 이 포털(첫 페이지)에서만 88돌이를 크게 — 다른 페이지는 chat.js 기본값 ── */
+  .dori-egg{ width:98px !important; height:98px !important;
+    box-shadow:0 8px 26px rgba(92,127,34,.36) !important; }
+  .dori-bubble{ font-size:15.5px !important; padding:12px 17px !important;
+    box-shadow:0 5px 20px rgba(40,40,30,.20) !important; }
+  .dori-fab{ gap:13px !important; right:26px !important; bottom:26px !important; }
+  .dori-dot{ width:18px !important; height:18px !important; }
+  @media (max-width:420px){
+    .dori-egg{ width:84px !important; height:84px !important; }
+    .dori-bubble{ font-size:14px !important; padding:10px 14px !important; }
+    .dori-fab{ right:16px !important; bottom:16px !important; }
+  }
 </style>
 </head>
 <body>
