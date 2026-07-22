@@ -878,11 +878,11 @@
     }
     var birth = id.birth;
     var g = { value: id.gender };
-    // 휴대전화 — 한 자리가 빠지는 경우까지 잡는다(010 은 11자리, 끝 블록은 4자리).
+    // 휴대전화 — 앞3·가운데4·끝4 자리를 모두 채워야 한다(한 자리라도 빠지면 잡는다).
     var ph1 = $('#fPh1').value.replace(/\D/g, '');
+    var ph2 = $('#fPh2').value.replace(/\D/g, '');
     var ph3 = $('#fPh3').value.replace(/\D/g, '');
-    if (phone.length < 10 || phone.length > 11 || ph3.length !== 4 ||
-        (ph1 === '010' && phone.length !== 11)) {
+    if (ph1.length < 3 || ph2.length !== 4 || ph3.length !== 4) {
       $('#fPh2').scrollIntoView({ behavior: 'smooth', block: 'center' });
       return alert('휴대전화번호를 다시 확인해 주세요.\n빠진 자리가 없는지 확인 부탁드립니다.');
     }
