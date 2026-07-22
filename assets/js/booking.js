@@ -173,6 +173,16 @@
   var ENDO_MAP = {};
   ENDO_OPTS.forEach(function (o) { ENDO_MAP[o.v] = o; });
 
+  /* 국가암검진 — 검진 예약에서 '함께 받으실 검진'으로 나이·성별 대상만 보여준다.
+     위암·대장암은 내시경이라 종류 코드(state.endo)로 연결돼 내시경실 자리를 잡고,
+     유방암·자궁경부암은 여성만·방사선/산부인과로 배정된다(원장 확정 2026-07-23). */
+  var CHECKUP_SCREEN = [
+    { k:'위암',     endo:'gastro', label:'위암검진 (위내시경)',      sub:'만 40세 이상 · 2년마다',      min:40 },
+    { k:'대장암',   endo:'colon',  label:'대장암검진 (대장내시경)',  sub:'만 50세 이상 · 사전 진료 필요', min:50 },
+    { k:'유방암',   label:'유방암검진 (유방촬영)',    sub:'만 40세 이상 여성 · 2년마다', min:40, sex:'F' },
+    { k:'자궁경부암', label:'자궁경부암검진',          sub:'만 20세 이상 여성 · 2년마다', min:20, sex:'F' }
+  ];
+
   // 자원별 운영 구간 [요일들, 시작, 끝]  (0=일 … 6=토)  ※ JS는 0=일
   var WD = [1,2,3,4,5], SAT = [6];
   var RULES = {
@@ -186,7 +196,7 @@
 
   var closedDays = [];         // 공휴일·일요일 (assets/closed-days.json)
   var state = { group:GROUPS[0], sub:null, type:null, endo:'', sedation:'sleep',
-               anti:'', together:false, date:null, time:null };
+               anti:'', together:false, screens:{}, date:null, time:null };
   var viewMonth;
 
   // ── 유틸 ────────────────────────────────────────
@@ -388,28 +398,42 @@
   function renderOpt() {
     var box = $('#bkOpt'), t = state.type;
     if (!t || !t.endoOpt) { box.hidden = true; box.innerHTML = ''; return; }
-    box.innerHTML =
-      '<p class="bo-h">검진과 함께 받으실 내시경 <span>(선택)</span></p>' +
-      ENDO_OPTS.map(function (o) {
-        return '<label class="bo-item"><input type="radio" name="xEndo" value="' + o.v + '"' +
-               (state.endo === o.v ? ' checked' : '') + '><span>' + o.label + '</span></label>';
+    var head = '<p class="bo-h">함께 받으실 검진 <span>(선택)</span></p>';
+    var p = profile();
+    if (!p) {
+      box.innerHTML = head + '<p class="bo-note">위 <b>진료받으실 분</b>의 주민 앞자리를 입력하시면 올해 대상 검진을 보여드립니다.</p>';
+      box.hidden = false; return;
+    }
+    // 나이·성별 대상만
+    var list = CHECKUP_SCREEN.filter(function (s) {
+      return (!s.sex || p.gender === s.sex) && p.age >= s.min;
+    });
+    if (!list.length) {
+      box.innerHTML = head + '<p class="bo-note">올해 함께 받으실 국가암검진 대상은 없으세요. <b>일반 건강검진</b>만 받으시게 됩니다.</p>';
+      box.hidden = false; return;
+    }
+    box.innerHTML = head +
+      list.map(function (s) {
+        return '<label class="bo-scr' + (state.screens[s.k] ? ' on' : '') + '" data-k="' + s.k + '">' +
+          '<input type="checkbox"' + (state.screens[s.k] ? ' checked' : '') + '>' +
+          '<span class="bo-scr-t"><b>' + s.label + '</b><i>' + s.sub + '</i></span>' +
+          '<span class="bo-scr-b">대상일 수 있어요</span></label>';
       }).join('') +
-      '<label class="bo-item"><input type="radio" name="xEndo" value=""' +
-      (state.endo ? '' : ' checked') + '><span>받지 않음</span></label>' +
-      '<details class="bx-help"><summary>위암검진 대상자인지 확인하는 방법</summary>' +
-      '<div><ol>' +
-      '<li><b>공단 홈페이지</b> — ' +
-      '<a href="https://www.nhis.or.kr/nhis/index.do" target="_blank" rel="noopener">' +
-      'nhis.or.kr</a> 접속 → <i>자주 찾는 서비스</i> → <i>건강검진 대상조회</i>' +
-      '<em>본인 인증(간편인증·공동인증서) 후 올해 받으실 수 있는 검진 항목이 나옵니다.</em></li>' +
-      '<li><b>「건강보험25시」 앱</b> — 로그인 후 <i>건강검진 대상조회</i></li>' +
-      '<li><b>공단 고객센터 1577-1000</b> — 평일 09:00~18:00</li>' +
-      '<li><b>공단에서 보내드린 검진표</b> — 우편·모바일 안내문에 받으실 검진 항목이 적혀 있습니다.</li>' +
-      '</ol>' +
-      '<p>확인이 어려우시면 선택하지 마시고 신청해 주세요. ' +
-      '병원에서 확인 전화를 드릴 때 함께 확인해 드립니다.</p>' +
-      '</div></details>';
+      '<p class="bo-note">대상 여부·무료/본인부담은 병원에서 <b>공단 조회 후</b> 확정해 안내드립니다. ' +
+      '원하는 것만 고르시고, 모르시면 비워두셔도 됩니다.</p>';
     box.hidden = false;
+  }
+
+  // 암검진 체크 토글 — 위암/대장암은 내시경 종류(state.endo)로 연결(리드타임·자원 갱신)
+  function toggleScreen(k) {
+    state.screens[k] = !state.screens[k];
+    var g = !!state.screens['위암'], c = !!state.screens['대장암'];
+    var ne = (g && c) ? 'both' : g ? 'gastro' : c ? 'colon' : '';
+    if (ne !== state.endo) {                       // 내시경 구성이 바뀌면 리드타임·달력 갱신
+      state.endo = ne; state.date = null; state.time = null;
+      renderMonth(viewMonth || new Date()); renderTimes(); showWarn(); renderSed(); renderAnti();
+    }
+    renderOpt(); syncSummary();
   }
 
   /* 수면 / 비수면 — EGHIS 표기가 '위수/위비'로 갈리고, 수면은 신분증·귀가 안내가 붙는다.
@@ -510,6 +534,7 @@
       else { w.hidden = true; w.textContent = ''; }
     }
     renderTogether();
+    renderOpt();          // 검진 암검진 목록도 나이·성별 맞춤으로 갱신
   }
 
   /* 국가건강검진 동반 희망 — **내시경 예약에만**. 생년월일에 맞춰 문구만 바뀌고(대상 가능성 안내),
@@ -561,7 +586,8 @@
 
   function pickType(code) {
     state.type = TYPES.filter(function (t) { return t.code === code; })[0];
-    state.endo = ''; state.date = null; state.time = null; state.anti = ''; state.together = false;
+    state.endo = ''; state.date = null; state.time = null; state.anti = '';
+    state.together = false; state.screens = {};
     renderChips(); renderOpt(); renderSed(); renderAnti(); renderTogether();
     renderMonth(viewMonth || new Date());
     renderTimes();
@@ -754,7 +780,8 @@
     });
     $('#bkOpt').addEventListener('change', function (e) {
       if (CHG) return;
-      if (e.target.name === 'xEndo') pickEndo(e.target.value);
+      var lab = e.target.closest('.bo-scr');
+      if (lab) toggleScreen(lab.dataset.k);
     });
     $('#bkChips').addEventListener('click', function (e) {
       if (CHG) return;                      // 시간 변경 모드에서는 항목을 못 바꾼다
@@ -872,8 +899,15 @@
       addons: addons.map(function (c) { return ADDON_MAP[c].n; }),
       reasons: reasons,
       addon_etc: addonEtc,
-      // 내시경 예약의 '국가검진 동반 희망'은 메모 앞에 표시로 남긴다 — 데스크가 공단 조회로 확정한다
-      memo: (state.together ? '[국가검진 함께 희망] ' : '') + $('#fMemo').value.trim()
+      // 함께 검진 희망(내시경의 '국가검진 함께' · 검진의 유방암/자궁경부암)은 메모 앞에 표시로 남긴다
+      // — 데스크가 공단 조회로 확정한다. 위암/대장암은 예약 종류(내시경 포함)로 이미 반영됨.
+      memo: (function () {
+        var f = [];
+        if (state.together) f.push('국가검진 함께 희망');
+        var scr = ['유방암', '자궁경부암'].filter(function (k) { return state.screens[k]; });
+        if (scr.length) f.push('함께 검진: ' + scr.join(', '));
+        return (f.length ? '[' + f.join(' / ') + '] ' : '') + $('#fMemo').value.trim();
+      })()
     };
 
     var btn = $('#bkSubmit');
@@ -988,6 +1022,9 @@
     if (!t.type) { CHG = null; return; }      // 모르는 종류면 일반 예약 화면 그대로
     state.type = t.type;
     state.endo = t.endo;
+    state.screens = {};                          // 종류 코드의 내시경 구성을 암검진 체크로 복원
+    if (t.endo === 'gastro' || t.endo === 'both') state.screens['위암'] = true;
+    if (t.endo === 'colon'  || t.endo === 'both') state.screens['대장암'] = true;
     state.date = null; state.time = null;
 
     var h1 = document.querySelector('.sub-hero h1');
