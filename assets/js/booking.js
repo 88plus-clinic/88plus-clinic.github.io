@@ -864,16 +864,28 @@
 
     if (name.length < 2) return alert('이름을 입력해 주세요.');
     if (rrn1.length !== 6) {
-      return alert('주민등록번호 앞 6자리를 입력해 주세요. (예: 850312)');
+      $('#fRrn1').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return alert('주민등록번호 앞 6자리(생년월일)를 입력해 주세요. (예: 850312)');
     }
     if (rrn2.length !== 1) {
-      return alert('주민등록번호 뒷자리 첫 한 자리를 입력해 주세요.');
+      $('#fRrn2').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return alert('주민등록번호 뒷자리 첫 한 자리(성별)를 입력해 주세요.');
     }
     var id = parseRrn(rrn1, rrn2);
-    if (!id) return alert('주민등록번호 앞자리를 다시 확인해 주세요.');
+    if (!id) {
+      $('#fRrn1').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return alert('주민등록번호를 다시 확인해 주세요.\n생년월일·성별 자리가 올바른지 확인 부탁드립니다.');
+    }
     var birth = id.birth;
     var g = { value: id.gender };
-    if (phone.length < 10) return alert('휴대전화번호를 정확히 입력해 주세요.');
+    // 휴대전화 — 한 자리가 빠지는 경우까지 잡는다(010 은 11자리, 끝 블록은 4자리).
+    var ph1 = $('#fPh1').value.replace(/\D/g, '');
+    var ph3 = $('#fPh3').value.replace(/\D/g, '');
+    if (phone.length < 10 || phone.length > 11 || ph3.length !== 4 ||
+        (ph1 === '010' && phone.length !== 11)) {
+      $('#fPh2').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return alert('휴대전화번호를 다시 확인해 주세요.\n빠진 자리가 없는지 확인 부탁드립니다.');
+    }
     if (state.type.reasons && !checkedReasons().length &&
         !($('#xEtc') && $('#xEtc').value.trim())) {
       return alert('내원 목적을 하나 이상 선택해 주세요.\n' +
