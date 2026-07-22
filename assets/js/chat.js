@@ -14,8 +14,8 @@
   var BASE = (me && me.src ? me.src.replace(/js\/chat\.js.*$/, '') : 'assets/');   // → .../assets/
   var IMG  = BASE + 'img/chatbot.png';
 
-  // 환자용 챗봇 API 주소. 배포 전에는 비워 두면 "준비중"으로 안내한다.
-  var CHAT_API = "";   // 예: "https://api.88plus.co.kr/api/chat/ask"
+  // 환자용 챗봇 API 주소 (예약 VPS). 비우면 "준비중"으로 안내.
+  var CHAT_API = "https://api.88plus.co.kr/api/chat/ask";
 
   // ── 스타일 주입 ────────────────────────────────────────────
   var css = ''
