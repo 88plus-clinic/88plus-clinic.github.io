@@ -187,6 +187,14 @@
 .bo-item span{ font-size:14.5px; color:var(--body); word-break:keep-all; }
 .bo-item:hover span{ color:var(--olive-dk); }
 .bo-item input:checked + span{ color:var(--ink); font-weight:600; }
+/* 국가검진 동반 희망 — 내시경 예약의 선택 체크박스(원장 확정 2026-07-23) */
+.bo-tog{ display:flex; gap:11px; align-items:flex-start; cursor:pointer; }
+.bo-tog input{ width:19px; height:19px; accent-color:var(--olive); flex:none; margin-top:1px; }
+.bo-tog-t b{ display:block; font-size:14.5px; font-weight:700; color:var(--ink); }
+.bo-tog-t i{ display:block; font-style:normal; font-size:12.5px; color:var(--muted);
+  margin-top:4px; line-height:1.55; word-break:keep-all; }
+.bo-tog-t i b{ display:inline; color:var(--olive-dk); font-weight:700; }
+.bo-tog.on .bo-tog-t b{ color:var(--olive-dk); }
 
 /* 위암검진 대상자 확인 방법 */
 .bk-opt .bx-help{ margin:10px 0 0; }

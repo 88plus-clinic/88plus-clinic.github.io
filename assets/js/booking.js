@@ -97,6 +97,10 @@
   // 현재 온라인 예약이 열린 그룹. 나머지는 '준비 중 — 전화 예약' 안내만 띄운다.
   // (2026-07-22 원장 지시: 산부인과만 오픈, 내과·검진은 준비중)
   var OPEN_GROUPS = ['산부인과'];
+  // ?preview=1 이면 내과·검진도 열어 본다(원장 테스트용 — 일반 방문자에겐 계속 '준비 중').
+  var PREVIEW = false;
+  try { PREVIEW = new URLSearchParams(location.search).get('preview') === '1'; } catch (e) {}
+  function openGroups() { return PREVIEW ? GROUPS : OPEN_GROUPS; }
   var SUBS = { '내과': ['내시경', '초음파'] };   // 그룹 안의 2차 탭
   var GROUP_NOTE = {
     '검진': '검진은 <b>검사 전 8시간 동안 물을 포함한 완전 금식</b>이 필요합니다. ' +
@@ -182,7 +186,7 @@
 
   var closedDays = [];         // 공휴일·일요일 (assets/closed-days.json)
   var state = { group:GROUPS[0], sub:null, type:null, endo:'', sedation:'sleep',
-               anti:'', date:null, time:null };
+               anti:'', together:false, date:null, time:null };
   var viewMonth;
 
   // ── 유틸 ────────────────────────────────────────
@@ -335,7 +339,7 @@
 
   function renderChips() {
     // 아직 오픈 안 된 그룹(검진·내과)은 예약 대신 '준비 중 · 전화' 안내를 띄운다.
-    if (OPEN_GROUPS.indexOf(state.group) < 0) {
+    if (openGroups().indexOf(state.group) < 0) {
       $('#bkSubs').innerHTML = '';
       $('#bkChips').innerHTML =
         '<div class="bk-soon">' +
@@ -345,7 +349,7 @@
           '<a class="bk-soon-tel" href="tel:0229728800">☎ 02-972-8800</a>' +
         '</div>';
       state.type = null;
-      ['#bkOpt', '#bkSed', '#bkAnti', '#bkExtra'].forEach(function (s) {
+      ['#bkOpt', '#bkSed', '#bkAnti', '#bkTog', '#bkExtra'].forEach(function (s) {
         var el = $(s); if (el) { el.hidden = true; el.innerHTML = ''; }
       });
       bookingAreaVisible(false);
@@ -486,6 +490,23 @@
     antiNote(); syncSummary();
   }
 
+  /* 국가건강검진 동반 희망 — **내시경 예약에만**. 나이 판정·자동배정 없이 '희망'만 받고,
+     대상 확정은 데스크가 공단 조회로 처리한다(원장 확정 2026-07-23). */
+  function renderTogether() {
+    var box = $('#bkTog');
+    if (!box) return;
+    if (!state.type || state.type.res !== 'ENDO') {   // 내시경(위/대장) 예약에만 노출
+      box.hidden = true; box.innerHTML = ''; state.together = false; return;
+    }
+    box.innerHTML =
+      '<label class="bo-tog' + (state.together ? ' on' : '') + '">' +
+      '<input type="checkbox" id="xTog"' + (state.together ? ' checked' : '') + '>' +
+      '<span class="bo-tog-t"><b>국가건강검진도 함께 받길 원해요</b>' +
+      '<i>유방촬영·자궁경부암 검사 등. 대상 여부는 병원에서 <b>공단 조회 후 확인</b>해 안내드립니다. ' +
+      '원치 않으시면 비워두세요.</i></span></label>';
+    box.hidden = false;
+  }
+
   function pickEndo(v) {
     state.endo = v;
     state.date = null; state.time = null;      // 리드타임이 바뀌므로 날짜를 다시 고른다
@@ -509,8 +530,8 @@
 
   function pickType(code) {
     state.type = TYPES.filter(function (t) { return t.code === code; })[0];
-    state.endo = ''; state.date = null; state.time = null; state.anti = '';
-    renderChips(); renderOpt(); renderSed(); renderAnti();
+    state.endo = ''; state.date = null; state.time = null; state.anti = ''; state.together = false;
+    renderChips(); renderOpt(); renderSed(); renderAnti(); renderTogether();
     renderMonth(viewMonth || new Date());
     renderTimes();
     syncSummary();
@@ -694,6 +715,12 @@
     $('#bkAnti').addEventListener('change', function (e) {
       if (e.target.name === 'xAnti') pickAnti(e.target.value);
     });
+    $('#bkTog').addEventListener('change', function (e) {
+      if (e.target.id !== 'xTog') return;
+      state.together = e.target.checked;
+      var l = $('#bkTog .bo-tog'); if (l) l.classList.toggle('on', state.together);
+      syncSummary();
+    });
     $('#bkOpt').addEventListener('change', function (e) {
       if (CHG) return;
       if (e.target.name === 'xEndo') pickEndo(e.target.value);
@@ -812,7 +839,8 @@
       addons: addons.map(function (c) { return ADDON_MAP[c].n; }),
       reasons: reasons,
       addon_etc: addonEtc,
-      memo: $('#fMemo').value.trim()
+      // 내시경 예약의 '국가검진 동반 희망'은 메모 앞에 표시로 남긴다 — 데스크가 공단 조회로 확정한다
+      memo: (state.together ? '[국가검진 함께 희망] ' : '') + $('#fMemo').value.trim()
     };
 
     var btn = $('#bkSubmit');
@@ -980,6 +1008,11 @@
     .then(function (list) {
       closedDays = list || [];
       if (CHG) setupChangeUI();
+      if (PREVIEW) {                       // 미리보기 모드 — 안내 배너를 바꿔 둔다
+        var oi = document.querySelector('.bk-openinfo');
+        if (oi) oi.innerHTML = '<b>🔍 미리보기 모드 — 내과·검진 예약이 열려 있습니다.</b>' +
+          '<span>원장님 테스트용 화면입니다. 일반 방문자에겐 보이지 않습니다.</span>';
+      }
       renderTabs(); renderChips();
       renderMonth(new Date());
       renderTimes(); syncSummary(); bind();
