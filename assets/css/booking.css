@@ -441,3 +441,18 @@
 /* 항혈전제 — 임의 중단 경고는 눈에 띄어야 한다 */
 .bx-help p.bo-warn{ color:var(--body); }
 .bx-help p.bo-warn b{ color:#a33; }
+
+/* ── 오픈 범위 안내(산부인과만 온라인) · 준비중 그룹 ── */
+.bk-openinfo{ margin:0 0 16px; padding:14px 18px; border-radius:12px;
+  background:#EDF2E2; border:1px solid #CBD9B4; }
+.bk-openinfo b{ display:block; font-size:15px; color:#3F5A14; font-weight:800; margin-bottom:4px; }
+.bk-openinfo u{ text-underline-offset:3px; }
+.bk-openinfo span{ font-size:13px; color:#5a6a3a; line-height:1.6; }
+.bk-openinfo a{ color:#3F5A14; font-weight:700; white-space:nowrap; }
+.bk-soon{ padding:26px 20px; text-align:center; background:#FAF9F5;
+  border:1px dashed #d8d3c4; border-radius:12px; }
+.bk-soon b{ display:block; font-size:16px; color:#3F5A14; font-weight:800; margin-bottom:9px; }
+.bk-soon p{ font-size:13.5px; color:#666; line-height:1.65; margin:0 0 16px; }
+.bk-soon-tel{ display:inline-block; background:#5C7F22; color:#fff; font-weight:800;
+  font-size:17px; padding:12px 26px; border-radius:10px; text-decoration:none; letter-spacing:.02em; }
+.bk-soon-tel:hover{ background:#4a6918; }

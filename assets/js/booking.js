@@ -88,7 +88,10 @@
     { code:'consult_obgy', name:'산부인과 진료', group:'산부인과', res:'OBGY', step:30, need:1,
       note:'목요일 휴진 · 당일 예약 가능', lead:0, reasons:true }
   ];
-  var GROUPS = ['검진', '내과', '산부인과'];
+  var GROUPS = ['산부인과', '검진', '내과'];
+  // 현재 온라인 예약이 열린 그룹. 나머지는 '준비 중 — 전화 예약' 안내만 띄운다.
+  // (2026-07-22 원장 지시: 산부인과만 오픈, 내과·검진은 준비중)
+  var OPEN_GROUPS = ['산부인과'];
   var SUBS = { '내과': ['내시경', '초음파'] };   // 그룹 안의 2차 탭
   var GROUP_NOTE = {
     '검진': '검진은 <b>검사 전 8시간 동안 물을 포함한 완전 금식</b>이 필요합니다. ' +
@@ -279,7 +282,34 @@
     }).join('');
   }
 
+  // 날짜·시간 패널과 신청 폼 표시/숨김 — 준비중 그룹에서는 감춘다.
+  function bookingAreaVisible(show) {
+    ['#bkPanelDate', '#bkPanelTime', '#bkFormWrap'].forEach(function (s) {
+      var el = $(s); if (el) el.hidden = !show;
+    });
+    if (!show) { var tw = $('#bkTypeWarn'); if (tw) tw.hidden = true; }
+  }
+
   function renderChips() {
+    // 아직 오픈 안 된 그룹(검진·내과)은 예약 대신 '준비 중 · 전화' 안내를 띄운다.
+    if (OPEN_GROUPS.indexOf(state.group) < 0) {
+      $('#bkSubs').innerHTML = '';
+      $('#bkChips').innerHTML =
+        '<div class="bk-soon">' +
+          '<b>온라인 예약 준비 중입니다</b>' +
+          '<p><b>' + state.group + '</b> 예약은 아직 온라인으로 받고 있지 않습니다.<br>' +
+          '전화로 예약해 주시면 친절히 안내해 드리겠습니다.</p>' +
+          '<a class="bk-soon-tel" href="tel:0229728800">☎ 02-972-8800</a>' +
+        '</div>';
+      state.type = null;
+      ['#bkOpt', '#bkSed', '#bkAnti', '#bkExtra'].forEach(function (s) {
+        var el = $(s); if (el) { el.hidden = true; el.innerHTML = ''; }
+      });
+      bookingAreaVisible(false);
+      return;
+    }
+    bookingAreaVisible(true);
+
     var subs = SUBS[state.group];
     if (subs && subs.indexOf(state.sub) < 0) state.sub = subs[0];
 
