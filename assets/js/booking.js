@@ -546,6 +546,24 @@
     renderOpt();          // 검진 암검진 목록도 나이·성별 맞춤으로 갱신
   }
 
+  // ── 입력 오류 표시(빨간 칸) ────────────────────
+  function fErr(sel, bad) { var e = $(sel); if (e) e.classList.toggle('bk-inerr', !!bad); }
+  function clearFieldErrs() {
+    ['#fName', '#fRrn1', '#fRrn2', '#fPh1', '#fPh2', '#fPh3'].forEach(function (s) { fErr(s, false); });
+  }
+  // 칸에서 나갈 때(blur) — 채우다 만 자리를 바로 빨갛게
+  function checkPhoneBlur() {
+    var v2 = $('#fPh2').value.replace(/\D/g, ''), v3 = $('#fPh3').value.replace(/\D/g, '');
+    fErr('#fPh2', v2.length > 0 && v2.length < 4);
+    fErr('#fPh3', v3.length > 0 && v3.length < 4);
+  }
+  function checkRrnBlur() {
+    var r1 = $('#fRrn1').value.replace(/\D/g, ''), r2 = $('#fRrn2').value.replace(/\D/g, '');
+    var invalid = r1.length === 6 && r2.length === 1 && !parseRrn(r1, r2);
+    fErr('#fRrn1', (r1.length > 0 && r1.length < 6) || invalid);
+    fErr('#fRrn2', invalid);
+  }
+
   /* 국가건강검진 동반 희망 — **내시경 예약에만**. 생년월일에 맞춰 문구만 바뀌고(대상 가능성 안내),
      자동배정은 없다. 대상 확정은 데스크가 공단 조회로 처리(원장 확정 2026-07-23). */
   function renderTogether() {
@@ -820,18 +838,27 @@
         var el = $(p[0]); if (!el) return;
         el.addEventListener('input', function (e) {
           e.target.value = e.target.value.replace(/[^\d]/g, '').slice(0, p[1]);
+          e.target.classList.remove('bk-inerr');       // 고치는 중이면 빨간색 해제
           if (p[2] && e.target.value.length === p[1]) $(p[2]).focus();
         });
+        if (p[0] !== '#fPh1') el.addEventListener('blur', checkPhoneBlur);
       });
+    ['#fName'].forEach(function (s) {
+      var el = $(s); if (el) el.addEventListener('input', function (e) { e.target.classList.remove('bk-inerr'); });
+    });
     $('#fRrn1').addEventListener('input', function (e) {
       e.target.value = e.target.value.replace(/[^\d]/g, '');
+      e.target.classList.remove('bk-inerr');
       if (e.target.value.length === 6) $('#fRrn2').focus();   // 6자리 채우면 자동 이동
       onProfileInput();
     });
+    $('#fRrn1').addEventListener('blur', checkRrnBlur);
     $('#fRrn2').addEventListener('input', function (e) {
       e.target.value = e.target.value.replace(/[^\d]/g, '').slice(0, 1);
+      $('#fRrn1').classList.remove('bk-inerr'); e.target.classList.remove('bk-inerr');
       onProfileInput();
     });
+    $('#fRrn2').addEventListener('blur', checkRrnBlur);
     $('#bkExtra').addEventListener('change', onExtraChange);
     $('#bkForm').addEventListener('submit', submit);
   }
@@ -862,17 +889,22 @@
       return $(s).value.replace(/\D/g, '');
     }).join('');
 
-    if (name.length < 2) return alert('이름을 입력해 주세요.');
+    clearFieldErrs();
+    if (name.length < 2) {
+      fErr('#fName', true); $('#fName').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return alert('이름을 입력해 주세요.');
+    }
     if (rrn1.length !== 6) {
-      $('#fRrn1').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      fErr('#fRrn1', true); $('#fRrn1').scrollIntoView({ behavior: 'smooth', block: 'center' });
       return alert('주민등록번호 앞 6자리(생년월일)를 입력해 주세요. (예: 850312)');
     }
     if (rrn2.length !== 1) {
-      $('#fRrn2').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      fErr('#fRrn2', true); $('#fRrn2').scrollIntoView({ behavior: 'smooth', block: 'center' });
       return alert('주민등록번호 뒷자리 첫 한 자리(성별)를 입력해 주세요.');
     }
     var id = parseRrn(rrn1, rrn2);
     if (!id) {
+      fErr('#fRrn1', true); fErr('#fRrn2', true);
       $('#fRrn1').scrollIntoView({ behavior: 'smooth', block: 'center' });
       return alert('주민등록번호를 다시 확인해 주세요.\n생년월일·성별 자리가 올바른지 확인 부탁드립니다.');
     }
@@ -883,6 +915,7 @@
     var ph2 = $('#fPh2').value.replace(/\D/g, '');
     var ph3 = $('#fPh3').value.replace(/\D/g, '');
     if (ph1.length < 3 || ph2.length !== 4 || ph3.length !== 4) {
+      fErr('#fPh1', ph1.length < 3); fErr('#fPh2', ph2.length !== 4); fErr('#fPh3', ph3.length !== 4);
       $('#fPh2').scrollIntoView({ behavior: 'smooth', block: 'center' });
       return alert('휴대전화번호를 다시 확인해 주세요.\n빠진 자리가 없는지 확인 부탁드립니다.');
     }
@@ -955,6 +988,12 @@
       }
       $('#bkDoneWarn').innerHTML = $('#bkTypeWarn').innerHTML;
       $('#bkDoneWarn').hidden = $('#bkTypeWarn').hidden;
+      // 완료 안내 문구는 여기(JS)에서 넣는다 — HTML 은 캐시버스터가 없어 갱신이 늦다
+      var noteEl = document.querySelector('#bkDoneView .bk-note');
+      if (noteEl) noteEl.innerHTML =
+        '아직 <b>예약이 확정된 것은 아닙니다.</b> 확정되면 <b>알림톡으로 안내</b>해 드립니다.<br>' +
+        '<b>처음 방문</b>하시는 경우 확인 전화를 드릴 수 있습니다.<br>' +
+        '<b>「내 예약」</b>에서 언제든 확인 · 변경 · 취소하실 수 있습니다.';
       // 완료 화면이 맨 위로 오도록 상단 안내·입력부를 모두 숨긴다
       ['.bk-openinfo', '.bk-intro', '.bk-who', '.bk-panels', '.bk-typewarn'].forEach(function (s) {
         var el = document.querySelector(s); if (el) el.hidden = true;

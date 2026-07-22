@@ -271,6 +271,8 @@
   border:1.5px solid var(--line); border-radius:8px; background:#fff; color:var(--ink);
 }
 .bk-field input:focus{ outline:none; border-color:var(--olive); }
+/* 입력 오류 — 해당 칸을 빨갛게 표시 */
+.bk-field input.bk-inerr, input.bk-inerr{ border-color:#D64545 !important; background:#FDF3F3 !important; }
 .bk-help{ display:block; margin-top:5px; font-size:12.5px; color:var(--muted); }
 /* 주민번호 앞자리 — 뒷자리는 첫 칸만 받고 나머지는 ● 로 막아 둔다(입력란이 아니다) */
 .bk-rrn{ display:flex; align-items:center; gap:7px; }
@@ -326,9 +328,9 @@
 .bk-submit:disabled{ opacity:.55; cursor:default; }
 
 /* 완료 */
-.bk-done{ text-align:center; padding:40px 0 20px; }
-.bk-h{ font-size:clamp(21px,2.4vw,27px); margin-bottom:20px; word-break:keep-all; }
-.bk-note{ font-size:14.5px; color:var(--muted); line-height:1.8; }
+.bk-done{ text-align:center; padding:44px 0 24px; }
+.bk-h{ font-size:clamp(21px,2.4vw,27px); margin-bottom:22px; word-break:keep-all; }
+.bk-note{ font-size:14px; color:var(--muted); line-height:1.75; max-width:480px; margin:0 auto 32px; }
 .bk-note b{ color:var(--ink); }
 .bk-done-ico{
   width:64px; height:64px; margin:0 auto 22px; border-radius:50%;
@@ -336,7 +338,7 @@
   display:flex; align-items:center; justify-content:center;
 }
 .bk-done-box{
-  max-width:440px; margin:0 auto 24px; text-align:left;
+  max-width:440px; margin:0 auto 28px; text-align:left;
   background:var(--cream-dp); border-radius:10px; padding:20px 24px;
 }
 .bk-done-box div{ display:flex; gap:14px; font-size:15.5px; padding:4px 0; }
