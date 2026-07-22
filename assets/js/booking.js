@@ -245,33 +245,57 @@
 
   /* lead 는 0 이 유효값이라 falsy 체크(||)를 쓰면 안 된다 — 당일 예약이 막힌다.
      검진에 대장내시경을 붙이면 사전 진료(1주일 전) 때문에 리드타임이 늘어난다. */
-  function leadOf(type) {
+  function baseLead(type) {
     var l = type.lead == null ? MIN_LEAD_DAYS : type.lead;
     if (type.endoOpt && (state.endo === 'colon' || state.endo === 'both')) {
       l = Math.max(l, COLON_LEAD_DAYS);
     }
-    // 검진·내시경(기본 lead 2)만 시간대 컷오프: 16시 전 → 익일 가능(1), 이후 → 모레부터(2)
-    if (l === MIN_LEAD_DAYS) {
-      l = (new Date().getHours() < CUTOFF_HOUR) ? 1 : MIN_LEAD_DAYS;
-    }
     return l;
   }
 
-  /* 날짜 상태: 'ok'(예약가능) · 'phone'(당일·익일 등 리드타임에 걸림 → 전화) · 'off'(과거·휴진·범위밖) */
+  function isOpenDay(type, d) { return timesFor(type, d).length > 0; }   // 휴진·휴일·일요일 = 닫힘
+  function nextOpen(type, d) {
+    var x = new Date(d);
+    do { x.setDate(x.getDate() + 1); } while (!isOpenDay(type, x));
+    return x;
+  }
+  function cutoffHour(d) { return d.getDay() === 6 ? 12 : CUTOFF_HOUR; }  // 토 12시, 평일 16시
+
+  /* 그 종류의 **가장 빠른 온라인 예약일**.
+     검진·내시경(lead 2)은 영업일 컷오프: 오늘 컷오프 전이면 다음 영업일, 지나면 다다음 영업일.
+     주말·공휴일은 영업일이 아니라 자동으로 건너뛴다(원장 확정 2026-07-22 · 시뮬레이션 검증). */
+  function onlineFrom(type) {
+    var today = new Date(); today.setHours(0,0,0,0);
+    var bl = baseLead(type);
+    if (bl === 0) return today;                                    // 산부인과 — 당일(자동확정)
+    if (bl !== MIN_LEAD_DAYS) {                                    // 대장 등 긴 리드 — 달력 기준
+      var m = new Date(today); m.setDate(m.getDate() + bl); return m;
+    }
+    var now = new Date();
+    if (isOpenDay(type, today) && now.getHours() < cutoffHour(today)) {
+      return nextOpen(type, today);
+    }
+    return nextOpen(type, nextOpen(type, today));
+  }
+
+  /* 날짜 상태: 'ok'(예약가능) · 'phone'(컷오프에 걸린 가까운 날 → 전화) · 'off'(과거·휴진·범위밖·긴리드) */
   function dayState(type, d) {
     if (!type) return 'off';
     var today = new Date(); today.setHours(0,0,0,0);
     var max = new Date(); max.setHours(0,0,0,0); max.setDate(max.getDate() + HORIZON_DAYS);
     if (d < today || d > max) return 'off';
-    if (timesFor(type, d).length === 0) return 'off';      // 휴진
-    var min = new Date(today); min.setDate(min.getDate() + leadOf(type));
-    return (d < min) ? 'phone' : 'ok';
+    if (!isOpenDay(type, d)) return 'off';                         // 휴무·휴일·일요일
+    if (d < onlineFrom(type)) {
+      // 검진·내시경의 가까운 날만 '전화'(눌러 안내). 대장 등 긴 리드 창은 그냥 비활성.
+      return (baseLead(type) === MIN_LEAD_DAYS) ? 'phone' : 'off';
+    }
+    return 'ok';
   }
 
   function bookableDate(type, d) { return dayState(type, d) === 'ok'; }
 
   function phoneNotice() {
-    alert('가까운 날짜(당일·내일)는 전화로 예약을 도와드리고 있어요.\n\n' +
+    alert('가까운 날짜는 전화로 예약을 도와드리고 있어요.\n\n' +
           '☎ 02-972-8800\n\n' +
           '번거로우시겠지만 전화 주시면 바로 잡아드리겠습니다. 감사합니다.');
   }
