@@ -1009,7 +1009,7 @@
       if (noteEl) noteEl.innerHTML =
         '아직 <b>예약이 확정된 것은 아닙니다.</b> 확정되면 <b>알림톡으로 안내</b>해 드립니다.<br>' +
         '<b>처음 방문</b>하시는 경우 확인 전화를 드릴 수 있습니다.<br>' +
-        '<b>「내 예약」</b>에서 언제든 확인 · 변경 · 취소하실 수 있습니다.';
+        '<b>「예약 변경/취소」</b>에서 언제든 확인 · 변경 · 취소하실 수 있습니다.';
       // 완료 화면이 맨 위로 오도록 상단 안내·입력부를 모두 숨긴다
       ['.bk-openinfo', '.bk-intro', '.bk-who', '.bk-panels', '.bk-typewarn'].forEach(function (s) {
         var el = document.querySelector(s); if (el) el.hidden = true;
@@ -1076,7 +1076,7 @@
       if (m.indexOf('429') >= 0) {
         alert('시도가 너무 많습니다. 잠시 후 다시 시도해 주세요.');
       } else if (m.indexOf('404') >= 0) {
-        alert('예약을 찾을 수 없습니다. 「내 예약」에서 다시 조회해 주세요.');
+        alert('예약을 찾을 수 없습니다. 「예약 변경/취소」에서 다시 조회해 주세요.');
       } else if (m.indexOf('409') >= 0) {
         alert('이미 변경을 신청하셨거나, 변경할 수 없는 예약입니다.\n' +
               '예약 조회에서 상태를 확인해 주세요.');
