@@ -984,10 +984,26 @@
     // 내시경이 포함되면 내시경실도 함께 잡아야 해 서버 코드가 달라진다
     var code = state.type.code + (endoOpt ? endoOpt.sfx : '');
 
+    /* 예약 항목 이름 — 검진은 종류명 대신 **환자가 고른 검사를 나열**한다(원장 지시 2026-07-23).
+       예) 국가일반검진 + 유방암검진 + 자궁경부암검진 + 상복부 초음파 + 혈액종합검사 (50여종)
+       조회 페이지·확정 카드가 이 문자열을 그대로 보여주므로 여기가 유일한 조립 지점.
+       ⚠ 서버 type_name 은 80자 제한 — 넘으면 자른다. */
+    var typeName = state.type.name + (endoOpt ? ' (' + endoOpt.name + ' 포함)' : '');
+    if (state.type.code.indexOf('checkup_nhis') === 0) {
+      var tparts = ['국가일반검진'];
+      if (state.screens['위암']) tparts.push('위암검진(위내시경)');
+      if (state.screens['대장암']) tparts.push('대장암검진(분변)');
+      if (state.screens['유방암']) tparts.push('유방암검진');
+      if (state.screens['자궁경부암']) tparts.push('자궁경부암검진');
+      addons.forEach(function (c) { tparts.push(ADDON_MAP[c].n); });
+      typeName = tparts.join(' + ');
+      if (typeName.length > 80) typeName = typeName.slice(0, 79) + '…';
+    }
+
     var payload = {
       client_id: 'r' + Date.now() + Math.random().toString(36).slice(2, 8),
       type: code,
-      type_name: state.type.name + (endoOpt ? ' (' + endoOpt.name + ' 포함)' : ''),
+      type_name: typeName,
       date: state.date, time: state.time,
       name: name, birth: birth, phone: phone, gender: g.value,
       endo_included: endoOpt ? endoOpt.name : '',
