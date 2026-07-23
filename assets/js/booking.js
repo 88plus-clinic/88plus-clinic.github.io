@@ -402,7 +402,7 @@
   function renderOpt() {
     var box = $('#bkOpt'), t = state.type;
     if (!t || !t.endoOpt) { box.hidden = true; box.innerHTML = ''; return; }
-    var head = '<p class="bo-h">함께 받으실 검진 <span>(선택)</span></p>';
+    var head = '<p class="bo-h">함께 받으실 국가검진 <span>(선택)</span></p>';
     var p = profile();
     if (!p) {
       box.innerHTML = head + '<p class="bo-note">위 <b>진료받으실 분</b>의 주민 앞자리를 입력하시면 올해 대상 검진을 보여드립니다.</p>';
