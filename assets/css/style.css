@@ -434,15 +434,7 @@ ol,ul{ margin:0; padding:0; list-style:none; }
 @media (max-width:1140px){
   .hd-in{ padding:0 24px; gap:22px; }
   .hd-nav{ display:none; }
-  .greet-in,.visit-in{ grid-template-columns:1fr; }
-  .flow-list{ grid-template-columns:repeat(2,1fr); }
-  .ft-in{ grid-template-columns:1fr 1fr; }
-}
-@media (max-width:768px){
-  body{ font-size:16.5px; }
-  .hd-act .btn-book{ display:none; }
-  /* 모바일은 햄버거 드로어에 두 링크가 다 들어 있다 */
-  .hd-act .hd-tabs{ display:none; }
+  /* 메뉴가 사라지는 즉시 햄버거 노출(원장 지시 2026-07-23) — 768~1140 구간도 드로어로 대체 */
   .hd-menu{
     display:flex; flex-direction:column; justify-content:center; gap:5px;
     width:40px; height:40px; border:none; background:none; cursor:pointer; padding:0;
@@ -459,6 +451,15 @@ ol,ul{ margin:0; padding:0; list-style:none; }
   .hd-drawer a{ display:block; padding:15px 0; font-size:17px; font-weight:600; color:var(--ink); border-bottom:1px solid var(--line); }
   .hd-drawer a:last-child{ border-bottom:none; }
   .hd-drawer .d-tel{ color:var(--olive); font-weight:800; }
+  .greet-in,.visit-in{ grid-template-columns:1fr; }
+  .flow-list{ grid-template-columns:repeat(2,1fr); }
+  .ft-in{ grid-template-columns:1fr 1fr; }
+}
+@media (max-width:768px){
+  body{ font-size:16.5px; }
+  .hd-act .btn-book{ display:none; }
+  /* 예약 탭은 이 폭부터 숨김 — 햄버거는 1140부터 이미 노출되어 두 링크를 드로어가 담는다 */
+  .hd-act .hd-tabs{ display:none; }
 
   /* 타일 — 세로로 쌓되 한 화면에 셋 다 보이게 */
   .tiles{ grid-template-columns:1fr; height:auto; min-height:0; }
@@ -716,7 +717,7 @@ ol,ul{ margin:0; padding:0; list-style:none; }
   display:flex; flex-direction:column; gap:8px;
 }
 .quick a{
-  width:60px; padding:12px 4px; border-radius:12px; text-align:center;
+  min-width:60px; padding:12px 14px; border-radius:12px; text-align:center; white-space:nowrap;
   background:rgba(250,249,245,.94); border:1px solid var(--line);
   backdrop-filter:blur(10px); box-shadow:0 2px 10px rgba(0,0,0,.05);
   font-size:11.5px; font-weight:600; color:var(--body); line-height:1.35;
@@ -737,8 +738,9 @@ ol,ul{ margin:0; padding:0; list-style:none; }
     background:rgba(250,249,245,.97); backdrop-filter:blur(10px);
   }
   .quick a{
-    flex:1; width:auto; border:none; border-radius:0; box-shadow:none;
-    background:none; padding:10px 2px 11px; font-size:11px;
+    flex:1; width:auto; min-width:0; border:none; border-radius:0; box-shadow:none;
+    background:none; padding:12px 2px; font-size:12px;
+    display:flex; align-items:center; justify-content:center; gap:6px; white-space:nowrap;
   }
   /* 예약 칸만 초록으로 채운다 — 셋 다 같은 모양이면 어디를 눌러야 할지 알 수 없다.
      환자 대부분이 모바일로 들어오므로 이 한 칸이 가장 중요한 진입점이다. */
@@ -747,8 +749,8 @@ ol,ul{ margin:0; padding:0; list-style:none; }
     background:var(--olive); color:#fff; font-weight:800;
   }
   .quick a.pri:hover{ background:var(--olive); color:#fff; }
-  .quick a.pri .qi{ font-size:18px; }
-  .quick .qi{ font-size:16px; }
+  .quick a.pri .qi{ font-size:16px; }
+  .quick .qi{ display:inline; font-size:15px; margin:0; }
   body{ padding-bottom:58px; }   /* 하단 바에 콘텐츠 안 가리도록 */
 }
 
