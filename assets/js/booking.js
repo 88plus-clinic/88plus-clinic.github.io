@@ -225,7 +225,7 @@
   // 자궁경부암 검진은 산부인과에서만 → 목요일(산부인과 휴진)엔 불가. 유방암(방사선)은 목요일도 가능.
   function papClosed(s) { return !!s && OBGY_CLOSED_DOW.indexOf(dateOf(s).getDay()) >= 0; }
   var PAP_THU_MSG = '목요일은 산부인과가 휴진이라 자궁경부암 검진은 어렵습니다.\n자궁경부암도 함께 받으시려면 다른 요일을 선택해 주세요.';
-  var OBGY_US_THU_MSG = '목요일은 산부인과가 휴진이라 부인과 초음파는 어렵습니다.\n부인과 초음파도 함께 받으시려면 다른 요일을 선택해 주세요.';
+  var OBGY_ADDON_THU_MSG = '목요일은 산부인과가 휴진이라 부인과 초음파·액상세포검사·HPV 검사는 어렵습니다.\n해당 검사도 함께 받으시려면 다른 요일을 선택해 주세요.';
 
   /* 주민등록번호 앞 6자리 + 뒷자리 첫 한 자리 → 생년월일 8자리 + 성별.
      **뒷자리는 이 한 자리 외에는 받지 않는다** — 주민등록번호를 수집하지 않기 위해서다.
@@ -767,6 +767,15 @@
   function checkedAddons() {
     return Array.prototype.map.call(
       document.querySelectorAll('.xAdd:checked'), function (el) { return el.value; });
+  }
+
+  // 산부인과에서 직접 채취·시술해야 하는 추가검진 — 목요일(산부인과 휴진) 가드 대상.
+  // 부인과 초음파·액상세포·HPV 만 해당. AMH는 혈액검사라 제외(원장 확정 2026-07-23).
+  var OBGY_ADDON_CODES = ['us_obgy', 'pap', 'hpv'];
+  function checkedObgyAddons() {
+    return Array.prototype.filter.call(
+      document.querySelectorAll('.xAdd:checked'),
+      function (el) { return OBGY_ADDON_CODES.indexOf(el.value) >= 0; });
   }
 
   function checkedReasons() {
