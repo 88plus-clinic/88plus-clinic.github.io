@@ -95,8 +95,8 @@
   ];
   var GROUPS = ['산부인과', '검진', '내과'];
   // 현재 온라인 예약이 열린 그룹. 나머지는 '준비 중 — 전화 예약' 안내만 띄운다.
-  // (2026-07-22 원장 지시: 산부인과만 오픈, 내과·검진은 준비중)
-  var OPEN_GROUPS = ['산부인과'];
+  // 2026-07-23 전체 오픈(원장 지시) — 확정 알림톡 U 시리즈 승인·실발송 검증 후.
+  var OPEN_GROUPS = ['산부인과', '검진', '내과'];
   // ?preview=1 이면 내과·검진도 열어 본다(원장 테스트용 — 일반 방문자에겐 계속 '준비 중').
   var PREVIEW = false;
   try { PREVIEW = new URLSearchParams(location.search).get('preview') === '1'; } catch (e) {}

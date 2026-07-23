@@ -118,7 +118,7 @@
 (function () {
   'use strict';
 
-  var BOOKING_OPEN = true;           // 2026-07-22 오픈(산부인과만 — 종류 제한은 booking.js OPEN_GROUPS)
+  var BOOKING_OPEN = true;           // 2026-07-23 전체 오픈(산부인과·검진·내과 — booking.js OPEN_GROUPS)
   // 로컬 미리보기(127.0.0.1·localhost)에서는 잠그지 않는다 — 예약 화면을 계속
   // 다듬어야 하기 때문. 배포된 88plus.co.kr 은 위 스위치만 따르므로 영향이 없다.
   var PREVIEW = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) ||
