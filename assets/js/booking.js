@@ -419,7 +419,13 @@
       return (!s.sex || p.gender === s.sex) && p.age >= s.min && (s.annual || cyc);
     });
     if (!list.length) {
-      box.innerHTML = head + '<p class="bo-note">올해 함께 받으실 국가암검진 대상은 없으세요. <b>일반 건강검진</b>만 받으시게 됩니다.</p>';
+      // 홀짝 불일치면 일반검진 자체도 올해 대상이 아닐 수 있다(직장 비사무직만 매년) — 단정 금지.
+      var emptyNote = cyc
+        ? '올해 함께 받으실 국가암검진 대상은 없으세요. <b>일반 건강검진</b>만 받으시게 됩니다.'
+        : '올해 함께 받으실 국가암검진 대상은 없으세요. 출생연도 기준으로 올해는 ' +
+          '<b>일반검진 대상 연도가 아닐 수 있어요</b>(직장 비사무직은 매년 대상). ' +
+          '정확한 대상 여부는 국민건강보험공단 확인이 필요합니다.';
+      box.innerHTML = head + '<p class="bo-note">' + emptyNote + '</p>';
       box.hidden = false; return;
     }
     box.innerHTML = head +
@@ -562,6 +568,14 @@
     if (p.age >= 50) items.push('대장암');
     if (p.gender === 'F' && cyc && p.age >= 40) items.push('유방암');
     if (p.gender === 'F' && cyc && p.age >= 20) items.push('자궁경부암');
+    // 홀짝 불일치 — **일반검진 자체도** 올해 대상이 아닐 수 있다(직장 비사무직만 매년).
+    // 직업 유형은 폼에서 알 수 없으므로 단정하지 않고 안내만 한다(원장 지적 2026-07-23).
+    if (!cyc) {
+      return '출생연도 기준으로 올해는 <b>국가건강검진 대상 연도가 아닐 수 있어요</b>' +
+             '(2년 주기 · 직장 비사무직은 매년 대상)' +
+             (items.length ? ' — 국가암검진은 <b>' + items.join(' · ') + '</b> 대상 가능' : '') +
+             '. 정확한 대상 여부는 국민건강보험공단 확인이 필요합니다.';
+    }
     if (!items.length) return '';
     return '올해 국가암검진 <b>' + items.join(' · ') + '</b> 대상자일 수 있어요 — ' +
            '정확한 대상 여부는 국민건강보험공단 확인이 필요합니다.';
