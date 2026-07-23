@@ -775,12 +775,12 @@
   }
 
   function onExtraChange() {
-    // 부인과 초음파는 목요일(산부인과 휴진) 불가 — 자궁경부암과 같은 UX(2026-07-23 검토 반영).
-    // 막지 않으면 접수는 되지만 허브에서 산부인과 자리를 못 잡아 조용히 '자리못잡음'이 된다.
-    var obUs = document.querySelector('.xAdd[value="us_obgy"]');
-    if (obUs && obUs.checked && state.date && papClosed(state.date)) {
-      alert(OBGY_US_THU_MSG);
-      obUs.checked = false;
+    // 산부인과 의존 추가검진(부인과 초음파·액상세포·HPV)은 목요일 불가 — 자궁경부암과 같은 UX.
+    // 막지 않으면 접수는 되지만 채취·시술할 산부인과가 없다(원장 확정 2026-07-23).
+    var obChecked = checkedObgyAddons();
+    if (obChecked.length && state.date && papClosed(state.date)) {
+      alert(OBGY_ADDON_THU_MSG);
+      obChecked.forEach(function (el) { el.checked = false; });
     }
     var pap = $('#xPapWarn');
     if (pap) pap.hidden = !$('#xPap').checked;
@@ -928,11 +928,11 @@
         state.screens['자궁경부암'] = false;
         renderOpt();
       }
-      // 부인과 초음파(추가검진)도 동일 — 목요일이면 그 항목만 빼고 날짜는 유지
-      var obUsEl = document.querySelector('.xAdd[value="us_obgy"]');
-      if (obUsEl && obUsEl.checked && papClosed(pd)) {
-        alert(OBGY_US_THU_MSG);
-        obUsEl.checked = false;
+      // 산부인과 의존 추가검진(부인과 초음파·액상세포·HPV)도 동일 — 항목만 빼고 날짜는 유지
+      var obEls = checkedObgyAddons();
+      if (obEls.length && papClosed(pd)) {
+        alert(OBGY_ADDON_THU_MSG);
+        obEls.forEach(function (el) { el.checked = false; });
         onExtraChange();
       }
       state.date = pd; state.time = null;
