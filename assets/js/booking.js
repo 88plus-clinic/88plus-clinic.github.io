@@ -225,6 +225,7 @@
   // 자궁경부암 검진은 산부인과에서만 → 목요일(산부인과 휴진)엔 불가. 유방암(방사선)은 목요일도 가능.
   function papClosed(s) { return !!s && OBGY_CLOSED_DOW.indexOf(dateOf(s).getDay()) >= 0; }
   var PAP_THU_MSG = '목요일은 산부인과가 휴진이라 자궁경부암 검진은 어렵습니다.\n자궁경부암도 함께 받으시려면 다른 요일을 선택해 주세요.';
+  var OBGY_US_THU_MSG = '목요일은 산부인과가 휴진이라 부인과 초음파는 어렵습니다.\n부인과 초음파도 함께 받으시려면 다른 요일을 선택해 주세요.';
 
   /* 주민등록번호 앞 6자리 + 뒷자리 첫 한 자리 → 생년월일 8자리 + 성별.
      **뒷자리는 이 한 자리 외에는 받지 않는다** — 주민등록번호를 수집하지 않기 위해서다.
@@ -257,8 +258,11 @@
     var dow = d.getDay();
     if (dow === 0) return [];
     if (type.res === 'OBGY' && OBGY_CLOSED_DOW.indexOf(dow) >= 0) return [];
+    // 검진에 내시경을 붙이면 내시경실 운영시간(15시 마지막)을 따른다 — 종전엔 CHECKUP
+    // 규칙(~18시)으로 16·17시가 노출돼 신청해도 항상 자리못잡음이었다(2026-07-23 검토 수정).
+    var resKey = (type.endoOpt && state.endo) ? 'ENDO' : type.res;
     var out = [];
-    (RULES[type.res] || []).forEach(function (blk) {
+    (RULES[resKey] || []).forEach(function (blk) {
       if (blk[0].indexOf(dow) < 0) return;
       var s = toMin(blk[1]), e = toMin(blk[2]);
       for (var m = s; m + type.step * type.need <= e; m += type.step) out.push(toStr(m));
@@ -771,6 +775,13 @@
   }
 
   function onExtraChange() {
+    // 부인과 초음파는 목요일(산부인과 휴진) 불가 — 자궁경부암과 같은 UX(2026-07-23 검토 반영).
+    // 막지 않으면 접수는 되지만 허브에서 산부인과 자리를 못 잡아 조용히 '자리못잡음'이 된다.
+    var obUs = document.querySelector('.xAdd[value="us_obgy"]');
+    if (obUs && obUs.checked && state.date && papClosed(state.date)) {
+      alert(OBGY_US_THU_MSG);
+      obUs.checked = false;
+    }
     var pap = $('#xPapWarn');
     if (pap) pap.hidden = !$('#xPap').checked;
     var f = $('#xFast');
@@ -815,7 +826,11 @@
     if (!state.type || !state.date) { renderTimes(); return; }
     var seq = ++availSeq;
     renderTimes();               // 우선 그려두고(로딩), 응답 오면 마감표시 갱신
-    fetch(API_AVAIL + '?type=' + encodeURIComponent(state.type.code) +
+    // 마감시간은 **제출 코드(내시경 접미사 포함)** 기준으로 조회한다 — 기본 코드로 물으면
+    // 검진+내시경의 내시경실 마감이 안 보이고 일반검진 마감이 잘못 반영된다(2026-07-23 검토 수정).
+    var availCode = state.type.code +
+      (state.type.endoOpt && state.endo && ENDO_MAP[state.endo] ? ENDO_MAP[state.endo].sfx : '');
+    fetch(API_AVAIL + '?type=' + encodeURIComponent(availCode) +
           '&date=' + encodeURIComponent(state.date))
       .then(function (r) { return r.json(); })
       .then(function (j) {
@@ -912,6 +927,13 @@
         alert(PAP_THU_MSG);
         state.screens['자궁경부암'] = false;
         renderOpt();
+      }
+      // 부인과 초음파(추가검진)도 동일 — 목요일이면 그 항목만 빼고 날짜는 유지
+      var obUsEl = document.querySelector('.xAdd[value="us_obgy"]');
+      if (obUsEl && obUsEl.checked && papClosed(pd)) {
+        alert(OBGY_US_THU_MSG);
+        obUsEl.checked = false;
+        onExtraChange();
       }
       state.date = pd; state.time = null;
       renderMonth(viewMonth); loadAvail(); syncSummary();
