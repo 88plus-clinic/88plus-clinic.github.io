@@ -75,6 +75,11 @@
     // 기존 예약 호환용으로 허브에 남아 있고, 새 예약은 checkup_nhis 로만 들어간다.
     { code:'checkup_nhis',      name:'국가공단검진',        group:'검진', res:'CHECKUP', step:60, need:1,
       note:'만 20세 이상 대상자 · 검진비 무료 또는 본인부담 10% · 원하시면 추가검진 선택', endoOpt:true, addons:true },
+    // 개인종합검진(2026-07-23 신설, 원장 확정) — 혈액종합검사(50여종) 기본 + 선택형.
+    // endoPick: 국가암검진 목록 대신 위/대장내시경 라디오를 보여준다(전액 비급여 검진).
+    { code:'checkup_private',   name:'개인종합검진',        group:'검진', res:'CHECKUP', step:60, need:1,
+      note:'혈액종합검사(50여종) 기본 · 내시경·초음파 등 원하시는 검사 선택 추가', endoOpt:true, endoPick:true, addons:true,
+      warn:'혈액종합검사가 포함되어 검사 전 8시간 동안 물·음료·껌·흡연을 포함한 완전 금식이 필요합니다.' },
     { code:'checkup_employ',    name:'채용검진',            group:'검진', res:'CHECKUP', step:60, need:1,
       note:'제출처 양식이 있으면 지참해 주세요' },
     { code:'endo_gastro',  name:'위내시경',      group:'내과', sub:'내시경', res:'ENDO', step:60, need:1,
@@ -406,6 +411,22 @@
   function renderOpt() {
     var box = $('#bkOpt'), t = state.type;
     if (!t || !t.endoOpt) { box.hidden = true; box.innerHTML = ''; return; }
+    // 개인종합검진 — 국가암검진 목록 대신 **내시경 선택 라디오**(주민번호 없이도 표시).
+    // state.endo 로 이어지므로 리드타임(대장 D+8)·수면·항혈전제·코드 접미사가 그대로 따라온다.
+    if (t.endoPick) {
+      box.innerHTML = '<p class="bo-h">함께 받으실 내시경 <span>(선택)</span></p>' +
+        '<label class="bo-item"><input type="radio" name="xEndo" value=""' +
+          (!state.endo ? ' checked' : '') + '><span>내시경 없이 (혈액·선택 검사만)</span></label>' +
+        ENDO_OPTS.map(function (o) {
+          return '<label class="bo-item"><input type="radio" name="xEndo" value="' + o.v + '"' +
+            (state.endo === o.v ? ' checked' : '') + '><span>' + o.name + '</span></label>';
+        }).join('') +
+        '<p class="bo-note">대장내시경은 장정결제 사전 진료가 필요해 <b>8일 뒤 날짜부터</b> 선택하실 수 있습니다.</p>';
+      Array.prototype.forEach.call(box.querySelectorAll('input[name="xEndo"]'), function (r) {
+        r.addEventListener('change', function () { pickEndo(this.value); });
+      });
+      box.hidden = false; return;
+    }
     var head = '<p class="bo-h">함께 받으실 국가검진 <span>(선택)</span></p>';
     var p = profile();
     if (!p) {
@@ -653,7 +674,9 @@
   function showWarn() {
     var w = $('#bkTypeWarn'), msgs = [];
     if (state.type) {
-      if (state.type.warn) msgs.push(state.type.warn);
+      // endoPick(개인종합검진)에서 내시경을 고르면 아래 내시경 금식 안내가 나가므로
+      // 기본(혈액) 금식 안내와 겹치지 않게 숨긴다
+      if (state.type.warn && !(state.type.endoPick && state.endo)) msgs.push(state.type.warn);
       if (state.type.endoOpt) {
         if (state.endo === 'gastro' || state.endo === 'both') msgs.push(PREP_ENDO_FAST);
         if (state.endo === 'colon'  || state.endo === 'both') msgs.push(PREP_COLON);
@@ -1023,6 +1046,12 @@
       if (state.screens['자궁경부암']) tparts.push('자궁경부암검진');
       addons.forEach(function (c) { tparts.push(ADDON_MAP[c].n); });
       typeName = tparts.join(' + ');
+      if (typeName.length > 80) typeName = typeName.slice(0, 79) + '…';
+    } else if (state.type.code === 'checkup_private') {
+      var pparts = ['개인종합검진'];
+      if (endoOpt) pparts.push(endoOpt.name);
+      addons.forEach(function (c) { pparts.push(ADDON_MAP[c].n); });
+      typeName = pparts.join(' + ');
       if (typeName.length > 80) typeName = typeName.slice(0, 79) + '…';
     }
 
