@@ -1008,7 +1008,7 @@
       var noteEl = document.querySelector('#bkDoneView .bk-note');
       if (noteEl) noteEl.innerHTML =
         '아직 <b>예약이 확정된 것은 아닙니다.</b> 확정되면 <b>알림톡으로 안내</b>해 드립니다.<br>' +
-        '<b>처음 방문</b>하시는 경우 확인 전화를 드릴 수 있습니다.<br>' +
+        '<b>처음 방문</b>하시는 경우 초진 차트 작성으로 인해 예약 주신 시간보다 진료 시간이 늦어질 수 있습니다. 양해 부탁드립니다.<br>' +
         '<b>「예약 변경/취소」</b>에서 언제든 확인 · 변경 · 취소하실 수 있습니다.';
       // 완료 화면이 맨 위로 오도록 상단 안내·입력부를 모두 숨긴다
       ['.bk-openinfo', '.bk-intro', '.bk-who', '.bk-panels', '.bk-typewarn'].forEach(function (s) {
