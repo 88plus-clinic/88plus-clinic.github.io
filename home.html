@@ -51,7 +51,7 @@
 <!-- ── ① 슬로건 (첫 화면) ───────────────────────── -->
 <section class="hero">
   <div class="hero-bg" aria-hidden="true"></div>
-  <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto"
+  <video class="hero-video" autoplay muted playsinline webkit-playsinline preload="auto"
          poster="assets/img/hero-poster.jpg" aria-hidden="true">
     <source src="assets/video/hero.mp4" type="video/mp4">
   </video>
@@ -328,5 +328,20 @@
 
 <script src="assets/js/main.js?v=07231920"></script>
 <script src="assets/js/chat.js?v=07231500"></script>
+<script>
+/* 히어로 동영상: 페이지 진입 때 딱 한 번만 재생(무한반복 X, loop 제거).
+   재진입(새 로드·뒤로가기 bfcache 복원 포함) 시 처음(0초)부터 다시 재생. */
+(function(){
+  var v = document.querySelector('.hero-video');
+  if(!v) return;
+  function playOnce(){
+    try{ v.currentTime = 0; }catch(e){}
+    var p = v.play();
+    if(p && p.catch) p.catch(function(){});   // 자동재생 차단돼도 조용히
+  }
+  // bfcache 복원(뒤로가기)·최초 표시 모두 pageshow 로 처음부터
+  window.addEventListener('pageshow', playOnce);
+})();
+</script>
 </body>
 </html>
