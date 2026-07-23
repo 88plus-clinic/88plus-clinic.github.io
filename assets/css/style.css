@@ -1083,8 +1083,20 @@ ol,ul{ margin:0; padding:0; list-style:none; }
    느린 확대/이동을 무한 왕복시켜 정지 사진을 영상처럼 보이게 한다.
    실제 동영상 대신이라 용량 부담(157KB)이 거의 없다. */
 .hero{ overflow:hidden; }
+/* 배경 영상 — 정지이미지(.hero-bg) 위에 덮인다. poster 가 로딩·실패 상태를 가려
+   깨짐이 없고, 모션축소 사용자는 아래에서 영상을 끄고 정지이미지로 되돌린다.
+   opacity 는 이미지와 동일(.62)하게 두어 크림 스크림 가독성을 유지. */
+.hero-video{
+  position:absolute; inset:0; z-index:0;
+  width:100%; height:100%; object-fit:cover;
+  opacity:.62; background:var(--cream);
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-video{ display:none; }       /* 모션 민감 사용자는 정지이미지 켄번즈 */
+}
 .hero-bg{
   position:absolute; inset:0; z-index:0;
+  display:none;                      /* 영상(.hero-video)이 대체 — 모션축소 시 되살림 */
   background:url(../img/hero-bg.jpg) center/cover no-repeat;
   opacity:.62;                       /* 연하게 깔려 배경처럼 */
   transform:scale(1.20);
@@ -1114,7 +1126,7 @@ ol,ul{ margin:0; padding:0; list-style:none; }
 .hero-in, .hero-scroll{ position:relative; z-index:2; }
 
 @media (prefers-reduced-motion:reduce){
-  .hero-bg{ animation:none; transform:scale(1.13); }
+  .hero-bg{ display:block; animation:none; transform:scale(1.13); }
 }
 @media (max-width:768px){
   /* 모바일은 세로가 짧아 확대폭을 줄여 인물·간판이 잘리지 않게 */
