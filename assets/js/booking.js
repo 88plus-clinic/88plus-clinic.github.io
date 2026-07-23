@@ -179,9 +179,11 @@
      위암·대장암은 내시경이라 종류 코드(state.endo)로 연결돼 내시경실 자리를 잡고,
      유방암·자궁경부암은 여성만·방사선/산부인과로 배정된다(원장 확정 2026-07-23). */
   var CHECKUP_SCREEN = [
+    // annual:true = 매년(대장암 분변). 나머지는 2년 주기 — **출생연도 홀짝 = 검진연도 홀짝**일 때만
+    // 올해 대상(공단 기준·nhis.py 와 동일). 불일치면 배지를 회색으로 바꾼다(2026-07-23 버그 수정).
     { k:'위암',     endo:'gastro', label:'위암검진 (위내시경)',   sub:'만 40세 이상 · 2년마다', min:40 },
     // 국가 대장암검진은 **분변검사(FOBT)** — 대장내시경이 아니라 내시경실 자리·항혈전제와 무관하다.
-    { k:'대장암',   label:'대장암검진 (분변검사)',  sub:'만 50세 이상 · 분변검사',  min:50 },
+    { k:'대장암',   label:'대장암검진 (분변검사)',  sub:'만 50세 이상 · 분변검사',  min:50, annual:true },
     { k:'유방암',   label:'유방암검진 (유방촬영)',  sub:'만 40세 이상 여성 · 2년마다', min:40, sex:'F' },
     { k:'자궁경부암', label:'자궁경부암검진',        sub:'만 20세 이상 여성 · 2년마다', min:20, sex:'F' }
   ];
@@ -418,12 +420,17 @@
       box.innerHTML = head + '<p class="bo-note">올해 함께 받으실 국가암검진 대상은 없으세요. <b>일반 건강검진</b>만 받으시게 됩니다.</p>';
       box.hidden = false; return;
     }
+    // 2년 주기 검진은 출생연도 홀짝이 올해와 같아야 대상(공단 기준) — 불일치면 회색 배지.
+    // 작년 미수검 이월 수검이 가능할 수 있어 항목 자체는 남겨 선택은 막지 않는다.
+    var cyc = (p.year % 2) === ((new Date()).getFullYear() % 2);
     box.innerHTML = head +
       list.map(function (s) {
+        var thisYear = s.annual || cyc;
         return '<label class="bo-scr' + (state.screens[s.k] ? ' on' : '') + '" data-k="' + s.k + '">' +
           '<input type="checkbox"' + (state.screens[s.k] ? ' checked' : '') + '>' +
           '<span class="bo-scr-t"><b>' + s.label + '</b><i>' + s.sub + '</i></span>' +
-          '<span class="bo-scr-b">대상일 수 있어요</span></label>';
+          (thisYear ? '<span class="bo-scr-b">대상일 수 있어요</span>'
+                    : '<span class="bo-scr-b off">올해는 대상이 아닐 수 있어요</span>') + '</label>';
       }).join('') +
       '<p class="bo-note">대상 여부·무료/본인부담은 병원에서 <b>공단 조회 후</b> 확정해 안내드립니다. ' +
       '원하는 것만 고르시고, 모르시면 비워두셔도 됩니다.</p>';
