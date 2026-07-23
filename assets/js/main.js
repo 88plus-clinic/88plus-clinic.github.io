@@ -207,4 +207,25 @@
   }
   window.addEventListener('scroll', toggle, { passive: true });
   toggle();
+
+  /* 히어로 배경영상 — 모바일 자동재생 보강.
+     muted+playsinline 이어도 일부 모바일(iOS·데이터절약 등)은 스크립트로 play() 를
+     눌러줘야 시작한다. 로드 직후 시도 + 첫 상호작용에서 한 번 더 시도한다.
+     (저전력 모드·동작 줄이기 등 OS 차원 차단은 코드로 못 넘긴다) */
+  var heroV = document.querySelector('.hero-video');
+  if (heroV) {
+    heroV.muted = true;                 // 자동재생 정책상 반드시 muted
+    var playHero = function () {
+      var p = heroV.play();
+      if (p && typeof p.catch === 'function') p.catch(function () {});
+    };
+    playHero();
+    heroV.addEventListener('loadeddata', playHero, { once: true });
+    ['touchstart', 'pointerdown', 'scroll'].forEach(function (ev) {
+      window.addEventListener(ev, function h() {
+        playHero();
+        window.removeEventListener(ev, h);
+      }, { passive: true });
+    });
+  }
 })();
