@@ -250,6 +250,19 @@
 .bx-item span{ font-size:14px; color:var(--body); line-height:1.45; word-break:keep-all; }
 .bx-item em{ font-style:normal; font-size:11.5px; color:var(--muted); }
 .bx-item:hover span{ color:var(--olive-dk); }
+/* 가격·설명 표시(2026-07-23) — 이름 ↔ 가격 한 줄, 설명은 아래 작은 글씨 */
+.bx-item .bx-tx{ flex:1; min-width:0; }
+.bx-item .bx-row{ display:flex; align-items:baseline; gap:10px; }
+.bx-item .bx-nm{ flex:1; }
+.bx-item .bx-p{ flex:none; font-size:13px; font-weight:700; color:var(--olive-dk); }
+.bx-item:hover .bx-p{ color:var(--olive-dk); }
+.bx-item .bx-d{ display:block; margin-top:1px; font-size:12px; color:var(--muted); line-height:1.5; }
+.bx-item:hover .bx-d{ color:var(--muted); }
+.bx-gnote{ margin:6px 0 2px 24px; font-size:12px; color:var(--muted); word-break:keep-all; }
+.bx-pay{
+  margin:10px 0 0; padding:10px 13px; background:#F6F3EA; border-left:2px solid #C0A46B;
+  font-size:12.5px; line-height:1.65; color:var(--body); word-break:keep-all;
+}
 .bx-etc{ margin:14px 0 0; }
 .bx-fast{
   margin:14px 0 0; padding:12px 16px; background:#FBF3EC; border-left:2px solid #C08A4A;

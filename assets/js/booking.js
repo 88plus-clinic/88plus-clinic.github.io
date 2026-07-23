@@ -70,10 +70,11 @@
 
   // 예약 종류 — code: 서버 BOOKING_TYPES 와 동일
   var TYPES = [
+    // 2026-07-23 통합(원장 지시) — '국가공단검진'과 '공단검진+추가검진'을 하나로.
+    // 추가검진은 어차피 선택 항목이라 종류를 나눌 이유가 없었다. checkup_nhis_plus 코드는
+    // 기존 예약 호환용으로 허브에 남아 있고, 새 예약은 checkup_nhis 로만 들어간다.
     { code:'checkup_nhis',      name:'국가공단검진',        group:'검진', res:'CHECKUP', step:60, need:1,
-      note:'만 20세 이상 대상자 · 검진비 무료 또는 본인부담 10%', endoOpt:true },
-    { code:'checkup_nhis_plus', name:'공단검진 + 추가검진', group:'검진', res:'CHECKUP', step:60, need:1,
-      note:'공단검진에 원하시는 항목을 추가', endoOpt:true, addons:true },
+      note:'만 20세 이상 대상자 · 검진비 무료 또는 본인부담 10% · 원하시면 추가검진 선택', endoOpt:true, addons:true },
     { code:'checkup_employ',    name:'채용검진',            group:'검진', res:'CHECKUP', step:60, need:1,
       note:'제출처 양식이 있으면 지참해 주세요' },
     { code:'endo_gastro',  name:'위내시경',      group:'내과', sub:'내시경', res:'ENDO', step:60, need:1,
@@ -110,26 +111,27 @@
   };
 
   /* 추가검진 항목 — 비급여 고지표(pricing.html) 기준.
-     f:'F' = 여성만, fast:true = 금식 필요.
-     ⚠ 이건 '신청'일 뿐 확정이 아니다. 최종 항목·비용은 내원 상담에서 정한다. */
+     f:'F' = 여성만, fast:true = 금식 필요, p = 고지 가격, d = 한 줄 설명(2026-07-23 원장 지시).
+     ⚠ 이건 '신청'일 뿐 확정이 아니다. 최종 항목·비용은 내원 상담에서 정한다.
+     ⚠ 가격은 pricing.html 고지표와 **반드시 같이** 고친다 — 두 곳이 어긋나면 안 된다. */
   var ADDONS = [
-    { g:'초음파', items:[
-      { c:'us_upper',  n:'상복부 초음파', fast:true },
-      { c:'us_lower',  n:'하복부 초음파', fast:true },
-      { c:'us_thy',    n:'갑상선 초음파' },
-      { c:'us_car',    n:'경동맥 초음파' },
-      { c:'us_obgy',   n:'부인과 초음파', f:'F' }
+    { g:'초음파', note:'두 부위 동시 시행 할인 — 상복부+하복부 100,000원 · 갑상선+경동맥 80,000원', items:[
+      { c:'us_upper',  n:'상복부 초음파', fast:true, p:'80,000원', d:'간·담낭·췌장·비장·신장' },
+      { c:'us_lower',  n:'하복부 초음파', fast:true, p:'60,000원', d:'방광 등 하복부 장기' },
+      { c:'us_thy',    n:'갑상선 초음파', p:'50,000원', d:'갑상선 결절·물혹' },
+      { c:'us_car',    n:'경동맥 초음파', p:'50,000원', d:'목 혈관 동맥경화 확인' },
+      { c:'us_obgy',   n:'부인과 초음파', f:'F', d:'자궁·난소' }
     ]},
     // 유방촬영·골밀도는 추가검진 목록에서 제외(원장 지시 2026-07-20)
     { g:'혈액', items:[
-      { c:'blood_full',n:'혈액종합검사 (50여종)', fast:true },
-      { c:'tumor5',    n:'암표지자 5종', fast:true },
-      { c:'vit_d',     n:'비타민 D' }
+      { c:'blood_full',n:'혈액종합검사 (50여종)', fast:true, p:'80,000원', d:'간·신장·당뇨·지질·빈혈 등 혈액+소변 50여 항목' },
+      { c:'tumor5',    n:'암표지자 5종', fast:true, p:'60,000원', d:'남성 간·대장·췌장·폐·전립선 / 여성 간·대장·췌장·유방·난소' },
+      { c:'vit_d',     n:'비타민 D', p:'15,000원', d:'비타민 D 결핍 확인' }
     ]},
     { g:'여성 검사', items:[
-      { c:'pap',       n:'자궁경부암 액상세포검사', f:'F' },
-      { c:'hpv',       n:'인유두종바이러스(HPV)',   f:'F' },
-      { c:'amh',       n:'난소나이(AMH)',           f:'F' }
+      { c:'pap',       n:'자궁경부암 액상세포검사', f:'F', p:'50,000원', d:'자궁경부암 정밀 세포검사' },
+      { c:'hpv',       n:'인유두종바이러스(HPV)',   f:'F', p:'60,000원', d:'자궁경부암 원인 바이러스 검사' },
+      { c:'amh',       n:'난소나이(AMH)',           f:'F', p:'60,000원', d:'난소 기능(가임력) 혈액검사' }
     ]}
   ];
   var ADDON_MAP = {};
@@ -689,13 +691,19 @@
 
     if (t.addons) {
       h += '<p class="bx-sub">추가로 원하시는 검사를 선택해 주세요. (복수 선택)</p>' +
+           '<p class="bx-pay">추가검진은 <b>비급여(본인부담)</b> 항목입니다. 표시된 금액은 ' +
+           '비급여 진료비용 고지 기준이며, 최종 비용은 <b>내원 상담에서 확정</b>됩니다.</p>' +
            '<div class="bx-groups">';
       ADDONS.forEach(function (g) {
         h += '<div class="bx-g"><p class="bx-gn">' + g.g + '</p>';
         g.items.forEach(function (i) {
           h += '<label class="bx-item"><input type="checkbox" class="xAdd" value="' + i.c + '">' +
-               '<span>' + i.n + (i.f === 'F' ? ' <em>여성</em>' : '') + '</span></label>';
+               '<span class="bx-tx"><span class="bx-row"><span class="bx-nm">' + i.n +
+               (i.f === 'F' ? ' <em>여성</em>' : '') + '</span>' +
+               (i.p ? '<b class="bx-p">' + i.p + '</b>' : '') + '</span>' +
+               (i.d ? '<small class="bx-d">' + i.d + '</small>' : '') + '</span></label>';
         });
+        if (g.note) h += '<p class="bx-gnote">' + g.note + '</p>';
         h += '</div>';
       });
       h += '</div>' +
