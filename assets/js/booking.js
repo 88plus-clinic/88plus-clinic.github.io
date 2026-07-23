@@ -544,11 +544,34 @@
     return { gender: r.gender, age: (new Date()).getFullYear() - year, year: year };
   }
 
+  /* 국가암검진 대상 **추정** 한 줄 — 서버 nhis.py 와 같은 공단 기준.
+     · 나이 = 검진연도 − 출생연도 · 2년 주기 항목은 출생연도 홀짝 = 올해 홀짝일 때
+     · 위암 40+ / 대장암 50+(매년) / 유방암 여 40+ / 자궁경부암 여 20+
+     ⚠ 추정일 뿐이므로 반드시 '공단 확인 필요' 문구를 붙인다(원장 지시 2026-07-23). */
+  function cancerHint(p) {
+    var yr = (new Date()).getFullYear();
+    var cyc = (p.year % 2) === (yr % 2);          // 2년 주기 대상 연도인가
+    var items = [];
+    if (cyc && p.age >= 40) items.push('위암');
+    if (p.age >= 50) items.push('대장암');
+    if (p.gender === 'F' && cyc && p.age >= 40) items.push('유방암');
+    if (p.gender === 'F' && cyc && p.age >= 20) items.push('자궁경부암');
+    if (!items.length) return '';
+    return '올해 국가암검진 <b>' + items.join(' · ') + '</b> 대상자일 수 있어요 — ' +
+           '정확한 대상 여부는 국민건강보험공단 확인이 필요합니다.';
+  }
+
   // 주민 앞자리 입력 시 — 성별·나이 표시 + 나이 맞춤 안내 갱신
   function onProfileInput() {
     var p = profile(), w = $('#bkWho');
     if (w) {
-      if (p) { w.textContent = (p.gender === 'F' ? '여성' : '남성') + ' · 만 ' + p.age + '세 (' + p.year + '년생)'; w.hidden = false; }
+      if (p) {
+        var base = (p.gender === 'F' ? '여성' : '남성') + ' · 만 ' + p.age + '세 (' + p.year + '년생)';
+        var hint = cancerHint(p);
+        w.innerHTML = base + (hint ?
+          '<span style="display:block;margin-top:4px;font-weight:400;font-size:13px;color:#6b6b62">' + hint + '</span>' : '');
+        w.hidden = false;
+      }
       else { w.hidden = true; w.textContent = ''; }
     }
     renderTogether();
