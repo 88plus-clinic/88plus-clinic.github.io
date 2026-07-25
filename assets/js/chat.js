@@ -157,6 +157,10 @@
   var PII = [/\d{6}\s*[-–]\s*[1-4]\d{6}/, /01[016-9][\s-]?\d{3,4}[\s-]?\d{4}/];
   function hasPII(q){ return PII.some(function(p){ return p.test(q); }); }
 
+  // 최근 대화 맥락(멀티턴) — 후속 질문("오늘 되나요?")이 앞 주제를 잇도록 최근 5턴을 함께 보낸다.
+  var HISTORY = [];
+  var MAX_TURNS = 5;
+
   function ask(q){
     q = (q||'').trim(); if(!q || busy) return;
     me2(q); text.value=''; if(chips){ chips.style.display='none'; }
@@ -170,10 +174,13 @@
         busy=false; sendB.disabled=false; }, 700);
       return;
     }
-    fetch(CHAT_API, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ q: q }) })
+    fetch(CHAT_API, { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ q: q, history: HISTORY.slice(-MAX_TURNS) }) })
       .then(function(r){ return r.json(); })
       .then(function(d){ typing.remove();
-        if(d && d.ok && d.answer){ bot(d.answer); }
+        if(d && d.ok && d.answer){ bot(d.answer);
+          HISTORY.push({ q: q, a: d.answer });        // 성공한 턴만 맥락에 누적
+          if(HISTORY.length > MAX_TURNS){ HISTORY = HISTORY.slice(-MAX_TURNS); } }
         else { bot((d && d.error) || "지금은 답변을 드리기 어려워요. 잠시 후 다시 시도하거나 02-972-8800으로 문의해 주세요."); } })
       .catch(function(){ typing.remove();
         bot("연결이 원활하지 않아요. 잠시 후 다시 시도하거나 02-972-8800으로 문의해 주세요."); })
