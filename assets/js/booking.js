@@ -886,17 +886,32 @@
                    '<i>' + fmtDate(state.date) + ' ' + state.time + '</i>';
   }
 
+  /* 시간 변경 모드에서 항목을 누르려 할 때 — **조용히 무시하면 "고장"으로 읽힌다.**
+     실제로 그래서 전화가 왔다(2026-07-31). 패널을 숨기는 게 1차 방어이고, 이건 2차 방어 —
+     어떤 이유로든 항목이 화면에 남았을 때 왜 안 되는지 말해 준다. */
+  var lockMsgAt = 0;
+  function chgLocked() {
+    var now = new Date().getTime();
+    if (now - lockMsgAt < 1500) return;      // 연타해도 알림이 쏟아지지 않게
+    lockMsgAt = now;
+    alert('예약 변경은 날짜·시간만 하실 수 있습니다.\n\n' +
+          '검사 항목을 바꾸시려면 지금 예약을 취소하신 뒤 새로 신청해 주세요.\n' +
+          '문의: 02-972-8800');
+  }
+
   // ── 이벤트 ──────────────────────────────────────
   function bind() {
     $('#bkTabs').addEventListener('click', function (e) {
-      if (CHG) return;
-      var b = e.target.closest('.bk-tab'); if (!b) return;
+      if (!e.target.closest('.bk-tab')) return;
+      if (CHG) return chgLocked();
+      var b = e.target.closest('.bk-tab');
       state.group = b.dataset.g; state.sub = null;
       renderTabs(); renderChips();
     });
     $('#bkSubs').addEventListener('click', function (e) {
-      if (CHG) return;
-      var b = e.target.closest('.bk-subtab'); if (!b) return;
+      if (!e.target.closest('.bk-subtab')) return;
+      if (CHG) return chgLocked();
+      var b = e.target.closest('.bk-subtab');
       state.sub = b.dataset.s;
       renderChips();
     });
@@ -912,14 +927,14 @@
       syncSummary();
     });
     $('#bkOpt').addEventListener('change', function (e) {
-      if (CHG) return;
-      var lab = e.target.closest('.bo-scr');
-      if (lab) toggleScreen(lab.dataset.k);
+      var lab = e.target.closest('.bo-scr'); if (!lab) return;
+      if (CHG) return chgLocked();
+      toggleScreen(lab.dataset.k);
     });
     $('#bkChips').addEventListener('click', function (e) {
-      if (CHG) return;                      // 시간 변경 모드에서는 항목을 못 바꾼다
-      var b = e.target.closest('.bk-chip'); if (!b) return;
-      pickType(b.dataset.c);
+      if (!e.target.closest('.bk-chip')) return;
+      if (CHG) return chgLocked();          // 시간 변경 모드에서는 항목을 못 바꾼다
+      pickType(e.target.closest('.bk-chip').dataset.c);
     });
     $('#mPrev').addEventListener('click', function () {
       renderMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth()-1, 1));
@@ -1258,15 +1273,18 @@
         '</ul>';
     }
 
-    /* 항목 선택 패널은 감춘다.
+    /* 항목 선택·예약자 정보 패널은 감춘다.
        ⚠ hidden 속성만으로는 부족하다 — `.bk-panel{display:flex}` 가 이겨서 그대로 보였고,
           실제로 변경 화면에서 항목이 눌리는 사고가 났다(2026-07-21).
-          CSS 에 `[hidden]{display:none!important}` 를 넣었고, 여기서도 한 번 더 막는다. */
-    var panels = document.querySelectorAll('.bk-panel');
-    if (panels[0]) {
-      panels[0].hidden = true;
-      panels[0].style.display = 'none';
-    }
+          CSS 에 `[hidden]{display:none!important}` 를 넣었고, 여기서도 한 번 더 막는다.
+       ⚠⚠ 종전엔 `querySelectorAll('.bk-panel')[0]` 로 **순서로** 찾았다. 그 뒤 맨 위에
+          '진료받으실 분'(.bk-who) 패널이 추가되면서 인덱스가 밀려, 감춰야 할 **항목 패널이
+          그대로 보이고** 클릭만 막힌 상태가 됐다 → 환자는 "산부인과가 눌리지 않는다"며
+          전화를 걸었다(2026-07-31 조경민님). **순서가 아니라 id 로 찾는다.** */
+    ['#bkPanelType', '.bk-who'].forEach(function (sel) {
+      var el = document.querySelector(sel);
+      if (el) { el.hidden = true; el.style.display = 'none'; }
+    });
 
     /* 예약자 정보는 다시 받지 않는다 — 조회에서 본인 확인이 끝났고,
        그때 받은 토큰으로 변경한다(개인정보를 화면 사이로 들고 다니지 않는다). */

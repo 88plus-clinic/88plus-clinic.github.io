@@ -111,8 +111,10 @@
     <!-- ── 항목·날짜·시간 ─────────────────────────── -->
     <div class="bk-panels">
 
-      <!-- 1) 항목 -->
-      <div class="bk-panel">
+      <!-- 1) 항목 — id 필수. 시간 변경 모드에서 이 패널을 숨긴다(booking.js setupChangeUI).
+           ⚠ 순서(querySelectorAll 인덱스)로 찾으면 안 된다 — 위에 패널이 하나 추가되면
+              조용히 엉뚱한 패널을 숨긴다(2026-07-31 실제 사고). -->
+      <div class="bk-panel" id="bkPanelType">
         <h2 class="bp-h">항목 선택</h2>
         <p class="bp-sub">원하시는 항목을 선택하세요.</p>
         <div class="bk-tabs" id="bkTabs"></div>
@@ -267,7 +269,7 @@
 </nav>
 
 <script src="assets/js/main.js?v=07221700"></script>
-<script src="assets/js/booking.js?v=07241145"></script>
+<script src="assets/js/booking.js?v=07311620"></script>
 <script src="assets/js/chat.js?v=07251610"></script>
 </body>
 </html>
