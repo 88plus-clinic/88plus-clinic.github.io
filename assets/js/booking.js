@@ -999,6 +999,23 @@
     $('#bkForm').addEventListener('submit', submit);
   }
 
+  /* 제출 1회분 고유키 — 성공할 때까지 **같은 값을 유지**한다.
+     sessionStorage 를 못 쓰는 브라우저면 메모리 변수로 폴백(같은 탭 안에서는 유지된다). */
+  var _skey = null;
+  function submitKey() {
+    if (_skey) return _skey;
+    try { _skey = sessionStorage.getItem('bk_skey'); } catch (e) { _skey = null; }
+    if (!_skey) {
+      _skey = 'r' + Date.now() + Math.random().toString(36).slice(2, 8);
+      try { sessionStorage.setItem('bk_skey', _skey); } catch (e) {}
+    }
+    return _skey;
+  }
+  function clearSubmitKey() {
+    _skey = null;
+    try { sessionStorage.removeItem('bk_skey'); } catch (e) {}
+  }
+
   // ── 제출 ────────────────────────────────────────
   function submit(e) {
     e.preventDefault();
@@ -1103,8 +1120,13 @@
       if (typeName.length > 80) typeName = typeName.slice(0, 79) + '…';
     }
 
+    /* 중복 신청 방지 키 — **재시도해도 같은 값**이어야 한다.
+       서버는 client_id 가 같으면 새로 만들지 않고 기존 예약번호를 돌려준다.
+       ⚠ 종전엔 여기서 매번 새로 만들어 그 방어가 사실상 꺼져 있었다. 통신이 끊겨
+          "전송에 실패했습니다"를 보고 다시 누르면 **예약이 2건** 들어갔다(2026-07-31).
+       성공하면 지운다(다음 예약은 새 키). */
     var payload = {
-      client_id: 'r' + Date.now() + Math.random().toString(36).slice(2, 8),
+      client_id: submitKey(),
       type: code,
       type_name: typeName,
       date: state.date, time: state.time,
@@ -1130,6 +1152,7 @@
     btn.disabled = true; btn.textContent = '전송 중…';
 
     send(payload).then(function (res) {
+      clearSubmitKey();                 // 성공 — 다음 예약은 새 키로
       $('#bkDoneBox').innerHTML =
         // 예약번호는 취소할 때 필요하다 — 맨 위에 크게 보여준다
         ((res && res.reservation_no)
