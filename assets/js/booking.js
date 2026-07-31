@@ -1182,7 +1182,9 @@
       $('#bkFormWrap').hidden = true;
       $('#bkDoneView').hidden = false;
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }).catch(function () {
+    }).catch(function (err) {
+      // 서버가 이유를 준 거절(같은 날 중복 신청 등)은 그 문구를 그대로 — 통신 실패와 다르다
+      if (err && err.detail) { alert(err.detail); return; }
       // 전화 예약으로 유도하지 않는다(원장 지시 2026-07-21) — 온라인에서 끝나야 한다
       alert('전송에 실패했습니다.\n잠시 후 다시 시도해 주세요.\n' +
             '계속 실패하면 인터넷 연결을 확인해 주세요.');
@@ -1257,8 +1259,15 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     }).then(function (r) {
-      if (!r.ok) throw new Error('http ' + r.status);
-      return r.json();
+      if (r.ok) return r.json();
+      /* 서버가 **이유를 담아** 거절한 것(같은 날 중복 신청·지난 시각·휴진일)은
+         그 문구를 그대로 보여준다. 종전엔 상태코드만 던져서 전부
+         "전송에 실패했습니다"로 뭉개졌고, 환자는 왜 안 되는지 알 수 없었다. */
+      return r.json().catch(function () { return null; }).then(function (j) {
+        var e = new Error('http ' + r.status);
+        if (j && j.detail) e.detail = String(j.detail);
+        throw e;
+      });
     });
   }
 
