@@ -1214,8 +1214,14 @@
       body: JSON.stringify({ reservation_no: CHG.no, token: CHG.token,
                              date: state.date, time: state.time })
     }).then(function (r) {
-      if (!r.ok) throw new Error('http ' + r.status);
-      return r.json();
+      if (r.ok) return r.json();
+      /* 서버가 이유를 담아 거절한 것(마감·차단 시각 등)은 그 문구를 그대로 보여준다 —
+         신청 화면(send)과 같은 방식. 종전엔 상태코드만 던져 "전송에 실패했습니다"가 됐다. */
+      return r.json().catch(function () { return null; }).then(function (j) {
+        var e = new Error('http ' + r.status);
+        if (j && j.detail) e.detail = String(j.detail);
+        throw e;
+      });
     }).then(function () {
       try { sessionStorage.removeItem('bk_change'); } catch (e) {}
       $('#bkDoneBox').innerHTML =
@@ -1239,6 +1245,8 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }).catch(function (err) {
       btn.disabled = false; btn.textContent = '시간 변경 신청';
+      // 서버가 이유를 준 거절은 그 문구 우선 — 아래 상태코드 분기보다 구체적이다
+      if (err && err.detail) { alert(err.detail); return; }
       var m = String(err.message || '');
       if (m.indexOf('429') >= 0) {
         alert('시도가 너무 많습니다. 잠시 후 다시 시도해 주세요.');
