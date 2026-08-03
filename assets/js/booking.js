@@ -412,62 +412,106 @@
       }).join('');
   }
 
+  /* state.endo('' | gastro | colon | both) 를 위·대장 두 성분으로 다루는 도우미.
+     국가공단검진에서는 '위암검진' 체크박스와 내시경 라디오가 **같은 위 성분**을 가리키므로
+     한쪽만 갈아끼우면 화면 두 곳이 어긋난다. 성분 단위로만 바꾼다. */
+  function endoHasG(v) { return v === 'gastro' || v === 'both'; }
+  function endoHasC(v) { return v === 'colon'  || v === 'both'; }
+  function endoJoin(g, c) { return g && c ? 'both' : (g ? 'gastro' : (c ? 'colon' : '')); }
+
+  /* 그 사람이 **올해 대상**으로 화면에 뜨는 국가암검진 목록.
+     나이·성별 + 2년 주기(출생연도 홀짝 = 검진연도 홀짝)만 보여준다.
+     홀짝 불일치 항목은 아예 숨긴다(원장 지시 2026-07-23 — 이월 등 예외는 공단 조회에서). */
+  function screenList() {
+    var p = profile();
+    if (!p) return [];
+    var cyc = (p.year % 2) === ((new Date()).getFullYear() % 2);
+    return CHECKUP_SCREEN.filter(function (s) {
+      return (!s.sex || p.gender === s.sex) && p.age >= s.min && (s.annual || cyc);
+    });
+  }
+  // 국가 **위암검진** 대상으로 보이나 — 급여(검진 포함)와 비급여를 가르는 기준.
+  function gastroCovered() {
+    return screenList().some(function (s) { return s.k === '위암'; });
+  }
+
+  /* 내시경 선택 라디오 HTML. 개인종합검진과 국가공단검진이 같이 쓴다.
+     state.endo 로 이어지므로 리드타임(대장 D+8)·수면·항혈전제·코드 접미사가 그대로 따라온다. */
+  function endoRadioHtml(head, note) {
+    return '<p class="bo-h">' + head + ' <span>(선택)</span></p>' +
+      '<label class="bo-item"><input type="radio" name="xEndo" value=""' +
+        (!state.endo ? ' checked' : '') + '><span>내시경 없이</span></label>' +
+      ENDO_OPTS.map(function (o) {
+        return '<label class="bo-item"><input type="radio" name="xEndo" value="' + o.v + '"' +
+          (state.endo === o.v ? ' checked' : '') + '><span>' + o.name + '</span></label>';
+      }).join('') +
+      '<p class="bo-note">' + note + '</p>';
+  }
+
+  function bindEndoRadio(box) {
+    Array.prototype.forEach.call(box.querySelectorAll('input[name="xEndo"]'), function (r) {
+      r.addEventListener('change', function () { pickEndo(this.value); });
+    });
+  }
+
   /* 검진에 함께 받을 내시경 선택 — 항목 패널 안에 둔다.
      날짜(리드타임)와 점유 자원이 달라지므로 달력보다 앞에 있어야 한다. */
   function renderOpt() {
     var box = $('#bkOpt'), t = state.type;
     if (!t || !t.endoOpt) { box.hidden = true; box.innerHTML = ''; return; }
-    // 개인종합검진 — 국가암검진 목록 대신 **내시경 선택 라디오**(주민번호 없이도 표시).
-    // state.endo 로 이어지므로 리드타임(대장 D+8)·수면·항혈전제·코드 접미사가 그대로 따라온다.
+    // 개인종합검진 — 국가암검진 목록 자체가 없다(전액 비급여). 내시경 라디오만 보여준다.
     if (t.endoPick) {
-      box.innerHTML = '<p class="bo-h">함께 받으실 내시경 <span>(선택)</span></p>' +
-        '<label class="bo-item"><input type="radio" name="xEndo" value=""' +
-          (!state.endo ? ' checked' : '') + '><span>내시경 없이 (혈액·선택 검사만)</span></label>' +
-        ENDO_OPTS.map(function (o) {
-          return '<label class="bo-item"><input type="radio" name="xEndo" value="' + o.v + '"' +
-            (state.endo === o.v ? ' checked' : '') + '><span>' + o.name + '</span></label>';
-        }).join('') +
-        '<p class="bo-note">대장내시경은 장정결제 사전 진료가 필요해 <b>8일 뒤 날짜부터</b> 선택하실 수 있습니다.</p>';
-      Array.prototype.forEach.call(box.querySelectorAll('input[name="xEndo"]'), function (r) {
-        r.addEventListener('change', function () { pickEndo(this.value); });
-      });
+      box.innerHTML = endoRadioHtml('함께 받으실 내시경',
+        '대장내시경은 장정결제 사전 진료가 필요해 <b>8일 뒤 날짜부터</b> 선택하실 수 있습니다.');
+      bindEndoRadio(box);
       box.hidden = false; return;
     }
+    /* 국가공단검진 — 국가암검진 목록 + **내시경 라디오**.
+       ★ 라디오를 나이와 무관하게 항상 보여준다(2026-08-03).
+         종전엔 내시경으로 가는 길이 '위암검진(위내시경)' 체크박스 하나뿐이었고, 그건
+         만 40세 이상 대상연도에만 화면에 떴다. 그래서
+           · 만 40세 미만은 위내시경을 **고를 방법이 아예 없었고**
+           · 대장내시경은 나이와 무관하게 국가검진과 함께 못 골랐다(국가 대장암검진은 분변검사).
+         실제로 김문희님(만 37세)이 '기타' 칸에 "위내시경"이라 적어 신청하셨는데, 그 칸은
+         자리·금식안내·수면선택 어디에도 연결되지 않아 내시경실 자리가 안 잡혔다. */
     var head = '<p class="bo-h">함께 받으실 국가검진 <span>(선택)</span></p>';
-    var p = profile();
+    var p = profile(), body;
     if (!p) {
-      box.innerHTML = head + '<p class="bo-note">위 <b>진료받으실 분</b>의 주민 앞자리를 입력하시면 올해 대상 검진을 보여드립니다.</p>';
-      box.hidden = false; return;
+      body = '<p class="bo-note">위 <b>진료받으실 분</b>의 주민 앞자리를 입력하시면 올해 대상 검진을 보여드립니다.</p>';
+    } else {
+      var cyc = (p.year % 2) === ((new Date()).getFullYear() % 2);
+      var list = screenList();
+      if (!list.length) {
+        // 홀짝 불일치면 일반검진 자체도 올해 대상이 아닐 수 있다(직장 비사무직만 매년) — 단정 금지.
+        body = '<p class="bo-note">' + (cyc
+          ? '올해 함께 받으실 국가암검진 대상은 없으세요. <b>일반 건강검진</b>만 받으시게 됩니다.'
+          : '올해 함께 받으실 국가암검진 대상은 없으세요. 출생연도 기준으로 올해는 ' +
+            '<b>일반검진 대상 연도가 아닐 수 있어요</b>(직장 비사무직은 매년 대상). ' +
+            '정확한 대상 여부는 국민건강보험공단 확인이 필요합니다.') + '</p>';
+      } else {
+        body = list.map(function (s) {
+          return '<label class="bo-scr' + (state.screens[s.k] ? ' on' : '') + '" data-k="' + s.k + '">' +
+            '<input type="checkbox"' + (state.screens[s.k] ? ' checked' : '') + '>' +
+            '<span class="bo-scr-t"><b>' + s.label + '</b><i>' + s.sub + '</i></span>' +
+            '<span class="bo-scr-b">대상일 수 있어요</span></label>';
+        }).join('') +
+        '<p class="bo-note">대상 여부·무료/본인부담은 병원에서 <b>공단 조회 후</b> 확정해 안내드립니다. ' +
+        '원하는 것만 고르시고, 모르시면 비워두셔도 됩니다.</p>';
+      }
     }
-    // 나이·성별 + **올해 대상**(2년 주기 = 출생연도 홀짝 일치)만 보여준다.
-    // 홀짝 불일치 항목은 아예 숨긴다(원장 지시 2026-07-23 — 이월 등 예외는 공단 조회에서).
-    var cyc = (p.year % 2) === ((new Date()).getFullYear() % 2);
-    var list = CHECKUP_SCREEN.filter(function (s) {
-      return (!s.sex || p.gender === s.sex) && p.age >= s.min && (s.annual || cyc);
-    });
-    if (!list.length) {
-      // 홀짝 불일치면 일반검진 자체도 올해 대상이 아닐 수 있다(직장 비사무직만 매년) — 단정 금지.
-      var emptyNote = cyc
-        ? '올해 함께 받으실 국가암검진 대상은 없으세요. <b>일반 건강검진</b>만 받으시게 됩니다.'
-        : '올해 함께 받으실 국가암검진 대상은 없으세요. 출생연도 기준으로 올해는 ' +
-          '<b>일반검진 대상 연도가 아닐 수 있어요</b>(직장 비사무직은 매년 대상). ' +
-          '정확한 대상 여부는 국민건강보험공단 확인이 필요합니다.';
-      box.innerHTML = head + '<p class="bo-note">' + emptyNote + '</p>';
-      box.hidden = false; return;
-    }
-    box.innerHTML = head +
-      list.map(function (s) {
-        return '<label class="bo-scr' + (state.screens[s.k] ? ' on' : '') + '" data-k="' + s.k + '">' +
-          '<input type="checkbox"' + (state.screens[s.k] ? ' checked' : '') + '>' +
-          '<span class="bo-scr-t"><b>' + s.label + '</b><i>' + s.sub + '</i></span>' +
-          '<span class="bo-scr-b">대상일 수 있어요</span></label>';
-      }).join('') +
-      '<p class="bo-note">대상 여부·무료/본인부담은 병원에서 <b>공단 조회 후</b> 확정해 안내드립니다. ' +
-      '원하는 것만 고르시고, 모르시면 비워두셔도 됩니다.</p>';
+    box.innerHTML = head + body +
+      '<div class="bo-sep"></div>' +
+      endoRadioHtml('함께 받으실 내시경',
+        '<b>국가 위암검진 대상</b>이시면 위내시경은 검진에 포함됩니다(무료 또는 본인부담 10%). ' +
+        '대상이 아니시면 <b>비급여(본인부담)</b>로 받으실 수 있어요. ' +
+        '<b>대장내시경은 국가검진에 없어 항상 비급여</b>이며, 장정결제 사전 진료가 필요해 ' +
+        '<b>8일 뒤 날짜부터</b> 선택하실 수 있습니다.');
+    bindEndoRadio(box);
     box.hidden = false;
   }
 
-  // 암검진 체크 토글 — 위암/대장암은 내시경 종류(state.endo)로 연결(리드타임·자원 갱신)
+  // 암검진 체크 토글 — 위암은 내시경 위 성분과 연결(리드타임·자원 갱신).
+  // 대장암은 분변검사라 내시경 아님.
   function toggleScreen(k) {
     // 자궁경부암은 산부인과 진료일에만 — 목요일이 선택돼 있으면 체크하지 않고 안내(목요일은 유지)
     if (k === '자궁경부암' && !state.screens[k] && papClosed(state.date)) {
@@ -476,8 +520,8 @@
       return;
     }
     state.screens[k] = !state.screens[k];
-    // 위암만 위내시경으로 연결(내시경실). 대장암은 분변검사라 내시경 아님.
-    var ne = state.screens['위암'] ? 'gastro' : '';
+    // 위 성분만 갈아끼운다 — 라디오로 고른 **대장은 그대로 둔다**(둘 다 받는 분이 있다).
+    var ne = endoJoin(!!state.screens['위암'], endoHasC(state.endo));
     if (ne !== state.endo) {                       // 내시경 구성이 바뀌면 리드타임·달력 갱신
       state.endo = ne; state.date = null; state.time = null;
       renderMonth(viewMonth || new Date()); renderTimes(); showWarn(); renderSed(); renderAnti();
@@ -671,6 +715,15 @@
 
   function pickEndo(v) {
     state.endo = v;
+    /* 국가공단검진은 '위암검진(위내시경)' 체크박스와 이 라디오가 **같은 위 성분**을 가리킨다
+       — 라디오만 바꾸면 두 곳이 어긋난 채 신청된다. 여기서 되맞춘다.
+       ⚠ 체크박스를 켜는 건 **위암검진 대상으로 보일 때만**이다. 비대상(만 40세 미만 등)이
+         켜지면 예약 항목명이 "위암검진(위내시경)"으로 나가 **무료 국가검진처럼** 보인다
+         (typeName 조립부 참조). 비대상의 위내시경은 비급여라 항목명에 넣지 않는다. */
+    if (state.type && state.type.endoOpt && !state.type.endoPick) {
+      state.screens['위암'] = endoHasG(v) && gastroCovered();
+      renderOpt();                              // 체크 표시를 실제 상태에 맞춘다
+    }
     state.date = null; state.time = null;      // 리드타임이 바뀌므로 날짜를 다시 고른다
     renderMonth(viewMonth || new Date());
     renderTimes(); syncSummary(); showWarn(); renderSed(); renderAnti();
@@ -1287,9 +1340,11 @@
     if (!t.type) { CHG = null; return; }      // 모르는 종류면 일반 예약 화면 그대로
     state.type = t.type;
     state.endo = t.endo;
-    state.screens = {};                          // 종류 코드의 내시경 구성을 암검진 체크로 복원
-    if (t.endo === 'gastro' || t.endo === 'both') state.screens['위암'] = true;
-    if (t.endo === 'colon'  || t.endo === 'both') state.screens['대장암'] = true;
+    /* 항목 패널(#bkPanelType)은 아래에서 통째로 감추므로 암검진 체크는 화면에 쓰이지 않는다.
+       state.endo 만 복원하면 리드타임·수면·항혈전제·자원이 모두 따라온다.
+       ⚠ 종전엔 `_colon` 코드에서 `state.screens['대장암']=true` 를 켰는데 **틀린 복원**이다 —
+         국가 대장암검진은 분변검사이고 `_colon` 은 대장내시경이다(자원·리드타임이 전혀 다르다). */
+    state.screens = {};
     state.date = null; state.time = null;
 
     var h1 = document.querySelector('.sub-hero h1');

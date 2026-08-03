@@ -187,6 +187,9 @@
 .bo-item span{ font-size:14.5px; color:var(--body); word-break:keep-all; }
 .bo-item:hover span{ color:var(--olive-dk); }
 .bo-item input:checked + span{ color:var(--ink); font-weight:600; }
+/* 국가암검진 목록과 내시경 선택 사이 구분선 (국가공단검진, 2026-08-03) —
+   둘은 성격이 다르다(급여 검진 vs 함께 받는 내시경). 붙여 두면 한 묶음으로 읽힌다. */
+.bo-sep{ height:1px; background:var(--line); margin:14px 0 13px; }
 /* 국가검진 동반 희망 — 내시경 예약의 선택 체크박스(원장 확정 2026-07-23) */
 .bo-tog{ display:flex; gap:11px; align-items:flex-start; cursor:pointer; }
 .bo-tog input{ width:19px; height:19px; accent-color:var(--olive); flex:none; margin-top:1px; }
