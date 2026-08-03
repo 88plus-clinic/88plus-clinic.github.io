@@ -596,6 +596,13 @@ ol,ul{ margin:0; padding:0; list-style:none; }
   text-align:right; white-space:nowrap; font-weight:700; color:var(--ink);
   font-feature-settings:'tnum'; padding-left:18px;
 }
+/* 가격표 아래 준비사항·조건 — 값만 보고 오시면 그날 시술을 못 받는 항목이 있다(제모 면도 등) */
+.price-note{
+  margin-top:14px; padding:13px 15px; background:var(--cream-dp);
+  border-left:3px solid var(--olive); font-size:14.5px; line-height:1.7;
+  color:var(--body); word-break:keep-all;
+}
+.price-note b{ color:var(--olive-dk); font-weight:700; }
 
 /* 예약·오시는길 */
 .map-box{
