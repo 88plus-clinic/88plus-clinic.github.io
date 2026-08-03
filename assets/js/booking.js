@@ -855,6 +855,9 @@
         '). 검사 전 8시간 동안 <b>물을 포함해 완전히 금식</b>해 주세요.' + FAST_BP;
       f.hidden = false;
     } else { f.hidden = true; }
+    /* ★ 추가검진이 바뀌면 자리 사정도 바뀐다(초음파 → 초음파실) — 마감을 다시 받는다.
+       안 하면 초음파실이 찬 시각으로 그대로 신청돼 접수 뒤 거부된다(2026-08-03). */
+    if (state.date) loadAvail(true);
   }
 
   // ── 2) 달력 ─────────────────────────────────────
@@ -883,7 +886,10 @@
   // 그 날짜의 마감(정원 초과) 시간 — 허브 실제 점유(EGHIS 포함)를 VPS에서 받아 온다.
   var fullTimes = [];
   var availSeq = 0;
-  function loadAvail() {
+  /* recheck=true 면 응답을 받은 뒤 **이미 고른 시간이 마감됐는지** 다시 본다.
+     추가검진 패널이 시간 선택 *뒤*에 있어, 08:00 을 고른 다음 갑상선 초음파를 체크하면
+     그 시각이 마감으로 바뀔 수 있다. 조용히 두면 그대로 신청돼 접수 뒤 거부된다. */
+  function loadAvail(recheck) {
     fullTimes = [];
     if (!state.type || !state.date) { renderTimes(); return; }
     var seq = ++availSeq;
@@ -892,12 +898,28 @@
     // 검진+내시경의 내시경실 마감이 안 보이고 일반검진 마감이 잘못 반영된다(2026-07-23 검토 수정).
     var availCode = state.type.code +
       (state.type.endoOpt && state.endo && ENDO_MAP[state.endo] ? ENDO_MAP[state.endo].sfx : '');
+    /* ★ 추가검진도 함께 보낸다(2026-08-03). 초음파는 **예약 종류가 아니라 추가검진**이
+       초음파실 자리를 먹는데, 종전엔 종류만 물어 그 마감이 안 보였다. 개인종합검진은
+       정원 자체가 없어 더 잘 뚫렸다(윤미경님 — 초음파실 2/2인 08:00 이 열려 보임).
+       서버는 허브가 밀어 준 매핑표로 해석한다(이름 해석을 여기서 하지 않는다). */
+    var availAdd = state.type.addons
+      ? checkedAddons().map(function (c) { return ADDON_MAP[c].n; }).join(',') : '';
     fetch(API_AVAIL + '?type=' + encodeURIComponent(availCode) +
-          '&date=' + encodeURIComponent(state.date))
+          '&date=' + encodeURIComponent(state.date) +
+          (availAdd ? '&addons=' + encodeURIComponent(availAdd) : ''))
       .then(function (r) { return r.json(); })
       .then(function (j) {
         if (seq !== availSeq) return;          // 그 사이 날짜/항목이 바뀌면 무시
         fullTimes = (j && j.full) || [];
+        if (recheck && state.time && fullTimes.indexOf(state.time) >= 0) {
+          var lost = state.time;
+          state.time = null;
+          renderTimes(); syncSummary();
+          alert('선택하신 검사를 함께 받으시려면 ' + lost + ' 시간은 어렵습니다.\n' +
+                '그 시간대 검사실이 이미 예약되어 있습니다.\n\n' +
+                '시간을 다시 선택해 주세요.');
+          return;
+        }
         renderTimes();
       })
       .catch(function () { /* 조회 실패 시 그냥 전체 노출(서버 hold가 최종 방어) */ });
