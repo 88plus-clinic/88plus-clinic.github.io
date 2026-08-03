@@ -31,6 +31,10 @@
 }
 .bp-h{ font-size:20px; font-weight:700; color:var(--ink); margin:0 0 8px; }
 .bp-sub{ font-size:14px; color:var(--muted); margin:0 0 18px; }
+/* 항목을 아직 안 고른 상태 — 달력이 통째로 비활성인 이유를 눈에 띄게 알린다 */
+.bp-sub.need{ color:var(--body); background:var(--cream-dp); border-left:3px solid var(--olive);
+  padding:9px 12px; border-radius:0 6px 6px 0; }
+.bp-sub.need b{ color:var(--olive-dk); }
 
 /* 항목 탭 */
 .bk-tabs{

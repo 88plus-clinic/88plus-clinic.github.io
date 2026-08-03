@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <link rel="stylesheet" href="assets/css/style.css?v=08031150">
-<link rel="stylesheet" href="assets/css/booking.css?v=08031120">
+<link rel="stylesheet" href="assets/css/booking.css?v=08031830">
 </head>
 <body>
 
@@ -129,7 +129,9 @@
       <!-- 2) 날짜 -->
       <div class="bk-panel" id="bkPanelDate">
         <h2 class="bp-h">날짜 선택</h2>
-        <p class="bp-sub">원하시는 날짜를 선택하세요.</p>
+        <!-- 항목을 안 고르면 달력이 통째로 비활성이다. 그때 이 문구가 이유를 말해 준다
+             (2026-08-03 — 환자가 "아무것도 안 눌러진다"고 문의). -->
+        <p class="bp-sub" id="bkDateSub">원하시는 날짜를 선택하세요.</p>
         <div class="bk-cal">
           <div class="bk-cal-top">
             <button type="button" id="mPrev" aria-label="이전 달">‹</button>
@@ -269,7 +271,7 @@
 </nav>
 
 <script src="assets/js/main.js?v=07221700"></script>
-<script src="assets/js/booking.js?v=08031745"></script>
+<script src="assets/js/booking.js?v=08031830"></script>
 <script src="assets/js/chat.js?v=07251610"></script>
 </body>
 </html>

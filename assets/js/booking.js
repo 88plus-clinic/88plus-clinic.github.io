@@ -862,6 +862,17 @@
 
   // ── 2) 달력 ─────────────────────────────────────
   function renderMonth(base) {
+    /* ★ 항목을 안 고르면 `dayState` 가 전부 'off' 를 돌려줘 **달력이 통째로 비활성**이 된다.
+       그런데 안내가 한 줄도 없어, 환자는 "아무것도 안 눌러진다"고만 느낀다
+       (2026-08-03 06:11 실제 문의 — 그 시각 다른 분은 06:04 에 정상 예약했다).
+       시간 패널은 이미 "항목을 먼저 선택해 주세요"라고 말해 준다. 날짜도 같게 맞춘다. */
+    var _sub = $('#bkDateSub');
+    if (_sub) {
+      _sub.innerHTML = state.type
+        ? '원하시는 날짜를 선택하세요.'
+        : '<b>먼저 위에서 항목을 선택해 주세요.</b> 항목에 따라 예약 가능한 날짜가 달라집니다.';
+      _sub.classList.toggle('need', !state.type);
+    }
     viewMonth = new Date(base.getFullYear(), base.getMonth(), 1);
     $('#mLabel').textContent = viewMonth.getFullYear() + '년 ' +
       String(viewMonth.getMonth()+1).padStart(2,'0') + '월';
