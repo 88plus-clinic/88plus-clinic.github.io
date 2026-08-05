@@ -44,12 +44,22 @@
     '<b>검사일 1주일 전까지</b> 한 번 내원하셔서 진료 후 처방과 복용 방법을 ' +
     '안내받으셔야 합니다. 진료가 늦어지면 검사일을 미루셔야 할 수 있습니다.';
 
-  /* 금식 기준(원장 확정 2026-07-21 → 2026-07-22 일원화)
-       내시경·초음파·요소호기검사(UBT) = **물 포함 완전 금식**
-       혈액검사 = 의학적으로는 소량의 물이 가능하나, **안내는 완전 금식으로 통일**한다.
-     ⚠ 이유: 당일 초음파 등이 추가되는 일이 잦다. 물을 마시고 오면 되돌릴 수 없어
-        검사가 취소되지만, 안 마시고 오면 손해가 없다 — 엄격한 쪽으로 통일한다. */
+  /* 금식 기준(원장 확정 2026-08-05 — 2026-07-22 '전부 완전 금식' 일원화를 **개정**)
+       위·대장내시경 · 상복부/하복부 초음파 · 요소호기검사(UBT) 가 **하나라도 끼면**
+         → **물까지 포함한 완전 금식**
+       그 외(혈액·소변·흉부X선만)  → 8시간 금식, **물(생수)은 마셔도 된다**
+     ⚠ 종전엔 혈액검사만 받아도 "완전 금식"으로 안내했다. 당일 초음파가 추가되는 경우를
+        걱정해 엄격한 쪽으로 묶은 것인데, 원장이 2026-08-05 에 풀었다.
+        챗봇 `policy.md`·`policy_public.md`, 알림톡 템플릿(A·I 완전금식 / C 생수 허용),
+        홈페이지 `checkup/blood-test.html` 과 **같은 기준**이다 — 한 곳만 고치면 어긋난다. */
   var FAST_FULL = '<b>물·음료·껌·흡연을 포함한 완전 금식</b>';
+  // 물은 되는 경우(혈액검사 등). 물 이외의 것은 그대로 막는다 — 결과에 영향을 준다.
+  var FAST_WATER_OK =
+    '검사 전 <b>8시간 금식</b>이 필요합니다. <b>물(생수)은 마셔도 됩니다</b> — ' +
+    '커피·차·우유·주스·탄산음료·사탕·껌은 드시면 안 됩니다.';
+  // 추가검진 중 **물까지 막아야 하는** 것 = 복부 초음파(담낭이 수축하면 안 보인다).
+  // 나머지 금식 항목(혈액종합·지질·암표지자)은 물이 된다. 내시경은 `state.endo` 로 따로 본다.
+  var NO_WATER_ADDONS = ['us_upper', 'us_lower'];
   // 혈압약은 예외 — 검사 당일 아침에도 복용해야 한다(원장 확정 2026-07-22)
   var FAST_BP = ' 다만 <b>혈압약은 검사 당일 아침에도 소량의 물과 함께 복용</b>해 주세요.';
   // 내시경 — 물도 불가. ⚠ TYPES 안에서 쓰이므로 **TYPES 보다 위에** 있어야 한다
@@ -79,7 +89,9 @@
     // endoPick: 국가암검진 목록 대신 위/대장내시경 라디오를 보여준다(전액 비급여 검진).
     { code:'checkup_private',   name:'개인종합검진',        group:'검진', res:'CHECKUP', step:60, need:1,
       note:'혈액종합검사(50여종) 기본 · 내시경·초음파 등 원하시는 검사 선택 추가', endoOpt:true, endoPick:true, addons:true,
-      warn:'혈액종합검사가 포함되어 검사 전 8시간 동안 물·음료·껌·흡연을 포함한 완전 금식이 필요합니다.' },
+      // 기본은 혈액종합검사뿐이라 **물은 된다.** 내시경·복부초음파를 함께 고르시면
+      // `updateFast()`/`showWarn()` 이 완전 금식 안내로 바꿔 준다(2026-08-05 기준 개정).
+      warn:'혈액종합검사가 포함되어 ' + FAST_WATER_OK + FAST_BP },
     { code:'checkup_employ',    name:'채용검진',            group:'검진', res:'CHECKUP', step:60, need:1,
       note:'제출처 양식이 있으면 지참해 주세요' },
     { code:'endo_gastro',  name:'위내시경',      group:'내과', sub:'내시경', res:'ENDO', step:60, need:1,
@@ -109,8 +121,9 @@
   function openGroups() { return PREVIEW ? GROUPS : OPEN_GROUPS; }
   var SUBS = { '내과': ['내시경', '초음파'] };   // 그룹 안의 2차 탭
   var GROUP_NOTE = {
-    '검진': '검진은 <b>검사 전 8시간 동안 물을 포함한 완전 금식</b>이 필요합니다. ' +
-            '당일 초음파 등 검사가 추가될 수 있어, 물도 드시지 않는 것이 안전합니다.' + FAST_BP,
+    '검진': '검진은 ' + FAST_WATER_OK +
+            ' 다만 <b>위·대장내시경이나 복부(상복부·하복부) 초음파</b>를 함께 받으시면 ' +
+            '<b>물도 드시면 안 됩니다.</b>' + FAST_BP,
     '내과': '일반 진료(감기·소화기·만성질환 등)는 <b>별도의 예약이 없습니다.</b> ' +
             '진료시간 내에 내원하시면 접수 순서대로 진료를 받으실 수 있습니다.'
   };
@@ -727,6 +740,10 @@
     state.date = null; state.time = null;      // 리드타임이 바뀌므로 날짜를 다시 고른다
     renderMonth(viewMonth || new Date());
     renderTimes(); syncSummary(); showWarn(); renderSed(); renderAnti();
+    /* ★ 금식 안내는 **내시경 선택 여부에 따라 물 허용이 갈린다**(2026-08-05) —
+       내시경을 고른 뒤에도 `#xFast` 가 "물은 마셔도 됩니다"로 남아 있으면 안 된다.
+       추가검진 패널이 있을 때만 부른다(패널이 없으면 할 일도 없다). */
+    if ($('#xFast')) onExtraChange();
   }
 
   // 선택 항목의 사전 준비 안내(대장 사전진료·금식 등)
@@ -844,15 +861,22 @@
       alert(OBGY_ADDON_THU_MSG);
       obChecked.forEach(function (el) { el.checked = false; });
     }
-    var pap = $('#xPapWarn');
-    if (pap) pap.hidden = !$('#xPap').checked;
+    var pap = $('#xPapWarn'), papChk = $('#xPap');
+    // ⚠ `#xPapWarn` 은 늘 그려지지만 `#xPap`(자궁경부암 체크박스)은 **대상자에게만** 그려진다.
+    //   널 검사 없이 `.checked` 를 읽으면 그 순간 함수가 죽어 아래 금식 안내까지 안 그려진다.
+    if (pap) pap.hidden = !(papChk && papChk.checked);
     var f = $('#xFast');
     if (!f) return;
     var need = checkedAddons().filter(function (c) { return ADDON_MAP[c] && ADDON_MAP[c].fast; });
     if (need.length) {
+      /* 물까지 막을지 = **복부 초음파나 내시경이 끼는가**(원장 확정 2026-08-05).
+         혈액종합·지질·암표지자만 고르셨으면 물은 드셔도 된다. */
+      var strict = need.some(function (c) { return NO_WATER_ADDONS.indexOf(c) >= 0; }) ||
+                   !!(state.type && state.type.endoOpt && state.endo);
       f.innerHTML = '선택하신 항목 중 <b>금식이 필요한 검사</b>가 있습니다 (' +
-        need.map(function (c) { return ADDON_MAP[c].n; }).join(', ') +
-        '). 검사 전 8시간 동안 <b>물을 포함해 완전히 금식</b>해 주세요.' + FAST_BP;
+        need.map(function (c) { return ADDON_MAP[c].n; }).join(', ') + '). ' +
+        (strict ? '검사 전 8시간 동안 <b>물을 포함해 완전히 금식</b>해 주세요.'
+                : FAST_WATER_OK) + FAST_BP;
       f.hidden = false;
     } else { f.hidden = true; }
     /* ★ 추가검진이 바뀌면 자리 사정도 바뀐다(초음파 → 초음파실) — 마감을 다시 받는다.
