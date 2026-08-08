@@ -863,7 +863,11 @@ function submitForm(){
   var FUNNEL_URL = (location.hostname==='localhost'||location.hostname==='127.0.0.1')
     ? 'http://127.0.0.1:5055/obgychart/submit'
     : 'https://doctor1.tail375e60.ts.net/obgychart/submit';
-  // ② 구글 버퍼(유실방지): PC가 꺼져 있어도 받아두고 켜지면 폴러가 회수.
+  // ② VPS 버퍼(유실방지, 2026-08-08 신설): PC가 꺼져 있어도 받아두고 켜지면 폴러가 회수.
+  //    구글과 달리 **우리 서버**라 서명·주민뒤7까지 그대로 보낸다(전송 즉시 AES 암호화,
+  //    허브가 가져가면 서버에서 즉시 삭제). 그래서 PC가 꺼진 동안 제출돼도 재서명이 필요 없다.
+  var VPS_URL = 'https://api.88plus.co.kr/api/obgychart';
+  // ③ 구글 버퍼(폐지 예정): VPS가 빠짐없이 받는 걸 확인할 때까지만 병행한다.
   //    ★ 주민등록번호 뒤7자리는 구글에 보내지 않는다(누출 위험 차단). 앞6(생년월일)만.
   var GAS_URL = 'https://script.google.com/macros/s/AKfycbxUVBCaJN5HtyO0ru8algX_fqRRtIBpgx8H_WNXhh4PS4Cq42dUsE_4vdJe5wQ6JGM/exec';
 
@@ -877,6 +881,14 @@ function submitForm(){
   delete gasData.k;               // 서명은 구글 동의서 PDF에 포함되도록 그대로 전송
   var gasBody = JSON.stringify(gasData);
 
+  // VPS 는 우리 서버라 CORS 를 열어 둔다 → no-cors 가 아니라 **응답을 읽는다**.
+  // 응답을 읽어야 "정말 받았는지"를 알 수 있다(구글은 no-cors 라 성공/실패만 알았다).
+  var vpsBody = JSON.stringify({ submit_id: data.submitted_at, payload: data });
+  function postVps(){
+    return fetch(VPS_URL, {method:'POST', headers:{'Content-Type':'application/json'},
+                           body: vpsBody})
+      .then(function(r){ if(!r.ok) throw new Error('VPS '+r.status); return r.json(); });
+  }
   function post(u, b){ return fetch(u, {method:'POST', headers:{'Content-Type':'text/plain'}, body:b, mode:'no-cors'}); }
   function done(){
     document.querySelector('.prog-wrap').style.display='none';
@@ -886,9 +898,12 @@ function submitForm(){
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  // 로컬은 즉시 시도(반영 빠름). 완료 판정은 구글 버퍼 성공 기준(유실방지 1순위).
+  // 로컬은 즉시 시도(반영 빠름). 구글은 병행 기간 동안 그대로 쏘되 완료 판정에서 뺀다.
   post(FUNNEL_URL, localBody).catch(function(){});
-  post(GAS_URL, gasBody)
+  post(GAS_URL, gasBody).catch(function(){});
+  // ★ 완료 판정은 **VPS 성공 기준**(유실방지 1순위). 여기가 받았으면 서명까지 안전하다.
+  //   VPS 가 실패하면 구글이 받았더라도 서명·주민뒤7은 못 건지므로 성공이라 말하지 않는다.
+  postVps()
     .then(done)
     .catch(function(err){
       alert(T('fail')+'\n'+(err&&err.message?err.message:''));
