@@ -884,10 +884,21 @@ function submitForm(){
   // VPS 는 우리 서버라 CORS 를 열어 둔다 → no-cors 가 아니라 **응답을 읽는다**.
   // 응답을 읽어야 "정말 받았는지"를 알 수 있다(구글은 no-cors 라 성공/실패만 알았다).
   var vpsBody = JSON.stringify({ submit_id: data.submitted_at, payload: data });
-  function postVps(){
+  // 완료 판정이 이 호출에 걸려 있으므로 **순간 장애로 환자에게 실패를 띄우지 않도록**
+  // 짧게 재시도한다(총 3회, 1.5초·4초 간격). 중복은 서버가 submit_id 로 막으므로 안전하다.
+  // 4xx(검증 실패)는 재시도해도 같은 답이라 즉시 포기한다.
+  function postVps(n){
+    n = n || 0;
     return fetch(VPS_URL, {method:'POST', headers:{'Content-Type':'application/json'},
                            body: vpsBody})
-      .then(function(r){ if(!r.ok) throw new Error('VPS '+r.status); return r.json(); });
+      .then(function(r){ if(!r.ok) throw new Error('VPS '+r.status); return r.json(); })
+      .catch(function(err){
+        var code = (err && err.message || '').match(/VPS (\d+)/);
+        if (code && +code[1] >= 400 && +code[1] < 500) throw err;   // 재시도 무의미
+        if (n >= 2) throw err;
+        return new Promise(function(res){ setTimeout(res, n === 0 ? 1500 : 4000); })
+                 .then(function(){ return postVps(n + 1); });
+      });
   }
   function post(u, b){ return fetch(u, {method:'POST', headers:{'Content-Type':'text/plain'}, body:b, mode:'no-cors'}); }
   function done(){
