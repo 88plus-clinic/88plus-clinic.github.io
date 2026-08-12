@@ -626,7 +626,7 @@ var ALERTS = {
   allergyDrug: {ko:'알러지 약물 종류를 입력해주세요.', en:'Please enter the drug name.', ru:'Укажите название препарата.', vi:'Vui lòng nhập tên thuốc.', mn:'Эмийн нэрийг оруулна уу.'},
   allergySymptom: {ko:'알러지 증상을 입력해주세요.', en:'Please enter the reaction.', ru:'Укажите реакцию.', vi:'Vui lòng nhập phản ứng.', mn:'Илэрсэн шинжийг оруулна уу.'},
   meds: {ko:'현재 복용 약물 여부를 선택해주세요.', en:'Please select your current medication status.', ru:'Укажите, принимаете ли вы лекарства.', vi:'Vui lòng chọn tình trạng dùng thuốc hiện tại.', mn:'Одоо эм хэрэглэж буй эсэхээ сонгоно уу.'},
-  medsText: {ko:'복용 중인 약물명을 입력해주세요.', en:'Please enter your medication names.', ru:'Укажите названия лекарств.', vi:'Vui lòng nhập tên thuốc đang dùng.', mn:'Хэрэглэж буй эмийн нэрийг оруулна уу.'},
+  medsText: {ko:'복용 중인 약을 선택하거나 직접 입력해주세요.', en:'Please select or enter your current medications.', ru:'Выберите или укажите принимаемые лекарства.', vi:'Vui lòng chọn hoặc nhập thuốc đang dùng.', mn:'Хэрэглэж буй эмээ сонгох эсвэл оруулна уу.'},
   pmhx: {ko:'과거 및 현 병력을 선택해주세요.', en:'Please select your medical history.', ru:'Укажите медицинский анамнез.', vi:'Vui lòng chọn tiền sử bệnh.', mn:'Өвчний түүхээ сонгоно уу.'},
   pmhxDetail: {ko:'병력 종류를 선택하거나 직접 입력해주세요.', en:'Please select or enter your medical history.', ru:'Выберите или укажите заболевание.', vi:'Vui lòng chọn hoặc nhập tiền sử bệnh.', mn:'Өвчний түүхээ сонгох эсвэл оруулна уу.'},
   surg: {ko:'수술력을 선택해주세요.', en:'Please select your surgical history.', ru:'Укажите перенесённые операции.', vi:'Vui lòng chọn tiền sử phẫu thuật.', mn:'Мэс заслын түүхээ сонгоно уу.'},
@@ -820,7 +820,10 @@ function validate(n){
     // 현재 복용 약물 (+ 세부)
     var md = document.querySelector('input[name="meds"]:checked');
     if(!md){ alert(T('meds')); return false; }
-    if(md.value==='있음' && !document.getElementById('medsText').value.trim()){ alert(T('medsText')); return false; }
+    // 약효군을 **체크했으면 자유칸은 비워도 된다**(병력과 같은 규칙, 2026-08-12).
+    // 체크박스를 만들면서 이 줄을 안 고쳐, 골라도 "약물명을 입력하라"고 막았다.
+    if(md.value==='있음' && !document.querySelector('input[name="medsType"]:checked')
+       && !document.getElementById('medsText').value.trim()){ alert(T('medsText')); return false; }
     // 과거 및 현 병력 (+ 세부: 체크박스 또는 기타 직접입력)
     var pm = document.querySelector('input[name="pmhx"]:checked');
     if(!pm){ alert(T('pmhx')); return false; }
