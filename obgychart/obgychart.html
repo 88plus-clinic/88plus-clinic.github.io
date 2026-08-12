@@ -94,6 +94,13 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 .sym-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:5px}
 @media(max-width:380px){.sym-grid{grid-template-columns:1fr}}
 .sym-full{width:100%;margin-top:5px}
+/* 완경 선택 시 잠기는 칸 — 흐리게 + 누를 수 없게. 감추지 않는 이유는
+   무엇을 안 물어보는지가 보여야 환자가 빠뜨렸다고 생각하지 않기 때문이다. */
+.card.off{opacity:.5}
+.card.off .rl,.card.off .cl,.card.off .inp{cursor:not-allowed;pointer-events:none}
+.offnote{display:none;font-size:13px;color:var(--g);margin:-3px 0 9px}
+.card.off .offnote{display:block}
+.card.off .req{visibility:hidden}
 .ft.grp{margin-top:18px;font-size:13px;font-weight:700;color:var(--g);letter-spacing:.02em;border-top:1px solid var(--border);padding-top:14px}
 .card > .ft.grp:first-of-type{margin-top:0;border-top:none;padding-top:0}
 
@@ -228,10 +235,15 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
       <div class="ft"><span data-ko="마지막 생리 시작일 (LMP)" data-en="Last Menstrual Period (LMP)" data-ru="Первый день последней менструации (LMP)" data-vi="Ngày đầu kỳ kinh cuối (LMP)" data-mn="Сүүлийн сарын тэмдэг эхэлсэн өдөр (LMP)">마지막 생리 시작일 (LMP)</span> <span class="req">*</span></div>
       <input class="inp" id="lmp" type="date" style="max-width:200px">
       <label class="cl" style="margin-top:10px"><input type="checkbox" id="lmpNA" value="완경"><div class="dot"></div><span data-ko="해당없음 (완경)" data-en="N/A (Menopause)" data-ru="Не применимо (менопауза)" data-vi="Không áp dụng (mãn kinh)" data-mn="Хамааралгүй (цэвэршилт)">해당없음 (완경)</span></label>
+      <!-- 미레나 등 호르몬 피임장치를 넣으면 생리를 하지 않는다 → 날짜도 주기도 쓸 수 없다.
+           완경과 서로 배타(하나를 켜면 다른 하나가 꺼진다). -->
+      <label class="cl" style="margin-top:7px"><input type="checkbox" id="lmpIUD" value="피임기구"><div class="dot"></div><span data-ko="해당없음 (미레나 등 피임기구 삽입)" data-en="N/A (IUD/IUS inserted, e.g. Mirena)" data-ru="Не применимо (установлена ВМС, напр. Мирена)" data-vi="Không áp dụng (đã đặt vòng tránh thai, vd Mirena)" data-mn="Хамааралгүй (ХБС суулгасан, ж.нь Мирена)">해당없음 (미레나 등 피임기구 삽입)</span></label>
     </div>
 
-    <div class="card">
+    <div class="card" id="card-cycle">
       <div class="ft"><span data-ko="생리 주기" data-en="Menstrual Cycle" data-ru="Менструальный цикл" data-vi="Chu kỳ kinh nguyệt" data-mn="Сарын тэмдгийн мөчлөг">생리 주기</span> <span class="req">*</span></div>
+      <!-- 완경을 고르면 이 칸 전체가 잠긴다. 왜 잠겼는지 말해 주지 않으면 고장으로 보인다. -->
+      <div class="offnote"><span data-ko="위에서 «해당없음»을 선택하셔서 입력하지 않으셔도 됩니다." data-en="Not required — you selected “N/A” above." data-ru="Заполнять не нужно — выше выбрано «Не применимо»." data-vi="Không cần điền — bạn đã chọn “Không áp dụng” ở trên." data-mn="Бөглөх шаардлагагүй — дээр «Хамааралгүй» сонгосон.">위에서 «해당없음»을 선택하셔서 입력하지 않으셔도 됩니다.</span></div>
       <div class="rg" id="rg-cycle">
         <label class="rl"><input type="radio" name="cycle" value="규칙적" data-sub="sub-cycle" data-hide="sub-cycle-irr"><div class="dot"></div><span data-ko="규칙적" data-en="Regular" data-ru="Регулярный" data-vi="Đều" data-mn="Тогтмол">규칙적</span></label>
         <label class="rl"><input type="radio" name="cycle" value="불규칙적" data-sub="sub-cycle-irr" data-hide="sub-cycle"><div class="dot"></div><span data-ko="불규칙적" data-en="Irregular" data-ru="Нерегулярный" data-vi="Không đều" data-mn="Тогтмол бус">불규칙적</span></label>
@@ -373,7 +385,19 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
         <label class="rl"><input type="radio" name="meds" value="있음" data-sub="sub-meds"><div class="dot"></div><span data-ko="있음" data-en="Yes" data-ru="Есть" data-vi="Có" data-mn="Тийм">있음</span></label>
       </div>
       <div class="sub" id="sub-meds">
-        <textarea class="inp" id="medsText" rows="2" placeholder="약물명을 입력해주세요" data-ko-ph="약물명을 입력해주세요" data-en-ph="Enter medication names" data-ru-ph="Укажите названия лекарств" data-vi-ph="Nhập tên thuốc" data-mn-ph="Эмийн нэрээ оруулна уу" style="resize:none"></textarea>
+        <!-- 약효군 체크 — 병력과 같은 방식. 목록은 **자유기입 실적**으로 정했다(초진 255건 중
+             복용약 '있음' 80건 전수 집계: 고지혈 27·고혈압 17·당뇨 16·정신과 10·갑상선 7·
+             호르몬/피임 5·골다공증 3). 그 밖은 아래 칸에 그대로 적는다. -->
+        <div class="cg" id="cg-medsType" style="flex-wrap:wrap;margin-bottom:8px">
+          <label class="cl"><input type="checkbox" name="medsType" value="고혈압약"><div class="dot"></div><span data-ko="고혈압약" data-en="Blood pressure" data-ru="От давления" data-vi="Thuốc huyết áp" data-mn="Даралтын эм">고혈압약</span></label>
+          <label class="cl"><input type="checkbox" name="medsType" value="당뇨약"><div class="dot"></div><span data-ko="당뇨약" data-en="Diabetes" data-ru="От диабета" data-vi="Thuốc tiểu đường" data-mn="Шижингийн эм">당뇨약</span></label>
+          <label class="cl"><input type="checkbox" name="medsType" value="고지혈증약"><div class="dot"></div><span data-ko="고지혈증약" data-en="Cholesterol" data-ru="От холестерина" data-vi="Thuốc mỡ máu" data-mn="Өөх тосны эм">고지혈증약</span></label>
+          <label class="cl"><input type="checkbox" name="medsType" value="갑상선약"><div class="dot"></div><span data-ko="갑상선약" data-en="Thyroid" data-ru="Для щитовидной железы" data-vi="Thuốc tuyến giáp" data-mn="Бамбайн эм">갑상선약</span></label>
+          <label class="cl"><input type="checkbox" name="medsType" value="골다공증약"><div class="dot"></div><span data-ko="골다공증약" data-en="Osteoporosis" data-ru="От остеопороза" data-vi="Thuốc loãng xương" data-mn="Ясны сийрэгжилтийн эм">골다공증약</span></label>
+          <label class="cl"><input type="checkbox" name="medsType" value="여성호르몬·피임약"><div class="dot"></div><span data-ko="여성호르몬 · 피임약" data-en="Hormone / contraceptive" data-ru="Гормоны / контрацептивы" data-vi="Nội tiết tố / thuốc tránh thai" data-mn="Эмэгтэйчүүдийн даавар / жирэмслэлтээс хамгаалах эм">여성호르몬 · 피임약</span></label>
+          <label class="cl"><input type="checkbox" name="medsType" value="정신과약"><div class="dot"></div><span data-ko="정신과 약 (항우울 · 수면 등)" data-en="Psychiatric (antidepressant, sleep, etc.)" data-ru="Психиатрические (антидепрессанты, снотворные)" data-vi="Thuốc tâm thần (chống trầm cảm, ngủ…)" data-mn="Сэтгэцийн эм (сэтгэл гутралын, нойрны г.м)">정신과 약 (항우울 · 수면 등)</span></label>
+        </div>
+        <textarea class="inp" id="medsText" rows="2" placeholder="그 밖의 약 (직접 입력)" data-ko-ph="그 밖의 약 (직접 입력)" data-en-ph="Other medications (please specify)" data-ru-ph="Другие лекарства (укажите)" data-vi-ph="Thuốc khác (ghi rõ)" data-mn-ph="Бусад эм (шууд бичих)" style="resize:none"></textarea>
       </div>
     </div>
 
@@ -387,10 +411,13 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
         <div class="cg" id="cg-pmhxType" style="flex-wrap:wrap;margin-bottom:8px">
           <label class="cl"><input type="checkbox" name="pmhxType" value="고혈압"><div class="dot"></div><span data-ko="고혈압" data-en="Hypertension" data-ru="Гипертония" data-vi="Tăng huyết áp" data-mn="Цусны даралт ихсэлт">고혈압</span></label>
           <label class="cl"><input type="checkbox" name="pmhxType" value="당뇨"><div class="dot"></div><span data-ko="당뇨" data-en="Diabetes" data-ru="Диабет" data-vi="Tiểu đường" data-mn="Чихрийн шижин">당뇨</span></label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="고지혈증"><div class="dot"></div><span data-ko="고지혈증" data-en="Hyperlipidemia" data-ru="Гиперлипидемия" data-vi="Rối loạn lipid máu" data-mn="Цусан дахь өөх тос ихсэлт">고지혈증</span></label>
           <label class="cl"><input type="checkbox" name="pmhxType" value="갑상선"><div class="dot"></div><span data-ko="갑상선" data-en="Thyroid" data-ru="Щитовидная железа" data-vi="Tuyến giáp" data-mn="Бамбай булчирхай">갑상선</span></label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="골다공증"><div class="dot"></div><span data-ko="골다공증" data-en="Osteoporosis" data-ru="Остеопороз" data-vi="Loãng xương" data-mn="Ясны сийрэгжилт">골다공증</span></label>
           <label class="cl"><input type="checkbox" name="pmhxType" value="A형간염"><div class="dot"></div><span data-ko="A형간염" data-en="Hepatitis A" data-ru="Гепатит A" data-vi="Viêm gan A" data-mn="Гепатит A">A형간염</span></label>
           <label class="cl"><input type="checkbox" name="pmhxType" value="B형간염"><div class="dot"></div><span data-ko="B형간염" data-en="Hepatitis B" data-ru="Гепатит B" data-vi="Viêm gan B" data-mn="Гепатит B">B형간염</span></label>
           <label class="cl"><input type="checkbox" name="pmhxType" value="C형간염"><div class="dot"></div><span data-ko="C형간염" data-en="Hepatitis C" data-ru="Гепатит C" data-vi="Viêm gan C" data-mn="Гепатит C">C형간염</span></label>
+          <label class="cl"><input type="checkbox" name="pmhxType" value="결핵"><div class="dot"></div><span data-ko="결핵" data-en="Tuberculosis" data-ru="Туберкулёз" data-vi="Lao" data-mn="Сүрьеэ">결핵</span></label>
         </div>
         <input class="inp" id="pmhxOther" type="text" placeholder="기타 (직접 입력)" data-ko-ph="기타 (직접 입력)" data-en-ph="Other (please specify)" data-ru-ph="Другое (укажите)" data-vi-ph="Khác (ghi rõ)" data-mn-ph="Бусад (шууд бичих)">
       </div>
@@ -746,13 +773,15 @@ function validate(n){
     if(!document.querySelector('input[name="marital"]:checked')){ alert(T('marital')); return false; }
   }
   if(n===2){
-    // 마지막 생리 시작일(LMP) — '해당없음(완경)' 체크 시 날짜 면제
-    if(!document.getElementById('lmpNA').checked && !document.getElementById('lmp').value){ alert(T('lmp')); return false; }
-    // 생리 주기 (+ 세부)
+    // 마지막 생리 시작일(LMP) — '해당없음'(완경 / 피임기구) 체크 시 날짜 면제
+    if(!lmpNone() && !document.getElementById('lmp').value){ alert(T('lmp')); return false; }
+    // 생리 주기 (+ 세부) — **완경이면 통째로 면제**한다(칸이 잠겨 있어 고를 수도 없다).
     var cy = document.querySelector('input[name="cycle"]:checked');
+    if(!lmpNone()){
     if(!cy){ alert(T('cycle')); return false; }
     if(cy.value==='규칙적' && !document.getElementById('cycleDays').value.trim()){ alert(T('cycleDays')); return false; }
     if(cy.value==='불규칙적' && (!document.getElementById('cycleMinWeeks').value.trim() || !document.getElementById('cycleMaxMonths').value.trim())){ alert(T('cycleRange')); return false; }
+    }
     // 성경험 여부
     if(!document.querySelector('input[name="sex"]:checked')){ alert(T('sex')); return false; }
     // 출산 여부 (+ 세부)
@@ -813,14 +842,51 @@ document.getElementById('btnN').addEventListener('click', function(){ if(!valida
 document.getElementById('btnP').addEventListener('click', function(){ if(cur>1){ cur--; showStep(cur); } });
 document.getElementById('btnS').addEventListener('click', function(){ if(!validate(cur)) return; submitForm(); });
 
-// LMP '해당없음(완경)' — 체크 시 날짜 입력 비활성·초기화, 해제 시 복원.
+// LMP '해당없음' 두 가지 — 완경 / 미레나 등 피임기구 삽입.
+// 둘 다 **생리를 하지 않는 상태**라 날짜도 주기도 쓸 수 없다.
 // 단독 .cl 라 initSelectable 관리 밖 → 체크 시각표시(.sel)도 직접 토글.
-document.getElementById('lmpNA').addEventListener('change', function(){
-  var d=document.getElementById('lmp');
-  this.closest('.cl').classList.toggle('sel', this.checked);
-  if(this.checked){ d.value=''; d.disabled=true; d.style.opacity='.45'; }
-  else { d.disabled=false; d.style.opacity='1'; }
+// ⚠ **서로 배타**로 둔다 — 둘 다 켜지면 전송값이 무엇이어야 하는지 답이 없다.
+var LMP_NONE = ['lmpNA', 'lmpIUD'];
+function lmpNone(){
+  return LMP_NONE.some(function(id){ return document.getElementById(id).checked; });
+}
+LMP_NONE.forEach(function(id){
+  document.getElementById(id).addEventListener('change', function(){
+    var self = this;
+    if(self.checked){                       // 하나를 켜면 나머지는 끈다
+      LMP_NONE.forEach(function(o){
+        if(o === id) return;
+        var e = document.getElementById(o);
+        e.checked = false; e.closest('.cl').classList.remove('sel');
+      });
+    }
+    self.closest('.cl').classList.toggle('sel', self.checked);
+    var d = document.getElementById('lmp'), off = lmpNone();
+    if(off){ d.value=''; d.disabled=true; d.style.opacity='.45'; }
+    else { d.disabled=false; d.style.opacity='1'; }
+    setCycleOff(off);
+  });
 });
+
+// 완경이면 '생리 주기' 칸 전체를 잠근다 (원장 지시 2026-08-12).
+// 종전엔 이 칸이 살아 있고 필수라, 완경을 고른 분은 **다음으로 넘어갈 수가 없었다** —
+// 주기를 고를 이유도 없고 고를 값도 없는데 검증이 막았다.
+// ⚠ 잠글 때 **값을 비우고 세부칸도 닫는다.** 먼저 고른 뒤 완경을 체크하면
+//   보이지 않는 값이 그대로 전송된다(요약에 'reg.28d (완경)' 같은 모순이 남는다).
+function setCycleOff(off){
+  var card = document.getElementById('card-cycle');
+  card.classList.toggle('off', off);
+  [].forEach.call(card.querySelectorAll('input'), function(i){
+    i.disabled = off;
+    if(off){ if(i.type === 'radio') i.checked = false; else i.value = ''; }
+  });
+  if(off){
+    [].forEach.call(card.querySelectorAll('.rl,.cl'), function(x){ x.classList.remove('sel'); });
+    [].forEach.call(card.querySelectorAll('.sub'), function(x){ x.classList.remove('on'); });
+  }
+}
+// 새로고침 시 브라우저가 체크 상태를 되살리는 경우가 있다 — 그때도 칸이 잠겨 있어야 한다.
+setCycleOff(lmpNone());
 
 // ── 전송 ──
 function submitForm(){
@@ -835,7 +901,10 @@ function submitForm(){
     name: v('name'), rrn_front: v('rrn1'), rrn_back: v('rrn2'),
     phone: v('phone1')+v('phone2')+v('phone3'),
     address: (v('address')+' '+v('addressDetail')).trim(),
-    marital: rval('marital'), lmp: (document.getElementById('lmpNA').checked ? '완경' : v('lmp')),
+    marital: rval('marital'),
+    // '해당없음'이면 날짜 대신 사유를 보낸다 — 뒷단이 요약에서 (완경)/(IUD)로 표시한다.
+    lmp: (document.getElementById('lmpNA').checked ? '완경'
+          : (document.getElementById('lmpIUD').checked ? '피임기구' : v('lmp'))),
     cycle: rval('cycle'), cycle_days: v('cycleDays'),
     cycle_min_weeks: v('cycleMinWeeks'), cycle_max_months: v('cycleMaxMonths'),
     sex_exp: rval('sex'),
@@ -845,7 +914,7 @@ function submitForm(){
     hpv_vax: rval('hpv'), hpv_type: rval('hpvType'), hpv_dose: rval('hpvDose'),
     pap: rval('pap'), pap_months: v('papMonths'),
     allergy: rval('allergy'), allergy_drug: v('allergyDrug'), allergy_symptom: v('allergySymptom'),
-    meds: rval('meds'), meds_text: v('medsText'),
+    meds: rval('meds'), meds_types: cvals('medsType'), meds_text: v('medsText'),
     pmhx: rval('pmhx'), pmhx_types: cvals('pmhxType'), pmhx_other: v('pmhxOther'),
     surg: rval('surg'), surg_text: v('surgText'),
     symptoms: [].map.call(document.querySelectorAll('input[name="symptom"]:checked'),function(x){
