@@ -366,6 +366,43 @@
   }
 
   // ── 1) 항목 ─────────────────────────────────────
+  /* 지금 탭(그룹 + 서브탭)에서 고를 수 있는 종류들. renderChips 와 autoPickOnly 가 같이 쓴다. */
+  function typesHere() {
+    var subs = SUBS[state.group];
+    return TYPES.filter(function (t) {
+      return t.group === state.group && (!subs || t.sub === state.sub);
+    });
+  }
+
+  /* 종류가 **하나뿐인 탭이면 자동으로 골라 준다**(원장 지시 2026-08-19).
+     산부인과는 「산부인과 진료」 하나뿐인데 그걸 안 누르고 «날짜가 안 뜬다»는
+     문의가 잦았다. 둘 이상이면 손대지 않는다 — 환자가 골라야 한다. */
+  function autoPickOnly() {
+    if (CHG) return;                                   // 시간 변경 모드는 종류 고정
+    if (openGroups().indexOf(state.group) < 0) return; // 준비 중 그룹
+    var list = typesHere();
+    if (list.length !== 1) return;
+    if (state.type && state.type.code === list[0].code) return;
+    pickType(list[0].code);
+  }
+
+  /* 탭을 옮겼는데 **앞 탭에서 고른 종류가 그대로 남아 있으면** 지운다.
+     남겨 두면 «검진» 탭인데 산부인과 날짜·내원목적이 보이고, 그대로 신청하면
+     엉뚱한 종류로 접수된다. 처음 열었을 때와 같은 빈 상태로 되돌린다. */
+  function clearIfStale() {
+    if (CHG || !state.type) return;
+    var code = state.type.code, here = false;
+    typesHere().forEach(function (t) { if (t.code === code) here = true; });
+    if (here) return;
+    state.type = null; state.endo = ''; state.date = null; state.time = null;
+    state.anti = ''; state.together = ''; state.screens = {};
+    ['#bkOpt', '#bkSed', '#bkAnti', '#bkTog', '#bkExtra'].forEach(function (sel) {
+      var el = $(sel); if (el) { el.hidden = true; el.innerHTML = ''; }
+    });
+    renderMonth(viewMonth || new Date());
+    renderTimes(); syncSummary(); showWarn();
+  }
+
   function renderTabs() {
     $('#bkTabs').innerHTML = GROUPS.map(function (g) {
       return '<button type="button" class="bk-tab' + (g === state.group ? ' on' : '') +
@@ -416,9 +453,7 @@
     }
     $('#bkSubs').innerHTML = head;
 
-    $('#bkChips').innerHTML = TYPES.filter(function (t) {
-        return t.group === state.group && (!subs || t.sub === state.sub);
-      })
+    $('#bkChips').innerHTML = typesHere()
       .map(function (t) {
         return '<button type="button" class="bk-chip' +
                (state.type && state.type.code === t.code ? ' on' : '') +
@@ -1018,14 +1053,14 @@
       if (CHG) return chgLocked();
       var b = e.target.closest('.bk-tab');
       state.group = b.dataset.g; state.sub = null;
-      renderTabs(); renderChips();
+      renderTabs(); renderChips(); clearIfStale(); autoPickOnly();
     });
     $('#bkSubs').addEventListener('click', function (e) {
       if (!e.target.closest('.bk-subtab')) return;
       if (CHG) return chgLocked();
       var b = e.target.closest('.bk-subtab');
       state.sub = b.dataset.s;
-      renderChips();
+      renderChips(); clearIfStale(); autoPickOnly();
     });
     $('#bkSed').addEventListener('change', function (e) {
       if (e.target.name === 'xSed') pickSed(e.target.value);
