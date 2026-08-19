@@ -161,7 +161,9 @@
   /* 산부인과 진료 — 내원 목적 (분류 개편 2026-07-21, 원장 지시).
      초진차트(hub obgychart/obgychart.html Step3 name="symptom")와 **같은 항목·같은 분류**를 쓴다.
      ⚠ 한쪽만 고치면 예약과 차트가 갈라진다 — 세 곳을 함께 고칠 것:
-        이 파일 · hub reservation/booking/db.py(OBGY_REASON_NAMES) · obgychart.html */
+        이 파일 · hub reservation/booking/db.py(OBGY_REASON_NAMES) · obgychart.html
+     ★ '기타'는 지금 **예약에만** 있다 — 차트에는 «이번만» 넣지 않기로 했다(원장 2026-08-19).
+       영구 방침이 아니라 이번 판단이다. 차트에도 넣자는 얘기가 나오면 그때 맞추면 된다. */
   var OBGY_REASONS = [
     // '기타' = 무엇을 고를지 모르실 때(원장 지시 2026-08-19). 내원 목적은 필수라
     // 해당 항목이 없으면 신청 자체가 막혔다 — 아래 '그 밖에 말씀하실 내용'과 짝이다.
