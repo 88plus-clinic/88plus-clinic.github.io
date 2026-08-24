@@ -445,7 +445,9 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
 
     <div class="card">
       <!-- 내원 목적 분류(원장 지시 2026-07-21) — 예약 폼 booking.js OBGY_REASONS 와
-           **같은 항목·같은 분류**를 쓴다. 한쪽만 고치면 예약과 차트가 갈라진다. -->
+           **같은 항목·같은 분류**를 쓴다. 한쪽만 고치면 예약과 차트가 갈라진다.
+           ★ 예약에만 있는 '기타'는 «이번만» 여기 넣지 않기로 했다(원장 2026-08-19).
+             영구 방침이 아니다 — 넣자는 얘기가 나오면 그때 맞추면 된다. -->
       <div class="ft grp" data-ko="일반 진료" data-en="General care" data-ru="Общий приём" data-vi="Khám thông thường" data-mn="Ерөнхий үзлэг">일반 진료</div>
       <div>
         <label class="cl sym-full" id="vagCheck" style="margin-top:0"><input type="checkbox" name="symptom" value="질염"><div class="dot"></div><span data-ko="질염" data-en="Vaginitis" data-ru="Вагинит" data-vi="Viêm âm đạo" data-mn="Үтрээний үрэвсэл">질염</span></label>
@@ -512,6 +514,7 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
         <label class="cl"><input type="checkbox" name="symptom" value="웨딩검진"><div class="dot"></div><span data-ko="웨딩검진" data-en="Premarital check-up" data-ru="Добрачное обследование" data-vi="Khám tiền hôn nhân" data-mn="Гэрлэлтийн өмнөх үзлэг">웨딩검진</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="갱년기검진"><div class="dot"></div><span data-ko="갱년기검진" data-en="Menopause check-up" data-ru="Обследование при климаксе" data-vi="Khám mãn kinh" data-mn="Цэвэршилтийн үзлэг">갱년기검진</span></label>
         <label class="cl"><input type="checkbox" name="symptom" value="자궁경부암검사"><div class="dot"></div><span data-ko="자궁경부암검사" data-en="Pap smear" data-ru="ПАП-тест (мазок)" data-vi="Xét nghiệm Pap" data-mn="Умайн хүзүүний шинжилгээ (Pap)">자궁경부암검사</span></label>
+        <label class="cl"><input type="checkbox" name="symptom" value="유방암검진(유방엑스레이촬영)"><div class="dot"></div><span data-ko="유방암검진(유방엑스레이촬영)" data-en="Breast cancer screening (mammography)" data-ru="Скрининг рака молочной железы (маммография)" data-vi="Tầm soát ung thư vú (chụp X-quang tuyến vú)" data-mn="Хөхний хорт хавдрын үзлэг (маммографи)">유방암검진(유방엑스레이촬영)</span></label>
       </div>
       <div class="ft grp" data-ko="예방접종" data-en="Vaccination" data-ru="Вакцинация" data-vi="Tiêm chủng" data-mn="Вакцинжуулалт">예방접종</div>
       <div class="sym-grid" id="cg-symptom-vac">

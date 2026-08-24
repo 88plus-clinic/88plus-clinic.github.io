@@ -173,7 +173,7 @@
                             '피임상담', '응급피임약',
                             '산모초음파', '산모 일반진료'] },
     { g:'정기검진 및 종합검진', items:['정기초음파검진', '웨딩검진', '갱년기검진',
-                                       '자궁경부암검사'] },
+                                       '자궁경부암검사', '유방암검진(유방엑스레이촬영)'] },
     // 자궁경부암 백신도 온라인 예약을 받는다(원장 지시 2026-07-21 — 종전 제외 방침 변경)
     { g:'예방접종', items:['가다실9가', '가다실4가(국가예방접종)'] },
     { g:'Y존케어', items:['브라질리언레이저제모', '비키니라인레이저제모', '회음부 토닝'] }
@@ -182,6 +182,14 @@
      둘 다 원하시는 분이 '산부인과 진료'로 예약하면 검진 라인이 안 잡혀
      당일 동시 진행이 어려우므로, 검진 탭으로 안내한다(원장 지시 2026-07-20). */
   var PAP_LABEL = '자궁경부암검사';
+  /* 유방암검진(유방촬영)은 **만 40세 이상 여성이면 2년마다 국가검진 대상**이라 공단검진으로
+     받으시면 무료다. 진료로 예약하시면 자비가 되므로 검진 탭으로 안내한다(원장 지시 2026-08-24).
+     자궁경부암검사와 같은 방식 — 막지는 않고 안내만 띄운다. */
+  var MAMMO_LABEL = '유방암검진(유방엑스레이촬영)';
+  var MAMMO_WARN =
+    '<b>만 40세 이상</b>이시면 2년마다 <b>국가건강검진(공단)으로 무료</b>로 받으실 수 있습니다. ' +
+    '해당되시면 <b>「검진」 탭에서 예약</b>해 주세요.<br>' +
+    '진료로 예약하시면 <b>자비 검사</b>가 됩니다. 대상 여부가 헷갈리시면 전화(02-972-8800)로 확인해 드립니다.';
   var PAP_WARN =
     '국가공단검진(일반검진)을 <b>함께 받고자 하시면 「검진」 탭에서 예약</b>해 주세요. ' +
     '자궁경부암 검진은 공단검진과 함께 받으실 수 있습니다.<br>' +
@@ -833,13 +841,15 @@
         h += '<div class="bx-g"><p class="bx-gn">' + g.g + '</p>';
         g.items.forEach(function (n) {
           h += '<label class="bx-item"><input type="checkbox" class="xRsn" value="' + n + '"' +
-               (n === PAP_LABEL ? ' id="xPap"' : '') + '>' +
+               (n === PAP_LABEL ? ' id="xPap"' : '') +
+               (n === MAMMO_LABEL ? ' id="xMammo"' : '') + '>' +
                '<span>' + n + '</span></label>';
         });
         h += '</div>';
       });
       h += '</div>' +
            '<p class="bx-fast" id="xPapWarn" hidden>' + PAP_WARN + '</p>' +
+           '<p class="bx-fast" id="xMammoWarn" hidden>' + MAMMO_WARN + '</p>' +
            '<div class="bk-field bx-etc"><label for="xEtc">그 밖에 말씀하실 내용 (선택)</label>' +
            '<input type="text" id="xEtc" maxlength="100" placeholder="목록에 없는 증상·문의를 적어주세요"></div>' +
            '<p class="bx-note">선택하신 내용은 <b>진료 준비를 위한 참고용</b>이며, ' +
@@ -906,6 +916,8 @@
     // ⚠ `#xPapWarn` 은 늘 그려지지만 `#xPap`(자궁경부암 체크박스)은 **대상자에게만** 그려진다.
     //   널 검사 없이 `.checked` 를 읽으면 그 순간 함수가 죽어 아래 금식 안내까지 안 그려진다.
     if (pap) pap.hidden = !(papChk && papChk.checked);
+    var mam = $('#xMammoWarn'), mamChk = $('#xMammo');   // 위 PAP 과 같은 널 방어
+    if (mam) mam.hidden = !(mamChk && mamChk.checked);
     var f = $('#xFast');
     if (!f) return;
     var need = checkedAddons().filter(function (c) { return ADDON_MAP[c] && ADDON_MAP[c].fast; });
