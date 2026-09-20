@@ -27,7 +27,8 @@
   function send(obj) {
     try {
       var b = new Blob([JSON.stringify(obj)], { type: 'text/plain;charset=UTF-8' });
-      if (navigator.sendBeacon) { navigator.sendBeacon(URL_, b); return; }
+      // ⚠ sendBeacon 은 큐가 차면 **false** 를 돌려준다 — 그때는 폴백으로 간다
+      if (navigator.sendBeacon && navigator.sendBeacon(URL_, b)) return;
       // 폴백 — 일부 브라우저·설정에서 sendBeacon 이 막힌다. 없으면 «없던 일»이 되므로
       // 계통적으로 빠지는 것을 줄인다. 실패해도 조용히 지나간다.
       fetch(URL_, { method: 'POST', body: b, keepalive: true, mode: 'no-cors' })
@@ -41,13 +42,17 @@
     if (/bot|crawl|spider|slurp|bingpreview|headless|lighthouse|pingdom/i.test(ua)) return;
 
     path = location.pathname || '/';
+    // 🔴 **SKIP 을 «먼저» 본다.** 404 치환을 앞에 두면 `/obgychart/오타.html` 처럼
+    //   그 3쪽 아래에서 404 가 났을 때 경로가 '/404' 로 바뀌어 **SKIP 을 빠져나간다**
+    //   (2026-09-20 검토에서 발견). 「그 3쪽은 아무것도 보내지 않는다」는 약속은
+    //   처리방침에도 적혀 있다 — 코드가 먼저 지켜야 한다.
+    for (var i = 0; i < SKIP.length; i++) {
+      if (path.indexOf(SKIP[i]) === 0) return;
+    }
     // 🔴 **없는 쪽(404)** 은 고정 문자열로 쏜다. 경로를 그대로 보내면 서버가 「기타」로
     //   뭉개 구분이 안 된다. 위키에 **옛 페이지를 지워 알림톡 링크가 404 났던** 사고가
     //   있다 — 이 줄이 있으면 환자가 전화로 알려 주기 전에 이 화면에서 보인다.
     if (window.__is404) path = '/404';
-    for (var i = 0; i < SKIP.length; i++) {
-      if (path.indexOf(SKIP[i]) === 0) return;
-    }
     dev = /Mobi|Android|iPhone|iPad/i.test(ua) ? 'm' : 'p';
 
     // 유입처 — **도메인만.** 전체 주소는 절대 보내지 않는다

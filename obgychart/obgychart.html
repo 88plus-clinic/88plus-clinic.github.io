@@ -565,8 +565,16 @@ body{font-family:'Pretendard Variable','Pretendard',-apple-system,sans-serif;bac
       <label class="cl" id="consentLabel" style="width:100%">
         <input type="checkbox" id="consent"><div class="dot"></div>
         <span style="font-size:15px;font-weight:600" data-ko="위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다." data-en="I have read and agree to the collection and use of my personal information." data-ru="Я ознакомлен(а) и согласен(на) на сбор и использование моих персональных данных." data-vi="Tôi đã đọc và đồng ý cho việc thu thập, sử dụng thông tin cá nhân của mình." data-mn="Би дээрхийг уншиж танилцсан бөгөөд хувийн мэдээллээ цуглуулах·ашиглахыг зөвшөөрч байна.">위 내용을 확인하였으며, 개인정보 수집·이용에 동의합니다.</span>
-        <div style="margin-top:6px;font-size:13px"><a href="../privacy.html" target="_blank" rel="noopener" style="color:#6b7280;border-bottom:1px solid #d1d5db">개인정보처리방침 전문 보기</a></div>
       </label>
+      <!-- 🔴 라벨 «밖»에 둔다 — 안에 두면 링크를 누르려다 동의 체크가 토글될 수 있다 -->
+      <div style="margin-top:8px;font-size:13px">
+        <a href="../privacy.html" target="_blank" rel="noopener"
+           style="color:#6b7280;border-bottom:1px solid #d1d5db"
+           data-ko="개인정보처리방침 전문 보기" data-en="View full Privacy Policy"
+           data-ru="Полная политика конфиденциальности"
+           data-vi="Xem toàn văn Chính sách bảo mật"
+           data-mn="Нууцлалын бодлогыг бүрэн эхээр нь үзэх">개인정보처리방침 전문 보기</a>
+      </div>
     </div>
 
     <div class="card">
