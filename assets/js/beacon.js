@@ -39,7 +39,10 @@
   try {
     // ⚠ 검색엔진 로봇은 세지 않는다. Googlebot 은 JS 를 실행하므로 비콘도 쏜다 —
     //   거르지 않으면 심야에 «방문» 이 규칙적으로 찍혀 숫자가 조용히 틀어진다.
-    if (/bot|crawl|spider|slurp|bingpreview|headless|lighthouse|pingdom/i.test(ua)) return;
+    // ⚠ **yeti(네이버)·daumoa(다음)** 는 bot/crawl/spider 어디에도 안 걸린다 —
+    //   한국 의원 홈페이지에 제일 많이 오는 크롤러 둘이다.
+    if (/bot|crawl|spider|slurp|yeti|daumoa|bingpreview|headless|lighthouse|pingdom/i
+        .test(ua)) return;
 
     path = location.pathname || '/';
     // 🔴 **SKIP 을 «먼저» 본다.** 404 치환을 앞에 두면 `/obgychart/오타.html` 처럼

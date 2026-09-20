@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
-  body{margin:0;font-family:Pretendard,-apple-system,sans-serif;background:#fafaf9;color:#1f2937;
+  *{box-sizing:border-box}   /* 없으면 padding 24px 때문에 항상 세로 스크롤 */
+  body{margin:0;font-family:'Pretendard Variable',Pretendard,-apple-system,sans-serif;background:#fafaf9;color:#1f2937;
        display:flex;flex-direction:column;min-height:100vh;align-items:center;
        justify-content:center;padding:24px}   /* column — 아래 줄이 «옆»이 아니라 «아래» */
   .wrap{max-width:460px;text-align:center}
@@ -37,12 +38,13 @@
   <div class="btns">
     <a class="b pri" href="/home.html">홈으로</a>
     <a class="b" href="/reservation.html">온라인 예약</a>
+    <a class="b" href="/exam-guide/">검사 안내</a>
     <a class="b" href="/location.html">오시는길</a>
   </div>
   <p class="tel">대표전화 <a href="tel:0229728800">02-972-8800</a></p>
 </div>
 <script src="/assets/js/beacon.js?v=09201100" defer></script>
-<div style="text-align:center;padding:16px 12px 26px;font-size:12.5px"><a href="/privacy.html" style="color:#9ca3af;text-decoration:none;border-bottom:1px solid #e5e7eb">개인정보처리방침</a></div>
+<div style="margin-top:auto;text-align:center;padding:16px 12px 8px;font-size:13px"><a href="/privacy.html" style="color:#6b7280;text-decoration:none;border-bottom:1px solid #d1d5db">개인정보처리방침</a></div>
 
 </body>
 </html>

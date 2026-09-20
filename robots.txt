@@ -1,15 +1,15 @@
 # 88플러스내과산부인과의원 — https://88plus.co.kr
 #
-# 환자가 개인정보를 적어 넣는 폼은 검색에 올리지 않는다.
-#   /reservation-lookup.html 은 ?no=<예약번호> 가 붙는다 — 색인되면 안 된다.
+# 🔴 **Disallow 와 noindex 를 같이 걸지 않는다.** 크롤링을 막으면 크롤러가
+#   noindex 메타를 «읽을 수 없어», 외부에 링크가 하나라도 있으면 URL 만 색인된 채
+#   「정보 없음」으로 검색에 뜬다. 확실히 지우려면 **noindex 쪽**이 맞다.
+#   그래서 환자가 개인정보를 적는 3쪽은 **각 페이지의 noindex 메타**로 막고
+#   여기서는 크롤링을 허용한다(메타를 읽어 가라고).
 #
 # AI 검색 크롤러(GPTBot·ClaudeBot·PerplexityBot·Google-Extended)는
 # 따로 막지 않는다 = 허용. 막으려면 여기에 Disallow 를 적으면 된다.
 
 User-agent: *
-Disallow: /munjin/
-Disallow: /obgychart/
-Disallow: /reservation-lookup.html
 Allow: /
 
 Sitemap: https://88plus.co.kr/sitemap.xml
