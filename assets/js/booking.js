@@ -1313,6 +1313,9 @@
 
     var btn = $('#bkSubmit');
     btn.disabled = true; btn.textContent = '전송 중…';
+    // 🔴 «신청을 눌렀다» 를 여기서 센다(2026-09-20). 아래 완료(book_done)와 나눠야
+    //    「예약 페이지는 보는데 신청이 없다」와 「신청은 하는데 실패한다」를 가를 수 있다.
+    try { if (window.__hitBookStart) window.__hitBookStart(); } catch (e) { }
 
     send(payload).then(function (res) {
       clearSubmitKey();                 // 성공 — 다음 예약은 새 키로
@@ -1344,6 +1347,10 @@
       });
       $('#bkFormWrap').hidden = true;
       $('#bkDoneView').hidden = false;
+      // 예약 완료 — 주소가 바뀌지 않아 페이지뷰로는 셀 수 없다(2026-09-20).
+      // 🔴 «신규 예약이 하나 들어왔다»는 사실만 센다. 누가 했는지는 담지 않는다.
+      //    아래 «시간 변경» 완료는 새 예약이 아니므로 세지 않는다.
+      try { if (window.__hitBookDone) window.__hitBookDone(); } catch (e) { }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }).catch(function (err) {
       // 서버가 이유를 준 거절(같은 날 중복 신청 등)은 그 문구를 그대로 — 통신 실패와 다르다

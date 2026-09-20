@@ -1,0 +1,15 @@
+# 88플러스내과산부인과의원 — https://88plus.co.kr
+#
+# 환자가 개인정보를 적어 넣는 폼은 검색에 올리지 않는다.
+#   /reservation-lookup.html 은 ?no=<예약번호> 가 붙는다 — 색인되면 안 된다.
+#
+# AI 검색 크롤러(GPTBot·ClaudeBot·PerplexityBot·Google-Extended)는
+# 따로 막지 않는다 = 허용. 막으려면 여기에 Disallow 를 적으면 된다.
+
+User-agent: *
+Disallow: /munjin/
+Disallow: /obgychart/
+Disallow: /reservation-lookup.html
+Allow: /
+
+Sitemap: https://88plus.co.kr/sitemap.xml
