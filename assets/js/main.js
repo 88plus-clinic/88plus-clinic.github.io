@@ -138,7 +138,7 @@
         '<p class="soon-p">더 편하고 정확하게 이용하실 수 있도록 마지막 점검을 하고 있습니다.' +
           '<br>준비가 끝나는 대로 홈페이지에서 안내해 드리겠습니다.</p>' +
         '<p class="soon-p">그때까지 예약은 전화로 도와드리겠습니다.</p>' +
-        '<a class="soon-tel" href="tel:0229728800">' + TEL + '</a>' +
+        '<a class="soon-tel" href="tel:029728800">' + TEL + '</a>' +
         (closable ? '<button type="button" class="soon-close">닫기</button>'
                   : '<a class="soon-close" href="home.html">홈으로 돌아가기</a>') +
       '</div>';

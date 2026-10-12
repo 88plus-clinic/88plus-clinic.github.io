@@ -439,7 +439,7 @@
           '<b>온라인 예약 준비 중입니다</b>' +
           '<p><b>' + state.group + '</b> 예약은 아직 온라인으로 받고 있지 않습니다.<br>' +
           '전화로 예약해 주시면 친절히 안내해 드리겠습니다.</p>' +
-          '<a class="bk-soon-tel" href="tel:0229728800">☎ 02-972-8800</a>' +
+          '<a class="bk-soon-tel" href="tel:029728800">☎ 02-972-8800</a>' +
         '</div>';
       state.type = null;
       ['#bkOpt', '#bkSed', '#bkAnti', '#bkTog', '#bkExtra'].forEach(function (s) {

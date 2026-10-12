@@ -94,7 +94,7 @@
         '<p class="lk-empty-h">예약을 찾지 못했습니다.</p>' +
         '<p>이름·생년월일·휴대전화 뒤 4자리를 다시 확인해 주세요.<br>' +
         '지난 예약은 일정 기간이 지나면 조회되지 않습니다.</p>' +
-        '<p class="lk-empty-tel">확인이 어려우시면 <a href="tel:0229728800">02-972-8800</a></p>' +
+        '<p class="lk-empty-tel">확인이 어려우시면 <a href="tel:029728800">02-972-8800</a></p>' +
         '</div>';
       box.scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
@@ -136,7 +136,7 @@
             esc(b.reservation_no) + '">예약 취소</button></div>'
           : (b.status === 'cancelled' ? ''
              : '<p class="lk-hint">이 예약은 홈페이지에서 취소하실 수 없습니다. ' +
-               '<a href="tel:0229728800">02-972-8800</a> 으로 연락 주세요.</p>')) +
+               '<a href="tel:029728800">02-972-8800</a> 으로 연락 주세요.</p>')) +
       '</div>';
   }
 
