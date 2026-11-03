@@ -149,7 +149,9 @@
     try {
       sessionStorage.setItem('bk_change', JSON.stringify({
         no: b.reservation_no, token: b.token, btype: b.btype,
-        type_name: b.type_name, date: b.date, time: b.time
+        type_name: b.type_name, date: b.date, time: b.time,
+        // 방사선실(유방촬영) 포함 — 변경 화면이 15:00 이후·12:30 을 감춘다(2026-11-03)
+        xray: !!b.xray
       }));
     } catch (e) {
       return alert('이 브라우저에서는 시간 변경을 이용하실 수 없습니다.');

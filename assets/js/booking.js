@@ -232,6 +232,20 @@
     US:    [[WD, '08:00','13:00'], [WD, '14:00','18:00'], [SAT,'08:00','13:00']]
   };
   var OBGY_CLOSED_DOW = [4];   // 목요일 산부인과 휴진 (JS 0=일 → 4=목)
+  /* 방사선실(유방촬영) 시작 가능 시각 — 허브 `XRAY_ROOM`·VPS `_XRAY_HOURS` 와 같다.
+     평일 08~12·14~15시, 토 08~12시. :30 은 다음 정시도 운영 중일 때만(12:30·15:30 불가).
+     원장 2026-11-03 «유방암검진은 3시 마감 — 15:30·16:00 은 고르지 못하게». */
+  var XRAY_HOURS = { 1:[8,9,10,11,12,14,15], 2:[8,9,10,11,12,14,15], 3:[8,9,10,11,12,14,15],
+                     4:[8,9,10,11,12,14,15], 5:[8,9,10,11,12,14,15], 6:[8,9,10,11,12] };
+  function mammoChosen() {
+    var m = document.getElementById('xMammo');
+    return !!((state.type && state.type.reasons && m && m.checked) ||
+              state.screens['유방암'] || (CHG && CHG.xray));
+  }
+  function xrayTimeOk(t, dow) {
+    var hrs = XRAY_HOURS[dow] || [], h = parseInt(t.slice(0, 2), 10), m = parseInt(t.slice(3), 10);
+    return hrs.indexOf(h) >= 0 && (m === 0 || hrs.indexOf(h + 1) >= 0);
+  }
 
   var closedDays = [];         // 공휴일·일요일 (assets/closed-days.json)
   var state = { group:GROUPS[0], sub:null, type:null, endo:'', sedation:'sleep',
@@ -294,6 +308,8 @@
       var s = toMin(blk[1]), e = toMin(blk[2]);
       for (var m = s; m + type.step * type.need <= e; m += type.step) out.push(toStr(m));
     });
+    // 유방촬영을 고르면 방사선실 시각만(15:00 마감·12:30 불가) — 서버(VPS·허브)도 같은 규칙으로 거절한다.
+    if (mammoChosen()) out = out.filter(function (t) { return xrayTimeOk(t, dow); });
     // 당일 예약은 지금부터 2시간 뒤 이후만 (진료 탭 전용 — 다른 종류는 애초에 당일이 막힘)
     var now = new Date();
     if (iso(d) === iso(now)) {
@@ -587,6 +603,8 @@
     if (ne !== state.endo) {                       // 내시경 구성이 바뀌면 리드타임·달력 갱신
       state.endo = ne; state.date = null; state.time = null;
       renderMonth(viewMonth || new Date()); renderTimes(); showWarn(); renderSed(); renderAnti();
+    } else if (k === '유방암') {
+      renderTimes();               // 유방암검진은 방사선실 시각만(15:00 마감) — 고른 16:00 등은 비운다
     }
     renderOpt(); syncSummary();
   }
@@ -918,6 +936,7 @@
     if (pap) pap.hidden = !(papChk && papChk.checked);
     var mam = $('#xMammoWarn'), mamChk = $('#xMammo');   // 위 PAP 과 같은 널 방어
     if (mam) mam.hidden = !(mamChk && mamChk.checked);
+    renderTimes();                 // 유방촬영 체크가 바뀌면 고를 수 있는 시각도 바뀐다(15:00 마감)
     var f = $('#xFast');
     if (!f) return;
     var need = checkedAddons().filter(function (c) { return ADDON_MAP[c] && ADDON_MAP[c].fast; });
@@ -1025,6 +1044,8 @@
     }
     lbl.textContent = fmtDate(state.date);
     var ts = timesFor(state.type, dateOf(state.date));
+    // 고른 시각이 더는 가능하지 않으면(예: 유방촬영을 켜서 15:30 이 빠짐) 비운다.
+    if (state.time && ts.indexOf(state.time) < 0) { state.time = null; syncSummary(); }
     box.innerHTML = ts.map(function (t) {
       var full = fullTimes.indexOf(t) >= 0;    // 정원 마감
       return '<button type="button" class="bk-time' +
