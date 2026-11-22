@@ -17,6 +17,8 @@
 .bi-list li::before{ content:'※'; position:absolute; left:0; font-size:12px; top:1px; }
 .bi-list b{ color:#8A5A22; }
 .bi-list a{ color:var(--olive-dk); border-bottom:1px solid var(--line); }
+/* 상단 안내가 한 줄만 남았다(2026-11-22) — 첫 줄 위 여백을 빼서 상자 위아래를 맞춘다 */
+.bi-list:first-child, .bi-list li:first-child{ margin-top:0; }
 
 /* ── 3단 패널 ─────────────────────────────────── */
 /* ⚠ hidden 속성이 항상 이기게 한다.
@@ -38,7 +40,7 @@
 
 /* 항목 탭 */
 .bk-tabs{
-  display:flex; gap:2px; padding:5px; margin-bottom:16px;
+  display:flex; gap:2px; padding:5px; margin-bottom:12px;
   background:var(--cream-dp); border-radius:100px;
 }
 .bk-tab{
@@ -49,15 +51,23 @@
 .bk-tab:hover{ color:var(--olive-dk); }
 .bk-tab.on{ background:var(--olive); color:#fff; }
 
-/* 그룹 안내 (내과 일반진료 등) */
-.bx-gnote{
+/* 탭 안내 (검진 금식·산부인과 당일·내과 일반진료) · 날짜 칸 안내 한 줄
+   ⚠ 클래스는 `bk-gnote` — 예전엔 `bx-gnote` 였는데 아래 추가검진 칸의 `.bx-gnote`
+     (margin-left 24px)가 덮어써서 상자만 혼자 들여지고 아래 판과 붙었다(원장 2026-11-22).
+   항목 카드 안 세로 간격은 12px 하나로 맞춘다: 탭 → 안내 → 목록. 좌우 끝은 모두 카드 안쪽 끝. */
+.bk-gnote, .bx-gnote{
   margin:0 0 12px; padding:12px 14px; background:#FBF3EC;
   border-left:2px solid #C08A4A; border-radius:0 6px 6px 0;
   font-size:13.5px; line-height:1.7; color:var(--body); word-break:keep-all;
 }
-.bx-gnote b{ color:#8A5A22; font-weight:700; }
+.bk-gnote b, .bx-gnote b{ color:#8A5A22; font-weight:700; }
 
-/* 2차 탭 (내시경 / 초음파) */
+.bk-datenote{ margin:-6px 0 14px; }   /* 날짜 칸: 위 설명(bp-sub 18px) 아래에 붙여 한 묶음으로 */
+/* 목록 안 작은 소제목 (내과: 내시경 / 초음파) — 버튼 아님(원장 2026-11-22 하위 탭 폐지) */
+.bk-chiph{ grid-column:1/-1; margin:4px 2px -2px; font-size:12.5px; font-weight:700; color:var(--muted); letter-spacing:.02em; }
+.bk-chiph:first-child{ margin-top:0; }
+
+/* 2차 탭 (내시경 / 초음파) — 2026-11-22 부터 쓰지 않음(SUBS 비움). 다시 쓸 때를 위해 남겨 둔다 */
 .bk-subtabs{ display:flex; gap:6px; margin-bottom:12px; }
 .bk-subtab{
   font:inherit; font-size:14px; font-weight:600; color:var(--muted);
@@ -71,7 +81,7 @@
 .bk-chips{
   flex:1; align-content:start;
   display:grid; grid-template-columns:1fr; gap:8px;
-  padding:14px; background:var(--cream); border-radius:10px;
+  padding:12px; background:var(--cream); border-radius:10px;
 }
 .bk-chip{
   display:block; text-align:left; font:inherit; color:var(--body);

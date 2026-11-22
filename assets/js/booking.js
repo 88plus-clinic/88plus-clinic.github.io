@@ -120,13 +120,16 @@
   var PREVIEW = false;
   try { PREVIEW = new URLSearchParams(location.search).get('preview') === '1'; } catch (e) {}
   function openGroups() { return PREVIEW ? GROUPS : OPEN_GROUPS; }
-  var SUBS = { '내과': ['내시경', '초음파'] };   // 그룹 안의 2차 탭
+  /* 그룹 안의 2차 탭. 내과 [내시경][초음파] 하위 탭은 2026-11-22 폐지(원장 — 한 목록으로 쭉).
+     대신 목록 안에 작은 소제목(t.sub)만 둔다(renderChips). 항목은 한 번에 하나만 고르는 구조 그대로. */
+  var SUBS = {};
   var GROUP_NOTE = {
     // 검진 탭 안내 — 짧게(원장 2026-11-22 «너무 장황해서 길어»). 혈압약 문장은 이 상자에서만 뺐다.
     '검진': '검사 전 <b>8시간 금식</b>해 주세요. <b>물(생수)만</b> 드실 수 있고, ' +
             '<b>내시경이나 복부 초음파</b>를 함께 받으시면 <b>물도 드시면 안 됩니다.</b>',
-    '내과': '일반 진료(감기·소화기·만성질환 등)는 <b>별도의 예약이 없습니다.</b> ' +
-            '진료시간 내에 내원하시면 접수 순서대로 진료를 받으실 수 있습니다.'
+    // 상단 안내 5줄을 탭 안내로 옮기며 짧게(원장 2026-11-22 2안).
+    '산부인과': '<b>당일 예약 가능</b> (2시간 뒤부터)',
+    '내과': '<b>일반 진료(감기·소화기·만성질환)는 예약 없이 접수 순서대로 진료합니다.</b>'
   };
 
   /* 추가검진 항목 — 비급여 고지표(pricing.html) 기준.
@@ -368,6 +371,23 @@
     return 'ok';
   }
 
+  /* 날짜 칸 안내 한 줄(원장 2026-11-22 2안 — 상단 안내 5줄에서 옮김).
+     · 대장내시경이 끼면: 7일 뒤부터 · 사전 내원
+     · 검진·내시경·초음파(lead 2): 가장 빠른 온라인 예약일 — 16시(토 12시) 컷오프 전이면
+       다음 영업일도 되므로 «모레부터»라고 고정해 쓰면 틀린다. onlineFrom() 그대로 쓴다.
+     · 산부인과(lead 0): 탭 안내에 이미 있어 생략. */
+  function dateNote() {
+    var t = state.type;
+    if (!t) return '';
+    if (hasColon()) {
+      return '대장내시경은 <b>' + COLON_LEAD_DAYS + '일 뒤부터</b> 가능 · 검사 전 <b>한 번 내원</b>(장정결제 처방)';
+    }
+    if (baseLead(t) !== MIN_LEAD_DAYS) return '';
+    var d = onlineFrom(t);
+    return '<b>' + (d.getMonth() + 1) + '월 ' + d.getDate() + '일(' + '일월화수목금토'.charAt(d.getDay()) +
+           ')부터</b> 예약하실 수 있습니다.';
+  }
+
   function bookableDate(type, d) { return dayState(type, d) === 'ok'; }
 
   function phoneNotice() {
@@ -471,7 +491,7 @@
 
     var head = '';
     if (GROUP_NOTE[state.group]) {
-      head += '<p class="bx-gnote">' + GROUP_NOTE[state.group] + '</p>';
+      head += '<p class="bk-gnote">' + GROUP_NOTE[state.group] + '</p>';
     }
     if (subs) {
       head += '<div class="bk-subtabs">' + subs.map(function (s) {
@@ -481,9 +501,14 @@
     }
     $('#bkSubs').innerHTML = head;
 
+    var lastSub = null;
     $('#bkChips').innerHTML = typesHere()
       .map(function (t) {
-        return '<button type="button" class="bk-chip' +
+        // 소제목(내과: 내시경 / 초음파) — 묶음이 바뀔 때만. 하위 탭이 있는 그룹에선 안 쓴다.
+        var h = '';
+        if (!subs && t.sub && t.sub !== lastSub) h = '<p class="bk-chiph">' + t.sub + '</p>';
+        lastSub = t.sub;
+        return h + '<button type="button" class="bk-chip' +
                (state.type && state.type.code === t.code ? ' on' : '') +
                '" data-c="' + t.code + '"><b>' + t.name + '</b>' +
                (t.note ? '<i>' + t.note + '</i>' : '') + '</button>';
@@ -969,6 +994,8 @@
         : '<b>먼저 위에서 항목을 선택해 주세요.</b> 항목에 따라 예약 가능한 날짜가 달라집니다.';
       _sub.classList.toggle('need', !state.type);
     }
+    var _dn = $('#bkDateNote');
+    if (_dn) { var _t = dateNote(); _dn.innerHTML = _t; _dn.hidden = !_t; }
     viewMonth = new Date(base.getFullYear(), base.getMonth(), 1);
     $('#mLabel').textContent = viewMonth.getFullYear() + '년 ' +
       String(viewMonth.getMonth()+1).padStart(2,'0') + '월';

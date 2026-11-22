@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <link rel="stylesheet" href="assets/css/style.css?v=08031150">
-<link rel="stylesheet" href="assets/css/booking.css?v=08031830">
+<link rel="stylesheet" href="assets/css/booking.css?v=11221800">
 </head>
 <body>
 
@@ -60,16 +60,10 @@
 
     <!-- 예약 전 안내 -->
     <div class="bk-intro">
+      <!-- 상단 안내는 한 줄만(원장 2026-11-22 «장황하다»). 항목별 안내는 탭·날짜 칸에서
+           그 항목을 고를 때 보여 준다(booking.js GROUP_NOTE · dateNote). -->
       <ul class="bi-list">
-        <li>인터넷으로 예약하신 경우에도 당일 진료 일정에 따라 대기 시간이 생길 수 있습니다.</li>
-        <li><b>검진·내시경은 당일과 다음 날 예약이 되지 않습니다.</b>
-          달력에서 선택 가능한 날짜만 활성화됩니다.</li>
-        <li><b>대장내시경은 오늘부터 7일 뒤 날짜부터 선택하실 수 있습니다.</b>
-          장정결제 처방을 위해 <b>검사 전에 한 번 내원 진료</b>가 필요하기 때문입니다.</li>
-        <li><b>산부인과 진료는 당일 예약도 가능</b>하며,
-          <b>현재 시각으로부터 2시간 뒤</b>부터 신청하실 수 있습니다.</li>
-        <li><b>내과 일반 진료(감기·소화기·만성질환 등)는 예약을 받지 않습니다.</b>
-          진료시간 내에 내원하시면 접수 순서대로 진료를 받으실 수 있습니다.</li>
+        <li>예약하셔도 당일 일정에 따라 대기가 있을 수 있습니다.</li>
       </ul>
     </div>
 
@@ -132,6 +126,8 @@
         <!-- 항목을 안 고르면 달력이 통째로 비활성이다. 그때 이 문구가 이유를 말해 준다
              (2026-08-03 — 환자가 "아무것도 안 눌러진다"고 문의). -->
         <p class="bp-sub" id="bkDateSub">원하시는 날짜를 선택하세요.</p>
+        <!-- 항목별 날짜 안내 한 줄(대장 7일 뒤·가장 빠른 예약일) — booking.js dateNote() -->
+        <p class="bk-gnote bk-datenote" id="bkDateNote" hidden></p>
         <div class="bk-cal">
           <div class="bk-cal-top">
             <button type="button" id="mPrev" aria-label="이전 달">‹</button>
@@ -276,7 +272,7 @@
 </nav>
 
 <script src="assets/js/main.js?v=10121500"></script>
-<script src="assets/js/booking.js?v=11221400"></script>
+<script src="assets/js/booking.js?v=11221800"></script>
 <script src="assets/js/chat.js?v=07251610"></script>
 <script src="assets/js/beacon.js?v=09201100" defer></script>
 </body>
