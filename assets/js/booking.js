@@ -1038,9 +1038,14 @@
        서버는 허브가 밀어 준 매핑표로 해석한다(이름 해석을 여기서 하지 않는다). */
     var availAdd = state.type.addons
       ? checkedAddons().map(function (c) { return ADDON_MAP[c].n; }).join(',') : '';
+    /* ★ 내원 목적(사유)도 보낸다(2026-11-23). 산부인과 진료에서 «자궁경부암검사» 를 고르면
+       OBGY_PAP 칸을 먹는다. 서버가 허브가 밀어 준 표(reason_res)로 해석한다(여기서 이름 해석 안 함).
+       사유 체크 변경은 #bkExtra change → onExtraChange → loadAvail(true) 로 다시 조회된다. */
+    var availRsn = state.type.reasons ? checkedReasons().join(',') : '';
     fetch(API_AVAIL + '?type=' + encodeURIComponent(availCode) +
           '&date=' + encodeURIComponent(state.date) +
-          (availAdd ? '&addons=' + encodeURIComponent(availAdd) : ''))
+          (availAdd ? '&addons=' + encodeURIComponent(availAdd) : '') +
+          (availRsn ? '&reasons=' + encodeURIComponent(availRsn) : ''))
       .then(function (r) { return r.json(); })
       .then(function (j) {
         if (seq !== availSeq) return;          // 그 사이 날짜/항목이 바뀌면 무시
