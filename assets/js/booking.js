@@ -99,6 +99,12 @@
       note:'검사 전 8시간 완전 금식(물 포함)', warn:PREP_ENDO_FAST },
     { code:'endo_colon',   name:'대장내시경',    group:'내과', sub:'내시경', res:'ENDO', step:60, need:1,
       note:'검사 1주일 전까지 내원 진료 필요', warn:PREP_COLON, lead:COLON_LEAD_DAYS },
+    // 국가검진 2차 대장내시경(2026-11-24) — 분변잠혈검사(대장암검진) 양성 판정자의 2단계 검사.
+    // 서버 종류 코드 endo_colon_nhis(허브 booking/db.py). 자리·리드타임은 대장내시경과 같다.
+    // noTogether: 이미 국가검진 항목이라 «국가검진도 함께?» 질문을 하지 않는다.
+    { code:'endo_colon_nhis', name:'국가검진 2차 대장내시경', group:'내과', sub:'내시경', res:'ENDO', step:60, need:1,
+      note:'분변검사(대장암검진) 양성 판정을 받으신 분 · 검진 비용 본인부담 없음 · 검사 1주일 전까지 내원 진료 필요',
+      warn:PREP_COLON, lead:COLON_LEAD_DAYS, noTogether:true },
     { code:'endo_both',    name:'위+대장내시경', group:'내과', sub:'내시경', res:'ENDO', step:60, need:1,
       note:'검사 1주일 전까지 내원 진료 필요', warn:PREP_COLON, lead:COLON_LEAD_DAYS },
     // 초음파 — 초음파실 1시간 1명(원장 확정 2026-07-20)
@@ -607,7 +613,8 @@
       endoRadioHtml('함께 받으실 내시경',
         '<b>국가 위암검진 대상</b>이시면 위내시경은 검진에 포함됩니다(무료 또는 본인부담 10%). ' +
         '대상이 아니시면 <b>비급여(본인부담)</b>로 받으실 수 있어요. ' +
-        '<b>대장내시경은 국가검진에 없어 항상 비급여</b>이며, 장정결제 사전 진료가 필요해 ' +
+        '<b>분변검사 양성으로 받으시는 2차 대장내시경</b>은 「내과 › 국가검진 2차 대장내시경」에서 예약해 주세요. ' +
+        '그 밖의 대장내시경은 <b>비급여</b>이며, 장정결제 사전 진료가 필요해 ' +
         '<b>' + COLON_LEAD_DAYS + '일 뒤 날짜부터</b> 선택하실 수 있습니다.');
     bindEndoRadio(box);
     box.hidden = false;
@@ -646,7 +653,8 @@
      그대로 시행하기 때문(원장 지시 2026-07-23). 조직검사·용종절제 출혈 위험은 대장에서 크다. */
   function hasColon() {
     if (!state.type) return false;
-    if (state.type.code === 'endo_colon' || state.type.code === 'endo_both') return true;
+    if (state.type.code === 'endo_colon' || state.type.code === 'endo_both' ||
+        state.type.code === 'endo_colon_nhis') return true;
     return !!(state.type.endoOpt && (state.endo === 'colon' || state.endo === 'both'));
   }
 
@@ -797,7 +805,7 @@
   function renderTogether() {
     var box = $('#bkTog');
     if (!box) return;
-    if (!state.type || state.type.res !== 'ENDO') {   // 내시경(위/대장) 예약에만 노출
+    if (!state.type || state.type.res !== 'ENDO' || state.type.noTogether) {   // 내시경(위/대장) 예약에만 노출(2차 검진은 제외)
       box.hidden = true; box.innerHTML = ''; state.together = ''; return;
     }
     var p = profile();
@@ -1110,6 +1118,21 @@
           '문의: 02-972-8800');
   }
 
+  /* `reservation.html?type=코드` 로 들어오면 그 그룹·항목을 미리 골라 둔다(안내 링크용, 2026-11-24).
+     없는 코드·열리지 않은 그룹이면 아무것도 하지 않는다(기본 화면 그대로). 시간 변경 모드(CHG)에서는 부르지 않는다. */
+  function preselectFromQuery() {
+    try {
+      var c = new URLSearchParams(location.search).get('type');
+      if (!c) return;
+      var t = TYPES.filter(function (x) { return x.code === c; })[0];
+      if (!t || openGroups().indexOf(t.group) < 0) return;
+      state.group = t.group;
+      state.sub = SUBS[t.group] ? t.sub : null;
+      renderTabs(); renderChips();
+      pickType(t.code);
+    } catch (e) { /* 미리 고르기는 편의일 뿐 — 실패해도 기본 화면 */ }
+  }
+
   // ── 이벤트 ──────────────────────────────────────
   function bind() {
     $('#bkTabs').addEventListener('click', function (e) {
@@ -1235,7 +1258,7 @@
     if (!state.date) return alert('예약 날짜를 선택해 주세요.');
     if (!state.time) return alert('예약 시간을 선택해 주세요.');
     // 내시경 예약 — 국가검진 함께 여부를 반드시 고르게 한다(예/아니오)
-    if (state.type.res === 'ENDO' && !state.together) {
+    if (state.type.res === 'ENDO' && !state.type.noTogether && !state.together) {
       $('#bkTog').scrollIntoView({ behavior: 'smooth', block: 'center' });
       return alert('국가건강검진을 함께 받으실지 선택해 주세요. (예 / 아니오)');
     }
@@ -1575,5 +1598,6 @@
       renderMonth(new Date());
       renderTimes(); syncSummary(); bind();
       if (CHG) { showWarn(); renderSed(); renderAnti(); }
+      else preselectFromQuery();
     });
 })();
